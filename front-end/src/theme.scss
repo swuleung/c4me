@@ -1,0 +1,26 @@
+// This file overrides the default Boostrap theme with our colors.
+
+// Override default variables before the import
+$body-bg: aliceblue;
+
+$theme-colors: (
+  "primary": #1091b3,
+  "dark": white
+);
+
+$navbar-light-color: white;
+$navbar-light-brand-color: white;
+$navbar-brand-font-size: 2rem;
+
+// Import Bootstrap and its default variables
+@import '~bootstrap/scss/bootstrap.scss';
+@import url('https://fonts.googleapis.com/css?family=Orbitron&display=swap');
+
+// Our Variables
+$logo-font: Orbitron;
+$main-color: #1091b3;
+
+// Base CSS 
+#logo {
+    font-family: $logo-font;
+}
