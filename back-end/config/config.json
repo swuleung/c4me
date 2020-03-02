@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "root",
-    "password": "password",
+    "password": "root",
     "database": "c4me",
     "host": "localhost",
     "dialect": "mysql",

@@ -11,9 +11,10 @@
     "debug": "~2.6.9",
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
-    "jade": "~1.11.0",
     "morgan": "~1.9.1",
     "mysql2": "^2.1.0",
+    "pug": "^2.0.4",
+    "puppeteer": "^2.1.1",
     "sequelize": "^5.21.4",
     "sequelize-cli": "^5.5.1"
   }
