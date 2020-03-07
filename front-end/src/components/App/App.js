@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from '../../../node_modules/react';
 import './App.css';
-import './theme.scss';
-import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-import Home from './Home/Home.js';
-import CreateAccount from './CreateAccount/CreateAccount.js';
+import '../../utils/styles/theme.scss';
+import { Navbar, Nav, NavDropdown } from '../../../node_modules/react-bootstrap';
+import { BrowserRouter as Router, Switch, Route, Link } from '../../../node_modules/react-router-dom';
+import Home from '../Home/Home.js';
+import CreateAccount from '../CreateAccount/CreateAccount.js';
 
 function App() {
     return (
