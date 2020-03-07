@@ -60,5 +60,5 @@ exports.createuser = async (user) => {
             }
         }
     }
-    return { student: newStudent };
+    return { ok: 'Success', student: newStudent };
 }
