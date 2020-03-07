@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Form, Button, Alert } from 'react-bootstrap';
+import React, { useState } from '../../../node_modules/react';
+import { Form, Button, Alert } from '../../../node_modules/react-bootstrap';
 import './CreateAccount.scss';
 
 const CreateAccount = (props) => {
