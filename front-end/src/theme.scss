@@ -12,15 +12,19 @@ $navbar-light-color: white;
 $navbar-light-brand-color: white;
 $navbar-brand-font-size: 2rem;
 
+.container {
+  background-color: white;
+}
+
 // Import Bootstrap and its default variables
-@import '~bootstrap/scss/bootstrap.scss';
-@import url('https://fonts.googleapis.com/css?family=Orbitron&display=swap');
+@import "~bootstrap/scss/bootstrap.scss";
+@import url("https://fonts.googleapis.com/css?family=Orbitron&display=swap");
 
 // Our Variables
 $logo-font: Orbitron;
 $main-color: #1091b3;
 
-// Base CSS 
+// Base CSS
 #logo {
-    font-family: $logo-font;
+  font-family: $logo-font;
 }
