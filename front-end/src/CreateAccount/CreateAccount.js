@@ -47,9 +47,6 @@ const CreateAccount = (props) => {
                     <Form.Group controlId="createAccountForm">
                         <Form.Label>Username</Form.Label>
                         <Form.Control type="text" placeholder="Enter username" onChange={e => setUsername(e.target.value)} autoComplete="on" />
-                        <Form.Text className="text-muted" >
-                            We'll never share your email with anyone else.
-                    </Form.Text>
                     </Form.Group>
 
                     <Form.Group controlId="formBasicPassword">
