@@ -3,8 +3,8 @@
  */
 const jwt = require("jsonwebtoken");
 const fs = require("fs");
-const publicKey = fs.readFileSync(__dirname + '/test.txt').toString();
-const privateKey = fs.readFileSync(__dirname + '/c4meJWT.pub').toString();
+const publicKey = fs.readFileSync(__dirname + '/c4meJWT.pub').toString();
+const privateKey = fs.readFileSync(__dirname + '/c4meJWT').toString();
 
 exports.generateKey = (username) => {
     return jwt.sign(
