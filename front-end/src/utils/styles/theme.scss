@@ -13,10 +13,13 @@ $navbar-light-brand-color: white;
 $navbar-brand-font-size: 2rem;
 
 .container {
-    margin-top: 1rem;
-    border-radius: 10px;
-    padding: 2rem;
+  border-radius: 10px;
+  padding: 2rem;
   background-color: white;
+}
+
+.navbar {
+  margin-bottom: 1rem;
 }
 
 // Import Bootstrap and its default variables
@@ -30,4 +33,10 @@ $main-color: #1091b3;
 // Base CSS
 #logo {
   font-family: $logo-font;
+}
+
+.center-card {
+  @extend .card;
+  width: 24rem;
+  margin: 0 auto;
 }

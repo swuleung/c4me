@@ -5,6 +5,7 @@ import { Navbar, Nav, NavDropdown } from '../../../node_modules/react-bootstrap'
 import { BrowserRouter as Router, Switch, Route, Link } from '../../../node_modules/react-router-dom';
 import Home from '../Home/Home.js';
 import CreateAccount from '../CreateAccount/CreateAccount.js';
+import Login from '../Login/Login.js';
 
 function App() {
     return (
@@ -16,10 +17,11 @@ function App() {
                         <Nav className="mr-auto">
                             <Nav.Link as={Link} to="/">Home</Nav.Link>
                             <Nav.Link as={Link} to="/search-colleges">Search Colleges</Nav.Link>
-                            <Nav.Link as={Link} to="/find-similar-hs">Find Similar High Schools</Nav.Link>
+                            <Nav.Link as={Link} to="/find-similar-hs">Similar High Schools</Nav.Link>
                         </Nav>
                         <Nav className="ml-auto">
                             <Nav.Link as={Link} to="/create-account">Create an Account</Nav.Link>
+                            <Nav.Link as={Link} to="/login">Login</Nav.Link>
                             {/* // until session is made,
                             // please keep this here so that we can switch between seeing create accoun the profile */}
                             {/* <NavDropdown title="John Doe" alignRight id="basic-nav-dropdown">
@@ -34,6 +36,7 @@ function App() {
                     <Switch>
                         <Route exact path='/' component={Home} />
                         <Route exact path='/create-account' component={CreateAccount} />
+                        <Route exact path='/login' component={Login} />
                         <Route render={function () {
                             return <p>404 Not found</p>
                         }} />
