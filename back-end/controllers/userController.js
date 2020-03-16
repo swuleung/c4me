@@ -1,5 +1,7 @@
 const sequelize = require('sequelize');
 const models = require('../models');
+const bcrypt = require('bcrypt');
+const authentication = require('../utils/auth');
 
 exports.createuser = async (user) => {
     let newUser = {};
@@ -61,4 +63,55 @@ exports.createuser = async (user) => {
         }
     }
     return { ok: 'Success', student: newStudent };
+}
+exports.login = async (loginUser) => {
+    let username = loginUser.username;
+    let password = loginUser.password;
+    let user = {};
+    try {
+        user = await models.User.findAll({
+            limit: 1,
+            raw: true,
+            where: {
+                username: username
+            }
+        });
+    } catch (error) {
+        return {
+            error: 'Invalid user',
+            reason: error
+        };
+    }
+    if (!user.length) {
+        return {
+            error: 'User not found',
+            reason: 'User does not exist in DB'
+        }
+    }
+    user = user[0];
+    let passwordCheck = false;
+    try {
+        passwordCheck = await bcrypt.compare(password, user.password);
+    } catch (error) {
+        return {
+            error: 'Error checking password',
+            reason: error
+        };
+    }
+    if (!passwordCheck) {
+        return {
+            error: 'Incorrect password',
+            reason: 'User did not input correct password'
+        };
+    }
+
+    let jwtToken = authentication.generateKey(username);
+
+    if (jwtToken == {}) {
+        return {
+            error: 'Unable to generate token',
+            reason: 'Invalid paramaters'
+        }
+    }
+    return { ok: 'Success', access_token: jwtToken };
 }
