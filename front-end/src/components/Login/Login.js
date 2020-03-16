@@ -1,16 +1,17 @@
-import React, { useState } from '../../../node_modules/react';
+import React, { useState } from 'react';
 import { Link } from '../../../node_modules/react-router-dom';
-import { Form, Button, Alert } from '../../../node_modules/react-bootstrap';
-import './CreateAccount.scss';
+import { Form, Button, Alert } from 'react-bootstrap';
+import Cookies from 'js-cookie';
+import './Login.scss';
 
-const CreateAccount = (props) => {
+const Login = (props) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [errorAlert, setErrorAlert] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
 
     const handleFormSubmission = () => {
-        fetch("http://localhost:9000/users/create", {
+        fetch("http://localhost:9000/users/login", {
             method: "POST",
             headers: {
                 Accept: "application/json",
@@ -27,7 +28,10 @@ const CreateAccount = (props) => {
                 setErrorMessage(data.error);
             }
             if (data.ok) {
+                Cookies.set('access_token', data.access_token);
+                localStorage.setItem('username', username);
                 props.history.push('/');
+                props.setUsername(username);
             }
         }).catch((error) => {
             console.log('Yikes!');
@@ -39,7 +43,7 @@ const CreateAccount = (props) => {
         <div>
             <div className="center-card">
                 <div className="card-body">
-                    <h1 className="card-title">Create an Account</h1>
+                    <h1 className="card-title">Login</h1>
                     {errorAlert &&
                         <Alert variant="danger">
                             {errorMessage}
@@ -59,11 +63,12 @@ const CreateAccount = (props) => {
                             Submit
                         </Button>
                     </Form>
-                    <Link className="card-link" to={`/login`} >Already have an account? Login here. </Link>
+
+                    <Link className="card-link" to={`/create-account`} > Don't have an account? Create one here. </Link>
                 </div>
             </div>
         </div>
     );
 }
 
-export default CreateAccount;
+export default Login;
