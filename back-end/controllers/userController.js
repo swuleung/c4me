@@ -71,10 +71,11 @@ exports.login = async (loginUser) => {
     try {
         user = await models.User.findAll({
             limit: 1,
+            raw: true,
             where: {
                 username: username
             }
-        })
+        });
     } catch (error) {
         return {
             error: 'Invalid user',
@@ -87,9 +88,10 @@ exports.login = async (loginUser) => {
             reason: 'User does not exist in DB'
         }
     }
+    user = user[0];
     let passwordCheck = false;
     try {
-        passwordCheck = bcrypt.compare(password, user.password);
+        passwordCheck = await bcrypt.compare(password, user.password);
     } catch (error) {
         return {
             error: 'Error checking password',

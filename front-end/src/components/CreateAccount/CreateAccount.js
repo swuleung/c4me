@@ -48,12 +48,12 @@ const CreateAccount = (props) => {
                     <Form style={{marginBottom: "1rem"}} onSubmit={e => { e.preventDefault(); handleFormSubmission() }}>
                         <Form.Group controlId="createAccountForm">
                             <Form.Label>Username</Form.Label>
-                            <Form.Control type="text" placeholder="Enter username" onChange={e => setUsername(e.target.value)} autoComplete="on" />
+                            <Form.Control type="text" placeholder="Enter username" onChange={e => setUsername(e.target.value)} autoComplete="on" required/>
                         </Form.Group>
 
                         <Form.Group controlId="formBasicPassword">
                             <Form.Label>Password</Form.Label>
-                            <Form.Control type="password" placeholder="Enter password" onChange={e => setPassword(e.target.value)} autoComplete="on" />
+                            <Form.Control type="password" placeholder="Enter password" onChange={e => setPassword(e.target.value)} autoComplete="on" required/>
                         </Form.Group>
                         <Button className="btn-block" variant="primary" type="submit">
                             Submit

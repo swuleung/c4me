@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from '../../../node_modules/react-router-dom';
 import { Form, Button, Alert } from 'react-bootstrap';
+import Cookies from 'js-cookie';
 import './Login.scss';
 
 const Login = (props) => {
@@ -10,7 +11,7 @@ const Login = (props) => {
     const [errorMessage, setErrorMessage] = useState('');
 
     const handleFormSubmission = () => {
-        fetch("http://localhost:9000/users/create", {
+        fetch("http://localhost:9000/users/login", {
             method: "POST",
             headers: {
                 Accept: "application/json",
@@ -27,6 +28,7 @@ const Login = (props) => {
                 setErrorMessage(data.error);
             }
             if (data.ok) {
+                Cookies.set('access_token', data.access_token);
                 props.history.push('/');
             }
         }).catch((error) => {
@@ -48,12 +50,12 @@ const Login = (props) => {
                     <Form style={{marginBottom: "1rem"}} onSubmit={e => { e.preventDefault(); handleFormSubmission() }}>
                         <Form.Group controlId="createAccountForm">
                             <Form.Label>Username</Form.Label>
-                            <Form.Control type="text" placeholder="Enter username" onChange={e => setUsername(e.target.value)} autoComplete="on" />
+                            <Form.Control type="text" placeholder="Enter username" onChange={e => setUsername(e.target.value)} autoComplete="on" required/>
                         </Form.Group>
 
                         <Form.Group controlId="formBasicPassword">
                             <Form.Label>Password</Form.Label>
-                            <Form.Control type="password" placeholder="Enter password" onChange={e => setPassword(e.target.value)} autoComplete="on" />
+                            <Form.Control type="password" placeholder="Enter password" onChange={e => setPassword(e.target.value)} autoComplete="on" required/>
                         </Form.Group>
                         <Button className="btn-block" variant="primary" type="submit">
                             Submit
