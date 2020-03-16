@@ -29,7 +29,9 @@ const Login = (props) => {
             }
             if (data.ok) {
                 Cookies.set('access_token', data.access_token);
+                localStorage.setItem('username', username);
                 props.history.push('/');
+                props.setUsername(username);
             }
         }).catch((error) => {
             console.log('Yikes!');
