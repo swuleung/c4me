@@ -3,44 +3,44 @@
 let array_of_states = ['AK', 'AL', 'AR', 'AZ', 'CA', 'CO', 'CT', 'DC', 'DE', 'FL', 'GA', 'GU', 'HI', 'IA', 'ID', 'IL', 'IN', 'KS', 'KY', 'LA', 'MA', 'MD', 'ME', 'MH', 'MI', 'MN', 'MO', 'MS', 'MT', 'NC', 'ND', 'NE', 'NH', 'NJ', 'NM', 'NV', 'NY', 'OH', 'OK', 'OR', 'PA', 'PR', 'PW', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VA', 'VI', 'VT', 'WA', 'WI', 'WV', 'WY', null];
 module.exports = (sequelize, DataTypes) => {
     let Student = sequelize.define('Student', {
-        'username': {
+        username: {
             type: DataTypes.STRING,
             primaryKey: true
         },
-        'GPA': {
+        GPA: {
             type: DataTypes.DECIMAL(3, 2),
             defaultValue: null
         },
-        'residenceState': {
+        residenceState: {
             type: DataTypes.CHAR(2),
             validate: { isIn: [array_of_states] },
             defaultValue: null
         },
-        'highschoolName': {
+        highschoolName: {
             type: DataTypes.STRING,
             defaultValue: null
         },
-        'highschoolState': {
+        highschoolState: {
             type: DataTypes.CHAR(2),
             validate: { isIn: [array_of_states] },
             defaultValue: null
         },
-        'collegeClass': {
+        collegeClass: {
             type: DataTypes.INTEGER,
             validate: {
                 min: 0
             },
             defaultValue: null
         },
-        'major1': {
+        major1: {
             type: DataTypes.STRING,
             defaultValue: null
         },
-        'major2': {
+        major2: {
             type: DataTypes.STRING,
             defaultValue: null
         },
-        'SATMath': {
+        SATMath: {
             type: DataTypes.INTEGER,
             validate: {
                 min: 200,
@@ -48,7 +48,7 @@ module.exports = (sequelize, DataTypes) => {
             },
             defaultValue: null
         },
-        'SATEBRW': {
+        SATEBRW: {
             type: DataTypes.INTEGER,
             validate: {
                 min: 200,
@@ -56,7 +56,7 @@ module.exports = (sequelize, DataTypes) => {
             },
             defaultValue: null
         },
-        'ACTEnglish': {
+        ACTEnglish: {
             type: DataTypes.INTEGER,
             validate: {
                 min: 1,
@@ -64,7 +64,7 @@ module.exports = (sequelize, DataTypes) => {
             },
             defaultValue: null
         },
-        'ACTMath': {
+        ACTMath: {
             type: DataTypes.INTEGER,
             validate: {
                 min: 1,
@@ -72,7 +72,7 @@ module.exports = (sequelize, DataTypes) => {
             },
             defaultValue: null
         },
-        'ACTReading': {
+        ACTReading: {
             type: DataTypes.INTEGER,
             validate: {
                 min: 1,
@@ -80,7 +80,7 @@ module.exports = (sequelize, DataTypes) => {
             },
             defaultValue: null
         },
-        'ACTScience': {
+        ACTScience: {
             type: DataTypes.INTEGER,
             validate: {
                 min: 1,
@@ -88,7 +88,7 @@ module.exports = (sequelize, DataTypes) => {
             },
             defaultValue: null
         },
-        'ACTComposite': {
+        ACTComposite: {
             type: DataTypes.INTEGER,
             validate: {
                 min: 1,
@@ -96,7 +96,7 @@ module.exports = (sequelize, DataTypes) => {
             },
             defaultValue: null
         },
-        'SATLit': {
+        SATLit: {
             type: DataTypes.INTEGER,
             validate: {
                 min: 200,
@@ -104,7 +104,7 @@ module.exports = (sequelize, DataTypes) => {
             },
             defaultValue: null
         },
-        'SATUs': {
+        SATUs: {
             type: DataTypes.INTEGER,
             validate: {
                 min: 200,
@@ -112,7 +112,7 @@ module.exports = (sequelize, DataTypes) => {
             },
             defaultValue: null
         },
-        'SATWorld': {
+        SATWorld: {
             type: DataTypes.INTEGER,
             validate: {
                 min: 200,
@@ -120,7 +120,7 @@ module.exports = (sequelize, DataTypes) => {
             },
             defaultValue: null
         },
-        'SATMathI': {
+        SATMathI: {
             type: DataTypes.INTEGER,
             validate: {
                 min: 200,
@@ -128,7 +128,7 @@ module.exports = (sequelize, DataTypes) => {
             },
             defaultValue: null
         },
-        'SATMathII': {
+        SATMathII: {
             type: DataTypes.INTEGER,
             validate: {
                 min: 200,
@@ -136,7 +136,7 @@ module.exports = (sequelize, DataTypes) => {
             },
             defaultValue: null
         },
-        'SATEco': {
+        SATEco: {
             type: DataTypes.INTEGER,
             validate: {
                 min: 200,
@@ -144,7 +144,7 @@ module.exports = (sequelize, DataTypes) => {
             },
             defaultValue: null
         },
-        'SATMol': {
+        SATMol: {
             type: DataTypes.INTEGER,
             validate: {
                 min: 200,
@@ -152,7 +152,7 @@ module.exports = (sequelize, DataTypes) => {
             },
             defaultValue: null
         },
-        'SATChem': {
+        SATChem: {
             type: DataTypes.INTEGER,
             validate: {
                 min: 200,
@@ -160,7 +160,7 @@ module.exports = (sequelize, DataTypes) => {
             },
             defaultValue: null
         },
-        'SATPhys': {
+        SATPhys: {
             type: DataTypes.INTEGER,
             validate: {
                 min: 200,
@@ -168,7 +168,7 @@ module.exports = (sequelize, DataTypes) => {
             },
             defaultValue: null
         },
-        'APPassed': {
+        APPassed: {
             type: DataTypes.INTEGER,
             validate: {
                 min: 0

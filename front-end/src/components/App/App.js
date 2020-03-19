@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from '../../../node_modules/react';
+import React, { useState } from '../../../node_modules/react';
 import './App.css';
 import '../../utils/styles/theme.scss';
 import { Navbar, Nav, NavDropdown } from '../../../node_modules/react-bootstrap';
@@ -7,6 +7,7 @@ import Cookies from 'js-cookie';
 import Home from '../Home/Home.js';
 import CreateAccount from '../CreateAccount/CreateAccount.js';
 import Login from '../Login/Login.js';
+import StudentProfile from '../StudentProfile/StudentProfile';
 
 function App() {
     const [username, setUsername] = useState(localStorage.getItem('username'));
@@ -27,11 +28,11 @@ function App() {
                             <Nav.Link as={Link} to="/find-similar-hs">Similar High Schools</Nav.Link>
                         </Nav>
                         <Nav className="ml-auto">
-                            {username == null || username.trim() == ''
+                            {username == null || username.trim() === ''
                                 ? <div style={{ display: 'flex' }}>
                                     <Nav.Link as={Link} to="/create-account" title={'Create Account'}>Create an Account</Nav.Link>
                                     <Nav.Link as={Link} to="/login" title={'Create Account'}>Login</Nav.Link>
-                                 </div>
+                                </div>
                                 : <NavDropdown title={username} alignRight id="basic-nav-dropdown">
                                     <NavDropdown.Item href="#tbd">View Profile</NavDropdown.Item>
                                     <NavDropdown.Item href="#tbd">Settings</NavDropdown.Item>
@@ -46,6 +47,7 @@ function App() {
                         <Route exact path='/' component={Home} />
                         <Route exact path='/create-account' component={CreateAccount} />
                         <Route exact path='/login' render={props => <Login {...props} setUsername={setUsername} />} />
+                        <Route path='/profile/student/:username' component={StudentProfile} />
                         <Route render={function () {
                             return <p>404 Not found</p>
                         }} />
