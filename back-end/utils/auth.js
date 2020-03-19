@@ -13,13 +13,21 @@ exports.generateKey = (username) => {
         },
         privateKey,
         {
+            algorithm: "RS256",
             expiresIn: "1 day"
         }
     );
 }
 
-exports.validateJWT = (access_token) => {
-    return jwt.verify(access_token, publicKey, {
-        algorithms: ["RS256"]
-    });
+exports.validateJWT = async (access_token) => {
+    try {
+        return jwt.verify(access_token, publicKey, {
+            algorithms: ["RS256"]
+        });
+    } catch (e) {
+        return {
+            error: 'Invalid JWT',
+            reason: e
+        };
+    }
 }
