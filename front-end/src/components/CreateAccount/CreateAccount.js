@@ -46,12 +46,12 @@ const CreateAccount = (props) => {
                         </Alert>
                     }
                     <Form style={{marginBottom: "1rem"}} onSubmit={e => { e.preventDefault(); handleFormSubmission() }}>
-                        <Form.Group controlId="createAccountForm">
+                        <Form.Group controlId="username">
                             <Form.Label>Username</Form.Label>
                             <Form.Control type="text" placeholder="Enter username" onChange={e => setUsername(e.target.value)} autoComplete="on" required/>
                         </Form.Group>
 
-                        <Form.Group controlId="formBasicPassword">
+                        <Form.Group controlId="password">
                             <Form.Label>Password</Form.Label>
                             <Form.Control type="password" placeholder="Enter password" onChange={e => setPassword(e.target.value)} autoComplete="on" required/>
                         </Form.Group>

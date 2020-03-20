@@ -8,6 +8,7 @@ import Home from '../Home/Home.js';
 import CreateAccount from '../CreateAccount/CreateAccount.js';
 import Login from '../Login/Login.js';
 import StudentProfile from '../StudentProfile/StudentProfile';
+import EditProfile from '../EditProfile/EditProfile';
 
 function App() {
     const [username, setUsername] = useState(localStorage.getItem('username'));
@@ -34,7 +35,7 @@ function App() {
                                     <Nav.Link as={Link} to="/login" title={'Create Account'}>Login</Nav.Link>
                                 </div>
                                 : <NavDropdown title={username} alignRight id="basic-nav-dropdown">
-                                    <NavDropdown.Item href="#tbd">View Profile</NavDropdown.Item>
+                                    <NavDropdown.Item  as={Link} to={`/profile/${username}`}>View Profile</NavDropdown.Item>
                                     <NavDropdown.Item href="#tbd">Settings</NavDropdown.Item>
                                     <NavDropdown.Divider />
                                     <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
@@ -47,7 +48,8 @@ function App() {
                         <Route exact path='/' component={Home} />
                         <Route exact path='/create-account' component={CreateAccount} />
                         <Route exact path='/login' render={props => <Login {...props} setUsername={setUsername} />} />
-                        <Route path='/profile/student/:username' component={StudentProfile} />
+                        <Route exact path='/profile/:username' component={StudentProfile} />
+                        <Route exact path='/profile/:username/edit' component={EditProfile} />
                         <Route render={function () {
                             return <p>404 Not found</p>
                         }} />
