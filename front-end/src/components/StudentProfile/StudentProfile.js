@@ -101,7 +101,7 @@ const StudentProfile = (props) => {
                                     <Col>{student.SATMath ? student.SATMath : '-'}</Col>
                                 </Row>
                                 <Row>
-                                    <Col>EBRW</Col>
+                                    <Col>Total</Col>
                                     <Col>{student.SATEBRW && student.SATMath ? student.SATEBRW + student.SATMath : '-'}</Col>
                                 </Row>
                                 <br />
