@@ -28,7 +28,11 @@ module.exports = (sequelize, DataTypes) => {
             },
             defaultValue: null
         },
-        CostOfAttendance: {
+        CostOfAttendanceInState: {
+            type: DataTypes.INTEGER,
+            defaultValue: null
+        },
+        CostOfAttendanceOutOfState: {
             type: DataTypes.INTEGER,
             defaultValue: null
         },
@@ -37,8 +41,12 @@ module.exports = (sequelize, DataTypes) => {
             validate: { isIn: [array_of_states] },
             defaultValue: null
         },
-        Majors: {
-            type: DataTypes.STRING,
+        GPA: {
+            type: DataTypes.DECIMAL(10, 2),
+            validate: {
+                min: 0,
+                max: 4
+            },
             defaultValue: null
         },
         SATMath: {
@@ -69,7 +77,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             defaultValue: null
         },
-        InstitutionType: {
+        CompletionRate: {
             type: DataTypes.INTEGER,
             validate: {
                 min: 0,
@@ -79,8 +87,19 @@ module.exports = (sequelize, DataTypes) => {
         },
         StudentDebt: {
             type: DataTypes.INTEGER,
-            defaultValue: 0
+            defaultValue: null
         }
+    },
+    {
+        indexes: [
+            {
+                unique: true,
+                fields: ['Name']
+            }
+        ]
     });
+    College.associate = (models) => {
+        College.belongsToMany(models.Major, { through: 'CollegeMajors' });
+    }
     return College;
 };
