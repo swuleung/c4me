@@ -31,4 +31,13 @@ router.get('/:username/scrapeCollegeRanking', async function(req, res) {
     res.send(result);
 });
 
+router.get('/:username/scrapeCollegeData', async function(req, res) {
+    let result = await adminController.scrapeCollegeData();
+    if(result.error) {
+        if(result.error == 'Something went wrong') res.status(500);
+        else res.status(400);
+    }
+    res.send(result);
+});
+
 module.exports = router;
