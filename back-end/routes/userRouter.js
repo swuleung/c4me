@@ -3,12 +3,12 @@ const router = express.Router();
 const userController = require('../controllers/userController');
 
 router.post('/create', function (req, res) {
-    userController.createuser(req.body).then(result => {
+    userController.createUser(req.body).then(result => {
         if (result.error) {
             if (result.error == 'Something went wrong') res.status(500);
             else res.status(400);
         }
-        res.send(result)
+        res.send(result);
     });
 });
 
@@ -18,8 +18,15 @@ router.post('/login', function (req, res) {
             if (result.error == 'Something went wrong') res.status(500);
             else res.status(400);
         }
-        res.send(result)
+        res.cookie("access_token", result.access_token);
+        res.send(result);
     });
 });
 
+router.get('/logout', (req, res) => {
+    res.clearCookie('access_token');
+    res.send({
+        ok: 'Logged out'
+    })
+})
 module.exports = router;
