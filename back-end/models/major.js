@@ -11,6 +11,14 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             defaultValue: null
         },
+    },
+    {
+        indexes: [
+            {
+                unique: true,
+                fields: ['Major']
+            }
+        ]
     });
     
     Major.associate = (models) => {
