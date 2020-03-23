@@ -73,7 +73,7 @@ exports.login = async (loginUser) => {
             limit: 1,
             raw: true,
             where: {
-                username: usernam
+                username: username
             }
         });
     } catch (error) {
