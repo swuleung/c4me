@@ -124,6 +124,7 @@ exports.scrapeCollegeData = async() => {
         } else costOfAttendanceInState = costOfAttendanceOutOfState = costOfAttendance.replace(/[^0-9]/g, '');
 
         gpa = await page.evaluate(el => el.textContent, gpaEl[0]);
+        if(gpa.includes('Not reported')) gpa = null;
 
         satMathFull = await page.evaluate(el => el.textContent, satMathEl[0]);
         if(satMathFull.includes('Not reported')) satMath = null;
@@ -154,6 +155,15 @@ exports.scrapeCollegeData = async() => {
 
         size = (await page.evaluate(el => el.textContent, sizeEl[0])).replace(/[^0-9]/g, '');
 
+        let majorEls = await page.$x(`(//div[contains(., 'Undergraduate Majors')])[last()]//ul`);
+        let majors = [];
+        for(let majorEl of majorEls) {
+            let listChildren = await page.evaluate(el => el.textContent, majorEl);
+            majors = majors.concat(listChildren.trim().split('\n'));
+        }
+
+        let thereIsError = null;
+
         try {
             await models.College.upsert({
                 AdmissionRate: admissionRate,
@@ -167,15 +177,28 @@ exports.scrapeCollegeData = async() => {
                 ACTComposite: actComposite,
                 Size: size
             });
+            let addedCollege = await models.College.findOne({ where: { Name: college } });
+            majors.forEach(async (major) => {
+                try {
+                    await models.Major.upsert({
+                        Major: major
+                    });
+                    let addedMajor = await models.Major.findOne({ where: { Major: major }});
+                    await addedCollege.addMajor(addedMajor);
+                } catch(error) {
+                    thereIsError = `Something went wrong in ${college}`;
+                }
+            });
         } catch(error) {
-            console.log(error);
-            await page.close();
-            await browser.close();
-            return {
-                error: 'Something went wrong',
-                reason: error
-            };
+            thereIsError = `Something went wrong in ${college}`;
         }
+    }
+    
+    if(thereIsError != null) {
+        return {
+            error: 'Something went wrong',
+            reason: error
+        };
     }
 
     await page.close();
