@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         status: {
             type: DataTypes.STRING,
-            validate: { isIn: ['accepted', 'pending', 'waitlisted', 'deferred', 'denied', 'withdraw'] },
+            validate: { isIn: [['accepted', 'pending', 'waitlisted', 'deferred', 'denied', 'withdrawn']] },
             defaultValue: 'pending'
         }
     });

@@ -10,7 +10,6 @@ const StudentProfile = (props) => {
     const [errorMessage, setErrorMessage] = useState('');
 
     useEffect(() => {
-        console.log('it changed!');
         fetch(`http://localhost:9000/students/${props.match.params.username}`, {
             method: "GET",
             credentials: 'include',

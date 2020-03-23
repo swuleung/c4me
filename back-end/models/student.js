@@ -9,7 +9,11 @@ module.exports = (sequelize, DataTypes) => {
         },
         GPA: {
             type: DataTypes.DECIMAL(3, 2),
-            defaultValue: null
+            defaultValue: null,
+            validate: {
+                min: 0,
+                max: 4.0
+            }
         },
         residenceState: {
             type: DataTypes.CHAR(2),
