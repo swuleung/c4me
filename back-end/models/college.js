@@ -99,7 +99,7 @@ module.exports = (sequelize, DataTypes) => {
         ]
     });
     College.associate = (models) => {
-        College.belongsToMany(models.Major, { through: 'CollegeMajors' });
+        College.belongsToMany(models.Major, { through: 'CollegeMajors', onDelete: 'CASCADE' });
     }
     return College;
 };
