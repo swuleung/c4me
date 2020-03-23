@@ -172,26 +172,26 @@ exports.scrapeCollegeData = async () => {
             Size: size
         };
 
-        let added = false;
-        while (!added) {
+
+        while (true) {
             try {
                 await models.College.upsert(collegeObject);
-                added = true;
+                break;
             } catch (error) {
                 if (error.name === 'SequelizeValidationError') {
                     delete collegeObject[error.errors[0].path];
                 } else {
-                    added = true;
                     thereIsError.push({
                         error: `Unable to add ${college}`,
                         reason: error
                     });
+                    break;
                 }
             }
         }
         try {
-            let addedCollege = await models.College.findOne({ where: { Name: college } });
             console.log(`Adding majors for ${college}`);
+            let addedCollege = await models.College.findOne({ where: { Name: college } });
             majors.forEach(async (major) => {
                 try {
                     await models.Major.upsert({
