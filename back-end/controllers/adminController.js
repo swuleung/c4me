@@ -6,7 +6,7 @@ let colleges = fs.readFileSync('./utils/colleges.txt').toString().split('\r\n');
 const rankingsURL = 'https://www.timeshighereducation.com/rankings/united-states/2020#!/page/0/length/-1/sort_by/rank/sort_order/asc/cols/stats';
 const collegeDataURL = 'https://www.collegedata.com/college/';
 
-exports.getAdmin = async (username) => {
+exports.checkAdmin = async (username) => {
     let admin = {};
     try {
         admin = await models.User.findAll({
@@ -18,22 +18,13 @@ exports.getAdmin = async (username) => {
             }
         });
     } catch (error) {
-        return {
-            error: 'Invalid admin',
-            reason: error
-        };
+        return false;
     }
     if (!admin.length) {
-        return {
-            error: 'User not found',
-            reason: 'User does not exist in DB'
-        }
+        return false;
     }
 
-    return {
-        ok: 'Success',
-        admin: admin[0]
-    }
+    return true;
 }
 
 exports.scrapeCollegeRankings = async() => {
@@ -193,7 +184,7 @@ exports.scrapeCollegeData = async() => {
             thereIsError = `Something went wrong in ${college}`;
         }
     }
-    
+
     if(thereIsError != null) {
         return {
             error: 'Something went wrong',
