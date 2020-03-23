@@ -3,7 +3,7 @@ const models = require('../models');
 const bcrypt = require('bcrypt');
 const authentication = require('../utils/auth');
 
-exports.createuser = async (user) => {
+exports.createUser = async (user) => {
     let newUser = {};
     try {
         newUser = await models.User.create({
