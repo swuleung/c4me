@@ -178,7 +178,7 @@ exports.scrapeCollegeData = async () => {
                 await models.College.upsert(collegeObject);
                 break;
             } catch (error) {
-                if (error.name === 'SequelizeValidationError') {
+                if (error instanceof sequelize.ValidationError)  {
                     delete collegeObject[error.errors[0].path];
                 } else {
                     thereIsError.push({

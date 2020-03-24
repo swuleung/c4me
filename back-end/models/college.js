@@ -99,6 +99,7 @@ module.exports = (sequelize, DataTypes) => {
         ]
     });
     College.associate = (models) => {
+        College.belongsToMany(models.User, {through: 'Application',  foreignKey: 'username', targetKey: 'username'});
         College.belongsToMany(models.Major, { through: 'CollegeMajors', onDelete: 'CASCADE' });
     }
     return College;

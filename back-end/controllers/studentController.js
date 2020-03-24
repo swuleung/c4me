@@ -6,11 +6,11 @@ const authentication = require('../utils/auth');
 exports.getStudent = async (username) => {
     let student = {};
     try {
-        student = await models.Student.findAll({
+        student = await models.User.findAll({
             limit: 1,
-            raw: true,
             where: {
-                username: username
+                username: username,
+                isAdmin: false
             }
         });
     } catch (error) {
@@ -26,18 +26,20 @@ exports.getStudent = async (username) => {
         }
     }
 
+    console.log(student[0]);
     return {
         ok: 'Success',
-        student: student[0]
+        student: student[0].toJSON()
     }
 }
 
 exports.updateStudent = async (username, newStudent) => {
     let student = [];
     try {
-        student = await models.Student.findAll({
+        student = await models.User.findAll({
             where: {
-                username: username
+                username: username,
+                isAdmin: false
             }
         });
     } catch (error) {
@@ -96,7 +98,7 @@ exports.updateStudentApplications = async (username, newApplications) => {
             applications = await models.Application.findAll({
                 // TODO CHANGE THE SEARCH PARAMETER TO USERNAME, COLLEGE
                 where: {
-                    ApplicationId: newApplications[i].ApplicationId,
+                    ApplicationId: newApplications[i].CollegeId,
                     username: username
                 }
             });
