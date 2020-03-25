@@ -212,7 +212,6 @@ module.exports = (sequelize, DataTypes) => {
     });
     User.prototype.toJSON = function () {
         var values = Object.assign({}, this.get());
-        console.log('ahh');
         delete values.password;
         delete values.createdAt;
         delete values.updatedAt;
@@ -221,7 +220,7 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     User.associate = (models) => {
-        User.belongsToMany(models.College, {through: 'Application', foreignKey: 'college', targetKey: 'CollegeId'});
+        User.belongsToMany(models.College, {through: 'Application', foreignKey: 'username'});
     }
     return User;
 };

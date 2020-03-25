@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, } from 'react';
 import { Link } from 'react-router-dom';
 import { Alert, Button, Container, Row, Col, Table } from 'react-bootstrap';
+import { getStudent, getStudentApplications } from '../../services/api/student';
+import { getCollegeByID } from '../../services/api/college';
 import './StudentProfile.scss';
 
 const StudentProfile = (props) => {
@@ -9,70 +11,62 @@ const StudentProfile = (props) => {
     const [errorAlert, setErrorAlert] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
 
+
+    const generateStudentApplications = () => {
+        let applications = [];
+        for (let i = 0; i < studentApplications.length; i++) {
+            applications.push(
+                <tr className='application' key={i}>
+                    <td>
+                        {studentApplications[i].collegeName}
+                    </td>
+                    <td className={studentApplications[i].status} >
+                        {studentApplications[i].status}
+                    </td>
+                </tr>
+            );
+        }
+        return applications;
+    }
+
     useEffect(() => {
-        fetch(`http://localhost:9000/students/${props.match.params.username}`, {
-            method: "GET",
-            credentials: 'include',
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json; charset=utf-8"
-            },
-        }).then((response) => response.json()
-        ).then((data) => {
-            if (data.error) {
+        getStudent(props.match.params.username).then((result) => {
+            if (result.error) {
                 setErrorAlert(true);
-                setErrorMessage(data.error);
+                setErrorMessage(result.error);
             }
-            if (data.ok) {
+            if (result.ok) {
                 setErrorAlert(false);
-                setStudent(data.student);
+                setStudent(result.student);
             }
-        }).catch((error) => {
-            setErrorAlert(true);
-            setErrorMessage(error.message);
-            console.log('Yikes!');
-            console.log(error);
         });
 
-        fetch(`http://localhost:9000/students/${props.match.params.username}/applications`, {
-            method: "GET",
-            credentials: 'include',
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json; charset=utf-8"
-            },
-        }).then((response) => response.json()
-        ).then((data) => {
-            if (data.error) {
-                setErrorAlert(true);
-                setErrorMessage(data.error);
+        if (studentApplications.length && !studentApplications[0].hasOwnProperty('collegeName')) {
+            for (let i = 0; i < studentApplications.length; i++) {
+                getCollegeByID(studentApplications[i].college).then((coll) => {
+                    let apps = [...studentApplications];
+                    apps[i].collegeName = coll.college.Name;
+                    setStudentApplications(apps);
+                });
             }
-            if (data.ok) {
-                const applications = data.applications.map((app) =>
-                    <tr className='application' key={app.ApplicationId}>
-                        <td>
-                            {app.college}
-                        </td>
-                        <td className={app.status} >
-                            {app.status}
-                        </td>
-                    </tr>
-                );
-
-                setStudentApplications(applications);
-            }
-        }).catch((error) => {
-            console.log('Yikes!');
-            console.log(error);
-        });
-    }, [props.match.params.username]);
+        } else if (!studentApplications.length) {
+            getStudentApplications(props.match.params.username).then((result) => {
+                if (result.error) {
+                    setErrorAlert(true);
+                    setErrorMessage(result.error);
+                }
+                if (result.ok) {
+                    setErrorAlert(false);
+                    setStudentApplications(result.applications);
+                }
+            });
+        }
+    }, [props.match.params.username, studentApplications]);
 
     return (
         <div>
             {errorAlert
-                ? <Alert variant="danger">
-                    {errorMessage}
-                </Alert>
+                ? <Alert variant="danger">{errorMessage}</Alert>
                 : <div>
                     <Container>
                         <Row>
@@ -180,7 +174,7 @@ const StudentProfile = (props) => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {studentApplications}
+                                {generateStudentApplications()}
                             </tbody>
                         </Table>
                     </Container>

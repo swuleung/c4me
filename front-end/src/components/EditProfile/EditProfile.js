@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Alert, Button, Container, Dropdown, Row, Col, Table, Form } from 'react-bootstrap';
+import { Alert, Button, Container, Row, Col, Table, Form } from 'react-bootstrap';
 import './EditProfile.scss';
+import { getStudent, editStudent, getStudentApplications, editStudentApplications } from '../../services/api/student';
+import CollegeDropdown from './CollegeDropdown';
 
 const EditProfile = (props) => {
     const [student, setStudent] = useState({});
     const [studentApplications, setStudentApplications] = useState([]);
     const [errorAlert, setErrorAlert] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
-
     const handleProfileChange = (e) => {
         const { value, id } = e.target;
         setStudent({ ...student, [id]: value });
@@ -21,6 +22,25 @@ const EditProfile = (props) => {
         setStudentApplications(newApplications);
     }
 
+    const handleApplicationCollegeChange = (e) => {
+        const value = e.target.value;
+        const index = e.target.getAttribute('index');
+        let newApplications = [...studentApplications];
+        newApplications[index].college = value;
+        setStudentApplications(newApplications);
+    }
+
+    const handleAddApplication = () => {
+        let newApplications = [...studentApplications];
+        newApplications.push({
+            status: "pending",
+            college: null,
+            username: props.match.params.username,
+            collegeName: null
+        })
+        setStudentApplications(newApplications);
+    }
+
     const generateStateOptions = () => {
         let stateCode = ['AK', 'AL', 'AR', 'AZ', 'CA', 'CO', 'CT', 'DC', 'DE', 'FL', 'GA', 'GU', 'HI', 'IA', 'ID', 'IL', 'IN', 'KS', 'KY', 'LA', 'MA', 'MD', 'ME', 'MH', 'MI', 'MN', 'MO', 'MS', 'MT', 'NC', 'ND', 'NE', 'NH', 'NJ', 'NM', 'NV', 'NY', 'OH', 'OK', 'OR', 'PA', 'PR', 'PW', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VA', 'VI', 'VT', 'WA', 'WI', 'WV', 'WY'];
         let states = [];
@@ -31,43 +51,25 @@ const EditProfile = (props) => {
     }
 
     const handleEditSubmission = () => {
-        fetch(`http://localhost:9000/students/${props.match.params.username}/edit`, {
-            method: "POST",
-            credentials: 'include',
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json; charset=utf-8"
-            },
-            body: JSON.stringify(student)
-        }).then((response) => response.json()
-        ).then((data) => {
-            if (data.error) {
+        editStudent(props.match.params.username, student).then((result) => {
+            if (result.error) {
                 setErrorAlert(true);
-                setErrorMessage(data.error);
+                setErrorMessage(result.error);
             }
-        }).catch((error) => {
-            console.log('Yikes!');
-            console.log(error);
+            if (result.ok) {
+                setErrorAlert(false);
+                props.history.push('./')
+            }
         });
-        console.log(studentApplications);
-        fetch(`http://localhost:9000/students/${props.match.params.username}/applications/edit`, {
-            method: "POST",
-            credentials: 'include',
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json; charset=utf-8"
-            },
-            body: JSON.stringify({ applications: studentApplications })
-        }).then((response) => response.json()
-        ).then((data) => {
-            if (data.error) {
+        editStudentApplications(props.match.params.username, studentApplications).then((result) => {
+            if (result.error) {
                 setErrorAlert(true);
-                setErrorMessage(data.error);
+                setErrorMessage(result.error);
             }
-        }).catch((error) => {
-            console.log('Yikes!');
-            console.log(error);
-        });
+            if (result.ok) {
+                setErrorAlert(false);
+            }
+        })
     }
 
     const generateStudentApplications = () => {
@@ -76,7 +78,7 @@ const EditProfile = (props) => {
             applications.push(
                 <tr className='application' key={`college-${i}`} >
                     <td>
-                        {studentApplications[i].college}
+                        <CollegeDropdown selectedValue={studentApplications[i].college} index={`${i}`} onChange={e => { handleApplicationCollegeChange(e) }}></CollegeDropdown>
                     </td>
                     <td>
                         <Form.Control as="select" index={`${i}`} className={studentApplications[i].status} value={studentApplications[i].status} onChange={e => { handleApplicationChange(e) }}>
@@ -94,61 +96,43 @@ const EditProfile = (props) => {
     }
 
     useEffect(() => {
-        fetch(`http://localhost:9000/students/${props.match.params.username}`, {
-            method: "GET",
-            credentials: 'include',
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json; charset=utf-8"
-            },
-        }).then((response) => response.json()
-        ).then((data) => {
-            if (data.error) {
+        getStudent(props.match.params.username).then((result) => {
+            if (result.error) {
                 setErrorAlert(true);
-                setErrorMessage(data.error);
+                setErrorMessage(result.error);
             }
-            if (data.ok) {
-                setStudent(data.student);
+            if (result.ok) {
+                setErrorAlert(false);
+                setStudent(result.student);
             }
-        }).catch((error) => {
-            console.log('Yikes!');
-            console.log(error);
         });
 
-        fetch(`http://localhost:9000/students/${props.match.params.username}/applications`, {
-            method: "GET",
-            credentials: 'include',
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json; charset=utf-8"
-            },
-        }).then((response) => response.json()
-        ).then((data) => {
-            if (data.error) {
-                setErrorAlert(true);
-                setErrorMessage(data.error);
-            }
-            if (data.ok) {
-                setStudentApplications(data.applications);
-            }
-        }).catch((error) => {
-            console.log('Yikes!');
-            console.log(error);
-        });
-    }, [props.match.params.username]);
+        if (!studentApplications.length) {
+            getStudentApplications(props.match.params.username).then((result) => {
+                if (result.error) {
+                    setErrorAlert(true);
+                    setErrorMessage(result.error);
+                }
+                if (result.ok) {
+                    setErrorAlert(false);
+                    setStudentApplications(result.applications);
+                }
+            });
+        }
+    }, [props.match.params.username, studentApplications]);
 
     return (
         <div>
             {errorAlert && <Alert variant="danger">
-                    {errorMessage}
-                </Alert>}
+                {errorMessage}
+            </Alert>}
             <div>
                 <Form onSubmit={(e) => { e.preventDefault(); handleEditSubmission() }}>
                     <Container>
                         <h1>{props.match.params.username}</h1>
 
                         <Form.Group controlId="highschoolName">
-                            <Form.Label>High School Name</Form.Label>
+                            <Form.Label>High School</Form.Label>
                             <Form.Control type="text" value={student.highschoolName || ""} placeholder="Enter high school" onChange={e => { handleProfileChange(e) }} autoComplete="on" />
                         </Form.Group>
                         <Row>
@@ -343,10 +327,10 @@ const EditProfile = (props) => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {/* {studentApplications} */}
                                 {generateStudentApplications()}
                             </tbody>
                         </Table>
+                        <Button onClick={handleAddApplication}>Add Application</Button>
                     </Container>
                     <br></br>
                     <Container>

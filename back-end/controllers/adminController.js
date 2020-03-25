@@ -1,3 +1,4 @@
+const sequelize = require('sequelize');
 const models = require('../models');
 const fs = require('fs');
 const puppeteer = require('puppeteer');

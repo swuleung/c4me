@@ -25,8 +25,6 @@ exports.getStudent = async (username) => {
             reason: 'User does not exist in DB'
         }
     }
-
-    console.log(student[0]);
     return {
         ok: 'Success',
         student: student[0].toJSON()
@@ -90,32 +88,13 @@ exports.getStudentApplications = async (username) => {
 }
 
 exports.updateStudentApplications = async (username, newApplications) => {
-    console.log(newApplications);
     for (let i = 0; i < newApplications.length; i++) {
-        let applications = [];
-        console.log(newApplications[i]);
         try {
-            applications = await models.Application.findAll({
-                // TODO CHANGE THE SEARCH PARAMETER TO USERNAME, COLLEGE
-                where: {
-                    ApplicationId: newApplications[i].CollegeId,
-                    username: username
-                }
+            models.Application.upsert({
+                username: username,
+                college: parseInt(newApplications[i].college),
+                status:  newApplications[i].status
             });
-        } catch (error) {
-            return {
-                error: 'Invalid application',
-                reason: error
-            };
-        }
-        if (!applications.length) {
-            return {
-                error: 'Application not found',
-                reason: 'Application does not exist in DB'
-            }
-        }
-        try {
-            await applications[0].update(newApplications[i]);
         } catch (error) {
             return {
                 error: 'Error updating application',
