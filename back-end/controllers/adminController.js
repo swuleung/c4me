@@ -228,7 +228,7 @@ exports.scrapeCollegeData = async () => {
 
 exports.removeAllUsers = async () => {
     db.User.destroy({
-        where: {isAdmin: false},
+        where: {isAdmin: False},
         truncate: true
       })
 }
