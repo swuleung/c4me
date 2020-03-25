@@ -7,6 +7,10 @@ import './StudentProfile.scss';
 
 const StudentProfile = (props) => {
     const [student, setStudent] = useState({});
+    const [loaded, setLoaded] = useState({
+        application: false,
+        college: false
+    });
     const [studentApplications, setStudentApplications] = useState([]);
     const [errorAlert, setErrorAlert] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
@@ -41,7 +45,8 @@ const StudentProfile = (props) => {
             }
         });
 
-        if (studentApplications.length && !studentApplications[0].hasOwnProperty('collegeName')) {
+        if (loaded.application && !loaded.college) {
+            setLoaded({...loaded, college: true})
             for (let i = 0; i < studentApplications.length; i++) {
                 getCollegeByID(studentApplications[i].college).then((coll) => {
                     let apps = [...studentApplications];
@@ -49,7 +54,9 @@ const StudentProfile = (props) => {
                     setStudentApplications(apps);
                 });
             }
-        } else if (!studentApplications.length) {
+        }
+        if (!loaded.application) {
+            setLoaded({...loaded, application: true})
             getStudentApplications(props.match.params.username).then((result) => {
                 if (result.error) {
                     setErrorAlert(true);
@@ -73,9 +80,9 @@ const StudentProfile = (props) => {
                             <Col><h1>{props.match.params.username}</h1></Col>
                             {localStorage.getItem('username') === props.match.params.username && <Col><Button as={Link} to={`./${props.match.params.username}/edit`} className="float-right">Edit Profile</Button></Col>}
                         </Row>
-                        <p>High School: {student.highschoolName ? student.highschoolName : 'No High School Found'}</p>
-                        <p>State: {student.residenceState}</p>
-                        <p>College Class of {student.collegeClass ? student.collegeClass : 'No Graduation Year Provided'}</p>
+                        <p>High School: {student.highschoolName ? student.highschoolName : 'No high school provided'}</p>
+                        <p>State: {student.residenceState ? student.residenceState : 'No state provided'}</p>
+                        <p>College Class of {student.collegeClass ? student.collegeClass : 'No graduation year provided'}</p>
                         <p>GPA: {student.GPA ? student.GPA : 'No GPA provided'}</p>
                         <p>Major(s): {!student.major1 && !student.major2 ? 'No majors provided' : student.major1} {student.major2 && `& ${student.major2}`} </p>
                     </Container>

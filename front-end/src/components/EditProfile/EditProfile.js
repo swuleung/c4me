@@ -107,19 +107,18 @@ const EditProfile = (props) => {
             }
         });
 
-        if (!studentApplications.length) {
-            getStudentApplications(props.match.params.username).then((result) => {
-                if (result.error) {
-                    setErrorAlert(true);
-                    setErrorMessage(result.error);
-                }
-                if (result.ok) {
-                    setErrorAlert(false);
-                    setStudentApplications(result.applications);
-                }
-            });
-        }
-    }, [props.match.params.username, studentApplications]);
+        getStudentApplications(props.match.params.username).then((result) => {
+            if (result.error) {
+                setErrorAlert(true);
+                setErrorMessage(result.error);
+            }
+            if (result.ok) {
+                setErrorAlert(false);
+                setStudentApplications(result.applications);
+            }
+        });
+
+    }, [props.match.params.username]);
 
     return (
         <div>

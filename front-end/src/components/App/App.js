@@ -2,7 +2,7 @@ import React, { useState } from '../../../node_modules/react';
 import './App.css';
 import '../../utils/styles/theme.scss';
 import { Navbar, Nav, NavDropdown } from '../../../node_modules/react-bootstrap';
-import { BrowserRouter as Router, Switch, Route, Link } from '../../../node_modules/react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Link, Redirect } from '../../../node_modules/react-router-dom';
 import Cookies from 'js-cookie';
 import Home from '../Home/Home.js';
 import CreateAccount from '../CreateAccount/CreateAccount.js';
@@ -35,7 +35,7 @@ function App() {
                                     <Nav.Link as={Link} to="/login" title={'Create Account'}>Login</Nav.Link>
                                 </div>
                                 : <NavDropdown title={username} alignRight id="basic-nav-dropdown">
-                                    <NavDropdown.Item  as={Link} to={`/profile/${username}`}>View Profile</NavDropdown.Item>
+                                    <NavDropdown.Item as={Link} to={`/profile/${username}`}>View Profile</NavDropdown.Item>
                                     <NavDropdown.Item href="#tbd">Settings</NavDropdown.Item>
                                     <NavDropdown.Divider />
                                     <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
@@ -49,7 +49,7 @@ function App() {
                         <Route exact path='/create-account' component={CreateAccount} />
                         <Route exact path='/login' render={props => <Login {...props} setUsername={setUsername} />} />
                         <Route exact path='/profile/:username' component={StudentProfile} />
-                        <Route exact path='/profile/:username/edit' component={EditProfile} />
+                        <Route exact path='/profile/:username/edit' username={username} render={props => (props.match.params.username === username ? <EditProfile  {...props} /> : <Redirect to='/'></Redirect>)} />
                         <Route render={function () {
                             return <p>404 Not found</p>
                         }} />
