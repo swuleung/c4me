@@ -7,6 +7,7 @@ import Cookies from 'js-cookie';
 import Home from '../Home/Home.js';
 import CreateAccount from '../CreateAccount/CreateAccount.js';
 import Login from '../Login/Login.js';
+import DeleteAllUsers from '../DeleteAllUsers/DeleteAllUsers.js';
 
 function App() {
     const [username, setUsername] = useState(localStorage.getItem('username'));
@@ -36,8 +37,8 @@ function App() {
                                         <NavDropdown.Item href="#tbd">View Profile</NavDropdown.Item>
                                         <NavDropdown.Item href="#tbd">Settings</NavDropdown.Item>
                                         {username == 'admin'
-                                        ? <NavDropdown.Item href="#tbd">Delete All Users</NavDropdown.Item>
-                                        :<null />
+                                        ? <NavDropdown.Item onClick={DeleteAllUsers} href="#tbd">Delete All Users</NavDropdown.Item>
+                                        : <void/>
                                         }
                                         <NavDropdown.Divider />
                                         <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
