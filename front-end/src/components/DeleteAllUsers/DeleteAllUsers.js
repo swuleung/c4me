@@ -8,9 +8,8 @@ const DeleteAllUsers =  (props) => {
     fetch("http://localhost:9000/users/delete", 
         {
             method: 'DELETE',
-            body: 'admin'
+            body: {username:'admin'}
         }
-    ).then((response) => response.json()
     ).catch((error) => {
         console.log("DeleteError");
         console.log(error);
