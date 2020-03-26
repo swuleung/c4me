@@ -7,11 +7,7 @@ import './StudentProfile.scss';
 
 const StudentProfile = (props) => {
     const [student, setStudent] = useState({});
-    const [loaded, setLoaded] = useState({
-        application: false,
-        college: false
-    });
-    const [studentApplications, setStudentApplications] = useState([]);
+    const [studentApplications, setStudentApplications] = useState(null);
     const [errorAlert, setErrorAlert] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
 
@@ -44,19 +40,7 @@ const StudentProfile = (props) => {
                 setStudent(result.student);
             }
         });
-
-        if (loaded.application && !loaded.college) {
-            setLoaded({...loaded, college: true})
-            for (let i = 0; i < studentApplications.length; i++) {
-                getCollegeByID(studentApplications[i].college).then((coll) => {
-                    let apps = [...studentApplications];
-                    apps[i].collegeName = coll.college.Name;
-                    setStudentApplications(apps);
-                });
-            }
-        }
-        if (!loaded.application) {
-            setLoaded({...loaded, application: true})
+        if (!studentApplications) {
             getStudentApplications(props.match.params.username).then((result) => {
                 if (result.error) {
                     setErrorAlert(true);
@@ -67,6 +51,15 @@ const StudentProfile = (props) => {
                     setStudentApplications(result.applications);
                 }
             });
+        }
+        if (studentApplications && studentApplications.length !== 0 && !studentApplications[0].collegeName) {
+            for (let i = 0; i < studentApplications.length; i++) {
+                getCollegeByID(studentApplications[i].college).then((coll) => {
+                    let apps = [...studentApplications];
+                    apps[i].collegeName = coll.college.Name;
+                    setStudentApplications(apps);
+                });
+            }
         }
     }, [props.match.params.username, studentApplications]);
 
@@ -181,7 +174,7 @@ const StudentProfile = (props) => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {generateStudentApplications()}
+                                {studentApplications ? generateStudentApplications() : null}
                             </tbody>
                         </Table>
                     </Container>

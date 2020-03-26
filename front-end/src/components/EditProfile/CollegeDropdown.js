@@ -11,9 +11,13 @@ const CollegeDropdown = (props) => {
     const getCollegeOptions = () => {
         let options = []
         for (let i = 0; i < colleges.length; i++) {
-            options.push(
-                <option key={colleges[i].Name} value={colleges[i].CollegeId}>{colleges[i].Name}</option>
-            )
+            if (props.selectedValue === colleges[i].CollegeId.toString()
+                || !props.applications.some(app => app.college === colleges[i].CollegeId.toString())
+            ) {
+                options.push(
+                    <option key={`${i}-${colleges[i].Name}`} value={colleges[i].CollegeId}>{colleges[i].Name}</option>
+                )
+            }
         }
         return options;
     }

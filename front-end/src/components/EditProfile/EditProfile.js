@@ -37,7 +37,6 @@ const EditProfile = (props) => {
             status: "pending",
             college: null,
             username: props.match.params.username,
-            collegeName: null
         })
         setStudentApplications(newApplications);
     }
@@ -79,7 +78,7 @@ const EditProfile = (props) => {
             applications.push(
                 <tr className='application' key={`college-${i}`} >
                     <td>
-                        <CollegeDropdown selectedValue={studentApplications[i].college} index={`${i}`} onChange={e => { handleApplicationCollegeChange(e) }}></CollegeDropdown>
+                        <CollegeDropdown applications={studentApplications} selectedValue={studentApplications[i].college} index={`${i}`} onChange={e => { handleApplicationCollegeChange(e) }}></CollegeDropdown>
                     </td>
                     <td>
                         <Form.Control as="select" index={`${i}`} className={studentApplications[i].status} value={studentApplications[i].status} onChange={e => { handleApplicationChange(e) }}>
