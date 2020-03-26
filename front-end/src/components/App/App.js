@@ -19,7 +19,7 @@ function App() {
     }
     return (
         <Router>
-            <div className="App">
+            <div className="App" style={{ paddingBottom: '1rem' }}>
                 <header className="App-header">
                     <Navbar bg="primary">
                         <Navbar.Brand id="logo" as={Link} to="/">C4Me</Navbar.Brand>
