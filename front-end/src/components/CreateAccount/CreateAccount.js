@@ -27,7 +27,7 @@ const CreateAccount = (props) => {
                 setErrorMessage(data.error);
             }
             if (data.ok) {
-                props.history.push('/');
+                props.history.push('/login');
             }
         }).catch((error) => {
             console.log('Yikes!');
