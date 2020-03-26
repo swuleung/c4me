@@ -78,7 +78,7 @@ const StudentProfile = (props) => {
                     <Container>
                         <Row>
                             <Col><h1>{props.match.params.username}</h1></Col>
-                            {localStorage.getItem('username') === props.match.params.username && <Col><Button as={Link} to={`./${props.match.params.username}/edit`} className="float-right">Edit Profile</Button></Col>}
+                            {localStorage.getItem('username') === props.match.params.username && <Col><Button as={Link} to={`/profile/${props.match.params.username}/edit`} className="float-right">Edit Profile</Button></Col>}
                         </Row>
                         <p>High School: {student.highschoolName ? student.highschoolName : 'No high school provided'}</p>
                         <p>State: {student.residenceState ? student.residenceState : 'No state provided'}</p>
