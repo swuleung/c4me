@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userController');
-const adminController = require('../controllers/adminController');
 router.post('/create', function (req, res) {
     userController.createUser(req.body).then(result => {
         if (result.error) {

@@ -227,8 +227,13 @@ exports.scrapeCollegeData = async () => {
 }
 
 exports.removeAllUsers = async () => {
+    try{
     db.User.destroy({
         where: {isAdmin: False},
         truncate: true
-      })
+      });
+      return {ok: "Successfully deleted all users"};
+    } catch (err){
+        return {error: "Something wrong in removeAllUsers"}
+    }
 }
