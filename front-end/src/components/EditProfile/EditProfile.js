@@ -10,7 +10,7 @@ const EditProfile = (props) => {
     const [errorAlert, setErrorAlert] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const handleProfileChange = (e) => {
-        const { value, id } = e.target;
+        let { value, id } = e.target;
         if (value === '') value = null;
         setStudent({ ...student, [id]: value });
     }
