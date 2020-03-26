@@ -46,6 +46,12 @@ router.get('/scrapeCollegeData', async function(req, res) {
 });
 
 router.get('/deleteStudentProfiles', async function (req, res) {
+    console.log("");
+    if(res.error){
+        res.send({
+            something:"else"
+        })
+    }
     res.send({
         title: 'C4Me API DeleteStudentProfs'
     });
