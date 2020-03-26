@@ -6,14 +6,14 @@ let colleges = fs.readFileSync('./utils/colleges.txt').toString().split('\n'); /
 const rankingsURL = 'https://www.timeshighereducation.com/rankings/united-states/2020#!/page/0/length/-1/sort_by/rank/sort_order/asc/cols/stats';
 const collegeDataURL = 'https://www.collegedata.com/college/';
 
-exports.checkAdmin = async (bdy) => {
+exports.checkAdmin = async (username) => {
     let admin = {};
     try {
         admin = await models.User.findAll({
             limit: 1,
             raw: true,
             where: {
-                username: bdy.username,
+                username: username,
                 isAdmin: true
             }
         });

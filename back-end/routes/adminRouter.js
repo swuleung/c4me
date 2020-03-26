@@ -46,10 +46,11 @@ router.get('/scrapeCollegeData', async function(req, res) {
 });
 
 router.get('/deleteStudentProfiles', async function (req, res) {
-    /*if (!req.cookies.access_token) {
+    if (!req.cookies.access_token) {
         res.status(400).send({ status: "error", error: "No token provided" });
     } else {
         let authorized = await authentication.validateJWT(req.cookies.access_token);
+        console.log(authorized);
         if (!authorized.username) {
             res.clearCookie("access_token");
             res.status(400).send(authorized);
@@ -57,16 +58,16 @@ router.get('/deleteStudentProfiles', async function (req, res) {
             res.status(400).send(authorized);
         } else {
             console.log('Delete Student Profiles');
-            // Add your code here
+            // Add your code her
             res.send({
                 example: 'example, dont actually leave this here, look at the other functions as how result should be returned'
             })
         }
-    } */
+    } 
 
-    res.send({
-        something:"else"
-    })
+    // res.send({
+    //     something:"else"
+    // })
 
 
 
