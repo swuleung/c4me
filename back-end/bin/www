@@ -21,7 +21,11 @@ app.set('port', port);
 
 var server = http.createServer(app);
 
-models.sequelize.sync().then(function () {
+models.sequelize.sync(
+    {
+        // force: true // TURN THIS OFF LATER
+    }
+).then(function () {
     /**
      * Listen on provided port, on all network interfaces.
      */
@@ -37,15 +41,6 @@ models.sequelize.sync().then(function () {
         isAdmin: true
     }).then(() => {
         console.log('Admin account created');
-
-        models.Student.create({
-            username: 'admin'
-        }).then(
-            console.log('Student view for admin created')
-        ).catch(() => {
-            console.log('Student view for admin exists');
-        })
-
     }).catch(() => {
         console.log('Admin account exists');
     });
