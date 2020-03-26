@@ -198,15 +198,6 @@ module.exports = (sequelize, DataTypes) => {
                     .catch(err => {
                         console.log(err);
                     });
-            }),
-            beforeUpdate: ((user) => {
-                return bcrypt.hash(user.password, 10)
-                    .then(hash => {
-                        user.password = hash;
-                    })
-                    .catch(err => {
-                        console.log(err);
-                    });
             })
         }
     });

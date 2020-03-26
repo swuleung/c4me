@@ -49,6 +49,9 @@ function App() {
                         <Route exact path='/create-account' component={CreateAccount} />
                         <Route exact path='/login' render={props => <Login {...props} setUsername={setUsername} />} />
                         <Route exact path='/profile/:username' component={StudentProfile} />
+                        <Route exact path='/profile/:username/'>
+                            <Redirect to='/profile/:username'></Redirect>
+                        </Route>
                         <Route exact path='/profile/:username/edit' username={username} render={props => (props.match.params.username === username ? <EditProfile  {...props} /> : <Redirect to='/'></Redirect>)} />
                         <Route render={function () {
                             return <p>404 Not found</p>

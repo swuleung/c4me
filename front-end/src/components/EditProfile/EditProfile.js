@@ -11,6 +11,7 @@ const EditProfile = (props) => {
     const [errorMessage, setErrorMessage] = useState('');
     const handleProfileChange = (e) => {
         const { value, id } = e.target;
+        if (value === '') value = null;
         setStudent({ ...student, [id]: value });
     }
 
@@ -58,7 +59,7 @@ const EditProfile = (props) => {
             }
             if (result.ok) {
                 setErrorAlert(false);
-                props.history.push('./')
+                props.history.push(`../${props.match.params.username}`)
             }
         });
         editStudentApplications(props.match.params.username, studentApplications).then((result) => {
@@ -138,13 +139,13 @@ const EditProfile = (props) => {
                             <Col>
                                 <Form.Group controlId="collegeClass">
                                     <Form.Label>College Class Year</Form.Label>
-                                    <Form.Control type="number" value={student.collegeClass || ''} onChange={e => { handleProfileChange(e) }} autoComplete="on" />
+                                    <Form.Control type="number" value={student.collegeClass || ''} placeholder="Enter college class year" onChange={e => { handleProfileChange(e) }} autoComplete="on" />
                                 </Form.Group>
                             </Col>
                             <Col>
                                 <Form.Group controlId="GPA">
                                     <Form.Label>GPA</Form.Label>
-                                    <Form.Control type="number" value={student.GPA || ''} step="0.01" onChange={e => { handleProfileChange(e) }} autoComplete="on" />
+                                    <Form.Control type="number" value={student.GPA || ''} min="0" max="4.00" step="0.01" placeholder="Enter GPA" onChange={e => { handleProfileChange(e) }} autoComplete="on" />
                                 </Form.Group>
                             </Col>
                         </Row>
@@ -152,6 +153,7 @@ const EditProfile = (props) => {
                         <Form.Group controlId="residenceState">
                             <Form.Label>Residence State</Form.Label>
                             <Form.Control as="select" value={student.residenceState || ''} onChange={e => { handleProfileChange(e) }}>
+                                <option value='' disabled>Select a State</option>
                                 {generateStateOptions()}
                             </Form.Control>
                         </Form.Group>
@@ -180,7 +182,7 @@ const EditProfile = (props) => {
                                     <Col>
                                         <Form.Group className="row" controlId="SATEBRW">
                                             <Form.Label className="col" >EBRW</Form.Label>
-                                            <Form.Control className="col" type="number" value={student.SATEBRW || ''} onChange={e => { handleProfileChange(e) }} autoComplete="on" />
+                                            <Form.Control className="col" type="number" value={student.SATEBRW || ''} min='200' max='800' placeholder="200-800" onChange={e => { handleProfileChange(e) }} autoComplete="on" />
                                         </Form.Group>
                                     </Col>
                                 </Row>
@@ -188,7 +190,7 @@ const EditProfile = (props) => {
                                     <Col>
                                         <Form.Group className="row" controlId="SATMath">
                                             <Form.Label className="col" >Math</Form.Label>
-                                            <Form.Control className="col" type="number" value={student.SATMath || ''} onChange={e => { handleProfileChange(e) }} autoComplete="on" />
+                                            <Form.Control className="col" type="number" value={student.SATMath || ''} min='200' max='800' placeholder="200-800" onChange={e => { handleProfileChange(e) }} autoComplete="on" />
                                         </Form.Group>
                                     </Col>
                                 </Row>
@@ -198,7 +200,7 @@ const EditProfile = (props) => {
                                     <Col>
                                         <Form.Group className="row" controlId="ACTEnglish">
                                             <Form.Label className="col" >English</Form.Label>
-                                            <Form.Control className="col" type="number" value={student.ACTEnglish || ''} onChange={e => { handleProfileChange(e) }} autoComplete="on" />
+                                            <Form.Control className="col" type="number" value={student.ACTEnglish || ''} min='1' max='36' placeholder="1-36" onChange={e => { handleProfileChange(e) }} autoComplete="on" />
                                         </Form.Group>
                                     </Col>
                                 </Row>
@@ -206,7 +208,7 @@ const EditProfile = (props) => {
                                     <Col>
                                         <Form.Group className="row" controlId="ACTMath">
                                             <Form.Label className="col" >Math</Form.Label>
-                                            <Form.Control className="col" type="number" value={student.ACTMath || ''} onChange={e => { handleProfileChange(e) }} autoComplete="on" />
+                                            <Form.Control className="col" type="number" value={student.ACTMath || ''} min='1' max='36' placeholder="1-36" onChange={e => { handleProfileChange(e) }} autoComplete="on" />
                                         </Form.Group>
                                     </Col>
                                 </Row>
@@ -214,7 +216,7 @@ const EditProfile = (props) => {
                                     <Col>
                                         <Form.Group className="row" controlId="ACTReading">
                                             <Form.Label className="col" >Reading</Form.Label>
-                                            <Form.Control className="col" type="number" value={student.ACTReading || ''} onChange={e => { handleProfileChange(e) }} autoComplete="on" />
+                                            <Form.Control className="col" type="number" value={student.ACTReading || ''} min='1' max='36' placeholder="1-36" onChange={e => { handleProfileChange(e) }} autoComplete="on" />
                                         </Form.Group>
                                     </Col>
                                 </Row>
@@ -222,7 +224,7 @@ const EditProfile = (props) => {
                                     <Col>
                                         <Form.Group className="row" controlId="ACTScience">
                                             <Form.Label className="col" >Science</Form.Label>
-                                            <Form.Control className="col" type="number" value={student.ACTScience || ''} onChange={e => { handleProfileChange(e) }} autoComplete="on" />
+                                            <Form.Control className="col" type="number" value={student.ACTScience || ''} min='1' max='36' placeholder="1-36" onChange={e => { handleProfileChange(e) }} autoComplete="on" />
                                         </Form.Group>
                                     </Col>
                                 </Row>
@@ -230,7 +232,7 @@ const EditProfile = (props) => {
                                     <Col>
                                         <Form.Group className="row" controlId="ACTComposite">
                                             <Form.Label className="col" >Composite</Form.Label>
-                                            <Form.Control className="col" type="number" value={student.ACTComposite || ''} onChange={e => { handleProfileChange(e) }} autoComplete="on" />
+                                            <Form.Control className="col" type="number" value={student.ACTComposite || ''} min='1' max='36' placeholder="1-36" onChange={e => { handleProfileChange(e) }} autoComplete="on" />
                                         </Form.Group>
                                     </Col>
                                 </Row>
@@ -241,7 +243,7 @@ const EditProfile = (props) => {
                                     <Col>
                                         <Form.Group className="row" controlId="SATLit">
                                             <Form.Label className="col" >Literature</Form.Label>
-                                            <Form.Control className="col" type="number" value={student.SATLit || ''} onChange={e => { handleProfileChange(e) }} autoComplete="on" />
+                                            <Form.Control className="col" type="number" value={student.SATLit || ''} min='200' max='800' placeholder="200-800" onChange={e => { handleProfileChange(e) }} autoComplete="on" />
                                         </Form.Group>
                                     </Col>
                                 </Row>
@@ -249,7 +251,7 @@ const EditProfile = (props) => {
                                     <Col>
                                         <Form.Group className="row" controlId="SATUs">
                                             <Form.Label className="col" >US History</Form.Label>
-                                            <Form.Control className="col" type="number" value={student.SATUs || ''} onChange={e => { handleProfileChange(e) }} autoComplete="on" />
+                                            <Form.Control className="col" type="number" value={student.SATUs || ''} min='200' max='800' placeholder="200-800" onChange={e => { handleProfileChange(e) }} autoComplete="on" />
                                         </Form.Group>
                                     </Col>
                                 </Row>
@@ -257,7 +259,7 @@ const EditProfile = (props) => {
                                     <Col>
                                         <Form.Group className="row" controlId="SATWorld">
                                             <Form.Label className="col" >World History</Form.Label>
-                                            <Form.Control className="col" type="number" value={student.SATWorld || ''} onChange={e => { handleProfileChange(e) }} autoComplete="on" />
+                                            <Form.Control className="col" type="number" value={student.SATWorld || ''} min='200' max='800' placeholder="200-800" onChange={e => { handleProfileChange(e) }} autoComplete="on" />
                                         </Form.Group>
                                     </Col>
                                 </Row>
@@ -265,7 +267,7 @@ const EditProfile = (props) => {
                                     <Col>
                                         <Form.Group className="row" controlId="SATMathI">
                                             <Form.Label className="col" >Math I</Form.Label>
-                                            <Form.Control className="col" type="number" value={student.SATMathI || ''} onChange={e => { handleProfileChange(e) }} autoComplete="on" />
+                                            <Form.Control className="col" type="number" value={student.SATMathI || ''} min='200' max='800' placeholder="200-800" onChange={e => { handleProfileChange(e) }} autoComplete="on" />
                                         </Form.Group>
                                     </Col>
                                 </Row>
@@ -273,7 +275,7 @@ const EditProfile = (props) => {
                                     <Col>
                                         <Form.Group className="row" controlId="SATMathII">
                                             <Form.Label className="col" >Math II</Form.Label>
-                                            <Form.Control className="col" type="number" value={student.SATMathII || ''} onChange={e => { handleProfileChange(e) }} autoComplete="on" />
+                                            <Form.Control className="col" type="number" value={student.SATMathII || ''} min='200' max='800' placeholder="200-800" onChange={e => { handleProfileChange(e) }} autoComplete="on" />
                                         </Form.Group>
                                     </Col>
                                 </Row>
@@ -281,7 +283,7 @@ const EditProfile = (props) => {
                                     <Col>
                                         <Form.Group className="row" controlId="SATEco">
                                             <Form.Label className="col" >Ecological Biology</Form.Label>
-                                            <Form.Control className="col" type="number" value={student.SATEco || ''} onChange={e => { handleProfileChange(e) }} autoComplete="on" />
+                                            <Form.Control className="col" type="number" value={student.SATEco || ''} min='200' max='800' placeholder="200-800" onChange={e => { handleProfileChange(e) }} autoComplete="on" />
                                         </Form.Group>
                                     </Col>
                                 </Row>
@@ -289,7 +291,7 @@ const EditProfile = (props) => {
                                     <Col>
                                         <Form.Group className="row" controlId="SATMol">
                                             <Form.Label className="col" >Molecular Biology</Form.Label>
-                                            <Form.Control className="col" type="number" value={student.SATMol || ''} onChange={e => { handleProfileChange(e) }} autoComplete="on" />
+                                            <Form.Control className="col" type="number" value={student.SATMol || ''} min='200' max='800' placeholder="200-800" onChange={e => { handleProfileChange(e) }} autoComplete="on" />
                                         </Form.Group>
                                     </Col>
                                 </Row>
@@ -297,7 +299,7 @@ const EditProfile = (props) => {
                                     <Col>
                                         <Form.Group className="row" controlId="SATChem">
                                             <Form.Label className="col" >Chemistry</Form.Label>
-                                            <Form.Control className="col" type="number" value={student.SATChem || ''} onChange={e => { handleProfileChange(e) }} autoComplete="on" />
+                                            <Form.Control className="col" type="number" value={student.SATChem || ''} min='200' max='800' placeholder="200-800" onChange={e => { handleProfileChange(e) }} autoComplete="on" />
                                         </Form.Group>
                                     </Col>
                                 </Row>
@@ -310,7 +312,7 @@ const EditProfile = (props) => {
 
                                 <Form.Group className="row" controlId="APPassed">
                                     <Form.Label className="col-3" >Total</Form.Label>
-                                    <Form.Control className="col-3" type="number" value={student.APPassed || ''} onChange={e => { handleProfileChange(e) }} autoComplete="on" />
+                                    <Form.Control className="col-3" type="number" value={student.APPassed || ''} placeholder="0-38" min="0" max="38" onChange={e => { handleProfileChange(e) }} autoComplete="on" />
                                 </Form.Group>
                             </Col>
                         </Row>
