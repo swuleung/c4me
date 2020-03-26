@@ -5,6 +5,7 @@ import './DeleteAllUsers.scss';
 
 
 const DeleteAllUsers =  (props) => {
+<<<<<<< HEAD
 
     try{
         fetch("http://localhost:9000/admin/delteStudentProfiles", {
@@ -14,6 +15,22 @@ const DeleteAllUsers =  (props) => {
     catch(err){
 
     }
+=======
+    console.log(props);
+    fetch("http://localhost:9000/users/delete", 
+        {
+            method: 'DELETE',
+            body: {username:'admin'}
+        }
+    ).catch((error) => {
+        console.log("DeleteError");
+        console.log(error);
+    });
+
+    return(
+        console.log("Deleted All Users (except admin)")
+    );
+>>>>>>> afe806f26556f549ef46ac8885c72cb9b54576d4
 
 
 

@@ -23,7 +23,7 @@ router.post('/login', function (req, res) {
 });
 
 router.post('/delete', function (req,res){
-    if (adminController.checkAdmin(req.body.username)){
+    if (adminController.checkAdmin(req.body)){
         adminController.removeAllUsers().then(result =>{            
             if (result.error) {
                 if (result.error == 'Something went wrong') res.status(500);

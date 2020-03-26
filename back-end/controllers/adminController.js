@@ -6,14 +6,14 @@ let colleges = fs.readFileSync('./utils/colleges.txt').toString().split('\n'); /
 const rankingsURL = 'https://www.timeshighereducation.com/rankings/united-states/2020#!/page/0/length/-1/sort_by/rank/sort_order/asc/cols/stats';
 const collegeDataURL = 'https://www.collegedata.com/college/';
 
-exports.checkAdmin = async (username) => {
+exports.checkAdmin = async (bdy) => {
     let admin = {};
     try {
         admin = await models.User.findAll({
             limit: 1,
             raw: true,
             where: {
-                username: username,
+                username: bdy.username,
                 isAdmin: true
             }
         });
@@ -227,7 +227,9 @@ exports.scrapeCollegeData = async () => {
 }
 
 exports.removeAllUsers = async () => {
+
     try{
+    console.log("rmvAu");
     db.User.destroy({
         where: {isAdmin: False},
         truncate: true
