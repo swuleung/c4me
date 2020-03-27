@@ -3,6 +3,7 @@ const models = require('../models');
 const fs = require('fs');
 const puppeteer = require('puppeteer');
 
+
 let colleges = fs.readFileSync('./utils/colleges.txt').toString().split('\n'); // colleges.txt file into string array
 const rankingsURL = 'https://www.timeshighereducation.com/rankings/united-states/2020#!/page/0/length/-1/sort_by/rank/sort_order/asc/cols/stats';
 const collegeDataURL = 'https://www.collegedata.com/college/';
@@ -225,4 +226,16 @@ exports.scrapeCollegeData = async () => {
     await page.close();
     await browser.close();
     return { ok: 'Success. Able to scrape all colleges in file.' };
+}
+
+exports.removeAllUsers = async () => {
+    try{
+        user = await models.User.destroy({
+            where: {isAdmin:0 },
+            cascade:true
+        });
+        return {ok: "All Users Deleted"};
+    } catch (error){
+        return {error: "Something wrong in removeAllUsers"}
+    }
 }
