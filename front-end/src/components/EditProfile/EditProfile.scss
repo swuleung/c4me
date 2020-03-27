@@ -1,0 +1,19 @@
+select {
+  .accepted {
+    color: green;
+  }
+
+  .waitlisted,
+  .pending,
+  .deferred {
+    color: goldenrod;
+  }
+
+  .denied {
+    color: red;
+  }
+
+  .application {
+    text-transform: capitalize;
+  }
+}
