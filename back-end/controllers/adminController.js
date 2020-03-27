@@ -2,6 +2,7 @@ const sequelize = require('sequelize');
 const models = require('../models');
 const fs = require('fs');
 const puppeteer = require('puppeteer');
+const csvParser = require('csv-parser');
 
 let colleges = fs.readFileSync('./utils/colleges.txt').toString().split('\n'); // colleges.txt file into string array
 const rankingsURL = 'https://www.timeshighereducation.com/rankings/united-states/2020#!/page/0/length/-1/sort_by/rank/sort_order/asc/cols/stats';
@@ -65,9 +66,9 @@ exports.scrapeCollegeRankings = async () => {
     browser.close();
 
     if (thereIsError.length) {
-        return { error: 'Error Scraping College Rankings', reason: thereIsError};
+        return { error: 'Error Scraping College Rankings', reason: thereIsError };
     }
-    return { ok: "Successfully scraped college rankings"};
+    return { ok: "Successfully scraped college rankings" };
 }
 
 // Scrapes CollegeData.com for Admission Rate, Size, Cost of Attendance
@@ -179,7 +180,7 @@ exports.scrapeCollegeData = async () => {
                 await models.College.upsert(collegeObject);
                 break;
             } catch (error) {
-                if (error instanceof sequelize.ValidationError)  {
+                if (error instanceof sequelize.ValidationError) {
                     delete collegeObject[error.errors[0].path];
                 } else {
                     thereIsError.push({
@@ -225,4 +226,88 @@ exports.scrapeCollegeData = async () => {
     await page.close();
     await browser.close();
     return { ok: 'Success. Able to scrape all colleges in file.' };
+}
+
+exports.importStudents = async () => {
+    let newUsers = [];
+    const errors = [];
+    let readStudents = fs.createReadStream(__dirname + '/../assets/students-1.csv')
+        .on('error', (error) => {
+            console.log(error.message)
+        })
+        .pipe(csvParser({
+            mapHeaders: ({ header }) => header.trim()
+        }))
+        .on('data', async (row) => {
+            let user = {
+                "username": row.userid,
+                "password": row.password,
+                "GPA": row.GPA,
+                "residenceState": row.residence_state,
+                "highschoolName": row.high_school_name,
+                "highSchoolCity": row.high_school_city,
+                "highschoolState": row.high_school_state,
+                "collegeClass": row.college_class,
+                "major1": row.major_1,
+                "major2": row.major_2,
+                "SATMath": row.SAT_math,
+                "SATEBRW": row.SAT_EBRW,
+                "ACTEnglish": row.ACT_English,
+                "ACTMath": row.ACT_math,
+                "ACTReading": row.ACT_reading,
+                "ACTScience": row.ACT_science,
+                "ACTComposite": row.ACT_composite,
+                "SATLit": row.SAT_literature,
+                "SATUs": row.SAT_US_hist,
+                "SATWorld": row.SAT_world_hist,
+                "SATMathI": row.SAT_math_I,
+                "SATMathII": row.SAT_math_II,
+                "SATEco": row.SAT_eco_bio,
+                "SATMol": row.SAT_mol_bio,
+                "SATChem": row.SAT_chemistry,
+                "SATPhys": row.SAT_physics,
+                "APPassed": row.num_AP_passed
+            }
+
+            Object.keys(user).forEach(function (key) { if (user[key] === '') { user[key] = null }; });
+            while (true) {
+                try {
+                    await models.User.create(user);
+                    break;
+                } catch (error) {
+                    if (error instanceof sequelize.ValidationError && !(error instanceof sequelize.UniqueConstraintError)) {
+                        delete user[error.errors[0].path];
+                    }
+                    else {
+                        errors.push({
+                            error: `Error in creating ${user}: ${error}`,
+                            reason: error
+                        });
+                        break;
+                    }
+                }
+            }
+            // newUsers.push(models.User.create(user).catch(e => {console.log('ahhh'); errors.push(`Error in creating ${user}: ${e}`)}));
+        });
+    return readStudents
+        .on('end', () => {
+            // await Promise.all(newUsers).catch(function (err) {
+            //     errors.push(`Error resolving creations: ${err.message}`)
+            // });
+            console.log(errors);
+            return errors;
+        });
+    // if (errors.length) {
+    //     return {
+    //         error: errors,
+    //     }
+    // } else {
+    //     return {
+    //         ok: 'Success',
+    //     }
+    // }
+}
+
+exports.importApplications = async (filename) => {
+
 }
