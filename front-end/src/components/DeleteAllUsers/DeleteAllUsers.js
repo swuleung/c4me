@@ -5,9 +5,16 @@ import './DeleteAllUsers.scss';
 
 
 const DeleteAllUsers =  (props) => {
+    console.log(props);
     try{
+        console.log(props);
         fetch("http://localhost:9000/admin/deleteStudentProfiles", {
-            method: "GET"
+            method: "GET",
+            credentials: 'include',
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json; charset=utf-8"
+            }
         });
     }
     catch(err){
