@@ -38,7 +38,7 @@ function App() {
                                     : <NavDropdown title={username} alignRight id="basic-nav-dropdown">
                                         <NavDropdown.Item as={Link} to={`/profile/${username}`}>View Profile</NavDropdown.Item>
                                         <NavDropdown.Item href="#tbd">Settings</NavDropdown.Item>
-                                        {username == 'admin'
+                                        {username === 'admin'
                                         ? <NavDropdown.Item onClick={DeleteAllUsers} href="#tbd">Delete All Users</NavDropdown.Item>
                                         : <void/>
                                         }
