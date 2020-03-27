@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userController');
+
 router.post('/create', function (req, res) {
     userController.createUser(req.body).then(result => {
         if (result.error) {
@@ -20,17 +21,6 @@ router.post('/login', function (req, res) {
         res.cookie("access_token", result.access_token);
         res.send(result);
     });
-});
-
-router.post('/delete', function (req,res){
-    if (adminController.checkAdmin(req.body)){
-        adminController.removeAllUsers().then(result =>{            
-            if (result.error) {
-                if (result.error == 'Something went wrong') res.status(500);
-                else res.status(400);
-            }
-        });
-    }
 });
 
 router.get('/logout', (req, res) => {

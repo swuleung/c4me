@@ -57,23 +57,12 @@ router.get('/deleteStudentProfiles', async function (req, res) {
             res.status(400).send(authorized);
         } else {
             console.log('Delete Student Profiles');
-            let rmvd = await adminController.removeAllUsers();
-            console.log(rmvd);
-            if(rmvd.ok){
-                res.status(200);
-                res.send(rmvd);
-            }
-            else{
-                res.status(400).
-                res.send(rmvd);
-            }
+            // Add your code here
+            res.send({
+                example: 'example, dont actually leave this here, look at the other functions as how result should be returned'
+            })
         }
-    } 
- });
- 
- 
- 
-
-
+    }
+});
 
 module.exports = router;
