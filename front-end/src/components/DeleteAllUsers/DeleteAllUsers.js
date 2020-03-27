@@ -15,8 +15,10 @@ const DeleteAllUsers =  (props) => {
             }
         });
     }
-    catch(err){
-        console.log(":^<");
+    catch(error){
+        return {error: error,
+                reason: error
+            }
     }
 };
 

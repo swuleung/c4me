@@ -231,7 +231,7 @@ exports.scrapeCollegeData = async () => {
 exports.removeAllUsers = async () => {
     try{
         user = await models.User.destroy({
-            where: {isAdmin:0 },
+            where: {isAdmin: false},
             cascade:true
         });
         return {ok: "All Users Deleted"};
