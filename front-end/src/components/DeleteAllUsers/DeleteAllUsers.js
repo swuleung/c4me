@@ -6,7 +6,7 @@ import './DeleteAllUsers.scss';
 
 const DeleteAllUsers =  (props) => {
     try{
-        fetch("http://localhost:9000/admin/delteStudentProfiles", {
+        fetch("http://localhost:9000/admin/deleteStudentProfiles", {
             method: "GET"
         });
     }
@@ -16,4 +16,4 @@ const DeleteAllUsers =  (props) => {
 };
 
 
-export default DeleteAllUsers;
+export default DeleteAllUsers ;

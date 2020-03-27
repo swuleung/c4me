@@ -47,34 +47,28 @@ router.get('/scrapeCollegeData', async function(req, res) {
 
 router.get('/deleteStudentProfiles', async function (req, res) {
     if (!req.cookies.access_token) {
-        res.status(400).send({ status: "error", error: "No token provided" });
+        res.status(405).send({ status: "error", error: "No token provided" });
     } else {
         let authorized = await authentication.validateJWT(req.cookies.access_token);
-        console.log(authorized);
         if (!authorized.username) {
             res.clearCookie("access_token");
-            res.status(400).send(authorized);
+            res.status(404).send(authorized);
         } else if (!adminController.checkAdmin(authorized.username)) {
-            res.status(400).send(authorized);
+            res.status(403).send(authorized);
         } else {
             console.log('Delete Student Profiles');
-            // Add your code her
-            res.send({
-                example: 'example, dont actually leave this here, look at the other functions as how result should be returned'
-            })
+            let rmvd = await adminController.removeAllUsers();
+            console.log(rmvd);
+            if(rmvd.ok){
+                res.status(200);
+                res.send(rmvd);
+            }
+            else{
+                res.status(400).
+                res.send(rmvd);
+            }
         }
     } 
-
-    // res.send({
-    //     something:"else"
-    // })
-
-
-
-
-
-
-
  });
  
  
