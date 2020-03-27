@@ -22,17 +22,6 @@ router.post('/login', function (req, res) {
     });
 });
 
-router.post('/delete', function (req,res){
-    if (adminController.checkAdmin(req.body)){
-        adminController.removeAllUsers().then(result =>{            
-            if (result.error) {
-                if (result.error == 'Something went wrong') res.status(500);
-                else res.status(400);
-            }
-        });
-    }
-});
-
 router.get('/logout', (req, res) => {
     res.clearCookie('access_token');
     res.send({

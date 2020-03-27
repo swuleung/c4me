@@ -56,7 +56,6 @@ router.get('/deleteStudentProfiles', async function (req, res) {
         } else if (!adminController.checkAdmin(authorized.username)) {
             res.status(400).send(authorized);
         } else {
-            console.log('Delete Student Profiles');
             let rmvd = await adminController.removeAllUsers();
             console.log(rmvd);
             if(rmvd.ok){

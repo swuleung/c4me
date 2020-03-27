@@ -5,9 +5,7 @@ import './DeleteAllUsers.scss';
 
 
 const DeleteAllUsers =  (props) => {
-    console.log(props);
     try{
-        console.log(props);
         fetch("http://localhost:9000/admin/deleteStudentProfiles", {
             method: "GET",
             credentials: 'include',

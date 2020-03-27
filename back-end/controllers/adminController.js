@@ -235,6 +235,7 @@ exports.removeAllUsers = async () => {
         });
         return {ok: "All Users Deleted"};
     } catch (error){
-        return {error: "Something wrong in removeAllUsers"}
+        return {error: "Something wrong in removeAllUsers",
+                reason: error}
     }
 }
