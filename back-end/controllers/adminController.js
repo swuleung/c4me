@@ -226,3 +226,16 @@ exports.scrapeCollegeData = async () => {
     await browser.close();
     return { ok: 'Success. Able to scrape all colleges in file.' };
 }
+
+exports.removeAllUsers = async () => {
+    try{
+        user = await models.User.destroy({
+            where: {isAdmin: false},
+            cascade:true
+        });
+        return {ok: "All Users Deleted"};
+    } catch (error){
+        return {error: "Something wrong in removeAllUsers",
+                reason: error}
+    }
+}
