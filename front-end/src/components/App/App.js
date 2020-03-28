@@ -9,6 +9,7 @@ import CreateAccount from '../CreateAccount/CreateAccount.js';
 import Login from '../Login/Login.js';
 import StudentProfile from '../StudentProfile/StudentProfile';
 import EditProfile from '../EditProfile/EditProfile';
+import DeleteAllUsers from '../DeleteAllUsers/DeleteAllUsers.js';
 
 function App() {
     const [username, setUsername] = useState(localStorage.getItem('username'));
@@ -37,6 +38,10 @@ function App() {
                                 : <NavDropdown title={username} alignRight id="basic-nav-dropdown">
                                     <NavDropdown.Item as={Link} to={`/profile/${username}`}>View Profile</NavDropdown.Item>
                                     <NavDropdown.Item href="#tbd">Settings</NavDropdown.Item>
+                                    {username === 'admin'
+                                        ? <NavDropdown.Item onClick={DeleteAllUsers} href="#tbd">Delete All Users</NavDropdown.Item>
+                                        : ''
+                                    }
                                     <NavDropdown.Divider />
                                     <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
                                 </NavDropdown>

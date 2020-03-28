@@ -308,4 +308,15 @@ exports.importStudents = async () => {
 
 exports.importApplications = async (filename) => {
 
+exports.removeAllUsers = async () => {
+    try{
+        user = await models.User.destroy({
+            where: {isAdmin: false},
+            cascade:true
+        });
+        return {ok: "All Users Deleted"};
+    } catch (error){
+        return {error: "Something wrong in removeAllUsers",
+                reason: error}
+    }
 }
