@@ -228,7 +228,7 @@ exports.importCollegeScorecard = async () => {
                 let collegeStr = csvRow.INSTNM.replace('-Bloomington', ' Bloomington').replace('-Amherst', ' Amherst').replace('The University', 'University').replace(' Saint ', ' St ').replace('Franklin and Marshall', 'Franklin & Marshall').replace('-', ', ');
                 if(colleges.includes(collegeStr)) {
                     college = collegeStr;
-                    admissionRate = csvRow.ADM_RATE !== 'NULL' ? csvRow.ADM_RATE : null;
+                    admissionRate = csvRow.ADM_RATE !== 'NULL' ? csvRow.ADM_RATE*100 : null;
                     instiType = csvRow.CONTROL;
                     studentDebt = csvRow.GRAD_DEBT_MDN;
                     location = csvRow.STABBR;
@@ -283,7 +283,7 @@ exports.deleteAllStudents = async () => {
             where: { isAdmin: false },
             cascade: true
         });
-        return {ok: "All Students Deleted"};
+        return { ok: "All Students Deleted" };
     } catch (error){
         return {
             error: "Something wrong in deleteAllStudents",
@@ -360,7 +360,8 @@ exports.importStudents = async () => {
     }
     if (errors.length) {
         return {
-            error: errors,
+            error: 'Error importing students',
+            reason: errors
         }
     } else {
         return {
@@ -411,7 +412,8 @@ exports.importApplications = async () => {
     }
     if (errors.length) {
         return {
-            error: errors,
+            error: 'Error importing applications',
+            reason: errors
         }
     } else {
         return {
