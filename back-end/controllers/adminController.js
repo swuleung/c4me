@@ -307,16 +307,70 @@ exports.importStudents = async () => {
 }
 
 exports.importApplications = async (filename) => {
+    let errors = [];
+    let applications = [];
+    console.log('hello')
+    await new Promise(function (resolve) {
+        fs.createReadStream(__dirname + '/../assets/applications-1.csv')
+            .on('error', (error) => {
+                errors.push({
+                    error: error.message,
+                    reason: error
+                })
+            })
+            .pipe(csvParser({
+                mapHeaders: ({ header }) => header.trim()
+            }))
+            .on('data', async (row) => {
+                let application = {
+                    collegeName: row.college,
+                    username: row.userid,
+                    status: row.status
+                }
+                applications.push(application);
+            })
+            .on('end', () => {
+                resolve(applications);
+            });
+    });
+    for (let app of applications) {
+
+        try {
+            console.log(app);
+            let college = await models.College.findOne({
+                where: { Name: app.collegeName },
+                raw: true
+            });
+            app.college = college.CollegeId;
+            await models.Application.create(app);
+        } catch (error) {
+            errors.push({
+                error: `Error in creating app for ${app.collegeName}: ${error.message}`
+            });
+        }
+    }
+    if (errors.length) {
+        return {
+            error: errors,
+        }
+    } else {
+        return {
+            ok: 'Success',
+        }
+    }
+}
 
 exports.removeAllUsers = async () => {
-    try{
+    try {
         user = await models.User.destroy({
-            where: {isAdmin: false},
-            cascade:true
+            where: { isAdmin: false },
+            cascade: true
         });
-        return {ok: "All Users Deleted"};
-    } catch (error){
-        return {error: "Something wrong in removeAllUsers",
-                reason: error}
+        return { ok: "All Users Deleted" };
+    } catch (error) {
+        return {
+            error: "Something wrong in removeAllUsers",
+            reason: error
+        }
     }
 }
