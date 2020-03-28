@@ -71,7 +71,7 @@ exports.scrapeCollegeRankings = async () => {
     return { ok: "Successfully scraped college rankings" };
 }
 
-// Scrapes CollegeData.com for Admission Rate, Size, Cost of Attendance
+// Scrapes CollegeData.com for Cost of Attendance, Completion Rate, GPA, SAT and ACT scores
 exports.scrapeCollegeData = async () => {
     const browser = await puppeteer.launch({ headless: true });
     const page = await browser.newPage();
@@ -277,6 +277,20 @@ exports.importCollegeScorecard = async () => {
     return { ok: 'Success. Able to scrape all colleges in file.' };
 }
 
+exports.deleteAllStudents = async () => {
+    try{
+        user = await models.User.destroy({
+            where: { isAdmin: false },
+            cascade: true
+        });
+        return {ok: "All Students Deleted"};
+    } catch (error){
+        return {
+            error: "Something wrong in deleteAllStudents",
+            reason: error
+        }
+    }
+}
 
 exports.importStudents = async () => {
     let errors = [];
@@ -336,7 +350,8 @@ exports.importStudents = async () => {
                 }
                 else {
                     errors.push({
-                        error: `Error in creating ${user.username}: ${error.message}`
+                        error: `Error in creating ${user.username}: ${error.message} ${error.name}`,
+                        reason: error
                     });
                     break;
                 }
@@ -354,7 +369,7 @@ exports.importStudents = async () => {
     }
 }
 
-exports.importApplications = async (filename) => {
+exports.importApplications = async () => {
     let errors = [];
     let applications = [];
     await new Promise(function (resolve) {
@@ -389,7 +404,8 @@ exports.importApplications = async (filename) => {
             await models.Application.create(app);
         } catch (error) {
             errors.push({
-                error: `Error in creating app for ${app.collegeName}: ${error.message}`
+                error: `Error in creating app for ${app.collegeName}: ${error.message} ${error.name}`,
+                reason: error
             });
         }
     }
@@ -400,21 +416,6 @@ exports.importApplications = async (filename) => {
     } else {
         return {
             ok: 'Success',
-        }
-    }
-}
-
-exports.removeAllUsers = async () => {
-    try {
-        user = await models.User.destroy({
-            where: { isAdmin: false },
-            cascade: true
-        });
-        return { ok: "All Users Deleted" };
-    } catch (error) {
-        return {
-            error: "Something wrong in removeAllUsers",
-            reason: error
         }
     }
 }

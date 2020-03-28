@@ -66,7 +66,27 @@ router.get('/importCollegeScoreboard', async function (req, res) {
     }
 });
 
-router.get('/importStudents', async function (req, res) {
+router.get('/deleteStudentProfiles', async function (req, res) {
+    if (!req.cookies.access_token) {
+        res.status(400).send({ status: "error", error: "No token provided" });
+    } else {
+        let authorized = await authentication.validateJWT(req.cookies.access_token);
+        if (!authorized.username) {
+            res.clearCookie("access_token");
+            res.status(400).send(authorized);
+        } else if (!adminController.checkAdmin(authorized.username)) {
+            res.status(400).send(authorized);
+        } else {
+            let rmvd = await adminController.deleteAllStudents();
+            if(!rmvd.ok){
+                res.status(400);
+            }
+            res.send(rmvd);
+        }
+    } 
+ });
+ 
+ router.get('/importStudents', async function (req, res) {
     if (!req.cookies.access_token) {
         res.status(400).send({ status: "error", error: "No token provided" });
     } else {
@@ -99,25 +119,8 @@ router.get('/importApplications', async function (req, res) {
         }
     }
 });
+ 
 
-router.get('/deleteStudentProfiles', async function (req, res) {
-    if (!req.cookies.access_token) {
-        res.status(400).send({ status: "error", error: "No token provided" });
-    } else {
-        let authorized = await authentication.validateJWT(req.cookies.access_token);
-        if (!authorized.username) {
-            res.clearCookie("access_token");
-            res.status(400).send(authorized);
-        } else if (!adminController.checkAdmin(authorized.username)) {
-            res.status(400).send(authorized);
-        } else {
-            let rmvd = await adminController.removeAllUsers();
-            if(!rmvd.ok){
-                res.status(400);
-            }
-                res.send(rmvd);
-        }
-    } 
- });
+
 
 module.exports = router;
