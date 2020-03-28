@@ -45,6 +45,27 @@ router.get('/scrapeCollegeData', async function (req, res) {
     }
 });
 
+router.get('/importCollegeScoreboard', async function (req, res) {
+    if (!req.cookies.access_token) {
+        res.status(400).send({ status: "error", error: "No token provided" });
+    } else {
+        let authorized = await authentication.validateJWT(req.cookies.access_token);
+        if (!authorized.username) {
+            res.clearCookie("access_token");
+            res.status(400).send({ status: "error", error: "Not authorized" });
+        } else if (!(await adminController.checkAdmin(authorized.username))) {
+            res.status(400).send({ status: "error", error: "Not an admin" });
+        } else {
+            let result = await adminController.importCollegeScorecard();
+            if (result.error) {
+                if (result.error == 'Something went wrong') res.status(500);
+                else res.status(400);
+            }
+            res.send(result);
+        }
+    }
+});
+
 router.get('/deleteStudentProfiles', async function (req, res) {
     if (!req.cookies.access_token) {
         res.status(400).send({ status: "error", error: "No token provided" });

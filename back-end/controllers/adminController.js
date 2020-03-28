@@ -2,8 +2,9 @@ const sequelize = require('sequelize');
 const models = require('../models');
 const fs = require('fs');
 const puppeteer = require('puppeteer');
+const parse = require('csv-parse');
 
-let colleges = fs.readFileSync('./utils/colleges.txt').toString().split('\n'); // colleges.txt file into string array
+let colleges = fs.readFileSync('./utils/colleges.txt').toString().split('\r\n'); // colleges.txt file into string array
 const rankingsURL = 'https://www.timeshighereducation.com/rankings/united-states/2020#!/page/0/length/-1/sort_by/rank/sort_order/asc/cols/stats';
 const collegeDataURL = 'https://www.collegedata.com/college/';
 
@@ -70,7 +71,7 @@ exports.scrapeCollegeRankings = async () => {
     return { ok: "Successfully scraped college rankings"};
 }
 
-// Scrapes CollegeData.com for Admission Rate, Size, Cost of Attendance
+// Scrapes CollegeData.com for Cost of Attendance, Completion Rate, GPA, SAT and ACT scores
 exports.scrapeCollegeData = async () => {
     const browser = await puppeteer.launch({ headless: true });
     const page = await browser.newPage();
@@ -97,18 +98,12 @@ exports.scrapeCollegeData = async () => {
         await page.goto(collegeURL);
 
         // Finds elements that contain the data value
-        let admissionRateEl = await page.$x(`//dt[contains(.,'Overall Admission Rate')]/following-sibling::dd[1]`);
         let completionRateEl = await page.$x(`//dt[contains(., 'Students Graduating Within 4 Years')]//following-sibling::dd[1]`);
         let costOfAttendanceEl = await page.$x(`//dt[contains(., 'Cost of Attendance')]//following-sibling::dd[1]`);
         let gpaEl = await page.$x(`//dt[contains(., 'Average GPA')]//following-sibling::dd[1]`);
         let satMathEl = await page.$x(`//dt[contains(., 'SAT Math')]//following-sibling::dd[1]`);
         let satEbrwEl = await page.$x(`//dt[contains(., 'SAT EBRW')]//following-sibling::dd[1]`);
         let actCompositeEl = await page.$x(`//dt[contains(., 'ACT Composite')]//following-sibling::dd[1]`);
-        let sizeEl = await page.$x(`//span[contains(., 'Undergraduate')]//preceding-sibling::span[1]`);
-        // TODO: scrape major info from /?tab=profile-academics-tab
-
-        admissionRateFull = await page.evaluate(el => el.textContent, admissionRateEl[0]);
-        admissionRate = admissionRateFull.substring(0, admissionRateFull.indexOf('%'));
 
         completionRateFull = await page.evaluate(el => el.textContent, completionRateEl[0]);
         if (completionRateFull == 'Not reported') completionRate = null;
@@ -151,8 +146,6 @@ exports.scrapeCollegeData = async () => {
             actComposite = (parseInt(actCompositeNums[0]) + parseInt(actCompositeNums[1])) / 2;
         }
 
-        size = (await page.evaluate(el => el.textContent, sizeEl[0])).replace(/[^0-9]/g, '');
-
         let majorEls = await page.$x(`(//div[contains(., 'Undergraduate Majors')])[last()]//ul`);
         let majors = [];
         for (let majorEl of majorEls) {
@@ -161,7 +154,6 @@ exports.scrapeCollegeData = async () => {
         }
 
         let collegeObject = {
-            AdmissionRate: admissionRate,
             Name: college,
             CompletionRate: completionRate,
             CostOfAttendanceInState: costOfAttendanceInState,
@@ -169,8 +161,7 @@ exports.scrapeCollegeData = async () => {
             GPA: gpa,
             SATMath: satMath,
             SATEBRW: satEbrw,
-            ACTComposite: actComposite,
-            Size: size
+            ACTComposite: actComposite
         };
 
 
@@ -224,5 +215,64 @@ exports.scrapeCollegeData = async () => {
 
     await page.close();
     await browser.close();
+    return { ok: 'Success. Able to scrape all colleges in file.' };
+}
+
+exports.importCollegeScorecard = async () => {
+    let thereIsError = [];
+    let csvData = [];
+    await new Promise(function(resolve,reject){
+        fs.createReadStream('./utils/collegeScorecard.csv')
+            .pipe(parse({delimiter: ',', columns: true}))
+            .on('data', (csvRow) => {
+                let collegeStr = csvRow.INSTNM.replace('-Bloomington', ' Bloomington').replace('-Amherst', ' Amherst').replace('The University', 'University').replace(' Saint ', ' St ').replace('Franklin and Marshall', 'Franklin & Marshall').replace('-', ', ');
+                if(colleges.includes(collegeStr)) {
+                    college = collegeStr;
+                    admissionRate = csvRow.ADM_RATE !== 'NULL' ? csvRow.ADM_RATE : null;
+                    instiType = csvRow.CONTROL;
+                    studentDebt = csvRow.GRAD_DEBT_MDN;
+                    location = csvRow.STABBR;
+                    size = csvRow.UG !== 'NULL' ? csvRow.UG : csvRow.UGDS;
+                    csvData.push({
+                        Name: college,
+                        AdmissionRate: admissionRate,
+                        InstitutionType: instiType,
+                        StudentDebt: studentDebt,
+                        Location: location,
+                        Size: size
+                    });
+                }
+            })
+            .on('end', () => {
+                resolve(csvData);
+            })
+            .on('error', reject);
+        });
+    for(let obj of csvData) {
+        while (true) {
+            try {
+                await models.College.upsert(obj);
+                break;
+            } catch (error) {
+                if (error instanceof sequelize.ValidationError)  {
+                    delete obj[error.errors[0].path];
+                } else {
+                    thereIsError.push({
+                        error: `Unable to add ${college}`,
+                        reason: error
+                    });
+                    break;
+                }
+            }
+        }
+    }
+
+    if (thereIsError.length) {
+        return {
+            error: 'Error importing colleges',
+            reason: thereIsError
+        };
+    }
+
     return { ok: 'Success. Able to scrape all colleges in file.' };
 }
