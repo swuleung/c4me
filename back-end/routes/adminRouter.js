@@ -66,6 +66,40 @@ router.get('/importCollegeScoreboard', async function (req, res) {
     }
 });
 
+router.get('/importStudents', async function (req, res) {
+    if (!req.cookies.access_token) {
+        res.status(400).send({ status: "error", error: "No token provided" });
+    } else {
+        let authorized = await authentication.validateJWT(req.cookies.access_token);
+        if (!authorized.username) {
+            res.clearCookie("access_token");
+            res.status(400).send(authorized);
+        } else if (!adminController.checkAdmin(authorized.username)) {
+            res.status(400).send(authorized);
+        } else {
+            let result = await adminController.importStudents();
+            res.send(result);
+        }
+    }
+});
+
+router.get('/importApplications', async function (req, res) {
+    if (!req.cookies.access_token) {
+        res.status(400).send({ status: "error", error: "No token provided" });
+    } else {
+        let authorized = await authentication.validateJWT(req.cookies.access_token);
+        if (!authorized.username) {
+            res.clearCookie("access_token");
+            res.status(400).send(authorized);
+        } else if (!adminController.checkAdmin(authorized.username)) {
+            res.status(400).send(authorized);
+        } else {
+            let result = await adminController.importApplications();
+            res.send(result);
+        }
+    }
+});
+
 router.get('/deleteStudentProfiles', async function (req, res) {
     if (!req.cookies.access_token) {
         res.status(400).send({ status: "error", error: "No token provided" });
@@ -77,13 +111,13 @@ router.get('/deleteStudentProfiles', async function (req, res) {
         } else if (!adminController.checkAdmin(authorized.username)) {
             res.status(400).send(authorized);
         } else {
-            console.log('Delete Student Profiles');
-            // Add your code here
-            res.send({
-                example: 'example, dont actually leave this here, look at the other functions as how result should be returned'
-            })
+            let rmvd = await adminController.removeAllUsers();
+            if(!rmvd.ok){
+                res.status(400);
+            }
+                res.send(rmvd);
         }
-    }
-});
+    } 
+ });
 
 module.exports = router;

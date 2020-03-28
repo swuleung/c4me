@@ -62,16 +62,16 @@ exports.scrapeCollegeRankings = async () => {
         }
     }
 
-    page.close();
-    browser.close();
+    await page.close();
+    await browser.close();
 
     if (thereIsError.length) {
-        return { error: 'Error Scraping College Rankings', reason: thereIsError};
+        return { error: 'Error Scraping College Rankings', reason: thereIsError };
     }
-    return { ok: "Successfully scraped college rankings"};
+    return { ok: "Successfully scraped college rankings" };
 }
 
-// Scrapes CollegeData.com for Cost of Attendance, Completion Rate, GPA, SAT and ACT scores
+// Scrapes CollegeData.com for Admission Rate, Size, Cost of Attendance
 exports.scrapeCollegeData = async () => {
     const browser = await puppeteer.launch({ headless: true });
     const page = await browser.newPage();
@@ -275,4 +275,146 @@ exports.importCollegeScorecard = async () => {
     }
 
     return { ok: 'Success. Able to scrape all colleges in file.' };
+}
+
+
+exports.importStudents = async () => {
+    let errors = [];
+    let users = [];
+    await new Promise(function (resolve) {
+        fs.createReadStream(__dirname + '/../assets/students-1.csv')
+            .on('error', (error) => {
+                console.log(error.message)
+            })
+            .pipe(parse({delimiter: ',', columns: true, trim: true}))
+            .on('data', async (row) => {
+                let user = {
+                    "username": row.userid,
+                    "password": row.password,
+                    "GPA": row.GPA,
+                    "residenceState": row.residence_state,
+                    "highschoolName": row.high_school_name,
+                    "highSchoolCity": row.high_school_city,
+                    "highschoolState": row.high_school_state,
+                    "collegeClass": row.college_class,
+                    "major1": row.major_1,
+                    "major2": row.major_2,
+                    "SATMath": row.SAT_math,
+                    "SATEBRW": row.SAT_EBRW,
+                    "ACTEnglish": row.ACT_English,
+                    "ACTMath": row.ACT_math,
+                    "ACTReading": row.ACT_reading,
+                    "ACTScience": row.ACT_science,
+                    "ACTComposite": row.ACT_composite,
+                    "SATLit": row.SAT_literature,
+                    "SATUs": row.SAT_US_hist,
+                    "SATWorld": row.SAT_world_hist,
+                    "SATMathI": row.SAT_math_I,
+                    "SATMathII": row.SAT_math_II,
+                    "SATEco": row.SAT_eco_bio,
+                    "SATMol": row.SAT_mol_bio,
+                    "SATChem": row.SAT_chemistry,
+                    "SATPhys": row.SAT_physics,
+                    "APPassed": row.num_AP_passed
+                }
+
+                Object.keys(user).forEach(function (key) { if (user[key] === '') { user[key] = null }; });
+                users.push(user);
+            })
+            .on('end', () => {
+                resolve(users);
+            });
+    });
+    for (let user of users) {
+        while (true) {
+            try {
+                await models.User.create(user);
+                break;
+            } catch (error) {
+                if (error instanceof sequelize.ValidationError && !(error instanceof sequelize.UniqueConstraintError)) {
+                    delete user[error.errors[0].path];
+                }
+                else {
+                    errors.push({
+                        error: `Error in creating ${user.username}: ${error.message}`
+                    });
+                    break;
+                }
+            }
+        }
+    }
+    if (errors.length) {
+        return {
+            error: errors,
+        }
+    } else {
+        return {
+            ok: 'Success',
+        }
+    }
+}
+
+exports.importApplications = async (filename) => {
+    let errors = [];
+    let applications = [];
+    await new Promise(function (resolve) {
+        fs.createReadStream(__dirname + '/../assets/applications-1.csv')
+            .on('error', (error) => {
+                errors.push({
+                    error: error.message,
+                    reason: error
+                })
+            })
+            .pipe(parse({delimiter: ',', columns: true}))
+            .on('data', async (row) => {
+                let application = {
+                    collegeName: row.college,
+                    username: row.userid,
+                    status: row.status
+                }
+                applications.push(application);
+            })
+            .on('end', () => {
+                resolve(applications);
+            });
+    });
+    for (let app of applications) {
+
+        try {
+            let college = await models.College.findOne({
+                where: { Name: app.collegeName },
+                raw: true
+            });
+            app.college = college.CollegeId;
+            await models.Application.create(app);
+        } catch (error) {
+            errors.push({
+                error: `Error in creating app for ${app.collegeName}: ${error.message}`
+            });
+        }
+    }
+    if (errors.length) {
+        return {
+            error: errors,
+        }
+    } else {
+        return {
+            ok: 'Success',
+        }
+    }
+}
+
+exports.removeAllUsers = async () => {
+    try {
+        user = await models.User.destroy({
+            where: { isAdmin: false },
+            cascade: true
+        });
+        return { ok: "All Users Deleted" };
+    } catch (error) {
+        return {
+            error: "Something wrong in removeAllUsers",
+            reason: error
+        }
+    }
 }
