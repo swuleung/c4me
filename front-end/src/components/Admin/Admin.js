@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Alert, Container, Row, Col } from 'react-bootstrap';
-import { scrapeCollegeRanking, scrapeCollegeData, importCollegeScorecard, deleteAllStudents } from '../../services/api/admin';
+import { scrapeCollegeRanking, scrapeCollegeData, importCollegeScorecard, deleteAllStudents, importStudents, importStudentApplications } from '../../services/api/admin';
 
 const Admin = (props) => {
     const [errorAlert, setErrorAlert] = useState(false);
@@ -54,6 +54,26 @@ const Admin = (props) => {
         });
     }
 
+    const handleImportStudentProfiles = () => {
+        importStudents().then((resultStudent) => {
+            if (resultStudent.error) {
+                setErrorAlert(true);
+                setErrorMessage(resultStudent.error);
+            }
+            if (resultStudent.ok) {
+                importStudentApplications().then((resultApp) => {
+                    if (resultApp.error) {
+                        setErrorAlert(true);
+                        setErrorMessage(resultApp.error);
+                    }
+                    if (resultApp.ok) {
+                        setErrorAlert(false);
+                    }
+                });
+            }
+        })
+    }
+
     return (
         <div>
             {errorAlert &&
@@ -63,38 +83,47 @@ const Admin = (props) => {
             }
             <Container>
                 <Row className='align-items-center mb-3'>
-                    <Col sm='8'>
+                    <Col sm='10'>
                         <h2>Scrape College Rankings</h2>
                         <div>Overwrites the ranking of colleges in database with WSJ/THE 2020 rankings</div>
                     </Col>
-                    <Col sm='4'>
-                        <Button onClick={e =>{ handleScrapeCollegeRankings(e) }} className="float-right">Scrape College Rankings</Button>
+                    <Col sm='2'>
+                        <Button onClick={e => { handleScrapeCollegeRankings(e) }} className="float-right">Scrape College Rankings</Button>
                     </Col>
                 </Row>
                 <Row className='align-items-center mb-3'>
-                    <Col sm='8'>
+                    <Col sm='10'>
                         <h2>Import College Scorecard</h2>
                         <div>Overwrites Admission Rate, Institution Type, Location, Student Debt, and Size of colleges in database with information from the College Scorecard data file.</div>
                     </Col>
-                    <Col sm='4'>
-                        <Button onClick={e =>{ handleImportCollegeScorecard(e) }} className="float-right">Import College Scorecard</Button>
+                    <Col sm='2'>
+                        <Button onClick={e => { handleImportCollegeScorecard(e) }} className="float-right">Import College Scorecard</Button>
                     </Col>
                 </Row>
                 <Row className='align-items-center mb-3'>
-                    <Col sm='8'>
+                    <Col sm='10'>
                         <h2>Scrape CollegeData.com</h2>
                         <div>Overwrites Cost of Attendance, Completion Rate, GPA, SAT and ACT scores of colleges in database with data from CollegeData.com</div>
                     </Col>
-                    <Col sm='4'>
-                        <Button onClick={e =>{ handleScrapeCollegeData(e) }} className="float-right">Scrape CollegeData.com</Button>
+                    <Col sm='2'>
+                        <Button onClick={e => { handleScrapeCollegeData(e) }} className="float-right">Scrape CollegeData.com</Button>
                     </Col>
                 </Row>
                 <Row className='align-items-center mb-3'>
-                    <Col sm='8'>
-                        <h2>Delete All Students</h2>
+                    <Col sm='10'>
+                        <h2>Delete All Student Profiles</h2>
                     </Col>
-                    <Col sm='4'>
-                        <Button onClick={e =>{ handleDeleteAllStudents(e) }} className="float-right">Delete All Students</Button>
+                    <Col sm='2'>
+                        <Button onClick={e => { handleDeleteAllStudents(e) }} className="float-right">Delete All Student Profiles</Button>
+                    </Col>
+                </Row>
+                <Row className='align-items-center mb-3'>
+                    <Col sm='10'>
+                        <h2>Import Student Profile Dataset</h2>
+                        <div>Imports student profiles to system databse with information included in the students and applications csv files</div>
+                    </Col>
+                    <Col sm='2'>
+                        <Button onClick={e => { handleImportStudentProfiles(e) }} className="float-right">Import Student Profile Dataset</Button>
                     </Col>
                 </Row>
             </Container>
