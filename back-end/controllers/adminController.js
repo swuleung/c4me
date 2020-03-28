@@ -229,83 +229,81 @@ exports.scrapeCollegeData = async () => {
 }
 
 exports.importStudents = async () => {
-    let newUsers = [];
-    const errors = [];
-    let readStudents = fs.createReadStream(__dirname + '/../assets/students-1.csv')
-        .on('error', (error) => {
-            console.log(error.message)
-        })
-        .pipe(csvParser({
-            mapHeaders: ({ header }) => header.trim()
-        }))
-        .on('data', async (row) => {
-            let user = {
-                "username": row.userid,
-                "password": row.password,
-                "GPA": row.GPA,
-                "residenceState": row.residence_state,
-                "highschoolName": row.high_school_name,
-                "highSchoolCity": row.high_school_city,
-                "highschoolState": row.high_school_state,
-                "collegeClass": row.college_class,
-                "major1": row.major_1,
-                "major2": row.major_2,
-                "SATMath": row.SAT_math,
-                "SATEBRW": row.SAT_EBRW,
-                "ACTEnglish": row.ACT_English,
-                "ACTMath": row.ACT_math,
-                "ACTReading": row.ACT_reading,
-                "ACTScience": row.ACT_science,
-                "ACTComposite": row.ACT_composite,
-                "SATLit": row.SAT_literature,
-                "SATUs": row.SAT_US_hist,
-                "SATWorld": row.SAT_world_hist,
-                "SATMathI": row.SAT_math_I,
-                "SATMathII": row.SAT_math_II,
-                "SATEco": row.SAT_eco_bio,
-                "SATMol": row.SAT_mol_bio,
-                "SATChem": row.SAT_chemistry,
-                "SATPhys": row.SAT_physics,
-                "APPassed": row.num_AP_passed
-            }
+    let errors = [];
+    let users = [];
+    await new Promise(function (resolve) {
+        fs.createReadStream(__dirname + '/../assets/students-1.csv')
+            .on('error', (error) => {
+                console.log(error.message)
+            })
+            .pipe(csvParser({
+                mapHeaders: ({ header }) => header.trim()
+            }))
+            .on('data', async (row) => {
+                let user = {
+                    "username": row.userid,
+                    "password": row.password,
+                    "GPA": row.GPA,
+                    "residenceState": row.residence_state,
+                    "highschoolName": row.high_school_name,
+                    "highSchoolCity": row.high_school_city,
+                    "highschoolState": row.high_school_state,
+                    "collegeClass": row.college_class,
+                    "major1": row.major_1,
+                    "major2": row.major_2,
+                    "SATMath": row.SAT_math,
+                    "SATEBRW": row.SAT_EBRW,
+                    "ACTEnglish": row.ACT_English,
+                    "ACTMath": row.ACT_math,
+                    "ACTReading": row.ACT_reading,
+                    "ACTScience": row.ACT_science,
+                    "ACTComposite": row.ACT_composite,
+                    "SATLit": row.SAT_literature,
+                    "SATUs": row.SAT_US_hist,
+                    "SATWorld": row.SAT_world_hist,
+                    "SATMathI": row.SAT_math_I,
+                    "SATMathII": row.SAT_math_II,
+                    "SATEco": row.SAT_eco_bio,
+                    "SATMol": row.SAT_mol_bio,
+                    "SATChem": row.SAT_chemistry,
+                    "SATPhys": row.SAT_physics,
+                    "APPassed": row.num_AP_passed
+                }
 
-            Object.keys(user).forEach(function (key) { if (user[key] === '') { user[key] = null }; });
-            while (true) {
-                try {
-                    await models.User.create(user);
+                Object.keys(user).forEach(function (key) { if (user[key] === '') { user[key] = null }; });
+                users.push(user);
+            })
+            .on('end', () => {
+                resolve(users);
+            });
+    });
+    for (let user of users) {
+        while (true) {
+            try {
+                await models.User.create(user);
+                break;
+            } catch (error) {
+                if (error instanceof sequelize.ValidationError && !(error instanceof sequelize.UniqueConstraintError)) {
+                    delete user[error.errors[0].path];
+                }
+                else {
+                    errors.push({
+                        error: `Error in creating ${user.username}: ${error.message}`
+                    });
                     break;
-                } catch (error) {
-                    if (error instanceof sequelize.ValidationError && !(error instanceof sequelize.UniqueConstraintError)) {
-                        delete user[error.errors[0].path];
-                    }
-                    else {
-                        errors.push({
-                            error: `Error in creating ${user}: ${error}`,
-                            reason: error
-                        });
-                        break;
-                    }
                 }
             }
-            // newUsers.push(models.User.create(user).catch(e => {console.log('ahhh'); errors.push(`Error in creating ${user}: ${e}`)}));
-        });
-    return readStudents
-        .on('end', () => {
-            // await Promise.all(newUsers).catch(function (err) {
-            //     errors.push(`Error resolving creations: ${err.message}`)
-            // });
-            console.log(errors);
-            return errors;
-        });
-    // if (errors.length) {
-    //     return {
-    //         error: errors,
-    //     }
-    // } else {
-    //     return {
-    //         ok: 'Success',
-    //     }
-    // }
+        }
+    }
+    if (errors.length) {
+        return {
+            error: errors,
+        }
+    } else {
+        return {
+            ok: 'Success',
+        }
+    }
 }
 
 exports.importApplications = async (filename) => {
