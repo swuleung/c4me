@@ -277,16 +277,16 @@ exports.importCollegeScorecard = async () => {
     return { ok: 'Success. Able to scrape all colleges in file.' };
 }
 
-exports.deleteAllUsers = async () => {
+exports.deleteAllStudents = async () => {
     try{
         user = await models.User.destroy({
             where: {isAdmin: false},
             cascade:true
         });
-        return {ok: "All Users Deleted"};
+        return {ok: "All Students Deleted"};
     } catch (error){
         return {
-            error: "Something wrong in deleteAllUsers",
+            error: "Something wrong in deleteAllStudents",
             reason: error
         }
     }

@@ -16,9 +16,9 @@ module.exports = {
             }
         }
     },
-    deleteAllUsers: async function() {
+    deleteAllStudents: async function() {
         try{
-            fetch("http://localhost:9000/admin/deleteStudentProfiles", {
+            let result = fetch("http://localhost:9000/admin/deleteStudentProfiles", {
                 method: "GET",
                 credentials: 'include',
                 headers: {

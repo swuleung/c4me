@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Alert, Container, Row, Col } from 'react-bootstrap';
-import { scrapeCollegeRanking, scrapeCollegeData, importCollegeScorecard } from '../../services/api/admin';
+import { scrapeCollegeRanking, scrapeCollegeData, importCollegeScorecard, deleteAllStudents } from '../../services/api/admin';
 
 const Admin = (props) => {
     const [errorAlert, setErrorAlert] = useState(false);
@@ -17,6 +17,7 @@ const Admin = (props) => {
             }
         });
     }
+
     const handleImportCollegeScorecard = () => {
         importCollegeScorecard().then((result) => {
             if (result.error) {
@@ -28,8 +29,21 @@ const Admin = (props) => {
             }
         });
     }
+
     const handleScrapeCollegeData = () => {
         scrapeCollegeData().then((result) => {
+            if (result.error) {
+                setErrorAlert(true);
+                setErrorMessage(result.error);
+            }
+            if (result.ok) {
+                setErrorAlert(false);
+            }
+        });
+    }
+    
+    const handleDeleteAllStudents = () => {
+        deleteAllStudents().then((result) => {
             if (result.error) {
                 setErrorAlert(true);
                 setErrorMessage(result.error);
@@ -73,6 +87,14 @@ const Admin = (props) => {
                     </Col>
                     <Col sm='4'>
                         <Button onClick={e =>{ handleScrapeCollegeData(e) }} className="float-right">Scrape CollegeData.com</Button>
+                    </Col>
+                </Row>
+                <Row className='align-items-center mb-3'>
+                    <Col sm='8'>
+                        <h2>Delete All Students</h2>
+                    </Col>
+                    <Col sm='4'>
+                        <Button onClick={e =>{ handleDeleteAllStudents(e) }} className="float-right">Delete All Students</Button>
                     </Col>
                 </Row>
             </Container>

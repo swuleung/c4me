@@ -77,7 +77,7 @@ router.get('/deleteStudentProfiles', async function (req, res) {
         } else if (!adminController.checkAdmin(authorized.username)) {
             res.status(400).send(authorized);
         } else {
-            let rmvd = await adminController.removeAllUsers();
+            let rmvd = await adminController.deleteAllStudents();
             if(!rmvd.ok){
                 res.status(400);
             }
