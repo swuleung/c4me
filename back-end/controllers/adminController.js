@@ -2,9 +2,9 @@ const sequelize = require('sequelize');
 const models = require('../models');
 const fs = require('fs');
 const puppeteer = require('puppeteer');
-const csvParser = require('csv-parser');
+const parse = require('csv-parse');
 
-let colleges = fs.readFileSync('./utils/colleges.txt').toString().split('\n'); // colleges.txt file into string array
+let colleges = fs.readFileSync('./utils/colleges.txt').toString().split('\r\n'); // colleges.txt file into string array
 const rankingsURL = 'https://www.timeshighereducation.com/rankings/united-states/2020#!/page/0/length/-1/sort_by/rank/sort_order/asc/cols/stats';
 const collegeDataURL = 'https://www.collegedata.com/college/';
 
@@ -62,8 +62,8 @@ exports.scrapeCollegeRankings = async () => {
         }
     }
 
-    page.close();
-    browser.close();
+    await page.close();
+    await browser.close();
 
     if (thereIsError.length) {
         return { error: 'Error Scraping College Rankings', reason: thereIsError };
@@ -236,9 +236,7 @@ exports.importStudents = async () => {
             .on('error', (error) => {
                 console.log(error.message)
             })
-            .pipe(csvParser({
-                mapHeaders: ({ header }) => header.trim()
-            }))
+            .pipe(parse({delimiter: ',', columns: true, trim: true}))
             .on('data', async (row) => {
                 let user = {
                     "username": row.userid,
@@ -309,7 +307,6 @@ exports.importStudents = async () => {
 exports.importApplications = async (filename) => {
     let errors = [];
     let applications = [];
-    console.log('hello')
     await new Promise(function (resolve) {
         fs.createReadStream(__dirname + '/../assets/applications-1.csv')
             .on('error', (error) => {
@@ -318,9 +315,7 @@ exports.importApplications = async (filename) => {
                     reason: error
                 })
             })
-            .pipe(csvParser({
-                mapHeaders: ({ header }) => header.trim()
-            }))
+            .pipe(parse({delimiter: ',', columns: true}))
             .on('data', async (row) => {
                 let application = {
                     collegeName: row.college,
@@ -336,7 +331,6 @@ exports.importApplications = async (filename) => {
     for (let app of applications) {
 
         try {
-            console.log(app);
             let college = await models.College.findOne({
                 where: { Name: app.collegeName },
                 raw: true
