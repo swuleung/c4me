@@ -11,7 +11,6 @@ exports.createUser = async (user) => {
             password: user.password
         });
     } catch (error) {
-        console.log(error);
         if (error instanceof sequelize.UniqueConstraintError) {
             return { error: 'Username must be unique', reason: error.errors[0].message };
         }

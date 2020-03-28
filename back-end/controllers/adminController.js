@@ -3,7 +3,6 @@ const models = require('../models');
 const fs = require('fs');
 const puppeteer = require('puppeteer');
 
-
 let colleges = fs.readFileSync('./utils/colleges.txt').toString().split('\n'); // colleges.txt file into string array
 const rankingsURL = 'https://www.timeshighereducation.com/rankings/united-states/2020#!/page/0/length/-1/sort_by/rank/sort_order/asc/cols/stats';
 const collegeDataURL = 'https://www.collegedata.com/college/';
