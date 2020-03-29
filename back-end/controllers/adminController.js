@@ -4,7 +4,7 @@ const fs = require('fs');
 const puppeteer = require('puppeteer');
 const parse = require('csv-parse');
 
-let colleges = fs.readFileSync('./utils/colleges.txt').toString().split('\r\n'); // colleges.txt file into string array
+let colleges = fs.readFileSync('./utils/colleges.txt').toString().split(/\r?\n/); // colleges.txt file into string array
 const rankingsURL = 'https://www.timeshighereducation.com/rankings/united-states/2020#!/page/0/length/-1/sort_by/rank/sort_order/asc/cols/stats';
 const collegeDataURL = 'https://www.collegedata.com/college/';
 
@@ -52,7 +52,7 @@ exports.scrapeCollegeRankings = async () => {
         try {
             await models.College.upsert({
                 Name: college,
-                Ranking: ranking
+                Ranking: ranking.replace('=', '')
             });
         } catch (error) {
             thereIsError.push({
@@ -222,7 +222,7 @@ exports.importCollegeScorecard = async () => {
     let thereIsError = [];
     let csvData = [];
     await new Promise(function(resolve,reject){
-        fs.createReadStream('./utils/collegeScorecard.csv')
+        fs.createReadStream('./assets/collegeScorecard.csv')
             .pipe(parse({delimiter: ',', columns: true}))
             .on('data', (csvRow) => {
                 let collegeStr = csvRow.INSTNM.replace('-Bloomington', ' Bloomington').replace('-Amherst', ' Amherst').replace('The University', 'University').replace(' Saint ', ' St ').replace('Franklin and Marshall', 'Franklin & Marshall').replace('-', ', ');
@@ -308,7 +308,7 @@ exports.importStudents = async () => {
                     "GPA": row.GPA,
                     "residenceState": row.residence_state,
                     "highschoolName": row.high_school_name,
-                    "highSchoolCity": row.high_school_city,
+                    "highschoolCity": row.high_school_city,
                     "highschoolState": row.high_school_state,
                     "collegeClass": row.college_class,
                     "major1": row.major_1,
@@ -386,7 +386,7 @@ exports.importApplications = async () => {
                 let application = {
                     collegeName: row.college,
                     username: row.userid,
-                    status: row.status
+                    status: row.status.replace('-', '')
                 }
                 applications.push(application);
             })
@@ -395,14 +395,19 @@ exports.importApplications = async () => {
             });
     });
     for (let app of applications) {
-
         try {
             let college = await models.College.findOne({
                 where: { Name: app.collegeName },
                 raw: true
             });
-            app.college = college.CollegeId;
-            await models.Application.create(app);
+            if(college !== null) {
+                app.college = college.CollegeId;
+                await models.Application.create(app);
+            } else {
+                errors.push({
+                    error: `Error in creating app for ${app.collegeName}: no matching college in database`
+                });
+            }
         } catch (error) {
             errors.push({
                 error: `Error in creating app for ${app.collegeName}: ${error.message} ${error.name}`,
