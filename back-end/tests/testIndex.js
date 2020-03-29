@@ -11,7 +11,8 @@ describe("top", function () {
     importTest('user.js', './user/simple');
     importTest('profile.js', './student/profile')
     importTest('application.js', './student/application')
+    importTest('college.js','./college/college')
     after(function () {
-        console.log("after all tests");
+        console.log("after all tests\n");
     });
 });

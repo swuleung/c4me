@@ -1,7 +1,7 @@
 const agent = require('../shared').agent;
 const expect = require('../shared').expect;
 
-describe("Student Application", () => {
+describe("Student Profile", () => {
     describe("Create a new application", () => {
         it('Make sure mochaStudent\'s has no applications', (done) => {
             agent
@@ -15,6 +15,18 @@ describe("Student Application", () => {
         });
 
         it('Add one student application', () => {
+            it('Add one a non-existing college', (done) => {
+                agent
+                    .post('/students/mochaStudent/applications/edit')
+                    .send({
+                        college: -1,
+                        status: 'deferred'
+                    })
+                    .end((err, res) => {
+                        res.should.have.status(400);
+                        done();
+                    }); 
+            });            
             it('Add one college', (done) => {
                 agent
                     .post('/students/mochaStudent/applications/edit')
@@ -25,7 +37,7 @@ describe("Student Application", () => {
                     .end((err, res) => {
                         res.should.have.status(200);
                         let application = res.body.applications;
-                        expect(application).to.depp.equal({
+                        expect(application).to.deep.equal({
                             college: 1,
                             status: 'waitlisted',
                             username: 'mochaStudent'
@@ -44,15 +56,12 @@ describe("Student Application", () => {
                     'username': 'mochaStudent'
                 })
                 .end((err, res) => {
-                    res.should.have.status(200);
                     res.should.not.have.cookie('access_token');
+                    res.should.have.status(200);
                     done();
                 });
         })
-    })
-
-    describe("Check if application was deleted", () => {
-        it ("Check if application does not exist", (done) => {
+        it ("Check application cascade", (done) => {
             agent 
                 .get('/student/mochaStudent/applications')
                 .end((err,res) => {
