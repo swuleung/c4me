@@ -88,18 +88,53 @@ exports.getStudentApplications = async (username) => {
 }
 
 exports.updateStudentApplications = async (username, newApplications) => {
-    for (let i = 0; i < newApplications.length; i++) {
-        try {
-            models.Application.upsert({
-                username: username,
-                college: parseInt(newApplications[i].college),
-                status:  newApplications[i].status
-            });
-        } catch (error) {
-            return {
-                error: 'Error updating application',
-                reason: error
+    let copyApplications = [...newApplications];
+    let allApplications = await models.Application.findAll({
+        where: {
+            username: username
+        }
+    });
+    let errors = [];
+    for (let i = 0; i < allApplications.length; i++) {
+        let found = copyApplications.findIndex(app => parseInt(app.college) == allApplications[i].dataValues.college);
+        if (found > -1) {
+            try {
+                await allApplications[i].update(copyApplications[found].college);
+            } catch (error) {
+                errors.push({
+                    error: `Error updating application: ${allApplications[i]}`,
+                    reason: error
+                });
             }
+            copyApplications.splice(found, 1);
+        } else {
+            try {
+                await allApplications[i].destroy();
+            } catch (error) {
+                errors.push({
+                    error: `Error deleting application: ${allApplications[i]}`,
+                    reason: error
+                });
+            }
+        }
+    }
+
+    if (copyApplications.length) {
+        for (let i = 0; i < copyApplications.length; i++) {
+            try {
+                await models.Application.create(copyApplications[i]);
+            } catch (error) {
+                errors.push({
+                    error: `Error creating application:  ${allApplications[i]}`,
+                    reason: error
+                });
+            }
+        }
+    }
+    if (errors.length) {
+        return {
+            error: 'Error updating some applications',
+            reason: errors
         }
     }
     return {
