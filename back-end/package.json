@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "test": "mocha --timeout 3000 --recursive tests/testIndex.js --reporter nyan --sort --exit"
+    "test": "NODE_ENV=test mocha --timeout 3000 --recursive tests/testIndex.js --reporter nyan --sort --exit"
   },
   "dependencies": {
     "bcrypt": "^4.0.1",

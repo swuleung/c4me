@@ -1,0 +1,29 @@
+{
+  "development": {
+    "username": "swuleung",
+    "password": "111065204",
+    "database": "swuleung",
+    "host": "mysql3.cs.stonybrook.edu",
+    "dialect": "mysql",
+    "operatorsAliases": 0,
+    "JWT_COOKIE": "access_token"
+  },
+  "test": {
+    "username": "swuleung",
+    "password": "111065204",
+    "database": "swuleung",
+    "host": "mysql3.cs.stonybrook.edu",
+    "dialect": "mysql",
+    "operatorsAliases": 0,
+    "JWT_COOKIE": "access_token"
+  },
+  "production": {
+    "username": "swuleung",
+    "password": "111065204",
+    "database": "swuleung",
+    "host": "mysql3.cs.stonybrook.edu",
+    "dialect": "mysql",
+    "operatorsAliases": 0,
+    "JWT_COOKIE": "access_token"
+  }
+}
