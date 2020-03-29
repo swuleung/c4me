@@ -1,22 +1,12 @@
-// Import the dependencies for testing
-const chai = require('chai');
-const chaiHTTP = require('chai-http');
-const app = require('../app');
+const agent = require('../shared').agent;
 
-// Configure chai
-chai.use(chaiHTTP);
-chai.should();
-
-const agent = chai.request.agent(app);
-
-describe("User", () => {
+describe("Simple Create/Login/Delete", () => {
     describe("Create User", () => {
-        // Test to get all students record
         it("Creates a new user", (done) => {
             agent
                 .post('/users/create')
                 .send({
-                    'username': 'mocha3',
+                    'username': 'mocha',
                     'password': 'password',
                 })
                 .end((err, res) => {
@@ -31,7 +21,7 @@ describe("User", () => {
             agent
                 .post('/users/login')
                 .send({
-                    'username': 'mocha3',
+                    'username': 'mocha',
                     'password': 'password',
                 })
                 .end((err, res) => {
@@ -47,7 +37,7 @@ describe("User", () => {
             agent
                 .delete('/users/delete')
                 .send({
-                    'username': 'mocha3'
+                    'username': 'mocha'
                 })
                 .end((err, res) => {
                     res.should.have.status(200);
