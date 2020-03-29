@@ -188,7 +188,8 @@ module.exports = (sequelize, DataTypes) => {
         APPassed: {
             type: DataTypes.INTEGER,
             validate: {
-                min: 0
+                min: 0,
+                max: 12
             },
             defaultValue: 0
         }

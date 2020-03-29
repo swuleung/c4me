@@ -47,7 +47,6 @@ describe("Student Profile", () => {
                     done();
                 });
         });
-
         it('Update mochaStudent with valid data', (done) => {
             agent
                 .post('/students/mochaStudent/edit')
@@ -58,11 +57,12 @@ describe("Student Profile", () => {
                     res.should.have.status(200);
                     let student = res.body.student;
                     expect(student.username).to.equal('mochaStudent');
-                    expect(student.GPA).to.be.equal(3.0);
+                    expect(student.GPA).to.be.lessThan(4.0);
+                    expect(student.GPA).to.be.greaterThan(0.0);
                     done();
                 })
         });
-        it('Update mochaStudent with invalid data', (done) => {
+        it('Update mochaStudent with invalid data (ACTComposite out of Range)', (done) => {
             agent
                 .post('/students/mochaStudent/edit')
                 .send({
@@ -70,9 +70,112 @@ describe("Student Profile", () => {
                 })
                 .end((err, res) => {
                     res.should.have.status(400);
+                    let student = res.body.student;
+                    //student is undefined here what do?
                     // Error message here
                     done();
                 })
         });
+        it('Update mochaStudent with valid data (ACTComposite in Range)', (done) => {
+            agent
+                .post('/students/mochaStudent/edit')
+                .send({
+                    ACTComposite: 2
+                })
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    let student = res.body.student;
+                    expect(student.username).to.equal('mochaStudent');
+                    expect(student.ACTComposite).to.be.equal(2);
+                    done();
+                })
+        });
+        it('Update mochaStudent with invalid data (Illegal residenceState)', (done) => {
+            agent
+                .post('/students/mochaStudent/edit')
+                .send({
+                    residenceState: 'ZZ'
+                })
+                .end((err, res) => {
+                    res.should.have.status(400);
+                    let student = res.body.student;
+                    //student is undefined here what do?
+                    // Error message here
+                    done();
+                })
+        });
+        it('Update mochaStudent with valid data (Legal residenceState)', (done) => {
+            agent
+                .post('/students/mochaStudent/edit')
+                .send({
+                    residenceState: 'AL'
+                })
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    let student = res.body.student;
+                    expect(student.username).to.equal('mochaStudent');
+                    expect(student.residenceState).to.be.equal('AL');
+                    done();
+                })
+        });
+        it('Update mochaStudent with invalid data (SATMath out of Range)', (done) => {
+            agent
+                .post('/students/mochaStudent/edit')
+                .send({
+                    SATMath: 801
+                })
+                .end((err, res) => {
+                    res.should.have.status(400);
+                    let student = res.body.student;
+                    //student is undefined here what do?
+                    // Error message here
+                    done();
+                })
+        });
+        it('Update mochaStudent with valid data (SATMath in Range)', (done) => {
+            agent
+                .post('/students/mochaStudent/edit')
+                .send({
+                    SATMath: 200
+                })
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    let student = res.body.student;
+                    expect(student.username).to.equal('mochaStudent');
+                    expect(student.SATMath).to.be.greaterThan(199);
+                    expect(student.SATMath).to.be.lessThan(801);
+                    done();
+                })
+        });
+        it('Update mochaStudent with invalid data (APPassed out of Range)', (done) => {
+            agent
+                .post('/students/mochaStudent/edit')
+                .send({
+                    APPassed: 13
+                })
+                .end((err, res) => {
+                    res.should.have.status(400);
+                    let student = res.body.student;
+                    //student is undefined here what do?
+                    // Error message here
+                    done();
+                })
+        });
+        it('Update mochaStudent with valid data (APPassed in Range)', (done) => {
+            agent
+                .post('/students/mochaStudent/edit')
+                .send({
+                    APPassed: 1
+                })
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    let student = res.body.student;
+                    expect(student.username).to.equal('mochaStudent');
+                    expect(student.APPassed).to.be.lessThan(12);
+                    expect(student.APPassed).to.be.greaterThan(-1);
+                    done();
+                })
+        }); 
     });
+
 });

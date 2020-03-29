@@ -1,7 +1,7 @@
 const agent = require('../shared').agent;
 const expect = require('../shared').expect;
 
-describe("Student Profile", () => {
+describe("Student Application", () => {
     describe("Create a new application", () => {
         it('Make sure mochaStudent\'s has no applications', (done) => {
             agent
@@ -48,6 +48,17 @@ describe("Student Profile", () => {
                     res.should.not.have.cookie('access_token');
                     done();
                 });
+        })
+    })
+
+    describe("Check if application was deleted", () => {
+        it ("Check if application does not exist", (done) => {
+            agent 
+                .get('/student/mochaStudent/applications')
+                .end((err,res) => {
+                    res.should.have.status(404);
+                    done();
+                })
         })
     })
 });
