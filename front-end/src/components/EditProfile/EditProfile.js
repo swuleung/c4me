@@ -31,6 +31,14 @@ const EditProfile = (props) => {
         setStudentApplications(newApplications);
     }
 
+    const handleDeleteApplication = (e) => {
+        const value = e.target.value;
+        const index = e.target.getAttribute('index');
+        let newApplications = [...studentApplications];
+        newApplications.splice(index, 1);
+        setStudentApplications(newApplications);
+    }
+
     const handleAddApplication = () => {
         let newApplications = [...studentApplications];
         newApplications.push({
@@ -58,7 +66,6 @@ const EditProfile = (props) => {
             }
             if (result.ok) {
                 setErrorAlert(false);
-                props.history.push(`../${props.match.params.username}`)
             }
         });
         editStudentApplications(props.match.params.username, studentApplications).then((result) => {
@@ -68,6 +75,7 @@ const EditProfile = (props) => {
             }
             if (result.ok) {
                 setErrorAlert(false);
+                props.history.push(`../${props.match.params.username}`);
             }
         })
     }
@@ -89,6 +97,9 @@ const EditProfile = (props) => {
                             <option value='waitlisted'>waitlisted</option>
                             <option value='withdrawn'>withdrawn</option>
                         </Form.Control>
+                    </td>
+                    <td className='delete-icon'>
+                        <span index={`${i}`} onClick={(e) => { handleDeleteApplication(e) }}>&#10005;</span>
                     </td>
                 </tr>);
         }
@@ -324,6 +335,7 @@ const EditProfile = (props) => {
                                 <tr>
                                     <th>School</th>
                                     <th>Status</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
