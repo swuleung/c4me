@@ -74,7 +74,7 @@ exports.getAllColleges = async () => {
     }
     return {
         ok: 'Success',
-        colleges,
+        colleges: colleges,
     };
 };
 

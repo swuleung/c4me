@@ -23,15 +23,13 @@ exports.createUser = async (user) => {
 };
 
 exports.login = async (loginUser) => {
-    const { username } = loginUser;
-    const { password } = loginUser;
+    const { username, password } = loginUser;
     let user = {};
     try {
         user = await models.User.findOne({
-            limit: 1,
             raw: true,
             where: {
-                username,
+                username: username,
             },
         });
     } catch (error) {
@@ -40,7 +38,7 @@ exports.login = async (loginUser) => {
             reason: error,
         };
     }
-    if (!user.length) {
+    if (!user) {
         return {
             error: 'User not found',
             reason: 'User does not exist in DB',
@@ -77,7 +75,7 @@ exports.deleteUser = async (username) => {
     try {
         await models.User.destroy({
             where: {
-                username,
+                username: username,
             },
         });
     } catch (error) {

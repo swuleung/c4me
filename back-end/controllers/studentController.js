@@ -3,10 +3,9 @@ const models = require('../models');
 exports.getStudent = async (username) => {
     let student = {};
     try {
-        student = await models.User.findAll({
-            limit: 1,
+        student = await models.User.findOne({
             where: {
-                username,
+                username: username,
                 isAdmin: false,
             },
         });
@@ -16,7 +15,7 @@ exports.getStudent = async (username) => {
             reason: error,
         };
     }
-    if (!student.length) {
+    if (!student) {
         return {
             error: 'User not found',
             reason: 'User does not exist in DB',
@@ -24,7 +23,7 @@ exports.getStudent = async (username) => {
     }
     return {
         ok: 'Success',
-        student: student[0].toJSON(),
+        student: student.toJSON(),
     };
 };
 
@@ -33,7 +32,7 @@ exports.updateStudent = async (username, newStudent) => {
     try {
         student = await models.User.findAll({
             where: {
-                username,
+                username: username,
                 isAdmin: false,
             },
         });
@@ -69,7 +68,7 @@ exports.getStudentApplications = async (username) => {
         applications = await models.Application.findAll({
             raw: true,
             where: {
-                username,
+                username: username,
             },
         });
     } catch (error) {
@@ -80,7 +79,7 @@ exports.getStudentApplications = async (username) => {
     }
     return {
         ok: 'Success',
-        applications,
+        applications: applications,
     };
 };
 
@@ -88,7 +87,7 @@ exports.updateStudentApplications = async (username, newApplications) => {
     const copyApplications = [...newApplications];
     const allApplications = await models.Application.findAll({
         where: {
-            username,
+            username: username,
         },
     });
     const errors = [];
