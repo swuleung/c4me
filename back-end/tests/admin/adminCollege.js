@@ -48,23 +48,38 @@ describe("Scrape college information", () => {
                 });
         });
 
+        it('Import College Scorecard', function (done) {
+            this.timeout(30000)
+            agent
+                .get('/admin/importCollegeScorecard')
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    done();
+                });
+        });
+
         it('Verify College Data and College Ranking', (done) => {
             agent
                 .get('/colleges/name/Stony Brook University')
                 .end((err, res) => {
                     res.should.have.status(200);
                     let college = res.body.college;
-                    expect(college.Name).to.equal('Stony Brook University');
-                    expect(college.Ranking).to.equal('=105'); // change this to 105
-                    expect(college.Size).to.equal(17364);
-                    expect(college.AdmissionRate).to.equal(42);
-                    expect(college.CostOfAttendanceInState).to.equal(27221);
-                    expect(college.CostOfAttendanceOutOfState).to.equal(44891);
-                    expect(parseFloat(college.GPA)).to.equal(3.83);
-                    expect(college.SATMath).to.equal(675);
-                    expect(college.SATEBRW).to.equal(671);
-                    expect(college.ACTComposite).to.equal(28);
-                    expect(college.CompletionRate).to.equal(53); // change this to 52.8
+                    expect(college).to.shallowDeepEqual({
+                        Name: 'Stony Brook University',
+                        Ranking: '105',
+                        Size: 17215,
+                        AdmissionRate: '42.19',
+                        CostOfAttendanceInState: 27221,
+                        CostOfAttendanceOutOfState: 44891,
+                        Location: 'NY',
+                        GPA: '3.83',
+                        SATMath: 675,
+                        SATEBRW: 671,
+                        ACTComposite: 28,
+                        InstitutionType: '1',
+                        CompletionRate: '52.80',
+                        StudentDebt: 19000,
+                    })
                     done();
                 });
         });

@@ -56,7 +56,7 @@ exports.scrapeCollegeRankings = async () => {
         try {
             await models.College.upsert({
                 Name: college,
-                Ranking: ranking
+                Ranking: ranking.replace('=', '')
             });
         } catch (error) {
             thereIsError.push({
@@ -75,7 +75,7 @@ exports.scrapeCollegeRankings = async () => {
     return { ok: "Successfully scraped college rankings" };
 }
 
-// Scrapes CollegeData.com for Admission Rate, Size, Cost of Attendance
+// Scrapes CollegeData.com for Cost of Attendance, Completion Rate, GPA, SAT and ACT scores
 exports.scrapeCollegeData = async () => {
     const browser = await puppeteer.launch({ headless: true });
     const page = await browser.newPage();
@@ -94,30 +94,22 @@ exports.scrapeCollegeData = async () => {
     let thereIsError = [];
 
     for (let college of colleges) {
-        console.log(college);
         // removes all special chars and replaces spaces with -
         let collegeStr = college.replace(/The\s/g, '').replace(/[^A-Z0-9]+/ig, ' ').replace(/\s/g, '-').replace('SUNY', 'State-University-of-New-York');
         let collegeURL = collegeDataURL + collegeStr;
-        console.log(collegeURL);
         await page.goto(collegeURL);
 
         // Finds elements that contain the data value
-        let admissionRateEl = await page.$x(`//dt[contains(.,'Overall Admission Rate')]/following-sibling::dd[1]`);
         let completionRateEl = await page.$x(`//dt[contains(., 'Students Graduating Within 4 Years')]//following-sibling::dd[1]`);
         let costOfAttendanceEl = await page.$x(`//dt[contains(., 'Cost of Attendance')]//following-sibling::dd[1]`);
         let gpaEl = await page.$x(`//dt[contains(., 'Average GPA')]//following-sibling::dd[1]`);
         let satMathEl = await page.$x(`//dt[contains(., 'SAT Math')]//following-sibling::dd[1]`);
         let satEbrwEl = await page.$x(`//dt[contains(., 'SAT EBRW')]//following-sibling::dd[1]`);
         let actCompositeEl = await page.$x(`//dt[contains(., 'ACT Composite')]//following-sibling::dd[1]`);
-        let sizeEl = await page.$x(`//span[contains(., 'Undergraduate')]//preceding-sibling::span[1]`);
-        // TODO: scrape major info from /?tab=profile-academics-tab
-
-        admissionRateFull = await page.evaluate(el => el.textContent, admissionRateEl[0]);
-        admissionRate = admissionRateFull.substring(0, admissionRateFull.indexOf('%'));
 
         completionRateFull = await page.evaluate(el => el.textContent, completionRateEl[0]);
         if (completionRateFull == 'Not reported') completionRate = null;
-        else completionRate = completionRateFull.substring(0, completionRateFull.indexOf('%'));
+        else completionRate = parseFloat(completionRateFull.substring(0, completionRateFull.indexOf('%')));
 
         costOfAttendance = await page.evaluate(el => el.textContent, costOfAttendanceEl[0]);
         if (costOfAttendance == 'Not available') costOfAttendance = null;
@@ -156,8 +148,6 @@ exports.scrapeCollegeData = async () => {
             actComposite = (parseInt(actCompositeNums[0]) + parseInt(actCompositeNums[1])) / 2;
         }
 
-        size = (await page.evaluate(el => el.textContent, sizeEl[0])).replace(/[^0-9]/g, '');
-
         let majorEls = await page.$x(`(//div[contains(., 'Undergraduate Majors')])[last()]//ul`);
         let majors = [];
         for (let majorEl of majorEls) {
@@ -166,7 +156,6 @@ exports.scrapeCollegeData = async () => {
         }
 
         let collegeObject = {
-            AdmissionRate: admissionRate,
             Name: college,
             CompletionRate: completionRate,
             CostOfAttendanceInState: costOfAttendanceInState,
@@ -174,8 +163,7 @@ exports.scrapeCollegeData = async () => {
             GPA: gpa,
             SATMath: satMath,
             SATEBRW: satEbrw,
-            ACTComposite: actComposite,
-            Size: size
+            ACTComposite: actComposite
         };
 
 
@@ -184,7 +172,7 @@ exports.scrapeCollegeData = async () => {
                 await models.College.upsert(collegeObject);
                 break;
             } catch (error) {
-                if (error instanceof sequelize.ValidationError) {
+                if (error instanceof sequelize.ValidationError)  {
                     delete collegeObject[error.errors[0].path];
                 } else {
                     thereIsError.push({
@@ -196,7 +184,6 @@ exports.scrapeCollegeData = async () => {
             }
         }
         try {
-            console.log(`Adding majors for ${college}`);
             let addedCollege = await models.College.findOne({ where: { Name: college } });
             majors.forEach(async (major) => {
                 try {
@@ -212,7 +199,6 @@ exports.scrapeCollegeData = async () => {
                 }
             });
         } catch (error) {
-            console.log(error);
             thereIsError.push({
                 error: `Unable to add ${college}`,
                 reason: error
@@ -230,6 +216,80 @@ exports.scrapeCollegeData = async () => {
     await page.close();
     await browser.close();
     return { ok: 'Success. Able to scrape all colleges in file.' };
+}
+
+exports.importCollegeScorecard = async () => {
+    let thereIsError = [];
+    let csvData = [];
+    await new Promise(function(resolve,reject){
+        fs.createReadStream('./assets/collegeScorecard.csv')
+            .pipe(parse({delimiter: ',', columns: true}))
+            .on('data', (csvRow) => {
+                let collegeStr = csvRow.INSTNM.replace('-Bloomington', ' Bloomington').replace('-Amherst', ' Amherst').replace('The University', 'University').replace(' Saint ', ' St ').replace('Franklin and Marshall', 'Franklin & Marshall').replace('-', ', ');
+                if(colleges.includes(collegeStr)) {
+                    college = collegeStr;
+                    admissionRate = csvRow.ADM_RATE !== 'NULL' ? csvRow.ADM_RATE*100 : null;
+                    instiType = csvRow.CONTROL;
+                    studentDebt = csvRow.GRAD_DEBT_MDN;
+                    location = csvRow.STABBR;
+                    size = csvRow.UG !== 'NULL' ? csvRow.UG : csvRow.UGDS;
+                    csvData.push({
+                        Name: college,
+                        AdmissionRate: admissionRate,
+                        InstitutionType: instiType,
+                        StudentDebt: studentDebt,
+                        Location: location,
+                        Size: size
+                    });
+                }
+            })
+            .on('end', () => {
+                resolve(csvData);
+            })
+            .on('error', reject);
+        });
+    for(let obj of csvData) {
+        while (true) {
+            try {
+                await models.College.upsert(obj);
+                break;
+            } catch (error) {
+                if (error instanceof sequelize.ValidationError)  {
+                    delete obj[error.errors[0].path];
+                } else {
+                    thereIsError.push({
+                        error: `Unable to add ${college}`,
+                        reason: error
+                    });
+                    break;
+                }
+            }
+        }
+    }
+
+    if (thereIsError.length) {
+        return {
+            error: 'Error importing colleges',
+            reason: thereIsError
+        };
+    }
+
+    return { ok: 'Success. Able to scrape all colleges in file.' };
+}
+
+exports.deleteAllStudents = async () => {
+    try{
+        user = await models.User.destroy({
+            where: { isAdmin: false },
+            cascade: true
+        });
+        return { ok: "All Students Deleted" };
+    } catch (error){
+        return {
+            error: "Something wrong in deleteAllStudents",
+            reason: error
+        }
+    }
 }
 
 exports.importStudents = async () => {
@@ -294,7 +354,8 @@ exports.importStudents = async () => {
                 }
                 else {
                     errors.push({
-                        error: `Error in creating ${user.username}: ${error.message}`
+                        error: `Error in creating ${user.username}: ${error.message} ${error.name}`,
+                        reason: error
                     });
                     break;
                 }
@@ -303,7 +364,8 @@ exports.importStudents = async () => {
     }
     if (errors.length) {
         return {
-            error: errors,
+            error: 'Error importing students',
+            reason: errors
         }
     } else {
         return {
@@ -312,7 +374,7 @@ exports.importStudents = async () => {
     }
 }
 
-exports.importApplications = async (filename) => {
+exports.importApplications = async () => {
     let errors = [];
     let applications = [];
     await new Promise(function (resolve) {
@@ -332,7 +394,7 @@ exports.importApplications = async (filename) => {
                 let application = {
                     collegeName: row.college,
                     username: row.userid,
-                    status: row.status
+                    status: row.status.replace('-', '')
                 }
                 applications.push(application);
             })
@@ -341,42 +403,34 @@ exports.importApplications = async (filename) => {
             });
     });
     for (let app of applications) {
-
         try {
             let college = await models.College.findOne({
                 where: { Name: app.collegeName },
                 raw: true
             });
-            app.college = college.CollegeId;
-            await models.Application.create(app);
+            if(college !== null) {
+                app.college = college.CollegeId;
+                await models.Application.create(app);
+            } else {
+                errors.push({
+                    error: `Error in creating app for ${app.collegeName}: no matching college in database`
+                });
+            }
         } catch (error) {
             errors.push({
-                error: `Error in creating app for ${app.collegeName}: ${error.message}`
+                error: `Error in creating app for ${app.collegeName}: ${error.message} ${error.name}`,
+                reason: error
             });
         }
     }
     if (errors.length) {
         return {
-            error: errors,
+            error: 'Error importing applications',
+            reason: errors
         }
     } else {
         return {
             ok: 'Success',
-        }
-    }
-}
-
-exports.removeAllUsers = async () => {
-    try {
-        user = await models.User.destroy({
-            where: { isAdmin: false },
-            cascade: true
-        });
-        return { ok: "All Users Deleted" };
-    } catch (error) {
-        return {
-            error: "Something wrong in removeAllUsers",
-            reason: error
         }
     }
 }
