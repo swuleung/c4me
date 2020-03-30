@@ -1,0 +1,29 @@
+{
+  "development": {
+    "username": "zzysberg",
+    "password": "110801274",
+    "database": "zzysberg",
+    "host": "mysql3.cs.stonybrook.edu",
+    "dialect": "mysql",
+    "operatorsAliases": 0,
+    "JWT_COOKIE": "access_token"
+  },
+  "test": {
+    "username": "zzysberg",
+    "password": "110801274",
+    "database": "zzysberg",
+    "host": "mysql3.cs.stonybrook.edu",
+    "dialect": "mysql",
+    "operatorsAliases": 0,
+    "JWT_COOKIE": "access_token"
+  },
+  "production": {
+    "username": "zzysberg",
+    "password": "110801274",
+    "database": "zzysberg",
+    "host": "mysql3.cs.stonybrook.edu",
+    "dialect": "mysql",
+    "operatorsAliases": 0,
+    "JWT_COOKIE": "access_token"
+  }
+}
