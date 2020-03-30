@@ -27,6 +27,33 @@ exports.getCollegeByID = async (collegeID) => {
     }
 }
 
+exports.getCollegeByName = async (collegeName) => {
+    let college = {};
+    try {
+        college = await models.College.findAll({
+            limit: 1,
+            where: {
+                Name: collegeName
+            }
+        });
+    } catch (error) {
+        return {
+            error: 'Error finding college',
+            reason: error
+        };
+    }
+    if (!college.length) {
+        return {
+            error: 'College not found',
+            reason: 'College does not exist in DB'
+        }
+    }
+    return {
+        ok: 'Success',
+        college: college[0].toJSON()
+    }
+}
+
 exports.getAllColleges = async () => {
     let colleges = [];
     try {
@@ -48,5 +75,22 @@ exports.getAllColleges = async () => {
     return {
         ok: 'Success',
         colleges: colleges
+    }
+}
+
+exports.deleteAllColleges = async () => {
+    try {
+        colleges = await models.College.destroy({
+            where: {}
+        });
+    } catch (error) {
+        return {
+            error: 'Unable to delete all colleges',
+            reason: error
+        }
+    }
+
+    return {
+        ok: 'Deleted colleges successfully'
     }
 }

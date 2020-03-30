@@ -9,7 +9,7 @@ import CreateAccount from '../CreateAccount/CreateAccount.js';
 import Login from '../Login/Login.js';
 import StudentProfile from '../StudentProfile/StudentProfile';
 import EditProfile from '../EditProfile/EditProfile';
-import DeleteAllUsers from '../DeleteAllUsers/DeleteAllUsers.js';
+import Admin from '../Admin/Admin';
 
 function App() {
     const [username, setUsername] = useState(localStorage.getItem('username'));
@@ -36,12 +36,11 @@ function App() {
                                     <Nav.Link as={Link} to="/login" title={'Create Account'}>Login</Nav.Link>
                                 </div>
                                 : <NavDropdown title={username} alignRight id="basic-nav-dropdown">
-                                    <NavDropdown.Item as={Link} to={`/profile/${username}`}>View Profile</NavDropdown.Item>
-                                    <NavDropdown.Item href="#tbd">Settings</NavDropdown.Item>
                                     {username === 'admin'
-                                        ? <NavDropdown.Item onClick={DeleteAllUsers} href="#tbd">Delete All Users</NavDropdown.Item>
-                                        : ''
+                                        ? <NavDropdown.Item as={Link} to={`/admin`}>Admin Controls</NavDropdown.Item>
+                                        : <NavDropdown.Item as={Link} to={`/profile/${username}`}>View Profile</NavDropdown.Item>
                                     }
+                                    <NavDropdown.Item href="#tbd">Settings</NavDropdown.Item>
                                     <NavDropdown.Divider />
                                     <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
                                 </NavDropdown>
@@ -58,6 +57,7 @@ function App() {
                             <Redirect to='/profile/:username'></Redirect>
                         </Route>
                         <Route exact path='/profile/:username/edit' username={username} render={props => (props.match.params.username === username ? <EditProfile  {...props} /> : <Redirect to='/'></Redirect>)} />
+                        <Route exact path='/admin' component={Admin} />
                         <Route render={function () {
                             return <p>404 Not found</p>
                         }} />

@@ -17,3 +17,13 @@ select {
     text-transform: capitalize;
   }
 }
+
+td.delete-icon {
+  text-align: center;
+  cursor: pointer;
+  span {
+    display: block;
+    color: red;
+    font-size: 24px;
+  }
+}
