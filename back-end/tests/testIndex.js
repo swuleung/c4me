@@ -4,15 +4,11 @@ function importTest(name, path) {
     });
 }
 
-describe("top", function () {
-    beforeEach(function () {
-       console.log("running something before each test");
-    });
+describe("c4me", function () {
     importTest('user.js', './user/simple');
-    importTest('profile.js', './student/profile')
-    importTest('application.js', './student/application')
-    importTest('college.js','./college/college')
-    after(function () {
-        console.log("after all tests\n");
-    });
+    importTest('profile.js', './student/profile');
+    importTest('application.js', './student/application');
+    importTest('adminCollege.js', './admin/adminCollege.js' );
+    importTest('adminStudent.js', './admin/adminStudent.js' );
+    importTest('college.js','./college/college');
 });
