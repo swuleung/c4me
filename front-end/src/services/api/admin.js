@@ -19,7 +19,7 @@ module.exports = {
     deleteAllStudents: async function() {
         try{
             let result = fetch("http://localhost:9000/admin/deleteStudentProfiles", {
-                method: "GET",
+                method: "DELETE",
                 credentials: 'include',
                 headers: {
                     Accept: "application/json",
