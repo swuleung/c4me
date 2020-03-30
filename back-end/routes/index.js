@@ -1,11 +1,11 @@
-var express = require('express');
-var router = express.Router();
-var models = require('../models');
+const express = require('express');
+
+const router = express.Router();
 
 /* GET home page. */
-router.get('/', function (req, res) {
+router.get('/', (req, res) => {
     res.send({
-        title: 'C4Me API'
+        title: 'C4Me API',
     });
 });
 
