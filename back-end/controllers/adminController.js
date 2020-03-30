@@ -4,7 +4,7 @@ const fs = require('fs');
 const puppeteer = require('puppeteer');
 const parse = require('csv-parse');
 
-let collegeFile = __dirname + '/../utils/colleges.txt';
+let collegeFile = __dirname + '/../assets/colleges.txt';
 if(process.env.NODE_ENV == "test") {
     collegeFile = __dirname + '/../tests/testData/colleges.txt'
 }
