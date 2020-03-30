@@ -57,8 +57,7 @@ describe("Student Profile", () => {
                     res.should.have.status(200);
                     let student = res.body.student;
                     expect(student.username).to.equal('mochaStudent');
-                    expect(student.GPA).to.be.lessThan(4.0);
-                    expect(student.GPA).to.be.greaterThan(0.0);
+                    expect(student.GPA).to.equal(3.0);
                     done();
                 })
         });
@@ -70,9 +69,6 @@ describe("Student Profile", () => {
                 })
                 .end((err, res) => {
                     res.should.have.status(400);
-                    let student = res.body.student;
-                    //student is undefined here what do?
-                    // Error message here
                     done();
                 })
         });
@@ -86,7 +82,7 @@ describe("Student Profile", () => {
                     res.should.have.status(200);
                     let student = res.body.student;
                     expect(student.username).to.equal('mochaStudent');
-                    expect(student.ACTComposite).to.be.equal(2);
+                    expect(student.ACTComposite).to.equal(2);
                     done();
                 })
         });
@@ -98,9 +94,6 @@ describe("Student Profile", () => {
                 })
                 .end((err, res) => {
                     res.should.have.status(400);
-                    let student = res.body.student;
-                    //student is undefined here what do?
-                    // Error message here
                     done();
                 })
         });
@@ -114,7 +107,7 @@ describe("Student Profile", () => {
                     res.should.have.status(200);
                     let student = res.body.student;
                     expect(student.username).to.equal('mochaStudent');
-                    expect(student.residenceState).to.be.equal('AL');
+                    expect(student.residenceState).to.equal('AL');
                     done();
                 })
         });
@@ -126,9 +119,6 @@ describe("Student Profile", () => {
                 })
                 .end((err, res) => {
                     res.should.have.status(400);
-                    let student = res.body.student;
-                    //student is undefined here what do?
-                    // Error message here
                     done();
                 })
         });
@@ -142,8 +132,7 @@ describe("Student Profile", () => {
                     res.should.have.status(200);
                     let student = res.body.student;
                     expect(student.username).to.equal('mochaStudent');
-                    expect(student.SATMath).to.be.greaterThan(199);
-                    expect(student.SATMath).to.be.lessThan(801);
+                    expect(student.SATMath).to.equal(200);
                     done();
                 })
         });
@@ -155,9 +144,6 @@ describe("Student Profile", () => {
                 })
                 .end((err, res) => {
                     res.should.have.status(400);
-                    let student = res.body.student;
-                    //student is undefined here what do?
-                    // Error message here
                     done();
                 })
         });
@@ -171,8 +157,7 @@ describe("Student Profile", () => {
                     res.should.have.status(200);
                     let student = res.body.student;
                     expect(student.username).to.equal('mochaStudent');
-                    expect(student.APPassed).to.be.lessThan(12);
-                    expect(student.APPassed).to.be.greaterThan(-1);
+                    expect(student.APPassed).to.equal(1);
                     done();
                 })
         }); 

@@ -110,6 +110,7 @@ describe("Scrape college information", () => {
                     agent
                         .get('/colleges/id/' + applications[0].college)
                         .end((err, res) => {
+                            res.should.have.status(200);
                             let college = res.body.college;
                             expect(college.Name).to.equal('Stony Brook University')
 

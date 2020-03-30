@@ -63,9 +63,10 @@ describe("Student Profile", () => {
         })
         it ("Check application cascade", (done) => {
             agent 
-                .get('/student/mochaStudent/applications')
+                .get('/students/mochaStudent/applications')
                 .end((err,res) => {
-                    res.should.have.status(404);
+                    res.should.have.status(200);
+                    res.body.applications.should.deep.equal([]);
                     done();
                 })
         })
