@@ -18,6 +18,7 @@
     "rules": {
         "no-console": "off",
         "indent": ["error", 4],
-        "object-shorthand": ["error", "never"]
+        "object-shorthand": ["error", "never"],
+        "global-require": 0
     }
 }

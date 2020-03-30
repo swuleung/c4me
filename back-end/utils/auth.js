@@ -9,7 +9,7 @@ const privateKey = fs.readFileSync(`${__dirname}/../assets/keys/c4meJWT`).toStri
 
 exports.generateKey = (username) => jwt.sign(
     {
-        username,
+        username: username,
     },
     privateKey,
     {
