@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const authentication = require('../utils/auth');
 const adminController = require('../controllers/adminController');
+const collegeController = require('../controllers/collegeController');
 
 router.get('/scrapeCollegeRanking', async function (req, res) {
     if (!req.cookies.access_token) {
@@ -122,5 +123,22 @@ router.get('/importApplications', async function (req, res) {
  
 
 
+router.delete('/deleteAllColleges', async function (req, res) {
+    if (!req.cookies.access_token) {
+        res.status(400).send({ status: "error", error: "No token provided" });
+    } else {
+        let authorized = await authentication.validateJWT(req.cookies.access_token);
+        if (!authorized.username) {
+            res.clearCookie("access_token");
+            res.status(400).send(authorized);
+        } else if (!adminController.checkAdmin(authorized.username)) {
+            res.status(400).send(authorized);
+        } else {
+            let result = await collegeController.deleteAllColleges();
+            if (!result.ok) res.status(400);
+            res.send(result);
+        }
+    }
+});
 
 module.exports = router;

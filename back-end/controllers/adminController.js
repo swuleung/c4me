@@ -4,7 +4,11 @@ const fs = require('fs');
 const puppeteer = require('puppeteer');
 const parse = require('csv-parse');
 
-let colleges = fs.readFileSync('./utils/colleges.txt').toString().split(/\r?\n/); // colleges.txt file into string array
+let collegeFile = './utils/colleges.txt';
+if(process.env.NODE_ENV == "test") {
+    collegeFile = './tests/testData/colleges.txt'
+}
+let colleges = fs.readFileSync(collegeFile).toString().split(/\r?\n/); // colleges.txt file into string array
 const rankingsURL = 'https://www.timeshighereducation.com/rankings/united-states/2020#!/page/0/length/-1/sort_by/rank/sort_order/asc/cols/stats';
 const collegeDataURL = 'https://www.collegedata.com/college/';
 
@@ -296,7 +300,11 @@ exports.importStudents = async () => {
     let errors = [];
     let users = [];
     await new Promise(function (resolve) {
-        fs.createReadStream(__dirname + '/../assets/students-1.csv')
+        let studentFile =  __dirname + '/../assets/students-1.csv'
+        if(process.env.NODE_ENV == "test") {
+            studentFile = __dirname + '/../tests/testData/students-1.csv';
+        }
+        fs.createReadStream(studentFile)
             .on('error', (error) => {
                 console.log(error.message)
             })
@@ -374,7 +382,11 @@ exports.importApplications = async () => {
     let errors = [];
     let applications = [];
     await new Promise(function (resolve) {
-        fs.createReadStream(__dirname + '/../assets/applications-1.csv')
+        let applicationFile = __dirname + '/../assets/applications-1.csv';
+        if(process.env.NODE_ENV == "test") {
+            applicationFile = __dirname + '/../tests/testData/applications-1.csv';
+        }
+        fs.createReadStream(applicationFile)
             .on('error', (error) => {
                 errors.push({
                     error: error.message,

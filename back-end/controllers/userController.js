@@ -18,7 +18,7 @@ exports.createUser = async (user) => {
             error: 'Something went wrong',
             reason: error
         };
-    } 
+    }
     return { ok: 'Success', student: newUser };
 }
 
@@ -72,4 +72,20 @@ exports.login = async (loginUser) => {
         }
     }
     return { ok: 'Success', access_token: jwtToken };
+}
+
+exports.deleteUser = async (username) => {
+    try { 
+        await models.User.destroy({
+            where: {
+                username: username
+            }
+        });
+    } catch (error) {
+        return {
+            error: 'Something went wrong',
+            reason: error
+        };
+    }
+    return { ok: 'Success' };
 }
