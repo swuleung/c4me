@@ -29,7 +29,6 @@ exports.getCollegeByID = async (collegeID) => {
 
 exports.getCollegeByName = async (collegeName) => {
     let college = {};
-    console.log(collegeName);
     try {
         college = await models.College.findAll({
             limit: 1,

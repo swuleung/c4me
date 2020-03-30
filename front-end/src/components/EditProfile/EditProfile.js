@@ -32,7 +32,6 @@ const EditProfile = (props) => {
     }
 
     const handleDeleteApplication = (e) => {
-        const value = e.target.value;
         const index = e.target.getAttribute('index');
         let newApplications = [...studentApplications];
         newApplications.splice(index, 1);
