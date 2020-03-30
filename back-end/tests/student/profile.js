@@ -151,7 +151,7 @@ describe("Student Profile", () => {
             agent
                 .post('/students/mochaStudent/edit')
                 .send({
-                    APPassed: 13
+                    APPassed: 39
                 })
                 .end((err, res) => {
                     res.should.have.status(400);

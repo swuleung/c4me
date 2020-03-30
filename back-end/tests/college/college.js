@@ -9,28 +9,31 @@ describe("College", () => {
                 .get('/colleges/all')
                 .end((err,res) => {
                     res.should.have.status(200);
-                    console.log(res);
                     done();
                 })
         })
     });
 
-    describe(" Get college by id", () =>{
-        it ("get college with id = 1", (done) => {
+    describe(" Get college by name", () =>{
+        it ("get \'Stony Brook University\'", (done) => {
             agent
-                .get('colleges/1')
+                .get('/colleges/name/Stony Brook University')
                 .end((err, res) => {
-                    console.log("\n\n\n\n\n\n\n\n\n\n");
-                    console.log(res);
-                    console.log("\n\n\n\n\n\n\n\n\n\n");
                     res.should.have.status(200);
-                    done();
+                    let college = res.body.college;
+                    agent
+                        .get('/colleges/id/'+college.CollegeId)
+                        .end((err,res) => {
+                            res.should.have.status(200);
+                            expect(res.body.college.Name).equals.toString("Stony Brook University");
+                            done();
+                    })
                 })
         })
 
         it ("get invalid college with id = -1", (done) => {
             agent
-            .get('colleges/-11')
+            .get('/colleges/id/-1')
             .end((err, res) => {
                 res.should.have.status(400);
                 done();
