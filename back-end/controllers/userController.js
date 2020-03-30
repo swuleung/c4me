@@ -1,6 +1,6 @@
 const sequelize = require('sequelize');
-const models = require('../models');
 const bcrypt = require('bcrypt');
+const models = require('../models');
 const authentication = require('../utils/auth');
 
 exports.createUser = async (user) => {
@@ -8,7 +8,7 @@ exports.createUser = async (user) => {
     try {
         newUser = await models.User.create({
             username: user.username,
-            password: user.password
+            password: user.password,
         });
     } catch (error) {
         if (error instanceof sequelize.UniqueConstraintError) {
@@ -16,76 +16,75 @@ exports.createUser = async (user) => {
         }
         return {
             error: 'Something went wrong',
-            reason: error
+            reason: error,
         };
     }
     return { ok: 'Success', student: newUser };
-}
+};
 
 exports.login = async (loginUser) => {
-    let username = loginUser.username;
-    let password = loginUser.password;
+    const { username } = loginUser;
+    const { password } = loginUser;
     let user = {};
     try {
-        user = await models.User.findAll({
+        user = await models.User.findOne({
             limit: 1,
             raw: true,
             where: {
-                username: username
-            }
+                username,
+            },
         });
     } catch (error) {
         return {
             error: 'Invalid user',
-            reason: error
+            reason: error,
         };
     }
     if (!user.length) {
         return {
             error: 'User not found',
-            reason: 'User does not exist in DB'
-        }
+            reason: 'User does not exist in DB',
+        };
     }
-    user = user[0];
     let passwordCheck = false;
     try {
         passwordCheck = await bcrypt.compare(password, user.password);
     } catch (error) {
         return {
             error: 'Error checking password',
-            reason: error
+            reason: error,
         };
     }
     if (!passwordCheck) {
         return {
             error: 'Incorrect password',
-            reason: 'User did not input correct password'
+            reason: 'User did not input correct password',
         };
     }
 
-    let jwtToken = authentication.generateKey(username);
+    const jwtToken = authentication.generateKey(username);
 
-    if (jwtToken == {}) {
+    if (jwtToken === {}) {
         return {
             error: 'Unable to generate token',
-            reason: 'Invalid paramaters'
-        }
+            reason: 'Invalid paramaters',
+        };
     }
     return { ok: 'Success', access_token: jwtToken };
-}
+};
 
 exports.deleteUser = async (username) => {
-    try { 
+    try {
         await models.User.destroy({
             where: {
-                username: username
-            }
+                username,
+            },
         });
     } catch (error) {
         return {
             error: 'Something went wrong',
-            reason: error
+            reason: error,
         };
     }
     return { ok: 'Success' };
-}
+};
