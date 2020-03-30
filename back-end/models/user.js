@@ -198,9 +198,7 @@ module.exports = (sequelize, DataTypes) => {
         hooks: {
             beforeCreate: ((user) => bcrypt.hash(user.password, 10)
                 .then((hash) => {
-                    const newUser = [...user];
-                    newUser.password = hash;
-                    return newUser;
+                    user.password = hash; // eslint-disable-line no-param-reassign
                 })
                 .catch((err) => {
                     console.log(err);

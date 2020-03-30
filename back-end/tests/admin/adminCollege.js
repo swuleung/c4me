@@ -1,14 +1,14 @@
-const agent = require('../shared').agent;
-const expect = require('../shared').expect;
+const { agent } = require('../shared');
+const { expect } = require('../shared');
 
-describe("Scrape college information", () => {
-    describe("Login as admin & delete colleges", () => {
+describe('Scrape college information', () => {
+    describe('Login as admin & delete colleges', () => {
         it('Login as admin test', (done) => {
             agent
                 .post('/users/login')
                 .send({
-                    'username': 'admin',
-                    'password': 'admin',
+                    username: 'admin',
+                    password: 'admin',
                 })
                 .end((err, res) => {
                     res.should.have.status(200);
@@ -27,9 +27,9 @@ describe("Scrape college information", () => {
         });
     });
 
-    describe("Scrape data", () => {
-        it('Scrape from CollegeData.com', function (done) {
-            this.timeout(30000)
+    describe('Scrape data', () => {
+        it('Scrape from CollegeData.com', function scrapeCollegeData(done) {
+            this.timeout(60000);
             agent
                 .get('/admin/scrapeCollegeData')
                 .end((err, res) => {
@@ -38,8 +38,8 @@ describe("Scrape college information", () => {
                 });
         });
 
-        it('Scrape from College Ranking', function (done) {
-            this.timeout(30000)
+        it('Scrape from College Ranking', function scrapeCollegeRanking(done) {
+            this.timeout(60000);
             agent
                 .get('/admin/scrapeCollegeRanking')
                 .end((err, res) => {
@@ -48,8 +48,8 @@ describe("Scrape college information", () => {
                 });
         });
 
-        it('Import College Scorecard', function (done) {
-            this.timeout(30000)
+        it('Import College Scorecard', function importCollegeScorecard(done) {
+            this.timeout(60000);
             agent
                 .get('/admin/importCollegeScorecard')
                 .end((err, res) => {
@@ -63,7 +63,7 @@ describe("Scrape college information", () => {
                 .get('/colleges/name/Stony Brook University')
                 .end((err, res) => {
                     res.should.have.status(200);
-                    let college = res.body.college;
+                    const { college } = res.body;
                     expect(college).to.shallowDeepEqual({
                         Name: 'Stony Brook University',
                         Ranking: '105',
@@ -79,7 +79,7 @@ describe("Scrape college information", () => {
                         InstitutionType: '1',
                         CompletionRate: '52.80',
                         StudentDebt: 19000,
-                    })
+                    });
                     done();
                 });
         });
