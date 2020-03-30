@@ -94,11 +94,9 @@ exports.scrapeCollegeData = async () => {
     let thereIsError = [];
 
     for (let college of colleges) {
-        console.log(college);
         // removes all special chars and replaces spaces with -
         let collegeStr = college.replace(/The\s/g, '').replace(/[^A-Z0-9]+/ig, ' ').replace(/\s/g, '-').replace('SUNY', 'State-University-of-New-York');
         let collegeURL = collegeDataURL + collegeStr;
-        console.log(collegeURL);
         await page.goto(collegeURL);
 
         // Finds elements that contain the data value
@@ -111,7 +109,7 @@ exports.scrapeCollegeData = async () => {
 
         completionRateFull = await page.evaluate(el => el.textContent, completionRateEl[0]);
         if (completionRateFull == 'Not reported') completionRate = null;
-        else completionRate = completionRateFull.substring(0, completionRateFull.indexOf('%'));
+        else completionRate = parseFloat(completionRateFull.substring(0, completionRateFull.indexOf('%')));
 
         costOfAttendance = await page.evaluate(el => el.textContent, costOfAttendanceEl[0]);
         if (costOfAttendance == 'Not available') costOfAttendance = null;
@@ -186,7 +184,6 @@ exports.scrapeCollegeData = async () => {
             }
         }
         try {
-            console.log(`Adding majors for ${college}`);
             let addedCollege = await models.College.findOne({ where: { Name: college } });
             majors.forEach(async (major) => {
                 try {
@@ -202,7 +199,6 @@ exports.scrapeCollegeData = async () => {
                 }
             });
         } catch (error) {
-            console.log(error);
             thereIsError.push({
                 error: `Unable to add ${college}`,
                 reason: error

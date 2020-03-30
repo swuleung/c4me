@@ -67,7 +67,7 @@ router.get('/importCollegeScorecard', async function (req, res) {
     }
 });
 
-router.get('/deleteStudentProfiles', async function (req, res) {
+router.delete('/deleteStudentProfiles', async function (req, res) {
     if (!req.cookies.access_token) {
         res.status(400).send({ status: "error", error: "No token provided" });
     } else {

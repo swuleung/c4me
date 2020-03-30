@@ -3,6 +3,17 @@ const expect = require('../shared').expect;
 const stonybrook = require('../shared').stonybrook;
 
 describe("Scrape college information", () => {
+    describe("Delete all users", () => {
+        it("Deletes all users", (done) => {
+            agent
+                .delete('/admin/deleteStudentProfiles')
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    done();
+                });
+        });
+    });
+
     describe("Import student and application", () => {
         it('Import students: mochaImport & mochaImportWrong', function (done) {
             agent

@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
             defaultValue: null
         },
         AdmissionRate: {
-            type: DataTypes.DECIMAL(3, 2),
+            type: DataTypes.DECIMAL(5, 2),
             validate: {
                 min: 0,
                 max: 100
@@ -78,7 +78,7 @@ module.exports = (sequelize, DataTypes) => {
             defaultValue: null
         },
         CompletionRate: {
-            type: DataTypes.DECIMAL(3, 2),
+            type: DataTypes.DECIMAL(5, 2),
             validate: {
                 min: 0,
                 max: 100
