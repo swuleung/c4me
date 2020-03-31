@@ -10,6 +10,7 @@ const userRouter = require('./routes/userRouter');
 const studentRouter = require('./routes/studentRouter');
 const adminRouter = require('./routes/adminRouter');
 const collegeRouter = require('./routes/collegeRouter');
+const searchRouter = require('./routes/searchRouter');
 
 const app = express();
 
