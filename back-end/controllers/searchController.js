@@ -7,7 +7,7 @@ exports.searchCollege = async ( filters ) => {
             raw: true,
             where: filters
         };
-        colleges : await models.College.findAll( query );
+        searchResults = await models.College.findAll( query );
     } 
     catch (error) {
         return {
