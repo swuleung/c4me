@@ -10,7 +10,7 @@ chai.use(chaiShallowDeepEqual);
 chai.should();
 
 const agent = chai.request.agent(app);
-const expect = chai.expect;
+const { expect } = chai;
 
 exports.agent = agent;
 exports.expect = expect;

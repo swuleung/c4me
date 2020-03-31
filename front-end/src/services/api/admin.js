@@ -1,104 +1,104 @@
 module.exports = {
-    scrapeCollegeRanking: async function () {
+    scrapeCollegeRanking: async function scrapeCollegeRanking() {
         try {
-            let result = await fetch(`http://localhost:9000/admin/scrapeCollegeRanking`, {
-                method: "GET",
+            const result = await fetch('http://localhost:9000/admin/scrapeCollegeRanking', {
+                method: 'GET',
                 credentials: 'include',
                 headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json; charset=utf-8"
-                }
-        });
-        return await result.json();
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json; charset=utf-8',
+                },
+            });
+            return await result.json();
         } catch (error) {
             return {
-                error: error.message + ' sql data'
-            }
+                error: `${error.message} sql data`,
+            };
         }
     },
-    deleteAllStudents: async function() {
-        try{
-            let result = fetch("http://localhost:9000/admin/deleteStudentProfiles", {
-                method: "DELETE",
+    deleteAllStudents: async function deleteAllStudents() {
+        try {
+            const result = fetch('http://localhost:9000/admin/deleteStudentProfiles', {
+                method: 'DELETE',
                 credentials: 'include',
                 headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json; charset=utf-8"
-                }
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json; charset=utf-8',
+                },
             });
             return await result;
         } catch (error) {
             return {
-                error: error.message
-            }
+                error: error.message,
+            };
         }
     },
-    scrapeCollegeData: async function () {
+    scrapeCollegeData: async function scrapeCollegeData() {
         try {
-            let result = await fetch(`http://localhost:9000/admin/scrapeCollegeData`, {
-                method: "GET",
+            const result = await fetch('http://localhost:9000/admin/scrapeCollegeData', {
+                method: 'GET',
                 credentials: 'include',
                 headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json; charset=utf-8"
-                }
-            });
-            return await result.json();
-        } catch (error) {
-            return {
-                error: error.message + ' sql data'
-            }
-        }
-    },
-    importCollegeScorecard: async function () {
-        try {
-            let result = await fetch(`http://localhost:9000/admin/importCollegeScorecard`, {
-                method: "GET",
-                credentials: 'include',
-                headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json; charset=utf-8"
-                },
-            });
-            return await result.json()
-        } catch (error) {
-            return {
-                error: error.message + ' sql data'
-            }
-        }
-    },
-    importStudents: async function() {
-        try {
-            let result = await fetch(`http://localhost:9000/admin/importStudents`,  {
-                method: "GET",
-                credentials: 'include',
-                headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json; charset=utf-8"
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json; charset=utf-8',
                 },
             });
             return await result.json();
         } catch (error) {
             return {
-                error: error.message + ' sql data'
-            }
+                error: `${error.message} sql data`,
+            };
         }
     },
-    importStudentApplications: async function() {
+    importCollegeScorecard: async function importCollegeScorecard() {
         try {
-            let result = await fetch(`http://localhost:9000/admin/importApplications`,  {
-                method: "GET",
+            const result = await fetch('http://localhost:9000/admin/importCollegeScorecard', {
+                method: 'GET',
                 credentials: 'include',
                 headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json; charset=utf-8"
-                }
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json; charset=utf-8',
+                },
             });
             return await result.json();
         } catch (error) {
             return {
-                error: error.message + ' sql data'
-            }
+                error: `${error.message} sql data`,
+            };
         }
-    }
-}
+    },
+    importStudents: async function importStudents() {
+        try {
+            const result = await fetch('http://localhost:9000/admin/importStudents', {
+                method: 'GET',
+                credentials: 'include',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json; charset=utf-8',
+                },
+            });
+            return await result.json();
+        } catch (error) {
+            return {
+                error: `${error.message} sql data`,
+            };
+        }
+    },
+    importStudentApplications: async function importStudentApplications() {
+        try {
+            const result = await fetch('http://localhost:9000/admin/importApplications', {
+                method: 'GET',
+                credentials: 'include',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json; charset=utf-8',
+                },
+            });
+            return await result.json();
+        } catch (error) {
+            return {
+                error: `${error.message} sql data`,
+            };
+        }
+    },
+};

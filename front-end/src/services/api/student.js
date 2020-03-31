@@ -1,72 +1,72 @@
 module.exports = {
-    editStudent: async function (username, studentInfo) {
+    editStudent: async function editStudent(username, studentInfo) {
         try {
-            let student = await fetch(`http://localhost:9000/students/${username}/edit`, {
-                method: "POST",
+            const student = await fetch(`http://localhost:9000/students/${username}/edit`, {
+                method: 'POST',
                 credentials: 'include',
                 headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json; charset=utf-8"
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json; charset=utf-8',
                 },
-                body: JSON.stringify(studentInfo)
-            })
-            return await student.json();
-        } catch (error) {
-            return {
-                error: error.message + ' student data'
-            }
-        }
-    },
-    getStudent: async function (username) {
-        try {
-            let student = await fetch(`http://localhost:9000/students/${username}`, {
-                method: "GET",
-                credentials: 'include',
-                headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json; charset=utf-8"
-                }
+                body: JSON.stringify(studentInfo),
             });
             return await student.json();
         } catch (error) {
             return {
-                error: error.message + ' student data'
-            }
+                error: `${error.message} student data`,
+            };
         }
     },
-    editStudentApplications: async function (username, applications) {
+    getStudent: async function getStudent(username) {
         try {
-            let newApplications = await fetch(`http://localhost:9000/students/${username}/applications/edit`, {
-                method: "POST",
+            const student = await fetch(`http://localhost:9000/students/${username}`, {
+                method: 'GET',
                 credentials: 'include',
                 headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json; charset=utf-8"
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json; charset=utf-8',
                 },
-                body: JSON.stringify({ applications: applications })
             });
-            return await newApplications.json()
+            return await student.json();
         } catch (error) {
             return {
-                error: error.message + ' student data'
-            }
+                error: `${error.message} student data`,
+            };
         }
     },
-    getStudentApplications: async function (username) {
+    editStudentApplications: async function editStudentApplications(username, applications) {
         try {
-            let applications = await fetch(`http://localhost:9000/students/${username}/applications`, {
-                method: "GET",
+            const newApplications = await fetch(`http://localhost:9000/students/${username}/applications/edit`, {
+                method: 'POST',
                 credentials: 'include',
                 headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json; charset=utf-8"
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json; charset=utf-8',
                 },
+                body: JSON.stringify({ applications: applications }),
             });
-            return await applications.json()
+            return await newApplications.json();
         } catch (error) {
             return {
-                error: error.message + ' student data'
-            }
+                error: `${error.message} student data`,
+            };
         }
-    }
+    },
+    getStudentApplications: async function getStudentApplications(username) {
+        try {
+            const applications = await fetch(`http://localhost:9000/students/${username}/applications`, {
+                method: 'GET',
+                credentials: 'include',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json; charset=utf-8',
+                },
+            });
+            return await applications.json();
+        } catch (error) {
+            return {
+                error: `${error.message} student data`,
+            };
+        }
+    },
 };
