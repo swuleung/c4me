@@ -1,4 +1,5 @@
 const models = require('../models');
+const { Op } = require("sequelize");
 
 exports.searchCollege = async ( filters ) => {
     let searchResults = {};
@@ -26,9 +27,16 @@ exports.searchCollege = async ( filters ) => {
             criteria.Ranking = { [Op.between] : [ filters.rankingMin, filters.rankingMax] };
         if ( "sizeMin" in filters && "sizeMax" in filters )
             criteria.Size = { [Op.between] : [ filters.sizeMin, filters.sizeMax] };
+        if ( "SATMathMin" in filters && "SATMathMax" in filters )
+            criteria.SATMath = { [Op.between] : [ filters.SATMathMin, filters.SATMathMax] };
+        if ( "SATEBRWMin" in filters && "SATEBRWMax" in filters )
+            criteria.SATEBRW = { [Op.between] : [ filters.SATEBRWMin, filters.SATEBRWMax] };
+        if ( "ACTCompositeMin" in filters && "ACTCompositeMax" in filters )
+            criteria.ACTComposite = { [Op.between] : [ filters.ACTCompositeMin, filters.ACTCompositeMax] };
 
-        //SAT ACT composite
+        //SAT Math, SAT EBRW, ACT Composite: range for average scores for enrolled freshmen
         //college majors
+        // Working filters: name, ranking, admission rate, size, ACT Composite, SAT Math, SAT EBRW
 
         console.log( criteria );
         query = {
