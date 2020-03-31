@@ -60,10 +60,7 @@ router.post('/:username/applications/edit', async (req, res) => {
                 req.params.username,
                 req.body.applications,
             );
-            if (result.error) {
-                if (result.error === 'Something went wrong') res.status(500);
-                else res.status(400);
-            }
+            if (result.error) res.status(400);
             res.send(result);
         }
     }

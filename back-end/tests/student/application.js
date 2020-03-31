@@ -14,35 +14,42 @@ describe('Student Profile', () => {
                 });
         });
 
-        it('Add one student application', () => {
+        describe('Add one student application', () => {
+
             it('Add one a non-existing college', (done) => {
                 agent
                     .post('/students/mochaStudent/applications/edit')
                     .send({
-                        college: -1,
-                        status: 'deferred',
+                        applications: [{
+                            college: -1,
+                            status: 'deferred',
+                        }]
                     })
                     .end((err, res) => {
                         res.should.have.status(400);
                         done();
                     });
             });
-            it('Add one college', (done) => {
+            it('Add Stony Brook University', (done) => {
                 agent
-                    .post('/students/mochaStudent/applications/edit')
-                    .send({
-                        college: 1,
-                        status: 'waitlisted',
-                    })
+                    .get('/colleges/name/Stony Brook University')
                     .end((err, res) => {
                         res.should.have.status(200);
-                        const application = res.body.applications;
-                        expect(application).to.deep.equal({
-                            college: 1,
-                            status: 'waitlisted',
-                            username: 'mochaStudent',
-                        });
-                        done();
+                        const { college } = res.body;
+                        agent
+                            .post('/students/mochaStudent/applications/edit')
+                            .send({
+                                applications: [{
+                                    college: college.CollegeId,
+                                    status: 'deferred',
+                                    username: 'mochaStudent'
+                                }]
+                            })
+                            .end((err, res) => {
+                                res.should.have.status(200);
+                                expect(res.body.applications).to.deep.equal([ { college: 365, status: 'deferred', username: 'mochaStudent' } ]);
+                                done();
+                            });
                     });
             });
         });
