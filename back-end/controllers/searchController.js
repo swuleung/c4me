@@ -10,9 +10,14 @@ const { Op } = require("sequelize");
 //  e.g. admissionRateMin and admissionRateMax
 //  An example filter:
 // {
-//     "location" : "CA",
+//     "location" : "NY",
 //     "SATEBRWMin": 500,
-//     "SATEBRWMax": 550
+//     "SATEBRWMax": 600,
+//     "SATMathMin" : 500,
+//     "SATMathMax" : 600,
+//     "name" : "University",
+//     "ACTCompositeMin" : 20,
+//     "ACTCompositeMax" : 30
 // }
 
 exports.searchCollege = async ( filters ) => {
@@ -39,7 +44,7 @@ exports.searchCollege = async ( filters ) => {
         if ( "ACTCompositeMin" in filters && "ACTCompositeMax" in filters )
             criteria.ACTComposite = { [Op.between] : [ filters.ACTCompositeMin, filters.ACTCompositeMax] };
 
-        //college majors
+        //college majors, location, cost of attendance To be completed
         // Working filters: name, ranking, admission rate, size, ACT Composite, SAT Math, SAT EBRW
 
         console.log( criteria );
@@ -47,11 +52,6 @@ exports.searchCollege = async ( filters ) => {
             raw: true,
             where: criteria
         };
-
-        // query = {
-        //     raw: true,
-        //     where: filters
-        // };
 
         searchResults = await models.College.findAll( query );
     } 
