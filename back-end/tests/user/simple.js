@@ -1,13 +1,13 @@
-const agent = require('../shared').agent;
+const { agent } = require('../shared');
 
-describe("Simple Create/Login/Delete", () => {
-    describe("Create User", () => {
-        it("Creates a new user", (done) => {
+describe('Simple Create/Login/Delete', () => {
+    describe('Create User', () => {
+        it('Creates a new user', (done) => {
             agent
                 .post('/users/create')
                 .send({
-                    'username': 'mocha',
-                    'password': 'password',
+                    username: 'mocha',
+                    password: 'password',
                 })
                 .end((err, res) => {
                     res.should.have.status(200);
@@ -21,15 +21,15 @@ describe("Simple Create/Login/Delete", () => {
             agent
                 .post('/users/login')
                 .send({
-                    'username': 'mocha',
-                    'password': 'password',
+                    username: 'mocha',
+                    password: 'password',
                 })
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.should.have.cookie('access_token');
                     done();
                 });
-        })
+        });
     });
 
     describe('Delete', () => {
@@ -37,13 +37,13 @@ describe("Simple Create/Login/Delete", () => {
             agent
                 .delete('/users/delete')
                 .send({
-                    'username': 'mocha'
+                    username: 'mocha',
                 })
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.should.not.have.cookie('access_token');
                     done();
                 });
-        })
-    })
+        });
+    });
 });

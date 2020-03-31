@@ -1,10 +1,9 @@
-const agent = require('../shared').agent;
-const expect = require('../shared').expect;
-const stonybrook = require('../shared').stonybrook;
+const { agent } = require('../shared');
+const { expect } = require('../shared');
 
-describe("Scrape college information", () => {
-    describe("Delete all users", () => {
-        it("Deletes all users", (done) => {
+describe('Scrape college information', () => {
+    describe('Delete all users', () => {
+        it('Deletes all users', (done) => {
             agent
                 .delete('/admin/deleteStudentProfiles')
                 .end((err, res) => {
@@ -14,8 +13,8 @@ describe("Scrape college information", () => {
         });
     });
 
-    describe("Import student and application", () => {
-        it('Import students: mochaImport & mochaImportWrong', function (done) {
+    describe('Import student and application', () => {
+        it('Import students: mochaImport & mochaImportWrong', (done) => {
             agent
                 .get('/admin/importStudents')
                 .end((err, res) => {
@@ -24,12 +23,12 @@ describe("Scrape college information", () => {
                 });
         });
 
-        it('Check mochaImport', function (done) {
+        it('Check mochaImport', (done) => {
             agent
                 .get('/students/mochaImport')
                 .end((err, res) => {
                     res.should.have.status(200);
-                    let student = res.body.student;
+                    const { student } = res.body;
                     expect(student).to.deep.equal({
                         username: 'mochaImport',
                         GPA: '3.50',
@@ -57,18 +56,18 @@ describe("Scrape college information", () => {
                         SATChem: 233,
                         SATPhys: 434,
                         APPassed: 3,
-                        isAdmin: false
+                        isAdmin: false,
                     });
                     done();
                 });
         });
 
-        it('Check mochaImportWrong', function (done) {
+        it('Check mochaImportWrong', (done) => {
             agent
                 .get('/students/mochaImportWrong')
                 .end((err, res) => {
                     res.should.have.status(200);
-                    let student = res.body.student;
+                    const { student } = res.body;
                     expect(student).to.deep.equal({
                         username: 'mochaImportWrong',
                         GPA: '3.50',
@@ -96,13 +95,13 @@ describe("Scrape college information", () => {
                         SATChem: 233,
                         SATPhys: 434,
                         APPassed: 3,
-                        isAdmin: false
+                        isAdmin: false,
                     });
                     done();
                 });
         });
 
-        it('Import student', function (done) {
+        it('Import student', (done) => {
             agent
                 .get('/admin/importApplications')
                 .end((err, res) => {
@@ -111,19 +110,19 @@ describe("Scrape college information", () => {
                 });
         });
 
-        it('Check mochaImport', function (done) {
+        it('Check mochaImport', (done) => {
             agent
                 .get('/students/mochaImport/applications')
                 .end((err, res) => {
                     res.should.have.status(200);
-                    let applications = res.body.applications;
-                    expect(applications[0].status).to.equal('accepted')
+                    const { applications } = res.body;
+                    expect(applications[0].status).to.equal('accepted');
                     agent
-                        .get('/colleges/id/' + applications[0].college)
-                        .end((err, res) => {
-                            res.should.have.status(200);
-                            let college = res.body.college;
-                            expect(college.Name).to.equal('Stony Brook University')
+                        .get(`/colleges/id/${applications[0].college}`)
+                        .end((error, response) => {
+                            response.should.have.status(200);
+                            const { college } = response.body;
+                            expect(college.Name).to.equal('Stony Brook University');
 
                             done();
                         });
