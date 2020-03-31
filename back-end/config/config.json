@@ -1,8 +1,8 @@
 {
   "development": {
-    "username": "swuleung",
-    "password": "111065204",
-    "database": "swuleung",
+    "username": "davsong",
+    "password": "111058499",
+    "database": "davsong",
     "host": "mysql3.cs.stonybrook.edu",
     "dialect": "mysql",
     "operatorsAliases": 0,
@@ -12,9 +12,9 @@
     "COLLEGE_NAMES": "colleges.txt"
   },
   "test": {
-    "username": "swuleung",
-    "password": "111065204",
-    "database": "swuleung",
+    "username": "davsong",
+    "password": "111058499",
+    "database": "davsong",
     "host": "mysql3.cs.stonybrook.edu",
     "dialect": "mysql",
     "operatorsAliases": 0,
@@ -24,9 +24,9 @@
     "COLLEGE_NAMES": "colleges.txt"
   },
   "production": {
-    "username": "zzysberg",
-    "password": "110801274",
-    "database": "zzysberg",
+    "username": "davsong",
+    "password": "111058499",
+    "database": "davsong",
     "host": "mysql3.cs.stonybrook.edu",
     "dialect": "mysql",
     "operatorsAliases": 0,
