@@ -7,21 +7,21 @@ const CollegeDropdown = (props) => {
     const [colleges, setColleges] = useState([]);
     const [errorAlert, setErrorAlert] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
-
+    const { index, selectedValue, onChange } = props;
     const getCollegeOptions = () => {
-        let options = []
-        for (let i = 0; i < colleges.length; i++) {
-            let value = props.selectedValue ? props.selectedValue.toString() : '';
+        const options = [];
+        for (let i = 0; i < colleges.length; i += 1) {
+            const value = props.selectedValue ? props.selectedValue.toString() : '';
             if (value === colleges[i].CollegeId.toString()
-                || !props.applications.some(app => (app.college ? app.college.toString() : '') === colleges[i].CollegeId.toString())
+                || !props.applications.some((app) => (app.college ? app.college.toString() : '') === colleges[i].CollegeId.toString())
             ) {
                 options.push(
-                    <option key={`${i}-${colleges[i].Name}`} value={colleges[i].CollegeId}>{colleges[i].Name}</option>
-                )
+                    <option key={`${i}-${colleges[i].Name}`} value={colleges[i].CollegeId}>{colleges[i].Name}</option>,
+                );
             }
         }
         return options;
-    }
+    };
     useEffect(() => {
         getAllColleges().then((result) => {
             if (result.error) {
@@ -33,18 +33,19 @@ const CollegeDropdown = (props) => {
                 setColleges(result.colleges);
             }
         });
-    }, [])
+    }, []);
     return (
         <div>
             {errorAlert
                 ? <Alert variant="danger">{errorMessage}</Alert>
-                : <Form.Control as="select" index={props.index} value={props.selectedValue ? props.selectedValue : '-1'} onChange={(e) => props.onChange(e)}>
-                    <option value='-1' disabled>Select a college</option>
-                    {getCollegeOptions()}
-                </Form.Control>
-            }
-        </div >
+                : (
+                    <Form.Control as="select" index={index} value={selectedValue || '-1'} onChange={(e) => onChange(e)}>
+                        <option value="-1" disabled>Select a college</option>
+                        {getCollegeOptions()}
+                    </Form.Control>
+                )}
+        </div>
     );
-}
+};
 
 export default CollegeDropdown;
