@@ -47,7 +47,7 @@ describe('Student Profile', () => {
                             })
                             .end((err, res) => {
                                 res.should.have.status(200);
-                                expect(res.body.applications).to.deep.equal([ { college: 365, status: 'deferred', username: 'mochaStudent' } ]);
+                                expect(res.body.applications).to.deep.equal([ { college: college.CollegeId, status: 'deferred', username: 'mochaStudent' } ]);
                                 done();
                             });
                     });
