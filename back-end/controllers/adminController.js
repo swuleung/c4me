@@ -9,8 +9,10 @@ if (process.env.NODE_ENV === 'test') {
     collegeFile = `${__dirname}/../tests/testData/colleges.txt`;
 }
 const colleges = fs.readFileSync(collegeFile).toString().split(/\r?\n/); // colleges.txt file into string array
-const rankingsURL = 'https://www.timeshighereducation.com/rankings/united-states/2020#!/page/0/length/-1/sort_by/rank/sort_order/asc/cols/stats';
-const collegeDataURL = 'https://www.collegedata.com/college/';
+
+const config = require(__dirname + '/../config/config.json')["development"];
+const rankingsURL = config.RANKING_URL;
+const collegeDataURL = config.COLLEGEDATA_URL;
 
 exports.checkAdmin = async (username) => {
     let admin = {};
