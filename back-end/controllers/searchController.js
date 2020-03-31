@@ -53,6 +53,11 @@ exports.searchCollege = async ( filters ) => {
             where: criteria
         };
 
+        // query = {
+        //     raw: true,
+        //     where: filters
+        // };
+
         searchResults = await models.College.findAll( query );
     } 
     catch (error) {
