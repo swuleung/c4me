@@ -10,6 +10,7 @@ const { Op } = require("sequelize");
 //  e.g. admissionRateMin and admissionRateMax
 //  An example filter:
 // {
+//     "location" : "CA",
 //     "SATEBRWMin": 500,
 //     "SATEBRWMax": 550
 // }

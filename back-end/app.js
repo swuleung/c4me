@@ -5,12 +5,12 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
 
-var indexRouter = require('./routes/index');
-var userRouter = require('./routes/userRouter');
-var studentRouter = require('./routes/studentRouter');
-var adminRouter = require('./routes/adminRouter');
-var collegeRouter = require('./routes/collegeRouter');
-var searchRouter = require('./routes/searchRouter');
+const indexRouter = require('./routes/index');
+const userRouter = require('./routes/userRouter');
+const studentRouter = require('./routes/studentRouter');
+const adminRouter = require('./routes/adminRouter');
+const collegeRouter = require('./routes/collegeRouter');
+const searchRouter = require('./routes/searchRouter');
 
 const app = express();
 

@@ -82,7 +82,15 @@ const StudentProfile = (props) => {
                                 {student.highschoolName ? student.highschoolName : 'No high school provided'}
                             </p>
                             <p>
-                            State:&nbsp;
+                            High School City:&nbsp;
+                                {student.highschoolCity ? student.highschoolCity : 'No high school provided'}
+                            </p>
+                            <p>
+                            High School State:&nbsp;
+                                {student.highschoolState ? student.highschoolState : 'No high school provided'}
+                            </p>
+                            <p>
+                            Residence State:&nbsp;
                                 {student.residenceState ? student.residenceState : 'No state provided'}
                             </p>
                             <p>

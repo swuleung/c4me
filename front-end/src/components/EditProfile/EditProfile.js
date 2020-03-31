@@ -149,11 +149,26 @@ const EditProfile = (props) => {
                 <Form onSubmit={(e) => { e.preventDefault(); handleEditSubmission(); }}>
                     <Container>
                         <h1>{username}</h1>
-
-                        <Form.Group controlId="highschoolName">
-                            <Form.Label>High School</Form.Label>
-                            <Form.Control type="text" value={student.highschoolName || ''} placeholder="Enter high school" onChange={(e) => { handleProfileChange(e); }} autoComplete="on" />
-                        </Form.Group>
+                        <Row>
+                            <Col>
+                                <Form.Group controlId="highschoolName">
+                                    <Form.Label>High School</Form.Label>
+                                    <Form.Control type="text" value={student.highschoolName || ''} placeholder="Name" onChange={(e) => { handleProfileChange(e); }} autoComplete="on" />
+                                </Form.Group>
+                            </Col>
+                            <Col>
+                                <Form.Group controlId="highschoolCity">
+                                    <Form.Label>High School</Form.Label>
+                                    <Form.Control type="text" value={student.highschoolCity || ''} placeholder="City" onChange={(e) => { handleProfileChange(e); }} autoComplete="on" />
+                                </Form.Group>
+                            </Col>
+                            <Col>
+                                <Form.Group controlId="highschoolState">
+                                    <Form.Label>High School</Form.Label>
+                                    <Form.Control type="text" value={student.highschoolState || ''} placeholder="State" onChange={(e) => { handleProfileChange(e); }} autoComplete="on" />
+                                </Form.Group>
+                            </Col>
+                        </Row>
                         <Row>
                             <Col>
                                 <Form.Group controlId="collegeClass">
