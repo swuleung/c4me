@@ -1,35 +1,31 @@
-const sequelize = require('sequelize');
 const models = require('../models');
-const bcrypt = require('bcrypt');
-const authentication = require('../utils/auth');
 
 exports.getStudent = async (username) => {
     let student = {};
     try {
-        student = await models.User.findAll({
-            limit: 1,
+        student = await models.User.findOne({
             where: {
                 username: username,
-                isAdmin: false
-            }
+                isAdmin: false,
+            },
         });
     } catch (error) {
         return {
             error: 'Invalid student',
-            reason: error
+            reason: error,
         };
     }
-    if (!student.length) {
+    if (!student) {
         return {
             error: 'User not found',
-            reason: 'User does not exist in DB'
-        }
+            reason: 'User does not exist in DB',
+        };
     }
     return {
         ok: 'Success',
-        student: student[0].toJSON()
-    }
-}
+        student: student.toJSON(),
+    };
+};
 
 exports.updateStudent = async (username, newStudent) => {
     let student = [];
@@ -37,34 +33,34 @@ exports.updateStudent = async (username, newStudent) => {
         student = await models.User.findAll({
             where: {
                 username: username,
-                isAdmin: false
-            }
+                isAdmin: false,
+            },
         });
     } catch (error) {
         return {
             error: 'Invalid student',
-            reason: error
+            reason: error,
         };
     }
     if (!student.length) {
         return {
             error: 'User not found',
-            reason: 'User does not exist in DB'
-        }
+            reason: 'User does not exist in DB',
+        };
     }
     try {
         await student[0].update(newStudent);
     } catch (error) {
         return {
             error: 'Error updating student',
-            reason: error
-        }
+            reason: error,
+        };
     }
     return {
         ok: 'Success',
-        student: student[0]
-    }
-}
+        student: student[0],
+    };
+};
 
 exports.getStudentApplications = async (username) => {
     let applications = {};
@@ -72,73 +68,73 @@ exports.getStudentApplications = async (username) => {
         applications = await models.Application.findAll({
             raw: true,
             where: {
-                username: username
-            }
+                username: username,
+            },
         });
     } catch (error) {
         return {
             error: 'Invalid student',
-            reason: error
+            reason: error,
         };
     }
     return {
         ok: 'Success',
-        applications: applications
-    }
-}
+        applications: applications,
+    };
+};
 
 exports.updateStudentApplications = async (username, newApplications) => {
-    let copyApplications = [...newApplications];
-    let allApplications = await models.Application.findAll({
+    const copyApplications = [...newApplications];
+    const allApplications = await models.Application.findAll({
         where: {
-            username: username
-        }
+            username: username,
+        },
     });
-    let errors = [];
-    for (let i = 0; i < allApplications.length; i++) {
-        let found = copyApplications.findIndex(app => parseInt(app.college) == allApplications[i].dataValues.college);
+    const errors = [];
+    const changes = [];
+    for (let i = 0; i < allApplications.length; i += 1) {
+        // eslint-disable-line max-len
+        const found = copyApplications.findIndex((app) => parseInt(app.college, 10) === allApplications[i].dataValues.college); // eslint-disable-line max-len
         if (found > -1) {
-            try {
-                await allApplications[i].update(copyApplications[found].college);
-            } catch (error) {
-                errors.push({
-                    error: `Error updating application: ${allApplications[i]}`,
-                    reason: error
-                });
-            }
+            changes.push(allApplications[i].update(copyApplications[found].college).catch(
+                (error) => {
+                    errors.push({
+                        error: `Error updating application: ${allApplications[i]}`,
+                        reason: error,
+                    });
+                },
+            ));
             copyApplications.splice(found, 1);
         } else {
-            try {
-                await allApplications[i].destroy();
-            } catch (error) {
+            changes.push(allApplications[i].destroy().catch((error) => {
                 errors.push({
                     error: `Error deleting application: ${allApplications[i]}`,
-                    reason: error
+                    reason: error,
                 });
-            }
+            }));
         }
     }
+    /* eslint-enable no-await-in-loop */
 
     if (copyApplications.length) {
-        for (let i = 0; i < copyApplications.length; i++) {
-            try {
-                await models.Application.create(copyApplications[i]);
-            } catch (error) {
+        for (let i = 0; i < copyApplications.length; i += 1) {
+            changes.push(models.Application.create(copyApplications[i]).catch((error) => {
                 errors.push({
                     error: `Error creating application:  ${allApplications[i]}`,
-                    reason: error
+                    reason: error,
                 });
-            }
+            }));
         }
     }
+    await Promise.all(changes).catch((error) => errors.push(`Error in processing application changes ${error.message}`));
     if (errors.length) {
         return {
             error: 'Error updating some applications',
-            reason: errors
-        }
+            reason: errors,
+        };
     }
     return {
         ok: 'Success',
-        applications: newApplications
-    }
-}
+        applications: newApplications,
+    };
+};
