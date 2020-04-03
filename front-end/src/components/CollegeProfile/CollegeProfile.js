@@ -41,8 +41,7 @@ const CollegeProfile = (props) => {
                             ) : college.InstitutionType === '3' ? (
                                 'Private for-profit'
                             ) : 'Unknown type of school'}
-                            {' '}
-in
+                            {' '}in{' '}
                             {college.Location}
                         </h2>
                         <Tabs defaultActiveKey="overview">

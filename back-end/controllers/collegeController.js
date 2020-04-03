@@ -104,7 +104,6 @@ exports.getMajorsByCollegeID = async (collegeID) => {
                 model: models.College,
                 where: { CollegeId: collegeID },
                 attributes: [],
-
             }],
             order: [
                 ['Major', 'ASC'],

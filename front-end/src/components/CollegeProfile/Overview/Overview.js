@@ -83,32 +83,31 @@ const Overview = (props) => {
                                 ? (
                                     <Col>
                                         <div className="overview-title">Cost of Attendance</div>
-                                        <div className="overview-text">{CostOfAttendanceOutOfState ? `$${CostOfAttendanceOutOfState}` : 'N/A'}</div>
+                                        <div className="overview-text">{CostOfAttendanceOutOfState ? `$${CostOfAttendanceOutOfState.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}` : 'N/A'}</div>
                                     </Col>
                                 )
                                 : (
                                     <>
                                         <Col>
                                             <div className="overview-title">In-State Cost</div>
-                                            <div className="overview-text">{CostOfAttendanceInState ? `$${CostOfAttendanceInState}` : 'N/A'}</div>
+                                            <div className="overview-text">{CostOfAttendanceInState ? `$${CostOfAttendanceInState.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}` : 'N/A'}</div>
                                         </Col>
                                         <Col>
                                             <div className="overview-title">Out-of-State Cost</div>
-                                            <div className="overview-text">{CostOfAttendanceOutOfState ? `$${CostOfAttendanceOutOfState}` : 'N/A'}</div>
+                                            <div className="overview-text">{CostOfAttendanceOutOfState ? `$${CostOfAttendanceOutOfState.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}` : 'N/A'}</div>
                                         </Col>
                                     </>
                                 )}
                             <Col>
                                 <div className="overview-title">Undergraduate Enrollment</div>
-                                <div className="overview-text">{Size || 'N/A'}</div>
+                                <div className="overview-text">{Size ? Size.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : 'N/A'}</div>
                             </Col>
                             <Col>
                                 <div className="overview-title">
                                     Median Student Debt
                                 </div>
                                 <div className="overview-text">
-                                    $
-                                    {StudentDebt || 'N/A'}
+                                    {StudentDebt ? '$' + StudentDebt.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : 'N/A'}
                                 </div>
                             </Col>
                         </Row>
@@ -134,7 +133,7 @@ const Overview = (props) => {
                             </Col>
                         </Row>
                         <Row className="mt-4">
-                            <h2>Popular Programs</h2>
+                            <h2>Majors</h2>
                         </Row>
                         {generateMajors()}
                     </Container>
