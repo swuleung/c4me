@@ -94,3 +94,30 @@ exports.deleteAllColleges = async () => {
         ok: 'Deleted colleges successfully',
     };
 };
+
+exports.getMajorsByCollegeID = async (collegeID) => {
+    let majors = [];
+    try {
+        majors = await models.Major.findAll({
+            attributes: ['MajorId', 'Major'],
+            include: [{
+                model: models.College,
+                where: { CollegeId: collegeID },
+                attributes: [],
+            }],
+            order: [
+                ['Major', 'ASC'],
+            ]
+        });
+    } catch (error) {
+        return {
+            error: 'Unable to get majors',
+            reason: error,
+        };
+    }
+
+    return {
+        ok: 'Successfully got majors',
+        majors: majors
+    };
+}

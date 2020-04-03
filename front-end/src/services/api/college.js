@@ -33,4 +33,21 @@ module.exports = {
             };
         }
     },
+    getMajorsByCollegeID: async function getMajorsByCollegeID(collegeID) {
+        try {
+            const majors = await fetch(`http://localhost:9000/colleges/id/${collegeID}/majors`, {
+                method: 'GET',
+                credentials: 'include',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json; charset=utf-8',
+                },
+            });
+            return await majors.json();
+        } catch (error) {
+            return {
+                error: `${error.message} major data data for ${collegeID}`,
+            };
+        }
+    }
 };

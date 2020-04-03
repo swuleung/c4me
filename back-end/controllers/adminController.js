@@ -167,12 +167,12 @@ exports.scrapeCollegeData = async () => {
         }
 
         const majorEls = await page.$x('(//div[contains(., \'Undergraduate Majors\')])[last()]//ul');
-        let majors = [];
+        let preMajors = [];
         for (let j = 0; j < majorEls.length; j += 1) {
             const listChildren = await page.evaluate((el) => el.textContent, majorEls[j]);
-            majors = majors.concat(listChildren.trim().split('\n'));
+            preMajors = preMajors.concat(listChildren.trim().split('\n'));
         }
-
+        const majors = preMajors.map(m => m.trim());
         const collegeObject = {
             Name: colleges[i],
             CompletionRate: completionRate,
@@ -181,7 +181,7 @@ exports.scrapeCollegeData = async () => {
             GPA: gpa,
             SATMath: satMath,
             SATEBRW: satEbrw,
-            ACTComposite: actComposite,
+            ACTComposite: actComposite
         };
 
 

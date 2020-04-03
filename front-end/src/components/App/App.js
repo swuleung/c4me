@@ -11,6 +11,7 @@ import Login from '../Login/Login';
 import StudentProfile from '../StudentProfile/StudentProfile';
 import EditProfile from '../EditProfile/EditProfile';
 import Admin from '../Admin/Admin';
+import CollegeProfile from '../CollegeProfile/CollegeProfile'
 
 function App() {
     const [username, setUsername] = useState(localStorage.getItem('username'));
@@ -56,10 +57,8 @@ function App() {
                         <Route exact path="/create-account" component={CreateAccount} />
                         <Route exact path="/login" render={(props) => <Login {...props} setUsername={setUsername} />} />
                         <Route exact path="/profile/:username" component={StudentProfile} />
-                        <Route exact path="/profile/:username/">
-                            <Redirect to="/profile/:username" />
-                        </Route>
                         <Route exact path="/profile/:username/edit" username={username} render={(props) => (props.match.params.username === username ? <EditProfile {...props} /> : <Redirect to="/" />)} />
+                        <Route exact path="/colleges/:collegeID" component={CollegeProfile} />
                         <Route exact path="/admin" component={Admin} />
                         <Route render={function notFound() {
                             return <p>404 Not found</p>;
