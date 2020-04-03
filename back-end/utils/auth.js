@@ -14,7 +14,7 @@ exports.generateKey = (username) => jwt.sign(
     privateKey,
     {
         algorithm: 'RS256',
-        expiresIn: '1 day',
+        expiresIn: '7 days',
     },
 );
 

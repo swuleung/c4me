@@ -1,0 +1,14 @@
+@import "../../../utils/styles/theme.scss";
+
+.overview-title {
+  font-weight: bold;
+}
+
+.overview-text {
+  font-size: 3rem;
+  color: $main-color;
+}
+
+.overview-text-md {
+  font-size: 2rem;
+}
