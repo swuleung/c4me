@@ -1,106 +1,106 @@
-'use strict';
-let array_of_states = ['AK', 'AL', 'AR', 'AZ', 'CA', 'CO', 'CT', 'DC', 'DE', 'FL', 'GA', 'GU', 'HI', 'IA', 'ID', 'IL', 'IN', 'KS', 'KY', 'LA', 'MA', 'MD', 'ME', 'MH', 'MI', 'MN', 'MO', 'MS', 'MT', 'NC', 'ND', 'NE', 'NH', 'NJ', 'NM', 'NV', 'NY', 'OH', 'OK', 'OR', 'PA', 'PR', 'PW', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VA', 'VI', 'VT', 'WA', 'WI', 'WV', 'WY', null];
+
+const UsStates = ['AK', 'AL', 'AR', 'AZ', 'CA', 'CO', 'CT', 'DC', 'DE', 'FL', 'GA', 'GU', 'HI', 'IA', 'ID', 'IL', 'IN', 'KS', 'KY', 'LA', 'MA', 'MD', 'ME', 'MH', 'MI', 'MN', 'MO', 'MS', 'MT', 'NC', 'ND', 'NE', 'NH', 'NJ', 'NM', 'NV', 'NY', 'OH', 'OK', 'OR', 'PA', 'PR', 'PW', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VA', 'VI', 'VT', 'WA', 'WI', 'WV', 'WY', null];
 
 module.exports = (sequelize, DataTypes) => {
-    let College = sequelize.define('College', {
+    const College = sequelize.define('College', {
         CollegeId: {
             type: DataTypes.INTEGER,
             autoIncrement: true,
-            primaryKey: true
+            primaryKey: true,
         },
         Name: {
             type: DataTypes.STRING,
-            defaultValue: null
+            defaultValue: null,
         },
         Ranking: {
             type: DataTypes.STRING,
-            defaultValue: null
+            defaultValue: null,
         },
         Size: {
             type: DataTypes.INTEGER,
-            defaultValue: null
+            defaultValue: null,
         },
         AdmissionRate: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.DECIMAL(5, 2),
             validate: {
                 min: 0,
-                max: 100
+                max: 100,
             },
-            defaultValue: null
+            defaultValue: null,
         },
         CostOfAttendanceInState: {
             type: DataTypes.INTEGER,
-            defaultValue: null
+            defaultValue: null,
         },
         CostOfAttendanceOutOfState: {
             type: DataTypes.INTEGER,
-            defaultValue: null
+            defaultValue: null,
         },
         Location: {
             type: DataTypes.CHAR(2),
-            validate: { isIn: [array_of_states] },
-            defaultValue: null
+            validate: { isIn: [UsStates] },
+            defaultValue: null,
         },
         GPA: {
-            type: DataTypes.DECIMAL(10, 2),
+            type: DataTypes.DECIMAL(3, 2),
             validate: {
                 min: 0,
-                max: 4
+                max: 4,
             },
-            defaultValue: null
+            defaultValue: null,
         },
         SATMath: {
             type: DataTypes.INTEGER,
             validate: {
                 min: 200,
-                max: 800
+                max: 800,
             },
-            defaultValue: null
+            defaultValue: null,
         },
         SATEBRW: {
             type: DataTypes.INTEGER,
             validate: {
                 min: 200,
-                max: 800
+                max: 800,
             },
-            defaultValue: null
+            defaultValue: null,
         },
         ACTComposite: {
             type: DataTypes.INTEGER,
             validate: {
                 min: 1,
-                max: 36
+                max: 36,
             },
-            defaultValue: null
+            defaultValue: null,
         },
         InstitutionType: {
             type: DataTypes.STRING,
-            defaultValue: null
+            defaultValue: null,
         },
         CompletionRate: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.DECIMAL(5, 2),
             validate: {
                 min: 0,
-                max: 100
+                max: 100,
             },
-            defaultValue: null
+            defaultValue: null,
         },
         StudentDebt: {
             type: DataTypes.INTEGER,
-            defaultValue: null
-        }
+            defaultValue: null,
+        },
     },
     {
         indexes: [
             {
                 unique: true,
-                fields: ['Name']
-            }
-        ]
+                fields: ['Name'],
+            },
+        ],
     });
     College.associate = (models) => {
-        College.belongsToMany(models.User, {through: 'Application',  foreignKey: 'college'});
+        College.belongsToMany(models.User, { through: 'Application', foreignKey: 'college' });
         College.belongsToMany(models.Major, { through: 'CollegeMajors', onDelete: 'CASCADE' });
-    }
+    };
     return College;
 };

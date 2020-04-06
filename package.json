@@ -1,0 +1,26 @@
+{
+  "name": "c4me",
+  "version": "1.0.0",
+  "description": "CSE-416 project",
+  "main": "index.js",
+  "dependencies": {
+    "concurrently": "^5.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "front-end": "cd front-end && npm start",
+    "back-end": "cd back-end && npm start",
+    "start": "concurrently \"npm run back-end\" \"npm run front-end\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/swuleung/c4me.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/swuleung/c4me/issues"
+  },
+  "homepage": "https://github.com/swuleung/c4me#readme"
+}

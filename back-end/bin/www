@@ -4,67 +4,43 @@
  * Module dependencies.
  */
 
-var app = require('../app');
-var debug = require('debug')('back-end:server');
-var http = require('http');
-var models = require('../models')
-/**
- * Get port from environment and store in Express.
- */
-
-var port = normalizePort(process.env.PORT || '9000');
-app.set('port', port);
-
-/**
- * Create HTTP server.
- */
-
-var server = http.createServer(app);
-
-models.sequelize.sync(
-    {
-        // force: true // TURN THIS OFF LATER
-    }
-).then(function () {
-    /**
-     * Listen on provided port, on all network interfaces.
-     */
-    server.listen(port, function () {
-        debug('Express server listening on port ' + server.address().port);
-    });
-    server.on('error', onError);
-    server.on('listening', onListening);
-
-    models.User.create({
-        username: 'admin',
-        password: 'admin',
-        isAdmin: true
-    }).then(() => {
-        console.log('Admin account created');
-    }).catch(() => {
-        console.log('Admin account exists');
-    });
-});
+const debug = require('debug')('back-end:server');
+const http = require('http');
+const models = require('../models');
+const app = require('../app');
 
 /**
  * Normalize a port into a number, string, or false.
  */
 
 function normalizePort(val) {
-    var port = parseInt(val, 10);
+    const port = parseInt(val, 10);
 
-    if (isNaN(port)) {
-        // named pipe
+    if (Number.isNaN(port)) {
+    // named pipe
         return val;
     }
 
     if (port >= 0) {
-        // port number
+    // port number
         return port;
     }
 
     return false;
 }
+
+/**
+ * Get port from environment and store in Express.
+ */
+
+const port = normalizePort(process.env.PORT || '9000');
+app.set('port', port);
+
+/**
+ * Create HTTP server.
+ */
+
+const server = http.createServer(app);
 
 /**
  * Event listener for HTTP server "error" event.
@@ -75,22 +51,22 @@ function onError(error) {
         throw error;
     }
 
-    var bind = typeof port === 'string'
-        ? 'Pipe ' + port
-        : 'Port ' + port;
+    const bind = typeof port === 'string'
+        ? `Pipe ${port}`
+        : `Port ${port}`;
 
     // handle specific listen errors with friendly messages
     switch (error.code) {
-        case 'EACCES':
-            console.error(bind + ' requires elevated privileges');
-            process.exit(1);
-            break;
-        case 'EADDRINUSE':
-            console.error(bind + ' is already in use');
-            process.exit(1);
-            break;
-        default:
-            throw error;
+    case 'EACCES':
+        console.error(`${bind} requires elevated privileges`);
+        process.exit(1);
+        break;
+    case 'EADDRINUSE':
+        console.error(`${bind} is already in use`);
+        process.exit(1);
+        break;
+    default:
+        throw error;
     }
 }
 
@@ -99,9 +75,35 @@ function onError(error) {
  */
 
 function onListening() {
-    var addr = server.address();
-    var bind = typeof addr === 'string'
-        ? 'pipe ' + addr
-        : 'port ' + addr.port;
-    debug('Listening on ' + bind);
+    const addr = server.address();
+    const bind = typeof addr === 'string'
+        ? `pipe ${addr}`
+        : `port ${addr.port}`;
+    debug(`Listening on ${bind}`);
 }
+
+models.sequelize.sync(
+    {
+    // force: true // TURN THIS OFF LATER
+    },
+).then(() => {
+    /**
+     * Listen on provided port, on all network interfaces.
+     */
+    server.listen(port, () => {
+        debug(`Express server listening on port ${server.address().port}`);
+    });
+    server.setTimeout(300000);
+    server.on('error', onError);
+    server.on('listening', onListening);
+
+    models.User.create({
+        username: 'admin',
+        password: 'admin',
+        isAdmin: true,
+    }).then(() => {
+        console.log('Admin account created');
+    }).catch(() => {
+        console.log('Admin account exists');
+    });
+});

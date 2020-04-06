@@ -1,33 +1,32 @@
 /**
  * JWT generation and verification
  */
-const jwt = require("jsonwebtoken");
-const fs = require("fs");
-const publicKey = fs.readFileSync(__dirname + '/c4meJWT.pub').toString();
-const privateKey = fs.readFileSync(__dirname + '/c4meJWT').toString();
+const jwt = require('jsonwebtoken');
+const fs = require('fs');
 
-exports.generateKey = (username) => {
-    return jwt.sign(
-        {
-            username: username
-        },
-        privateKey,
-        {
-            algorithm: "RS256",
-            expiresIn: "1 day"
-        }
-    );
-}
+const publicKey = fs.readFileSync(`${__dirname}/../assets/keys/c4meJWT.pub`).toString();
+const privateKey = fs.readFileSync(`${__dirname}/../assets/keys/c4meJWT`).toString();
 
-exports.validateJWT = async (access_token) => {
+exports.generateKey = (username) => jwt.sign(
+    {
+        username: username,
+    },
+    privateKey,
+    {
+        algorithm: 'RS256',
+        expiresIn: '7 days',
+    },
+);
+
+exports.validateJWT = async (accessToken) => {
     try {
-        return jwt.verify(access_token, publicKey, {
-            algorithms: ["RS256"]
+        return jwt.verify(accessToken, publicKey, {
+            algorithms: ['RS256'],
         });
     } catch (e) {
         return {
             error: 'Invalid JWT',
-            reason: e
+            reason: e,
         };
     }
-}
+};

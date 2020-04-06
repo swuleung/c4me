@@ -1,0 +1,38 @@
+{
+  "development": {
+    "username": "jaquach",
+    "password": "111019384",
+    "database": "jaquach",
+    "host": "mysql3.cs.stonybrook.edu",
+    "dialect": "mysql",
+    "operatorsAliases": 0,
+    "JWT_COOKIE": "access_token",
+    "RANKING_URL": "https://www.timeshighereducation.com/rankings/united-states/2020#!/page/0/length/-1/sort_by/rank/sort_order/asc/cols/stats",
+    "COLLEGEDATA_URL": "https://www.collegedata.com/college/",
+    "COLLEGE_NAMES": "colleges.txt"
+  },
+  "test": {
+    "username": "jaquach",
+    "password": "111019384",
+    "database": "jaquach",
+    "host": "mysql3.cs.stonybrook.edu",
+    "dialect": "mysql",
+    "operatorsAliases": 0,
+    "JWT_COOKIE": "access_token",
+    "RANKING_URL": "https://www.timeshighereducation.com/rankings/united-states/2020#!/page/0/length/-1/sort_by/rank/sort_order/asc/cols/stats",
+    "COLLEGEDATA_URL": "https://www.collegedata.com/college/",
+    "COLLEGE_NAMES": "colleges.txt"
+  },
+  "production": {
+    "username": "jaquach",
+    "password": "111019384",
+    "database": "jaquach",
+    "host": "mysql3.cs.stonybrook.edu",
+    "dialect": "mysql",
+    "operatorsAliases": 0,
+    "JWT_COOKIE": "access_token",
+    "RANKING_URL": "https://www.timeshighereducation.com/rankings/united-states/2020#!/page/0/length/-1/sort_by/rank/sort_order/asc/cols/stats",
+    "COLLEGEDATA_URL": "https://www.collegedata.com/college/",
+    "COLLEGE_NAMES": "colleges.txt"
+  }
+}
