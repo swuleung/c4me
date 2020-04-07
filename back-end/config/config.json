@@ -9,7 +9,8 @@
     "JWT_COOKIE": "access_token",
     "RANKING_URL": "https://www.timeshighereducation.com/rankings/united-states/2020#!/page/0/length/-1/sort_by/rank/sort_order/asc/cols/stats",
     "COLLEGEDATA_URL": "https://www.collegedata.com/college/",
-    "COLLEGE_NAMES": "colleges.txt"
+    "COLLEGE_NAMES": "colleges.txt",
+    "NICHE_URL": "https://www.niche.com/k12/"
   },
   "test": {
     "username": "jaquach",
@@ -21,7 +22,8 @@
     "JWT_COOKIE": "access_token",
     "RANKING_URL": "https://www.timeshighereducation.com/rankings/united-states/2020#!/page/0/length/-1/sort_by/rank/sort_order/asc/cols/stats",
     "COLLEGEDATA_URL": "https://www.collegedata.com/college/",
-    "COLLEGE_NAMES": "colleges.txt"
+    "COLLEGE_NAMES": "colleges.txt",
+    "NICHE_URL": "https://www.niche.com/k12/"
   },
   "production": {
     "username": "jaquach",
@@ -33,6 +35,7 @@
     "JWT_COOKIE": "access_token",
     "RANKING_URL": "https://www.timeshighereducation.com/rankings/united-states/2020#!/page/0/length/-1/sort_by/rank/sort_order/asc/cols/stats",
     "COLLEGEDATA_URL": "https://www.collegedata.com/college/",
-    "COLLEGE_NAMES": "colleges.txt"
+    "COLLEGE_NAMES": "colleges.txt",
+    "NICHE_URL": "https://www.niche.com/k12/"
   }
 }
