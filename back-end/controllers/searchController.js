@@ -31,6 +31,7 @@ exports.searchCollege = async ( filters ) => {
         
         let criteria = {};
         let query = {};
+
         if ( "name" in filters )
             criteria.Name = { [Op.substring] : filters.name };
         if ( "admissionRateMin" in filters && "admissionRateMax" in filters)
@@ -39,7 +40,6 @@ exports.searchCollege = async ( filters ) => {
             criteria.CostOfAttendanceInState = { [Op.lte] : filters.costInStateMax };
             criteria.CostOfAttendanceOutOfState = { [Op.lte] : filters.costOutOfMax };
         }
-
         if ( "location" in filters ) {
             //criteria.Location = filters.location;
             switch ( filters.location ) {
@@ -70,7 +70,24 @@ exports.searchCollege = async ( filters ) => {
             criteria.SATEBRW = { [Op.between] : [ filters.SATEBRWMin, filters.SATEBRWMax] };
         if ( "ACTCompositeMin" in filters && "ACTCompositeMax" in filters )
             criteria.ACTComposite = { [Op.between] : [ filters.ACTCompositeMin, filters.ACTCompositeMax] };
-        if ( "major" in filters ) {
+        
+        // the major filter is a bit weird since their can be 1 or 2 majors.
+        // I stuck with this solution for now.
+        if ( "major" in filters && "major2" in filters ) {
+            query.include = 
+            [{ 
+                model: models.Major,
+                where: {
+                    Major : { 
+                        [Op.or] : [
+                            { [Op.substring] : filters.major },
+                            { [Op.substring] : filters.major2 }
+                        ]                  
+                    }
+                }
+             }];
+        }
+        else if ( "major" in filters ) {
             query.include = 
             [{ 
                 model: models.Major,
@@ -79,31 +96,30 @@ exports.searchCollege = async ( filters ) => {
                 }
              }];
         }
-        //college majors, cost of attendance To be completed
-        // Working filters: name, ranking, admission rate, size, ACT Composite, SAT Math, SAT EBRW, location
+        else if ( "major2" in filters ) {
+            query.include = 
+            [{ 
+                model: models.Major,
+                where: {
+                    Major : { [Op.substring] : filters.major2 }             
+                }
+             }];
+        }
 
         query.raw = true;
         query.where = criteria;
-
-        // query = {
-        //     raw: true,
-        //     where: filters
-        // };
-
         searchResults = await models.College.findAll( query );
-
-        // this code is for the removal of duplicate college.
+        
+        // the following code is for the removal of duplicate colleges.
         // there can be duplicate results because when you search via majors,
         // there can be more results for the same college, just with different majors
         let collegeID = -1;
-        for ( let i = 0; i < searchResults.length; i++) {
-            console.log("check");
-            if ( collegeID == searchResults[i].CollegeId )
+        for ( let i = searchResults.length - 1; i >= 0; i--) {
+            if ( collegeID != searchResults[i].CollegeId )
                 collegeID = searchResults[i].CollegeId;
             else
                 searchResults.splice( i , 1 );
         }
-
     } 
     catch (error) {
         return {
@@ -111,8 +127,6 @@ exports.searchCollege = async ( filters ) => {
             reason: error
         };
     }
-    
-
     return {
         ok: 'Success',
         colleges : searchResults
