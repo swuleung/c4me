@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "jaquach",
-    "password": "111019384",
-    "database": "jaquach",
-    "host": "mysql3.cs.stonybrook.edu",
+    "username": "root",
+    "password": "password",
+    "database": "c4me",
+    "host": "localhost",
     "dialect": "mysql",
     "operatorsAliases": 0,
     "JWT_COOKIE": "access_token",
@@ -13,9 +13,9 @@
     "NICHE_URL": "https://www.niche.com/k12/"
   },
   "test": {
-    "username": "jaquach",
-    "password": "111019384",
-    "database": "jaquach",
+    "username": "swuleung",
+    "password": "111065204",
+    "database": "swuleung",
     "host": "mysql3.cs.stonybrook.edu",
     "dialect": "mysql",
     "operatorsAliases": 0,
@@ -26,9 +26,9 @@
     "NICHE_URL": "https://www.niche.com/k12/"
   },
   "production": {
-    "username": "jaquach",
-    "password": "111019384",
-    "database": "jaquach",
+    "username": "swuleung",
+    "password": "111065204",
+    "database": "swuleung",
     "host": "mysql3.cs.stonybrook.edu",
     "dialect": "mysql",
     "operatorsAliases": 0,
