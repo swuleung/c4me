@@ -217,6 +217,7 @@ module.exports = (sequelize, DataTypes) => {
 
     User.associate = (models) => {
         User.belongsToMany(models.College, { through: 'Application', foreignKey: 'username' });
+        User.belongsTo(models.HighSchool, { through: 'StudentHighSchools' });
     };
     return User;
 };
