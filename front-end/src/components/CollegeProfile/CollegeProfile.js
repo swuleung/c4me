@@ -51,7 +51,7 @@ const CollegeProfile = (props) => {
                             </Tab>
                             <Tab eventKey="applications-tracker" title="Applications Tracker">
                                 <br />
-                                <ApplicationsTracker></ApplicationsTracker>
+                                <ApplicationsTracker college={college} />
                             </Tab>
                         </Tabs>
                     </Container>

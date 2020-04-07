@@ -258,14 +258,16 @@ const processApplications = (applications) => {
     return {
         ok: 'Successfully got applications tracker data',
         applications: processedApplications,
-        avgGPA: averageGPA,
-        avgSATMath: averageSATMath,
-        avgSATEBRW: averageSATEBRW,
-        avgACTComposite: averageACTComposite,
-        avgAcceptedGPA: averageAcceptedGPA,
-        avgAcceptedSATMath: averageAcceptedSATMath,
-        avgAcceptedSATEBRW: averageAcceptedSATEBRW,
-        avgAcceptedACTComposite: averageAcceptedACTComposite
+        averages: {
+            avgGPA: averageGPA,
+            avgSATMath: averageSATMath,
+            avgSATEBRW: averageSATEBRW,
+            avgACTComposite: averageACTComposite,
+            avgAcceptedGPA: averageAcceptedGPA,
+            avgAcceptedSATMath: averageAcceptedSATMath,
+            avgAcceptedSATEBRW: averageAcceptedSATEBRW,
+            avgAcceptedACTComposite: averageAcceptedACTComposite
+        }
     };
 }
 
@@ -339,7 +341,14 @@ exports.getApplicationsByCollegeID = async (collegeID, filters) => {
     } catch (error) {
         return {
             error: 'Unable to get applications for applications tracker',
-            reason: error,
+            reason: error.message,
+        };
+    }
+    if (!applications) {
+        return {
+            ok: 'No data for college',
+            applications: [],
+            averages: {}
         };
     }
     return processApplications(applications.toJSON().Users);

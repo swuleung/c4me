@@ -8,7 +8,7 @@ import { faQuestionCircle } from '@fortawesome/free-regular-svg-icons';
 import Autocomplete from 'react-autocomplete';
 import './FilterAT.scss';
 
-const FilterAT = () => {
+const FilterAT = (props) => {
     const [lax, setLax] = useState('lax');
     const [collegeClass, setCollegeCLass] = useState({
         lowerCollegeClass: '',
@@ -24,6 +24,8 @@ const FilterAT = () => {
     });
     const [highSchool, setHighSchool] = useState('');
     const [highSchoolList, setHighSchoolList] = useState([]);
+    const { handleFilterChange } = props;
+
     const handleAddHighSchool = (hs) => {
         const newHighSchools = [...highSchoolList];
         newHighSchools.push(hs);
@@ -83,6 +85,8 @@ const FilterAT = () => {
         if (highSchoolList.length) {
             filters.highSchools = [...highSchoolList];
         }
+
+        handleFilterChange(filters);
     };
 
     useEffect(() => {
