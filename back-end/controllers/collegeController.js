@@ -139,6 +139,7 @@ const processApplications = (applications) => {
     let countSATEBRW = 0;
     let averageACTComposite = 0;
     let countACTComposite = 0;
+    let averageWeight = 0;
 
     let averageAcceptedGPA = 0;
     let countAcceptedGPA = 0;
@@ -156,10 +157,10 @@ const processApplications = (applications) => {
         if (app.GPA) {
             if (app.Application.status == 'accepted') {
                 countAcceptedGPA += 1;
-                averageAcceptedGPA += app.GPA;
+                averageAcceptedGPA += parseFloat(app.GPA);
             }
             countGPA += 1;
-            averageGPA += app.GPA;
+            averageGPA += parseFloat(app.GPA);
         }
 
         if (app.SATLit) {
@@ -245,11 +246,11 @@ const processApplications = (applications) => {
         processedApp.weight = weight;
         processedApplications.push(processedApp)
     }
-
     averageGPA /= countGPA;
     averageSATMath /= countSATMath;
     averageSATEBRW /= countSATEBRW;
     averageACTComposite /= countACTComposite;
+    averageWeight /= applications.length;
 
     averageAcceptedGPA /= countAcceptedGPA;
     averageAcceptedSATMath /= countAcceptedSATMath;
@@ -259,14 +260,15 @@ const processApplications = (applications) => {
         ok: 'Successfully got applications tracker data',
         applications: processedApplications,
         averages: {
-            avgGPA: averageGPA,
-            avgSATMath: averageSATMath,
-            avgSATEBRW: averageSATEBRW,
-            avgACTComposite: averageACTComposite,
-            avgAcceptedGPA: averageAcceptedGPA,
-            avgAcceptedSATMath: averageAcceptedSATMath,
-            avgAcceptedSATEBRW: averageAcceptedSATEBRW,
-            avgAcceptedACTComposite: averageAcceptedACTComposite
+            avgGPA: averageGPA.toFixed(2),
+            avgSATMath: Math.round(averageSATMath),
+            avgSATEBRW: Math.round(averageSATEBRW),
+            avgACTComposite: Math.round(averageACTComposite),
+            avgAcceptedGPA: averageAcceptedGPA.toFixed(2),
+            avgAcceptedSATMath: Math.round(averageAcceptedSATMath),
+            avgAcceptedSATEBRW: Math.round(averageAcceptedSATEBRW),
+            avgAcceptedACTComposite: Math.round(averageAcceptedACTComposite),
+            avgWeight: Math.round(averageWeight)
         }
     };
 }
