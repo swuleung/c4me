@@ -337,6 +337,14 @@ const EditProfile = (props) => {
                                         </Form.Group>
                                     </Col>
                                 </Row>
+                                <Row>
+                                    <Col>
+                                        <Form.Group className="row" controlId="SATPhys">
+                                            <Form.Label className="col">Physics</Form.Label>
+                                            <Form.Control className="col" type="number" value={student.SATPhys|| ''} min="200" max="800" placeholder="200-800" onChange={(e) => { handleProfileChange(e); }} autoComplete="on" />
+                                        </Form.Group>
+                                    </Col>
+                                </Row>
                             </Col>
                         </Row>
                         <br />
