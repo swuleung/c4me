@@ -73,14 +73,18 @@ const FilterAT = (props) => {
             filters.upperCollegeClass = parseInt(collegeClass.upperCollegeClass, 10);
         }
 
-        const selectedStatues = [];
+        const selectedStatuses = [];
         const entries = Object.entries(statuses);
         for (let i = 0; i < entries.length; i++) {
             if (entries[i][1]) {
-                selectedStatues.push(entries[i][0]);
+                selectedStatuses.push(entries[i][0]);
             }
         }
-        filters.statuses = selectedStatues;
+
+        if (selectedStatuses.length == 0) {
+            selectedStatuses = ['accepted', 'deferred', 'denied', 'pending', 'waitlisted', 'withdrawn'];
+        }
+        filters.statuses = selectedStatuses;
 
         if (highSchoolList.length) {
             filters.highSchools = [...highSchoolList];
