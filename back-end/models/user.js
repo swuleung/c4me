@@ -30,19 +30,6 @@ module.exports = (sequelize, DataTypes) => {
             validate: { isIn: [UsStates] },
             defaultValue: null,
         },
-        highschoolName: {
-            type: DataTypes.STRING,
-            defaultValue: null,
-        },
-        highschoolCity: {
-            type: DataTypes.STRING,
-            defaultValue: null,
-        },
-        highschoolState: {
-            type: DataTypes.CHAR(2),
-            validate: { isIn: [UsStates] },
-            defaultValue: null,
-        },
         collegeClass: {
             type: DataTypes.INTEGER,
             validate: {
@@ -217,7 +204,7 @@ module.exports = (sequelize, DataTypes) => {
 
     User.associate = (models) => {
         User.belongsToMany(models.College, { through: 'Application', foreignKey: 'username' });
-        User.belongsTo(models.HighSchool, { through: 'StudentHighSchools' });
+        User.belongsTo(models.HighSchool);
     };
     return User;
 };

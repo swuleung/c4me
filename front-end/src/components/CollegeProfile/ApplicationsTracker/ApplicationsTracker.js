@@ -11,7 +11,7 @@ const ApplicationsTracker = (props) => {
     const [errorAlert, setErrorAlert] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [filters, setFilters] = useState({});
-    const [application, setApplications] = useState([]);
+    const [applications, setApplications] = useState([]);
     const [averages, setAverages] = useState({});
     const { college } = props;
     const {
@@ -19,7 +19,6 @@ const ApplicationsTracker = (props) => {
     } = college;
 
     useEffect(() => {
-        console.log('ahh', averages);
         getApplicationsTrackerData(CollegeId, filters).then((results) => {
             if (results.error) {
                 setErrorAlert(true);
@@ -27,8 +26,6 @@ const ApplicationsTracker = (props) => {
             }
             if (results.ok) {
                 setErrorAlert(false);
-                console.log(results.averages);
-                console.log(results.applications);
                 setApplications(results.applications);
                 setAverages(results.averages);
             }
@@ -98,8 +95,8 @@ const ApplicationsTracker = (props) => {
                             <Col xs="4">
                                 <FilterAT handleFilterChange={setFilters} />
                             </Col>
-                            <Col>
-                                <ATScatterplot />
+                            <Col xs="8">
+                                <ATScatterplot applications={applications} averages={averages}/>
                             </Col>
                         </Row>
                     </>

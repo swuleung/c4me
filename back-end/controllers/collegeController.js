@@ -60,6 +60,9 @@ exports.getAllColleges = async () => {
     try {
         colleges = await models.College.findAll({
             raw: true,
+            order: [
+                ['Name', 'ASC'],
+            ],
         });
     } catch (error) {
         return {
@@ -67,6 +70,7 @@ exports.getAllColleges = async () => {
             reason: error,
         };
     }
+    
     if (!colleges.length) {
         return {
             error: 'No colleges in the db',
@@ -256,6 +260,7 @@ const processApplications = (applications) => {
     averageAcceptedSATMath /= countAcceptedSATMath;
     averageAcceptedSATEBRW /= countAcceptedSATEBRW;
     averageAcceptedACTComposite /= countAcceptedACTComposite;
+
     return {
         ok: 'Successfully got applications tracker data',
         applications: processedApplications,
@@ -277,13 +282,15 @@ const processApplications = (applications) => {
  * This function is specifically used by the Applications tracker
  */
 exports.getApplicationsByCollegeID = async (collegeID, filters) => {
+
     let applications = [];
-    let userWhereClause = {}
+    let userWhereClause = {};
     let applicationWhereClause = {
         isQuestionable: false
-    }
+    };
+    let highSchoolWhereClause = {};
 
-    let highschoolName = { [Op.or]: {} };
+    let HighSchoolId = { [Op.or]: {} };
     let collegeClass = { [Op.or]: {} };
     let status = { [Op.or]: {} };
 
@@ -294,15 +301,21 @@ exports.getApplicationsByCollegeID = async (collegeID, filters) => {
         }
     }
 
+    let includeHS = { 
+        model: models.HighSchool,
+    };
+    
     // Must change when the high school model shows up
-    if (filters.highschools) {
+    if (filters.highSchools) {
         if (filters.lax) {
-            highschoolName = {
+            HighSchoolId = {
                 [Op.or]: { [Op.eq]: null }
             }
+            includeHS.required = false;
         }
-        highschoolName[Op.or][Op.in] = filters.highschools;
-        userWhereClause.highschoolName = highschoolName;
+        HighSchoolId[Op.or][Op.in] = filters.highSchools;
+        highSchoolWhereClause.HighSchoolId = HighSchoolId;
+        includeHS.where = highSchoolWhereClause;
     }
 
     if (filters.statuses) {
@@ -324,6 +337,7 @@ exports.getApplicationsByCollegeID = async (collegeID, filters) => {
     if (filters.upperCollegeClass || filters.lowerCollegeClass) {
         userWhereClause.collegeClass = collegeClass;
     }
+
     try {
         applications = (await models.College.findOne({
             where: { CollegeId: collegeID },
@@ -337,7 +351,10 @@ exports.getApplicationsByCollegeID = async (collegeID, filters) => {
                 attributes: {
                     exclude: ['password', 'createdAt', 'updatedAt', 'APPassed', 'residenceState',
                         'highschoolCity', 'highschoolState', 'major1', 'major2']
-                }
+                },
+                include: [
+                    includeHS
+                ],
             }],
         }));
     } catch (error) {

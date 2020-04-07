@@ -11,7 +11,7 @@ const studentRouter = require('./routes/studentRouter');
 const adminRouter = require('./routes/adminRouter');
 const collegeRouter = require('./routes/collegeRouter');
 const searchRouter = require('./routes/searchRouter');
-
+const highSchoolRouter = require('./routes/highSchoolRouter');
 const app = express();
 
 // view engine setup
@@ -35,6 +35,7 @@ app.use('/students', studentRouter);
 app.use('/admin', adminRouter);
 app.use('/colleges', collegeRouter);
 app.use('/search', searchRouter);
+app.use('/highSchools', highSchoolRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

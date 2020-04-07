@@ -1,3 +1,13 @@
 #filter-box {
   border: 1px solid #dee2e6;
 }
+
+.list-group {
+  list-style-type: none;
+}
+
+.delete {
+    display: block;
+    cursor: pointer;
+    color: red;
+}
