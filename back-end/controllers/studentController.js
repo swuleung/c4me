@@ -96,7 +96,7 @@ exports.updateStudentApplications = async (username, newApplications) => {
         // eslint-disable-line max-len
         const found = copyApplications.findIndex((app) => parseInt(app.college, 10) === allApplications[i].dataValues.college); // eslint-disable-line max-len
         if (found > -1) {
-            changes.push(allApplications[i].update(copyApplications[found].college).catch(
+            changes.push(allApplications[i].update(copyApplications[found]).catch(
                 (error) => {
                     errors.push({
                         error: `Error updating application: ${allApplications[i]}`,
@@ -114,8 +114,6 @@ exports.updateStudentApplications = async (username, newApplications) => {
             }));
         }
     }
-    /* eslint-enable no-await-in-loop */
-
     if (copyApplications.length) {
         for (let i = 0; i < copyApplications.length; i += 1) {
             changes.push(models.Application.create(copyApplications[i]).catch((error) => {

@@ -10,6 +10,10 @@ module.exports = (sequelize, DataTypes) => {
             validate: { isIn: [['accepted', 'pending', 'waitlisted', 'deferred', 'denied', 'withdrawn']] },
             defaultValue: 'pending',
         },
+        isQuestionable: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
+        }
     });
     return Application;
 };
