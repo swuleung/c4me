@@ -3,6 +3,7 @@ import {
     Alert, Container, Tabs, Tab,
 } from '../../../node_modules/react-bootstrap';
 import Overview from './Overview/Overview';
+import ApplicationsTracker from './ApplicationsTracker/ApplicationsTracker';
 import { getCollegeByID } from '../../services/api/college';
 
 const CollegeProfile = (props) => {
@@ -44,11 +45,14 @@ const CollegeProfile = (props) => {
                             {' '}in{' '}
                             {college.Location}
                         </h2>
-                        <Tabs defaultActiveKey="overview">
+                        <Tabs defaultActiveKey="applications-tracker">
                             <Tab eventKey="overview" title="Overview">
                                 <Overview college={college} />
                             </Tab>
-                            <Tab eventKey="applications-tracker" title="Applications Tracker" />
+                            <Tab eventKey="applications-tracker" title="Applications Tracker">
+                                <br />
+                                <ApplicationsTracker></ApplicationsTracker>
+                            </Tab>
                         </Tabs>
                     </Container>
                 )}
