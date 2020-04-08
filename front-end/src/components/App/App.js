@@ -1,7 +1,9 @@
-import React, { useState } from '../../../node_modules/react';
+import React, { useState, useEffect } from '../../../node_modules/react';
 import './App.css';
 import '../../utils/styles/theme.scss';
-import { Navbar, Nav, NavDropdown, Alert } from '../../../node_modules/react-bootstrap';
+import {
+    Navbar, Nav, NavDropdown, Alert,
+} from '../../../node_modules/react-bootstrap';
 import {
     BrowserRouter as Router, Switch, Route, Link, Redirect,
 } from '../../../node_modules/react-router-dom';
@@ -11,16 +13,18 @@ import Login from '../Login/Login';
 import StudentProfile from '../StudentProfile/StudentProfile';
 import EditProfile from '../EditProfile/EditProfile';
 import Admin from '../Admin/Admin';
-import CollegeProfile from '../CollegeProfile/CollegeProfile'
+import CollegeProfile from '../CollegeProfile/CollegeProfile';
 import { logout } from '../../services/api/user';
+import { verifyAdmin } from '../../services/api/admin';
 
 function App() {
     const [username, setUsername] = useState(localStorage.getItem('username'));
     const [errorAlert, setErrorAlert] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
+    const [isAdmin, setIsAdmin] = useState(false);
 
     const handleLogout = () => {
-        logout().then(results => {
+        logout().then((results) => {
             if (results.error) {
                 setErrorAlert(true);
                 setErrorMessage(results.error);
@@ -32,6 +36,19 @@ function App() {
             }
         });
     };
+
+    useEffect(() => {
+        verifyAdmin().then((result) => {
+            if (result.error) {
+                setErrorAlert(true);
+                setErrorMessage(isAdmin.error);
+            }
+            if (result.ok) {
+                setErrorAlert(false);
+                setIsAdmin(result.isAdmin);
+            }
+        });
+    }, [username]);
 
     return (
         <Router>
@@ -57,12 +74,12 @@ function App() {
                                         )
                                         : (
                                             <NavDropdown title={username} alignRight id="basic-nav-dropdown">
-                                                {username === 'admin'
+                                                {isAdmin
                                                     ? <NavDropdown.Item as={Link} to="/admin">Admin Controls</NavDropdown.Item>
                                                     : <NavDropdown.Item as={Link} to={`/profile/${username}`}>View Profile</NavDropdown.Item>}
                                                 <NavDropdown.Item href="#tbd">Settings</NavDropdown.Item>
                                                 <NavDropdown.Divider />
-                                                <NavDropdown.Item as={Link} to='/' onClick={handleLogout}>Logout</NavDropdown.Item>
+                                                <NavDropdown.Item as={Link} to="/" onClick={handleLogout}>Logout</NavDropdown.Item>
                                             </NavDropdown>
                                         )}
                                 </Nav>
@@ -74,7 +91,14 @@ function App() {
                                 <Route exact path="/profile/:username" component={StudentProfile} />
                                 <Route exact path="/profile/:username/edit" username={username} render={(props) => (props.match.params.username === username ? <EditProfile {...props} /> : <Redirect to="/" />)} />
                                 <Route exact path="/colleges/:collegeID" component={CollegeProfile} />
-                                <Route exact path="/admin" component={Admin} />
+                                <Route
+                                    exact
+                                    path="/admin"
+                                    render={() => (isAdmin
+                                        ? (<Admin />)
+                                        : (<Redirect to="/" />)
+                                    )}
+                                />
                                 <Route render={function notFound() {
                                     return <p>404 Not found</p>;
                                 }}

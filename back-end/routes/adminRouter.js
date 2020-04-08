@@ -141,4 +141,19 @@ router.delete('/deleteAllColleges', async (req, res) => {
     }
 });
 
+router.get('/verifyAdmin', async (req, res) => {
+    if (!req.cookies.access_token) {
+        res.send({
+            ok: 'Successfaully checked admin',
+            isAdmin: false,
+        });
+    } else {
+        const authorized = await authentication.validateJWT(req.cookies.access_token);
+        const result = await adminController.checkAdmin(authorized.username);
+        res.send({
+            ok: 'Successfaully checked admin',
+            isAdmin: result,
+        });
+    }
+});
 module.exports = router;
