@@ -8,3 +8,14 @@
   font-size: 1.5rem;
   color: $main-color;
 }
+
+.list {
+    display: flex;
+    justify-content: space-between;
+}
+
+.view-button {
+    padding: .25rem;
+    border: 1.5px solid #8b96a2 !important;
+    color: $main-color;
+}
