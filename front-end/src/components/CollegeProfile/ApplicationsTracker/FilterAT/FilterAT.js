@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import {
-    Container, Form, Col, OverlayTrigger, Popover, Table, Button, ListGroup, Alert
+    Container, Form, Col, OverlayTrigger, Popover, Table, Button, ListGroup, Alert,
 } from 'react-bootstrap';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuestionCircle } from '@fortawesome/free-regular-svg-icons';
-import { getAllHighSchools } from './../../../../services/api/highSchool';
 import Autosuggest from 'react-autosuggest';
+import { getAllHighSchools } from '../../../../services/api/highSchool';
 import './FilterAT.scss';
 
 const FilterAT = (props) => {
@@ -46,7 +46,7 @@ const FilterAT = (props) => {
     };
 
     const generateHighSchoolList = () => {
-        const highSchools = [];
+        const highSchoolsHTML = [];
         for (let i = 0; i < highSchoolList.length; i += 1) {
             highSchools.push(
                 <tr className="mb-0" key={`hs-${i}`}>
@@ -59,7 +59,7 @@ const FilterAT = (props) => {
                 </tr>,
             );
         }
-        return highSchools;
+        return highSchoolsHTML;
     };
 
     const buildATQuery = () => {
@@ -80,13 +80,13 @@ const FilterAT = (props) => {
 
         let selectedStatuses = [];
         const entries = Object.entries(statuses);
-        for (let i = 0; i < entries.length; i++) {
+        for (let i = 0; i < entries.length; i += 1) {
             if (entries[i][1]) {
                 selectedStatuses.push(entries[i][0]);
             }
         }
 
-        if (selectedStatuses.length == 0) {
+        if (selectedStatuses.length === 0) {
             selectedStatuses = ['accepted', 'deferred', 'denied', 'pending', 'waitlisted', 'withdrawn'];
         }
         filters.statuses = selectedStatuses;
@@ -101,12 +101,10 @@ const FilterAT = (props) => {
     const getSuggestions = (value) => {
         const inputValue = value.trim().toLowerCase();
         const inputLength = inputValue.length;
-        return inputLength === 0 ? highSchools : highSchools.filter(hs =>
-            hs.Name.toLowerCase().indexOf(inputValue.toLowerCase()) > -1
-        );
+        return inputLength === 0 ? highSchools : highSchools.filter((hs) => hs.Name.toLowerCase().indexOf(inputValue.toLowerCase()) > -1);
     };
-    const getSuggestionValue = suggestion => suggestion.Name;
-    const renderSuggestion = suggestion => (
+    const getSuggestionValue = (suggestion) => suggestion.Name;
+    const renderSuggestion = (suggestion) => (
         <ListGroup.Item>
             {suggestion.Name}
         </ListGroup.Item>
@@ -115,11 +113,11 @@ const FilterAT = (props) => {
     const inputProps = {
         placeholder: 'Enter a high school name',
         value: highSchool,
-        onChange: (e, { newValue }) => setHighSchool(newValue)
+        onChange: (e, { newValue }) => setHighSchool(newValue),
     };
 
     const onSuggestionsFetchRequested = ({ value }) => {
-        setSuggestions(getSuggestions(value))
+        setSuggestions(getSuggestions(value));
     };
 
     // Autosuggest will call this function every time you need to clear suggestions.
@@ -156,7 +154,7 @@ const FilterAT = (props) => {
                                         <Popover.Title>Type of Filtering</Popover.Title>
                                         <Popover.Content>
                                             Lax will include schools whose values are null for these filters.
-                            </Popover.Content>
+                                        </Popover.Content>
                                     </Popover>
                                 )}
                             >
@@ -174,7 +172,7 @@ const FilterAT = (props) => {
                                         <Popover.Title>College Class</Popover.Title>
                                         <Popover.Content>
                                             Choose the college graduation year of the to filter by. For example, 2022-2024
-                            </Popover.Content>
+                                        </Popover.Content>
                                     </Popover>
                                 )}
                             >
@@ -185,7 +183,7 @@ const FilterAT = (props) => {
                                     <Form.Control type="number" placeholder="Min" min="0" max="2030" step="1" onChange={(e) => setCollegeCLass({ ...collegeClass, lowerCollegeClass: e.target.value })} />
                                 </Form.Group>
                                 -
-                    <Form.Group as={Col}>
+                                <Form.Group as={Col}>
                                     <Form.Control type="text" placeholder="Max" onChange={(e) => setCollegeCLass({ ...collegeClass, upperCollegeClass: e.target.value })} />
                                 </Form.Group>
 
@@ -199,7 +197,7 @@ const FilterAT = (props) => {
                                         <Popover.Title>Status</Popover.Title>
                                         <Popover.Content>
                                             Filter by type of status. If all or none is selected, it will return all statuses.
-                            </Popover.Content>
+                                        </Popover.Content>
                                     </Popover>
                                 )}
                             >
@@ -222,7 +220,7 @@ const FilterAT = (props) => {
                                         <Popover.Title>High Schools</Popover.Title>
                                         <Popover.Content>
                                             Enter high school names to filter by specific high schools.
-                            </Popover.Content>
+                                        </Popover.Content>
                                     </Popover>
                                 )}
                             >
@@ -253,7 +251,7 @@ const FilterAT = (props) => {
                                     suggestionHighlighted: 'react-autosuggest__suggestion--highlighted',
                                     sectionContainer: 'react-autosuggest__section-container',
                                     sectionContainerFirst: 'react-autosuggest__section-container--first',
-                                    sectionTitle: 'react-autosuggest__section-title'
+                                    sectionTitle: 'react-autosuggest__section-title',
                                 }}
                             />
                             <Table size="sm" borderless>
@@ -263,14 +261,13 @@ const FilterAT = (props) => {
                             </Table>
                             <Button className="btn-block" variant="primary" type="submit">
                                 Apply Filters
-                </Button>
+                            </Button>
                         </Form>
                     </Container>
 
-                )
-            }
+                )}
         </>
-    )
+    );
 };
 
 export default FilterAT;

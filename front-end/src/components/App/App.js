@@ -41,7 +41,7 @@ function App() {
         verifyAdmin().then((result) => {
             if (result.error) {
                 setErrorAlert(true);
-                setErrorMessage(isAdmin.error);
+                setErrorMessage(result.error);
             }
             if (result.ok) {
                 setErrorAlert(false);
