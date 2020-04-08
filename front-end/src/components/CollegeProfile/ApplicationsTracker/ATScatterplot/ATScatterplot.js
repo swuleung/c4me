@@ -110,7 +110,7 @@ const ATScatterplot = (props) => {
                 } else if (app.Application.status === "denied") {
                     borderColor = 'red';
                 } else {
-                    borderColor = 'yellow';
+                    borderColor = 'gold';
                 }
                 continue;
             }
@@ -203,8 +203,14 @@ const ATScatterplot = (props) => {
 
     const getChartConfiguration = (data) => {
         let xAxisStepSize = 1;
+        let xAxisSuggestedMin = 0;
+        let xAxisSuggestedMax = 100;
         if (selectedHorizontalAxis === 'SAT') {
             xAxisStepSize = 100;
+            xAxisSuggestedMin = 400;
+            xAxisSuggestedMax = 1600;
+        } else if (selectedHorizontalAxis === 'ACT') {
+            xAxisSuggestedMax = 36;
         }
         let options = {
             type: 'scatter',
@@ -244,7 +250,9 @@ const ATScatterplot = (props) => {
                         type: 'linear',
                         position: 'bottom',
                         ticks: {
-                            stepSize: xAxisStepSize
+                            stepSize: xAxisStepSize,
+                            suggestedMin: xAxisSuggestedMin,
+                            suggestedMax: xAxisSuggestedMax
                         }
                     }],
                     yAxes: [{
@@ -259,7 +267,11 @@ const ATScatterplot = (props) => {
                         }
                     }]
                 },
-                aspectRatio: 1.25
+                aspectRatio: 1.25,
+                legend: {
+                    position: 'right',
+                    align: 'start'
+                }
             },
             plugins: {
                 afterDatasetsDraw: function (chart) {
