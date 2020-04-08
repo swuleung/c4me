@@ -100,17 +100,17 @@ const ATScatterplot = (props) => {
         let accepted = [];
         let denied = [];
         let other = [];
-        let borderColor = '#1091b3';
+        let backgroundColor = '#1091b3';
 
         for (let applicationIndex = 0; applicationIndex < props.applications.length; applicationIndex += 1) {
             let app = props.applications[applicationIndex];
             if (localStorage.getItem('username') === app.username) {
                 if (app.Application.status === "accepted") {
-                    borderColor = 'green';
+                    backgroundColor = 'green';
                 } else if (app.Application.status === "denied") {
-                    borderColor = 'red';
+                    backgroundColor = 'red';
                 } else {
-                    borderColor = 'gold';
+                    backgroundColor = 'gold';
                 }
                 continue;
             }
@@ -189,7 +189,7 @@ const ATScatterplot = (props) => {
             other: other,
             you: you,
             average: average,
-            borderColor: borderColor
+            backgroundColor: backgroundColor
         }
     }
 
@@ -237,8 +237,9 @@ const ATScatterplot = (props) => {
                     data: data.other
                 }, {
                     label: 'You',
-                    borderColor: data.borderColor,
-                    pointStyle: 'star',
+                    borderColor: 'black',
+                    backgroundColor: data.backgroundColor,
+                    pointStyle: 'triangle',
                     pointRadius: 7,
                     data: [data.you]
                 }
