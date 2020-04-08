@@ -99,7 +99,7 @@ module.exports = (sequelize, DataTypes) => {
         ],
     });
     HighSchool.associate = (models) => {
-        HighSchool.belongsToMany(models.User, { through: 'StudentHighSchools' });
+        HighSchool.hasMany(models.User);
     };
     return HighSchool;
 };
