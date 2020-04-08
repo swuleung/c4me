@@ -2,6 +2,7 @@ import React, { useState } from '../../../node_modules/react';
 import { Link } from '../../../node_modules/react-router-dom';
 import { Form, Button, Alert } from '../../../node_modules/react-bootstrap';
 import './CreateAccount.scss';
+import { createAccount } from '../../services/api/user';
 
 const CreateAccount = (props) => {
     const [username, setUsername] = useState('');
@@ -10,27 +11,14 @@ const CreateAccount = (props) => {
     const [errorMessage, setErrorMessage] = useState('');
 
     const handleFormSubmission = () => {
-        fetch('http://localhost:9000/users/create', {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json; charset=utf-8',
-            },
-            body: JSON.stringify({
-                username: username,
-                password: password,
-            }),
-        }).then((response) => response.json()).then((data) => {
-            if (data.error) {
+        createAccount(username, password).then(results => {
+            if (results.error) {
                 setErrorAlert(true);
-                setErrorMessage(data.error);
+                setErrorMessage(results.error);
             }
-            if (data.ok) {
+            if (results.ok) {
                 props.history.push('/login');
             }
-        }).catch((error) => {
-            console.log('Yikes!');
-            console.log(error);
         });
     };
 
@@ -56,7 +44,7 @@ const CreateAccount = (props) => {
                             <Form.Control type="password" placeholder="Enter password" onChange={(e) => setPassword(e.target.value)} autoComplete="on" required />
                         </Form.Group>
                         <Button className="btn-block" variant="primary" type="submit">
-                        Submit
+                            Submit
                         </Button>
                     </Form>
                     <Link className="card-link" to="/login">Already have an account? Login here. </Link>

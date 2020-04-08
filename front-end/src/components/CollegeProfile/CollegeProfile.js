@@ -17,7 +17,7 @@ const CollegeProfile = (props) => {
         getCollegeByID(collegeID).then((results) => {
             if (results.error) {
                 setErrorAlert(true);
-                setErrorMessage(results.reason);
+                setErrorMessage(results.error);
             }
             if (results.ok) {
                 setErrorAlert(false);
