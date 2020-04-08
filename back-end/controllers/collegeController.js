@@ -248,6 +248,7 @@ const processApplications = (applications) => {
         }
         let processedApp = app;
         processedApp.weight = weight;
+        averageWeight += weight;
         processedApplications.push(processedApp)
     }
     averageGPA /= countGPA;
@@ -305,7 +306,6 @@ exports.getApplicationsByCollegeID = async (collegeID, filters) => {
         model: models.HighSchool,
     };
     
-    // Must change when the high school model shows up
     if (filters.highSchools) {
         if (filters.lax) {
             HighSchoolId = {
