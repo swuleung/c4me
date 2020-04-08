@@ -60,6 +60,9 @@ exports.getAllColleges = async () => {
     try {
         colleges = await models.College.findAll({
             raw: true,
+            order: [
+                ['Name', 'ASC'],
+            ],
         });
     } catch (error) {
         return {
@@ -67,6 +70,7 @@ exports.getAllColleges = async () => {
             reason: error,
         };
     }
+    
     if (!colleges.length) {
         return {
             error: 'No colleges in the db',
@@ -139,6 +143,7 @@ const processApplications = (applications) => {
     let countSATEBRW = 0;
     let averageACTComposite = 0;
     let countACTComposite = 0;
+    let averageWeight = 0;
 
     let averageAcceptedGPA = 0;
     let countAcceptedGPA = 0;
@@ -156,10 +161,10 @@ const processApplications = (applications) => {
         if (app.GPA) {
             if (app.Application.status == 'accepted') {
                 countAcceptedGPA += 1;
-                averageAcceptedGPA += app.GPA;
+                averageAcceptedGPA += parseFloat(app.GPA);
             }
             countGPA += 1;
-            averageGPA += app.GPA;
+            averageGPA += parseFloat(app.GPA);
         }
 
         if (app.SATLit) {
@@ -243,29 +248,34 @@ const processApplications = (applications) => {
         }
         let processedApp = app;
         processedApp.weight = weight;
+        averageWeight += weight;
         processedApplications.push(processedApp)
     }
-
     averageGPA /= countGPA;
     averageSATMath /= countSATMath;
     averageSATEBRW /= countSATEBRW;
     averageACTComposite /= countACTComposite;
+    averageWeight /= applications.length;
 
     averageAcceptedGPA /= countAcceptedGPA;
     averageAcceptedSATMath /= countAcceptedSATMath;
     averageAcceptedSATEBRW /= countAcceptedSATEBRW;
     averageAcceptedACTComposite /= countAcceptedACTComposite;
+
     return {
         ok: 'Successfully got applications tracker data',
         applications: processedApplications,
-        avgGPA: averageGPA,
-        avgSATMath: averageSATMath,
-        avgSATEBRW: averageSATEBRW,
-        avgACTComposite: averageACTComposite,
-        avgAcceptedGPA: averageAcceptedGPA,
-        avgAcceptedSATMath: averageAcceptedSATMath,
-        avgAcceptedSATEBRW: averageAcceptedSATEBRW,
-        avgAcceptedACTComposite: averageAcceptedACTComposite
+        averages: {
+            avgGPA: averageGPA.toFixed(2),
+            avgSATMath: Math.round(averageSATMath),
+            avgSATEBRW: Math.round(averageSATEBRW),
+            avgACTComposite: Math.round(averageACTComposite),
+            avgAcceptedGPA: averageAcceptedGPA.toFixed(2),
+            avgAcceptedSATMath: Math.round(averageAcceptedSATMath),
+            avgAcceptedSATEBRW: Math.round(averageAcceptedSATEBRW),
+            avgAcceptedACTComposite: Math.round(averageAcceptedACTComposite),
+            avgWeight: Math.round(averageWeight)
+        }
     };
 }
 
@@ -273,13 +283,15 @@ const processApplications = (applications) => {
  * This function is specifically used by the Applications tracker
  */
 exports.getApplicationsByCollegeID = async (collegeID, filters) => {
+
     let applications = [];
-    let userWhereClause = {}
+    let userWhereClause = {};
     let applicationWhereClause = {
         isQuestionable: false
-    }
+    };
+    let highSchoolWhereClause = {};
 
-    let highschoolName = { [Op.or]: {} };
+    let HighSchoolId = { [Op.or]: {} };
     let collegeClass = { [Op.or]: {} };
     let status = { [Op.or]: {} };
 
@@ -290,15 +302,20 @@ exports.getApplicationsByCollegeID = async (collegeID, filters) => {
         }
     }
 
-    // Must change when the high school model shows up
-    if (filters.highschools) {
+    let includeHS = { 
+        model: models.HighSchool,
+    };
+    
+    if (filters.highSchools) {
         if (filters.lax) {
-            highschoolName = {
+            HighSchoolId = {
                 [Op.or]: { [Op.eq]: null }
             }
+            includeHS.required = false;
         }
-        highschoolName[Op.or][Op.in] = filters.highschools;
-        userWhereClause.highschoolName = highschoolName;
+        HighSchoolId[Op.or][Op.in] = filters.highSchools;
+        highSchoolWhereClause.HighSchoolId = HighSchoolId;
+        includeHS.where = highSchoolWhereClause;
     }
 
     if (filters.statuses) {
@@ -320,6 +337,7 @@ exports.getApplicationsByCollegeID = async (collegeID, filters) => {
     if (filters.upperCollegeClass || filters.lowerCollegeClass) {
         userWhereClause.collegeClass = collegeClass;
     }
+
     try {
         applications = (await models.College.findOne({
             where: { CollegeId: collegeID },
@@ -333,13 +351,23 @@ exports.getApplicationsByCollegeID = async (collegeID, filters) => {
                 attributes: {
                     exclude: ['password', 'createdAt', 'updatedAt', 'APPassed', 'residenceState',
                         'highschoolCity', 'highschoolState', 'major1', 'major2']
-                }
+                },
+                include: [
+                    includeHS
+                ],
             }],
         }));
     } catch (error) {
         return {
             error: 'Unable to get applications for applications tracker',
-            reason: error,
+            reason: error.message,
+        };
+    }
+    if (!applications) {
+        return {
+            ok: 'No data for college',
+            applications: [],
+            averages: {}
         };
     }
     return processApplications(applications.toJSON().Users);
