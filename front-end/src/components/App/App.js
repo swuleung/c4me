@@ -46,7 +46,7 @@ function App() {
                                             : <NavDropdown.Item as={Link} to={`/profile/${username}`}>View Profile</NavDropdown.Item>}
                                         <NavDropdown.Item href="#tbd">Settings</NavDropdown.Item>
                                         <NavDropdown.Divider />
-                                        <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
+                                        <NavDropdown.Item as={Link} to='/' onClick={handleLogout}>Logout</NavDropdown.Item>
                                     </NavDropdown>
                                 )}
                         </Nav>
