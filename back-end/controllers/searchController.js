@@ -16,14 +16,18 @@ const westRegion = ["AK", "HI", "WA", "OR", "CA", "MT", "ID", "WY", "NV", "UT", 
 //  e.g. admissionRateMin and admissionRateMax
 //  An example filter:
 // {
-//     "location" : "NY",
+//     "region" : "northeast",
 //     "SATEBRWMin": 500,
 //     "SATEBRWMax": 600,
 //     "SATMathMin" : 500,
 //     "SATMathMax" : 600,
 //     "name" : "University",
 //     "ACTCompositeMin" : 20,
-//     "ACTCompositeMax" : 30
+//     "ACTCompositeMax" : 30,
+//     "costInStateMax" : 10000,
+//     "costOutOfStateMax" : 50000,
+//     "major" : "math",
+//     "major2" : "computer"
 // }
 exports.searchCollege = async ( filters ) => {
     let searchResults = {};
@@ -32,17 +36,16 @@ exports.searchCollege = async ( filters ) => {
         let criteria = {};
         let query = {};
 
-        if ( "name" in filters )
+        if ( filters.name )
             criteria.Name = { [Op.substring] : filters.name };
-        if ( "admissionRateMin" in filters && "admissionRateMax" in filters)
+        if ( filters.admissionRateMin && filters.admissionRateMax )
             criteria.AdmissionRate = { [Op.between] : [ filters.admissionRateMin, filters.admissionRateMax] };
-        if ( "costInStateMax" in filters && "costOutOfStateMax" in filters ) {
+        if ( filters.costInStateMax && filters.costOutOfStateMax ) {
             criteria.CostOfAttendanceInState = { [Op.lte] : filters.costInStateMax };
-            criteria.CostOfAttendanceOutOfState = { [Op.lte] : filters.costOutOfMax };
+            criteria.CostOfAttendanceOutOfState = { [Op.lte] : filters.costOutOfStateMax };
         }
-        if ( "location" in filters ) {
-            //criteria.Location = filters.location;
-            switch ( filters.location ) {
+        if ( filters.region ) {
+            switch ( filters.region ) {
                 case "northeast":
                     criteria.Location = { [Op.in] : northeastRegion };
                     break;
@@ -60,20 +63,20 @@ exports.searchCollege = async ( filters ) => {
                     break;
             }
         }
-        if ( "rankingMin" in filters && "rankingMax" in filters )
+        if ( filters.rankingMin && filters.rankingMax )
             criteria.Ranking = { [Op.between] : [ filters.rankingMin, filters.rankingMax] };
-        if ( "sizeMin" in filters && "sizeMax" in filters )
+        if ( filters.sizeMin && filters.sizeMax )
             criteria.Size = { [Op.between] : [ filters.sizeMin, filters.sizeMax] };
-        if ( "SATMathMin" in filters && "SATMathMax" in filters )
+        if ( filters.SATMathMin && filters.SATMathMax )
             criteria.SATMath = { [Op.between] : [ filters.SATMathMin, filters.SATMathMax] };
-        if ( "SATEBRWMin" in filters && "SATEBRWMax" in filters )
+        if ( filters.SATEBRWMin && filters.SATEBRWMax )
             criteria.SATEBRW = { [Op.between] : [ filters.SATEBRWMin, filters.SATEBRWMax] };
-        if ( "ACTCompositeMin" in filters && "ACTCompositeMax" in filters )
+        if ( filters.ACTCompositeMin && filters.ACTCompositeMax )
             criteria.ACTComposite = { [Op.between] : [ filters.ACTCompositeMin, filters.ACTCompositeMax] };
         
         // the major filter is a bit weird since their can be 1 or 2 majors.
         // I stuck with this solution for now.
-        if ( "major" in filters && "major2" in filters ) {
+        if ( filters.major && filters.major2 ) {
             query.include = 
             [{ 
                 model: models.Major,
@@ -87,7 +90,7 @@ exports.searchCollege = async ( filters ) => {
                 }
              }];
         }
-        else if ( "major" in filters ) {
+        else if ( filters.major ) {
             query.include = 
             [{ 
                 model: models.Major,
@@ -96,7 +99,7 @@ exports.searchCollege = async ( filters ) => {
                 }
              }];
         }
-        else if ( "major2" in filters ) {
+        else if ( filters.major2 ) {
             query.include = 
             [{ 
                 model: models.Major,

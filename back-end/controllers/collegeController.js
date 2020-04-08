@@ -304,6 +304,7 @@ exports.getApplicationsByCollegeID = async (collegeID, filters) => {
 
     let includeHS = { 
         model: models.HighSchool,
+        attributes: [],
     };
     
     if (filters.highSchools) {
