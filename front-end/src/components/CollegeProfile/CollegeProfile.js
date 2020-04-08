@@ -45,7 +45,7 @@ const CollegeProfile = (props) => {
                             {' '}in{' '}
                             {college.Location}
                         </h2>
-                        <Tabs defaultActiveKey="applications-tracker">
+                        <Tabs defaultActiveKey="overview">
                             <Tab eventKey="overview" title="Overview">
                                 <Overview college={college} />
                             </Tab>
