@@ -33,7 +33,7 @@ const FilterAT = (props) => {
 
     const handleAddHighSchool = (event, { suggestion }) => {
         const newHighSchools = [...highSchoolList];
-        newHighSchools.push(suggestion.HighSchoolId);
+        newHighSchools.push(suggestion);
         setHighSchool('');
         setHighSchoolList(newHighSchools);
     };
@@ -51,7 +51,7 @@ const FilterAT = (props) => {
             highSchools.push(
                 <tr className="mb-0" key={`hs-${i}`}>
                     <td>
-                        {highSchoolList[i]}
+                        {highSchoolList[i].Name}
                     </td>
                     <td>
                         <span role="button" className="delete text-right" tabIndex={i} index={`${i}`} onClick={(e) => handleDeleteHighSchool(e)} onKeyDown={(e) => handleDeleteHighSchool(e)}>&#10005;</span>
@@ -92,7 +92,7 @@ const FilterAT = (props) => {
         filters.statuses = selectedStatuses;
 
         if (highSchoolList.length) {
-            filters.highSchools = [...highSchoolList];
+            filters.highSchools = [highSchoolList.map((hs) => hs.HighSchoolId)];
         }
         handleFilterChange(filters);
     };
@@ -118,8 +118,6 @@ const FilterAT = (props) => {
         onChange: (e, { newValue }) => setHighSchool(newValue)
     };
 
-    // Autosuggest will call this function every time you need to update suggestions.
-    // You already implemented this logic above, so just use it.
     const onSuggestionsFetchRequested = ({ value }) => {
         setSuggestions(getSuggestions(value))
     };
