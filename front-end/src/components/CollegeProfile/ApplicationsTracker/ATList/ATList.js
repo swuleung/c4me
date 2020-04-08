@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import {
-    Alert, Col, Row, Card, CardDeck, Container
+    Col, Row, Card, CardDeck
 } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-// import FilterAT from './FilterAT/FilterAT';
-// import ATScatterplot from './ATScatterplot/ATScatterplot';
-// import { getApplicationsTrackerData } from './../../../services/api/applicationsTracker';
+
 import './ATList.scss';
 
 const ATList = (props) => {
@@ -22,7 +20,7 @@ const ATList = (props) => {
                             {app.Application.status}
                         </Col>
                         <Col className="text-right">
-                            <Link href="#">Go to Profile↗</Link>
+                            <Link to={`/profile/${app.username}`} target="_blank" >Go to Profile↗</Link>
                         </Col>
                     </Row>
                     <Row>
@@ -30,9 +28,7 @@ const ATList = (props) => {
                             <CardDeck>
                                 <Card>
                                     <div className="student-details text-center">
-                                        <div className="detail-title">
-                                            GPA
-                                                        </div>
+                                        <div className="detail-title">GPA</div>
                                         <div className="detail-score text-center">
                                             {app.GPA ? app.GPA : 'N/A'}
                                         </div>
@@ -40,9 +36,7 @@ const ATList = (props) => {
                                 </Card>
                                 <Card>
                                     <div className="student-details text-center">
-                                        <div className="detail-title">
-                                            SAT Math
-                                                        </div>
+                                        <div className="detail-title">SAT Math</div>
                                         <div className="detail-score text-center">
                                             {app.SATMath ? app.SATMath : 'N/A'}
                                         </div>
@@ -50,9 +44,7 @@ const ATList = (props) => {
                                 </Card>
                                 <Card>
                                     <div className="student-details text-center">
-                                        <div className="detail-title">
-                                            SAT EBRW
-                                                    </div>
+                                        <div className="detail-title">SAT EBRW</div>
                                         <div className="detail-score text-center">
                                             {app.SATEBRW ? app.SATEBRW : 'N/A'}
                                         </div>
@@ -60,9 +52,7 @@ const ATList = (props) => {
                                 </Card>
                                 <Card>
                                     <div className="student-details text-center">
-                                        <div className="detail-title">
-                                            ACT
-                                                    </div>
+                                        <div className="detail-title">ACT</div>
                                         <div className="detail-score text-center">
                                             {app.ACTComposite ? app.ACTComposite : 'N/A'}
                                         </div>
