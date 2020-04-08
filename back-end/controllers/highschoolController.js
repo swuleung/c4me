@@ -1,3 +1,4 @@
+const sequelize = require('sequelize');
 const models = require('../models');
 const puppeteer = require('puppeteer');
 
@@ -104,31 +105,31 @@ exports.scrapeHighSchoolData = async(highSchoolName, highSchoolCity, highSchoolS
     const page = await browser.newPage();
     await page.setViewport({ width: 1920, height: 926 });
 
-    // Request interception to block css and images to speed up scraping
-    await page.setRequestInterception(true);
-    page.on('request', (req) => {
-        if (req.resourceType() === 'stylesheet' || req.resourceType() === 'font' || req.resourceType() === 'image') {
-            req.abort();
-        } else {
-            req.continue();
-        }
-    });
+    const nicheHSURL = `${nicheURL}${highSchoolName.replace(/[^A-Za-z0-9_ ]/g, '')}-${highSchoolCity}-${highSchoolState}/academics/`.replace(/\s+/g, '-').toLowerCase();
+    console.log(nicheHSURL);
 
-    const nicheHSURL = `${nicheURL}${highSchoolName.replace(' ', '-')}-${highSchoolCity}-${highSchoolState}/`;
-    const academicsURL = nicheHSURL + '/academics';
+    await page.setUserAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36');
+    await page.goto(nicheHSURL);
+    const nicheAcademicScoreEl = await page.$x('//div[contains(@class, \'niche__grade--section\')]');
+    const nicheAcademicScore = await page.evaluate((el) => el.textContent, nicheAcademicScoreEl[0]);
 
-    await page.goto(academicsURL);
-    const nicheAcademicScore = await page.$x('//div[contains(@class, \'niche__grade--section\')]');
+    const averageSATEl = await page.$x('//div[contains(., \'Average SAT\')]/div[@class=\'scalar__value\']/text()[1]');
+    const averageSAT = await page.evaluate((el) => el.textContent, averageSATEl[0]);
+    const SATMathEl = await page.$x('//div[contains(., \'Average SAT\')]/div[contains(., \'Math\')]/div[@class=\'scalar__value\']');
+    const SATMath = await page.evaluate((el) => el.textContent, SATMathEl[0]);
+    const SATEBRWEl = await page.$x('//div[contains(., \'Average SAT\')]/div[contains(., \'Verbal\')]/div[@class=\'scalar__value\']');
+    const SATEBRW = await page.evaluate((el) => el.textContent, SATEBRWEl[0]);
 
-    const averageSAT = await page.$x('//div[contains(., \'Average SAT\')]/div[@class=\'scalar__value\']/text()[1]');
-    const SATMath = await page.$x('//div[contains(., \'Average SAT\')]/div[contains(., \'Math\')]/div[@class=\'scalar__value\']');
-    const SATEBRW = await page.$x('//div[contains(., \'Average SAT\')]/div[contains(., \'Verbal\')]/div[@class=\'scalar__value\']');
-
-    const averageACT = await page.$x('//div[contains(., \'Average ACT\')]/div[@class=\'scalar__value\']/text()[1]');
-    const ACTMath = await page.$x('//div[contains(., \'Average ACT\')]/div[contains(., \'Math\')]/div[@class=\'scalar__value\']');
-    const ACTReading = await page.$x('//div[contains(., \'Average SAT\')]/div[contains(., \'Reading\')]/div[@class=\'scalar__value\']');
-    const ACTEnglish = await page.$x('//div[contains(., \'Average SAT\')]/div[contains(., \'English\')]/div[@class=\'scalar__value\']');
-    const ACTScience = await page.$x('//div[contains(., \'Average SAT\')]/div[contains(., \'Science\')]/div[@class=\'scalar__value\']');
+    const averageACTEl = await page.$x('//div[contains(., \'Average ACT\')]/div[@class=\'scalar__value\']/text()[1]');
+    const averageACT = await page.evaluate((el) => el.textContent, averageACTEl[0]);
+    const ACTMathEl = await page.$x('//div[contains(., \'Average ACT\')]/div[contains(., \'Math\')]/div[@class=\'scalar__value\']');
+    const ACTMath = await page.evaluate((el) => el.textContent, ACTMathEl[0]);
+    const ACTReadingEl = await page.$x('//div[contains(., \'Average ACT\')]/div[contains(., \'Reading\')]/div[@class=\'scalar__value\']');
+    const ACTReading = await page.evaluate((el) => el.textContent, ACTReadingEl[0]);
+    const ACTEnglishEl = await page.$x('//div[contains(., \'Average ACT\')]/div[contains(., \'English\')]/div[@class=\'scalar__value\']');
+    const ACTEnglish = await page.evaluate((el) => el.textContent, ACTEnglishEl[0]);
+    const ACTScienceEl = await page.$x('//div[contains(., \'Average ACT\')]/div[contains(., \'Science\')]/div[@class=\'scalar__value\']');
+    const ACTScience = await page.evaluate((el) => el.textContent, ACTScienceEl[0]);
 
     const highSchoolObject = {
         Name: highSchoolName,
@@ -148,12 +149,13 @@ exports.scrapeHighSchoolData = async(highSchoolName, highSchoolCity, highSchoolS
     const errors = [];
     while (Object.keys(highSchoolObject).length > 1) {
         try {
-            await models.HighSchool.upsert(collegeObject);
+            await models.HighSchool.upsert(highSchoolObject);
             break;
         } catch (error) {
             if (error instanceof sequelize.ValidationError) {
                 delete highSchoolObject[error.errors[0].path];
             } else {
+                console.log(error);
                 errors.push({
                     error: `Unable to add ${highSchoolName}`,
                     reason: error,

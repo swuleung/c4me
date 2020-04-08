@@ -21,20 +21,8 @@ module.exports = (sequelize, DataTypes) => {
             validate: { isIn: [UsStates] },
             defaultValue: null,
         },
-        Ranking: {
-            type: DataTypes.STRING,
-            defaultValue: null,
-        },
         NicheAcademicScore: { 
             type: DataTypes.STRING,
-            defaultValue: null,
-        },
-        GPA: {
-            type: DataTypes.DECIMAL(3, 2),
-            validate: {
-                min: 0,
-                max: 4,
-            },
             defaultValue: null,
         },
         AverageSAT: {
