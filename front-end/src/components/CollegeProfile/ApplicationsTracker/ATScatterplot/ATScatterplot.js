@@ -88,7 +88,9 @@ const ATScatterplot = (props) => {
         return weight;
     };
 
-    /**
+
+    useEffect(() => {
+        /**
      * The vertical axis is always GPA.
      * The user can choose between SAT (Math+EBRW), ACT Composite, or
      * weighted average of percentile scores for standardized tests (except AP tests).
@@ -96,211 +98,210 @@ const ATScatterplot = (props) => {
      * taken, and the remainder for SAT or ACT Composite (or split evenly between
      * SAT and ACT Composite, if the student took both).
      */
-    const transformApplicationsData = () => {
-        const accepted = [];
-        const denied = [];
-        const other = [];
-        let backgroundColor = '#1091b3';
+        const transformApplicationsData = () => {
+            const accepted = [];
+            const denied = [];
+            const other = [];
+            let backgroundColor = '#1091b3';
 
-        for (let applicationIndex = 0; applicationIndex < props.applications.length; applicationIndex += 1) {
-            const app = props.applications[applicationIndex];
-            if (localStorage.getItem('username') === app.username) {
-                if (app.Application.status === 'accepted') {
-                    backgroundColor = 'green';
-                } else if (app.Application.status === 'denied') {
-                    backgroundColor = 'red';
-                } else {
-                    backgroundColor = 'gold';
-                }
-                // eslint-disable-next-line no-continue
-                continue;
-            }
-            const GPA = parseFloat(app.GPA);
-            if (app.Application.status === 'accepted') {
-                if (selectedHorizontalAxis === 'SAT') {
-                    accepted.push({
-                        x: app.SATMath + app.SATEBRW,
-                        y: GPA,
-                    });
-                } else if (selectedHorizontalAxis === 'ACT') {
-                    accepted.push({
-                        x: app.ACTComposite,
-                        y: GPA,
-                    });
-                } else if (selectedHorizontalAxis === 'weighted') {
-                    accepted.push({
-                        x: app.weight,
-                        y: GPA,
-                    });
-                }
-            } else if (app.Application.status === 'denied') {
-                if (selectedHorizontalAxis === 'SAT') {
-                    denied.push({
-                        x: app.SATMath + app.SATEBRW,
-                        y: GPA,
-                    });
-                } else if (selectedHorizontalAxis === 'ACT') {
-                    denied.push({
-                        x: app.ACTComposite,
-                        y: GPA,
-                    });
-                } else if (selectedHorizontalAxis === 'weighted') {
-                    denied.push({
-                        x: app.weight,
-                        y: GPA,
-                    });
-                }
-            } else if (selectedHorizontalAxis === 'SAT') {
-                other.push({
-                    x: app.SATMath + app.SATEBRW,
-                    y: GPA,
-                });
-            } else if (selectedHorizontalAxis === 'ACT') {
-                other.push({
-                    x: app.ACTComposite,
-                    y: GPA,
-                });
-            } else if (selectedHorizontalAxis === 'weighted') {
-                other.push({
-                    x: app.weight,
-                    y: GPA,
-                });
-            }
-        }
-
-        const you = { y: parseFloat(student.GPA) };
-        const average = { y: averages.avgGPA };
-        if (selectedHorizontalAxis === 'SAT') {
-            you.x = student.SATMath + student.SATEBRW;
-            average.x = averages.avgSATMath + averages.avgSATEBRW;
-        } else if (selectedHorizontalAxis === 'ACT') {
-            you.x = student.ACTComposite;
-            average.x = averages.avgACTComposite;
-        } else if (selectedHorizontalAxis === 'weighted') {
-            you.x = getWeight(student);
-            average.x = averages.avgWeight;
-        }
-
-        return {
-            accepted: accepted,
-            denied: denied,
-            other: other,
-            you: you,
-            average: average,
-            backgroundColor: backgroundColor,
-        };
-    };
-
-    const getChartConfiguration = (data) => {
-        let xAxisStepSize = 1;
-        let xAxisSuggestedMin = 0;
-        let xAxisSuggestedMax = 100;
-        if (selectedHorizontalAxis === 'SAT') {
-            xAxisStepSize = 100;
-            xAxisSuggestedMin = 400;
-            xAxisSuggestedMax = 1600;
-        } else if (selectedHorizontalAxis === 'ACT') {
-            xAxisSuggestedMax = 36;
-        }
-        const options = {
-            type: 'scatter',
-            data: {
-                datasets: [{
-                    label: 'Average',
-                    borderColor: 'orange',
-                    backgroundColor: 'orange',
-                    data: [data.average],
-                }, {
-                    label: 'Accepted',
-                    borderColor: 'green',
-                    backgroundColor: 'green',
-                    data: data.accepted,
-                }, {
-                    label: 'Denied',
-                    borderColor: 'red',
-                    backgroundColor: 'red',
-                    data: data.denied,
-                }, {
-                    label: 'Other',
-                    borderColor: 'gold',
-                    backgroundColor: 'gold',
-                    data: data.other,
-                }, {
-                    label: 'You',
-                    borderColor: 'black',
-                    backgroundColor: data.backgroundColor,
-                    pointStyle: 'triangle',
-                    pointRadius: 7,
-                    data: [data.you],
-                },
-                ],
-            },
-            options: {
-                scales: {
-                    xAxes: [{
-                        type: 'linear',
-                        position: 'bottom',
-                        ticks: {
-                            stepSize: xAxisStepSize,
-                            suggestedMin: xAxisSuggestedMin,
-                            suggestedMax: xAxisSuggestedMax,
-                        },
-                    }],
-                    yAxes: [{
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'GPA',
-                        },
-                        ticks: {
-                            stepSize: 0.2,
-                            suggestedMin: 0,
-                            suggestedMax: 4,
-                        },
-                    }],
-                },
-                aspectRatio: 1.25,
-                legend: {
-                    position: 'right',
-                    align: 'start',
-                },
-            },
-            plugins: {
-                afterDatasetsDraw: function drawAverageLine(chart) {
-                    // draw horizontal & vertical line to Average point
-                    const { ctx } = chart;
-                    if (chart.getDatasetMeta(0) && chart.getDatasetMeta(0).data[0]) {
-                        const yAxis = chart.scales['y-axis-1'];
-                        const bottomY = yAxis.bottom;
-                        // eslint-disable-next-line no-underscore-dangle
-                        const { x } = chart.getDatasetMeta(0).data[0]._model;
-                        // eslint-disable-next-line no-underscore-dangle
-                        const { y } = chart.getDatasetMeta(0).data[0]._model;
-                        ctx.save();
-                        ctx.beginPath();
-                        ctx.moveTo(x, bottomY);
-                        ctx.setLineDash([5, 3]);
-                        ctx.lineTo(x, y);
-                        ctx.lineTo(30, y);
-                        ctx.lineWidth = 1;
-                        ctx.strokeStyle = 'orange';
-                        ctx.stroke();
-                        ctx.restore();
+            for (let applicationIndex = 0; applicationIndex < applications.length; applicationIndex += 1) {
+                const app = applications[applicationIndex];
+                if (localStorage.getItem('username') === app.username) {
+                    if (app.Application.status === 'accepted') {
+                        backgroundColor = 'green';
+                    } else if (app.Application.status === 'denied') {
+                        backgroundColor = 'red';
+                    } else {
+                        backgroundColor = 'gold';
                     }
-                },
-            },
+                    // eslint-disable-next-line no-continue
+                    continue;
+                }
+                const GPA = parseFloat(app.GPA);
+                if (app.Application.status === 'accepted') {
+                    if (selectedHorizontalAxis === 'SAT') {
+                        accepted.push({
+                            x: app.SATMath + app.SATEBRW,
+                            y: GPA,
+                        });
+                    } else if (selectedHorizontalAxis === 'ACT') {
+                        accepted.push({
+                            x: app.ACTComposite,
+                            y: GPA,
+                        });
+                    } else if (selectedHorizontalAxis === 'weighted') {
+                        accepted.push({
+                            x: app.weight,
+                            y: GPA,
+                        });
+                    }
+                } else if (app.Application.status === 'denied') {
+                    if (selectedHorizontalAxis === 'SAT') {
+                        denied.push({
+                            x: app.SATMath + app.SATEBRW,
+                            y: GPA,
+                        });
+                    } else if (selectedHorizontalAxis === 'ACT') {
+                        denied.push({
+                            x: app.ACTComposite,
+                            y: GPA,
+                        });
+                    } else if (selectedHorizontalAxis === 'weighted') {
+                        denied.push({
+                            x: app.weight,
+                            y: GPA,
+                        });
+                    }
+                } else if (selectedHorizontalAxis === 'SAT') {
+                    other.push({
+                        x: app.SATMath + app.SATEBRW,
+                        y: GPA,
+                    });
+                } else if (selectedHorizontalAxis === 'ACT') {
+                    other.push({
+                        x: app.ACTComposite,
+                        y: GPA,
+                    });
+                } else if (selectedHorizontalAxis === 'weighted') {
+                    other.push({
+                        x: app.weight,
+                        y: GPA,
+                    });
+                }
+            }
+
+            const you = { y: parseFloat(student.GPA) };
+            const average = { y: averages.avgGPA };
+            if (selectedHorizontalAxis === 'SAT') {
+                you.x = student.SATMath + student.SATEBRW;
+                average.x = averages.avgSATMath + averages.avgSATEBRW;
+            } else if (selectedHorizontalAxis === 'ACT') {
+                you.x = student.ACTComposite;
+                average.x = averages.avgACTComposite;
+            } else if (selectedHorizontalAxis === 'weighted') {
+                you.x = getWeight(student);
+                average.x = averages.avgWeight;
+            }
+
+            return {
+                accepted: accepted,
+                denied: denied,
+                other: other,
+                you: you,
+                average: average,
+                backgroundColor: backgroundColor,
+            };
         };
-        return options;
-    };
 
-    const updateChart = () => {
-        const configuration = getChartConfiguration(transformApplicationsData());
+        const getChartConfiguration = (data) => {
+            let xAxisStepSize = 1;
+            let xAxisSuggestedMin = 0;
+            let xAxisSuggestedMax = 100;
+            if (selectedHorizontalAxis === 'SAT') {
+                xAxisStepSize = 100;
+                xAxisSuggestedMin = 400;
+                xAxisSuggestedMax = 1600;
+            } else if (selectedHorizontalAxis === 'ACT') {
+                xAxisSuggestedMax = 36;
+            }
+            const options = {
+                type: 'scatter',
+                data: {
+                    datasets: [{
+                        label: 'Average',
+                        borderColor: 'orange',
+                        backgroundColor: 'orange',
+                        data: [data.average],
+                    }, {
+                        label: 'Accepted',
+                        borderColor: 'green',
+                        backgroundColor: 'green',
+                        data: data.accepted,
+                    }, {
+                        label: 'Denied',
+                        borderColor: 'red',
+                        backgroundColor: 'red',
+                        data: data.denied,
+                    }, {
+                        label: 'Other',
+                        borderColor: 'gold',
+                        backgroundColor: 'gold',
+                        data: data.other,
+                    }, {
+                        label: 'You',
+                        borderColor: 'black',
+                        backgroundColor: data.backgroundColor,
+                        pointStyle: 'triangle',
+                        pointRadius: 7,
+                        data: [data.you],
+                    },
+                    ],
+                },
+                options: {
+                    scales: {
+                        xAxes: [{
+                            type: 'linear',
+                            position: 'bottom',
+                            ticks: {
+                                stepSize: xAxisStepSize,
+                                suggestedMin: xAxisSuggestedMin,
+                                suggestedMax: xAxisSuggestedMax,
+                            },
+                        }],
+                        yAxes: [{
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'GPA',
+                            },
+                            ticks: {
+                                stepSize: 0.2,
+                                suggestedMin: 0,
+                                suggestedMax: 4,
+                            },
+                        }],
+                    },
+                    aspectRatio: 1.25,
+                    legend: {
+                        position: 'right',
+                        align: 'start',
+                    },
+                },
+                plugins: {
+                    afterDatasetsDraw: function drawAverageLine(chart) {
+                        // draw horizontal & vertical line to Average point
+                        const { ctx } = chart;
+                        if (chart.getDatasetMeta(0) && chart.getDatasetMeta(0).data[0]) {
+                            const yAxis = chart.scales['y-axis-1'];
+                            const bottomY = yAxis.bottom;
+                            // eslint-disable-next-line no-underscore-dangle
+                            const { x } = chart.getDatasetMeta(0).data[0]._model;
+                            // eslint-disable-next-line no-underscore-dangle
+                            const { y } = chart.getDatasetMeta(0).data[0]._model;
+                            ctx.save();
+                            ctx.beginPath();
+                            ctx.moveTo(x, bottomY);
+                            ctx.setLineDash([5, 3]);
+                            ctx.lineTo(x, y);
+                            ctx.lineTo(30, y);
+                            ctx.lineWidth = 1;
+                            ctx.strokeStyle = 'orange';
+                            ctx.stroke();
+                            ctx.restore();
+                        }
+                    },
+                },
+            };
+            return options;
+        };
 
-        scatterplot.data = configuration.data;
-        scatterplot.options = configuration.options;
-        scatterplot.update();
-    };
+        const updateChart = () => {
+            const configuration = getChartConfiguration(transformApplicationsData());
 
-    useEffect(() => {
+            scatterplot.data = configuration.data;
+            scatterplot.options = configuration.options;
+            scatterplot.update();
+        };
+
         if (!student) {
             getStudent(localStorage.getItem('username')).then((result) => {
                 if (result.error) {
