@@ -12,6 +12,7 @@ const adminRouter = require('./routes/adminRouter');
 const collegeRouter = require('./routes/collegeRouter');
 const searchRouter = require('./routes/searchRouter');
 const highSchoolRouter = require('./routes/highSchoolRouter');
+
 const app = express();
 
 // view engine setup
