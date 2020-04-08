@@ -56,7 +56,7 @@ router.get('/name/:highSchoolName', async (req, res) => {
     }
 });
 
-router.get('/scrapeHighSchoolData', async (req, res) => {
+router.post('/scrapeHighSchoolData', async (req, res) => {
     if (!req.cookies.access_token) {
         res.status(400).send({ status: 'error', error: 'No token provided' });
     } else {
