@@ -3,6 +3,7 @@ import {
     Alert, Container, Tabs, Tab,
 } from '../../../node_modules/react-bootstrap';
 import Overview from './Overview/Overview';
+import ApplicationsTracker from './ApplicationsTracker/ApplicationsTracker';
 import { getCollegeByID } from '../../services/api/college';
 
 const CollegeProfile = (props) => {
@@ -16,7 +17,7 @@ const CollegeProfile = (props) => {
         getCollegeByID(collegeID).then((results) => {
             if (results.error) {
                 setErrorAlert(true);
-                setErrorMessage(results.reason);
+                setErrorMessage(results.error);
             }
             if (results.ok) {
                 setErrorAlert(false);
@@ -48,7 +49,10 @@ const CollegeProfile = (props) => {
                             <Tab eventKey="overview" title="Overview">
                                 <Overview college={college} />
                             </Tab>
-                            <Tab eventKey="applications-tracker" title="Applications Tracker" />
+                            <Tab eventKey="applications-tracker" title="Applications Tracker">
+                                <br />
+                                <ApplicationsTracker college={college} />
+                            </Tab>
                         </Tabs>
                     </Container>
                 )}
