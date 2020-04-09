@@ -15,5 +15,23 @@ module.exports = {
                 error: `${error.message} college data`,
             };
         }
-    }
+    },
+    editHighSchool: async function editHighSchool(highSchool) {
+        try {
+            const newHighSchool = await fetch(`http://localhost:9000/highSchools/${highSchool}/edit`, {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json; charset=utf-8',
+                },
+                body: JSON.stringify({ highSchool: highSchool }),
+            });
+            return await newHighSchool.json();
+        } catch (error) {
+            return {
+                error: `${error.message} high school data`,
+            };
+        }
+    },
 }

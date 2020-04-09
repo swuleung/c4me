@@ -100,6 +100,32 @@ exports.deleteAllHighSchools = async () => {
     };
 };
 
+exports.updateHighSchool = async (username, highSchool) => {
+    const newHighSchool = await models.HighSchool.findAll({
+        where: {
+            Name: highSchool,
+        },
+    });
+    const student = await models.User.findAll({
+        where: {
+            username: username
+        }
+    });
+    try {
+        newHighSchool.addUser(student);
+    } catch(error) {
+        return { 
+            error: 'Unable to add student to high school',
+            reason: error
+        };
+    }
+    return {
+        ok: 'Success',
+        highSchool: newHighSchool,
+    };
+
+}
+
 exports.scrapeHighSchoolData = async(highSchoolName, highSchoolCity, highSchoolState) => {
     const browser = await puppeteer.launch({ headless: true });
     const page = await browser.newPage();

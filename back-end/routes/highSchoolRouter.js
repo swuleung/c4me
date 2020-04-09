@@ -73,4 +73,28 @@ router.post('/scrapeHighSchoolData', async (req, res) => {
     }
 });
 
+router.post('/:highSchoolName/edit' , async (req, res) => {
+    if (!req.cookies.access_token) {
+        res.status(400).send({ status: 'error', error: 'No token provided' });
+    } else {
+        const authorized = await authentication.validateJWT(req.cookies.access_token);
+        if (!authorized.username) {
+            res.clearCookie('access_token');
+            res.status(400).send(authorized);
+        } else if (authorized.username !== req.params.username) {
+            res.status(400).send({
+                status: 'error',
+                error: 'Cannot edit another user',
+            });
+        } else {
+            const result = await highSchoolController.updateHighSchool(
+                req.params.username,
+                req.body.highSchool
+            );
+            if (result.error) res.status(400);
+            res.send(result);
+        }
+    }
+});
+
 module.exports = router;
