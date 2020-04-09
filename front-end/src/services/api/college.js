@@ -49,5 +49,5 @@ module.exports = {
                 error: `${error.message} major data data for ${collegeID}`,
             };
         }
-    }
+    },
 };

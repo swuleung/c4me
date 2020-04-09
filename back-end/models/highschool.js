@@ -2,8 +2,8 @@
 const UsStates = ['AK', 'AL', 'AR', 'AZ', 'CA', 'CO', 'CT', 'DC', 'DE', 'FL', 'GA', 'GU', 'HI', 'IA', 'ID', 'IL', 'IN', 'KS', 'KY', 'LA', 'MA', 'MD', 'ME', 'MH', 'MI', 'MN', 'MO', 'MS', 'MT', 'NC', 'ND', 'NE', 'NH', 'NJ', 'NM', 'NV', 'NY', 'OH', 'OK', 'OR', 'PA', 'PR', 'PW', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VA', 'VI', 'VT', 'WA', 'WI', 'WV', 'WY', null];
 
 module.exports = (sequelize, DataTypes) => {
-    const College = sequelize.define('College', {
-        CollegeId: {
+    const HighSchool = sequelize.define('HighSchool', {
+        HighSchoolId: {
             type: DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true,
@@ -12,40 +12,24 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             defaultValue: null,
         },
-        Ranking: {
+        HighSchoolCity: {
             type: DataTypes.STRING,
             defaultValue: null,
         },
-        Size: {
-            type: DataTypes.INTEGER,
-            defaultValue: null,
-        },
-        AdmissionRate: {
-            type: DataTypes.DECIMAL(5, 2),
-            validate: {
-                min: 0,
-                max: 100,
-            },
-            defaultValue: null,
-        },
-        CostOfAttendanceInState: {
-            type: DataTypes.INTEGER,
-            defaultValue: null,
-        },
-        CostOfAttendanceOutOfState: {
-            type: DataTypes.INTEGER,
-            defaultValue: null,
-        },
-        Location: {
+        HighSchoolState: {
             type: DataTypes.CHAR(2),
             validate: { isIn: [UsStates] },
             defaultValue: null,
         },
-        GPA: {
-            type: DataTypes.DECIMAL(3, 2),
+        NicheAcademicScore: { 
+            type: DataTypes.STRING,
+            defaultValue: null,
+        },
+        AverageSAT: {
+            type: DataTypes.INTEGER,
             validate: {
-                min: 0,
-                max: 4,
+                min: 400,
+                max: 1600,
             },
             defaultValue: null,
         },
@@ -65,7 +49,7 @@ module.exports = (sequelize, DataTypes) => {
             },
             defaultValue: null,
         },
-        ACTComposite: {
+        AverageACT: {
             type: DataTypes.INTEGER,
             validate: {
                 min: 1,
@@ -73,22 +57,38 @@ module.exports = (sequelize, DataTypes) => {
             },
             defaultValue: null,
         },
-        InstitutionType: {
-            type: DataTypes.STRING,
-            defaultValue: null,
-        },
-        CompletionRate: {
-            type: DataTypes.DECIMAL(5, 2),
+        ACTMath: {
+            type: DataTypes.INTEGER,
             validate: {
-                min: 0,
-                max: 100,
+                min: 1,
+                max: 36,
             },
             defaultValue: null,
         },
-        StudentDebt: {
+        ACTEnglish: {
             type: DataTypes.INTEGER,
+            validate: {
+                min: 1,
+                max: 36,
+            },
             defaultValue: null,
         },
+        ACTReading: {
+            type: DataTypes.INTEGER,
+            validate: {
+                min: 1,
+                max: 36,
+            },
+            defaultValue: null,
+        },
+        ACTScience: {
+            type: DataTypes.INTEGER,
+            validate: {
+                min: 1,
+                max: 36,
+            },
+            defaultValue: null,
+        }
     },
     {
         indexes: [
@@ -98,9 +98,8 @@ module.exports = (sequelize, DataTypes) => {
             },
         ],
     });
-    College.associate = (models) => {
-        College.belongsToMany(models.User, { through: 'Application', foreignKey: 'college' });
-        College.belongsToMany(models.Major, { through: 'CollegeMajors' });
+    HighSchool.associate = (models) => {
+        HighSchool.hasMany(models.User);
     };
-    return College;
+    return HighSchool;
 };
