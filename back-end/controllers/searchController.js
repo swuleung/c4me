@@ -110,7 +110,7 @@ exports.searchCollege = async ( filters ) => {
         query.where = criteria;
         searchResults = await models.College.findAll( query );
         
-        // this code is for the removal of duplicate college.
+        // the following code is for the removal of duplicate colleges.
         // there can be duplicate results because when you search via majors,
         // there can be more results for the same college, just with different majors
         let collegeID = -1;
