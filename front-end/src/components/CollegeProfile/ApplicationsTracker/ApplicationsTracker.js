@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import {
-    Alert, Col, Row, Card, CardDeck
-} from '../../../../node_modules/react-bootstrap';
+    Alert, Col, Row, Card, CardDeck, Button
+} from 'react-bootstrap';
 import FilterAT from './FilterAT/FilterAT';
 import ATScatterplot from './ATScatterplot/ATScatterplot';
-import { getApplicationsTrackerData } from './../../../services/api/applicationsTracker';
+import ATList from './ATList/ATList';
+import { getApplicationsTrackerData } from '../../../services/api/applicationsTracker';
 import './ApplicationsTracker.scss';
 
 const ApplicationsTracker = (props) => {
@@ -13,9 +14,10 @@ const ApplicationsTracker = (props) => {
     const [filters, setFilters] = useState({});
     const [applications, setApplications] = useState([]);
     const [averages, setAverages] = useState({});
+    const [listATView, setListATView] = useState(true);
     const { college } = props;
     const {
-        CollegeId
+        CollegeId,
     } = college;
 
     useEffect(() => {
@@ -26,7 +28,9 @@ const ApplicationsTracker = (props) => {
             }
             if (results.ok) {
                 setErrorAlert(false);
-                setApplications(results.applications);
+                setApplications(results.applications.sort((a, b) => {
+                    return a.Application.status.localeCompare(b.Application.status) ? 1 : -1;
+                }));
                 setAverages(results.averages);
             }
         });
@@ -44,7 +48,7 @@ const ApplicationsTracker = (props) => {
                                 <CardDeck>
                                     <Card body className="text-center">
                                         <h3>Average Student</h3>
-                                        <Row >
+                                        <Row>
                                             <Col>
                                                 <div className="at-title">GPA</div>
                                                 <div className="at-text">{averages.avgGPA ? averages.avgGPA : 'N/A'}</div>
@@ -54,7 +58,7 @@ const ApplicationsTracker = (props) => {
                                                 <div className="at-text">{averages.avgSATMath ? averages.avgSATMath : 'N/A'}</div>
                                             </Col>
                                         </Row>
-                                        <Row >
+                                        <Row>
                                             <Col>
                                                 <div className="at-title">SAR EBRW</div>
                                                 <div className="at-text">{averages.avgSATEBRW ? averages.avgSATEBRW : 'N/A'}</div>
@@ -67,7 +71,7 @@ const ApplicationsTracker = (props) => {
                                     </Card>
                                     <Card body className="text-center">
                                         <h3>Average Accepted Student</h3>
-                                        <Row >
+                                        <Row>
                                             <Col>
                                                 <div className="at-title">GPA</div>
                                                 <div className="at-text">{averages.avgAcceptedGPA ? averages.avgAcceptedGPA : 'N/A'}</div>
@@ -96,12 +100,25 @@ const ApplicationsTracker = (props) => {
                                 <FilterAT handleFilterChange={setFilters} />
                             </Col>
                             <Col xs="8">
-                                <ATScatterplot applications={applications} averages={averages}/>
+                                <div className="list mb-2">
+                                    <p className="mb-0">
+                                        <b>{applications.length} matching students</b>
+                                    </p>
+                                    <Button variant='outline-primary' onClick={() => setListATView(!listATView)}>
+                                        {
+                                            listATView
+                                                ? 'Switch to Scatterplot View'
+                                                : 'Switch to List View'
+                                        }
+                                    </Button>
+                                </div>
+                                {listATView
+                                    ? <ATList applications={applications} />
+                                    : <ATScatterplot applications={applications} averages={averages} />}
                             </Col>
                         </Row>
                     </>
-                )
-            }
+                )}
         </>
     );
 };

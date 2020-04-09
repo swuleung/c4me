@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
-import Cookies from 'js-cookie';
 import { Link } from '../../../node_modules/react-router-dom';
+import { login } from '../../services/api/user';
 import './Login.scss';
 
 const Login = (props) => {
@@ -11,30 +11,16 @@ const Login = (props) => {
     const [errorMessage, setErrorMessage] = useState('');
 
     const handleFormSubmission = () => {
-        fetch('http://localhost:9000/users/login', {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json; charset=utf-8',
-            },
-            body: JSON.stringify({
-                username: username,
-                password: password,
-            }),
-        }).then((response) => response.json()).then((data) => {
-            if (data.error) {
+        login(username, password).then(results => {
+            if (results.error) {
                 setErrorAlert(true);
-                setErrorMessage(data.error);
+                setErrorMessage(results.error);
             }
-            if (data.ok) {
-                Cookies.set('access_token', data.access_token);
+            if (results.ok) {
                 localStorage.setItem('username', username);
                 props.history.push('/');
                 props.setUsername(username);
             }
-        }).catch((error) => {
-            console.log('Yikes!');
-            console.log(error);
         });
     };
 

@@ -101,4 +101,21 @@ module.exports = {
             };
         }
     },
+    verifyAdmin: async function verifyAdmin() {
+        try {
+            const result = await fetch('http://localhost:9000/admin/verifyAdmin', {
+                method: 'GET',
+                credentials: 'include',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json; charset=utf-8',
+                },
+            });
+            return await result.json();
+        } catch (error) {
+            return {
+                error: `${error.message} sql data`,
+            };
+        }
+    },
 };
