@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import {
-    Alert, Button, Container, Row, Col, Table, Form, ListGroup
+    Alert, Button, Container, Row, Col, Table, Form, ListGroup,
 } from 'react-bootstrap';
 import './EditProfile.scss';
+import Autosuggest from 'react-autosuggest';
 import {
     getStudent, editStudent, getStudentApplications, editStudentApplications,
 } from '../../services/api/student';
-import { getAllHighSchools } from '../../services/api/highSchool';
+import { getAllHighSchools, editHighSchool } from '../../services/api/highSchool';
 import CollegeDropdown from './CollegeDropdown';
-import Autosuggest from 'react-autosuggest';
-import { editHighSchool } from '../../services/api/highSchool';
+
 
 const EditProfile = (props) => {
     const [student, setStudent] = useState({});
@@ -100,7 +100,6 @@ const EditProfile = (props) => {
                 setErrorAlert(false);
                 props.history.push(`../${username}`);
             }
-
         });
     };
 
@@ -162,7 +161,7 @@ const EditProfile = (props) => {
             if (result.ok) {
                 setErrorAlert(false);
                 setHighSchools(result.highSchools);
-                result.highSchools.push({Name: 'Other'});
+                result.highSchools.push({ Name: 'Other' });
             }
         });
     }, [username]);
@@ -175,27 +174,32 @@ const EditProfile = (props) => {
     };
     const getSuggestionValue = (suggestion) => suggestion.Name;
     const renderSuggestion = (suggestion) => {
-        if(suggestion.Name && suggestion.HighSchoolCity && suggestion.HighSchoolState) {
-            return (
-                <ListGroup.Item>
-                    {suggestion.Name} <small>{suggestion.HighSchoolCity}, {suggestion.HighSchoolState}</small>
-                </ListGroup.Item>
-            );
-        } else {
+        if (suggestion.Name && suggestion.HighSchoolCity && suggestion.HighSchoolState) {
             return (
                 <ListGroup.Item>
                     {suggestion.Name}
+                    {' '}
+                    <small>
+                        {suggestion.HighSchoolCity}
+,
+                        {' '}
+                        {suggestion.HighSchoolState}
+                    </small>
                 </ListGroup.Item>
             );
         }
-    }
+        return (
+            <ListGroup.Item>
+                {suggestion.Name}
+            </ListGroup.Item>
+        );
+    };
 
     const inputProps = {
         placeholder: 'Enter high school name',
         value: highSchool,
         onChange: (e, { newValue }) => {
-            if(newValue === 'Other') setDisplayOtherHS(true);
-            else setDisplayOtherHS(false);
+            if (displayOtherHS) setDisplayOtherHS(false);
             setHighSchool(newValue);
         },
     };
@@ -210,14 +214,8 @@ const EditProfile = (props) => {
     };
 
     const handleSelectHighSchool = (event, { suggestion }) => {
-        const newHighSchool = suggestion;
-        if(suggestion.Name === 'Other') {
+        if (suggestion.Name === 'Other') {
             setDisplayOtherHS(true);
-        } else if(displayOtherHS) {
-            setDisplayOtherHS(false);
-            setHighSchool(newHighSchool);
-        } else {
-            setHighSchool(newHighSchool);
         }
     };
 
@@ -240,7 +238,7 @@ const EditProfile = (props) => {
                                         suggestions={suggestions}
                                         onSuggestionsFetchRequested={onSuggestionsFetchRequested}
                                         onSuggestionsClearRequested={onSuggestionsClearRequested}
-                                        getSuggestionValue={getSuggestionValue}
+                                        getSuggestionValue={(suggestion) => suggestion.Name}
                                         renderSuggestion={renderSuggestion}
                                         shouldRenderSuggestions={() => true}
                                         inputProps={inputProps}
@@ -265,31 +263,31 @@ const EditProfile = (props) => {
                                 </Form.Group>
                             </Col>
                         </Row>
-                            {displayOtherHS && (
-                                <Row>
-                                    <Col>
-                                        <Form.Group controlId="highschoolName">
-                                            <Form.Label>High School</Form.Label>
-                                            <Form.Control type="text" value={highSchool.Name || ''} placeholder="Name" onChange={(e) => { handleProfileChange(e); }} autoComplete="on" />
-                                        </Form.Group>
-                                    </Col>
-                                    <Col>
-                                        <Form.Group controlId="highschoolCity">
-                                            <Form.Label>City</Form.Label>
-                                            <Form.Control type="text" value={highSchool.HighSchoolCity || ''} placeholder="City" onChange={(e) => { handleProfileChange(e); }} autoComplete="on" />
-                                        </Form.Group>
-                                    </Col>
-                                    <Col>
-                                        <Form.Group controlId="highschoolState">
-                                            <Form.Label>State</Form.Label>
-                                            <Form.Control as="select" value={highSchool.HighSchoolState || ''} onChange={(e) => { handleProfileChange(e); }}>
-                                                <option value="" disabled>Select a State</option>
-                                                {generateStateOptions()}
-                                            </Form.Control>
-                                        </Form.Group>
-                                    </Col>
-                                </Row>
-                            )}
+                        {displayOtherHS && (
+                            <Row className="border">
+                                <Col>
+                                    <Form.Group controlId="highschoolName">
+                                        <Form.Label>High School</Form.Label>
+                                        <Form.Control type="text" value={highSchool.Name || ''} placeholder="Name" onChange={(e) => { handleProfileChange(e); }} autoComplete="on" />
+                                    </Form.Group>
+                                </Col>
+                                <Col>
+                                    <Form.Group controlId="highschoolCity">
+                                        <Form.Label>City</Form.Label>
+                                        <Form.Control type="text" value={highSchool.HighSchoolCity || ''} placeholder="City" onChange={(e) => { handleProfileChange(e); }} autoComplete="on" />
+                                    </Form.Group>
+                                </Col>
+                                <Col>
+                                    <Form.Group controlId="highschoolState">
+                                        <Form.Label>State</Form.Label>
+                                        <Form.Control as="select" value={highSchool.HighSchoolState || ''} onChange={(e) => { handleProfileChange(e); }}>
+                                            <option value="" disabled>Select a State</option>
+                                            {generateStateOptions()}
+                                        </Form.Control>
+                                    </Form.Group>
+                                </Col>
+                            </Row>
+                        )}
                         <Row>
                             <Col>
                                 <Form.Group controlId="collegeClass">
@@ -462,7 +460,7 @@ const EditProfile = (props) => {
                                     <Col>
                                         <Form.Group className="row" controlId="SATPhys">
                                             <Form.Label className="col">Physics</Form.Label>
-                                            <Form.Control className="col" type="number" value={student.SATPhys|| ''} min="200" max="800" placeholder="200-800" onChange={(e) => { handleProfileChange(e); }} autoComplete="on" />
+                                            <Form.Control className="col" type="number" value={student.SATPhys || ''} min="200" max="800" placeholder="200-800" onChange={(e) => { handleProfileChange(e); }} autoComplete="on" />
                                         </Form.Group>
                                     </Col>
                                 </Row>
