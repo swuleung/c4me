@@ -12,8 +12,8 @@ module.exports = (sequelize, DataTypes) => {
         },
         isQuestionable: {
             type: DataTypes.BOOLEAN,
-            defaultValue: false
-        }
+            defaultValue: false,
+        },
     });
     return Application;
 };

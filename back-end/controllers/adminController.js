@@ -11,6 +11,7 @@ if (process.env.NODE_ENV === 'test') {
 }
 const colleges = fs.readFileSync(collegeFile).toString().split(/\r?\n/); // colleges.txt file into string array
 
+// eslint-disable-next-line import/no-dynamic-require
 const config = require(`${__dirname}/../config/config.json`).development;
 const rankingsURL = config.RANKING_URL;
 const collegeDataURL = config.COLLEGEDATA_URL;
@@ -409,7 +410,11 @@ exports.importStudents = async () => {
                 if (hs.length === 0) {
                     try {
                         // scrape new high school
-                        const result = await scrapeHighSchoolData(highSchool.Name, highSchool.HighSchoolCity, highSchool.HighSchoolState);
+                        const result = await scrapeHighSchoolData(
+                            highSchool.Name,
+                            highSchool.HighSchoolCity,
+                            highSchool.HighSchoolState,
+                        );
 
                         // if scraped, set hs to new hs
                         if (result.ok) {
