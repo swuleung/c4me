@@ -5,6 +5,7 @@ import {
 import {
     scrapeCollegeRanking, scrapeCollegeData, importCollegeScorecard, deleteAllStudents, importStudents, importStudentApplications,
 } from '../../services/api/admin';
+import ReactDOM from 'react-dom';
 
 const Admin = () => {
     const [errorAlert, setErrorAlert] = useState(false);
@@ -19,8 +20,16 @@ const Admin = () => {
     const [disableDelete, setDisableDelete] = useState(false);
     const [disableProfile, setDisableProfile] = useState(false);
 
+    const toggleAll = (b) =>{
+        setDisableRanking(b);
+        setDisableScorecard(b);
+        setDisableCollegeData(b);
+        setDisableDelete(b);
+        setDisableProfile(b);
+    }
+
     const handleScrapeCollegeRankings = () => {
-        setDisableRanking(true);
+        toggleAll(true);
         setProgressAlert(true);
         setErrorAlert(false);
         setSuccessAlert(false);
@@ -37,12 +46,12 @@ const Admin = () => {
                 setSuccessAlert(true);
                 setSuccessMessage('College ranking scraping complete.');
             }
-            setDisableRanking(false);
+        toggleAll(false);
         });
     };
 
     const handleImportCollegeScorecard = () => {
-        setDisableScorecard(true);
+        toggleAll(true);
         setProgressAlert(true);
         setErrorAlert(false);
         setSuccessAlert(false);
@@ -59,12 +68,12 @@ const Admin = () => {
                 setSuccessAlert(true);
                 setSuccessMessage('College scorecard import complete.');
             }
-            setDisableScorecard(false);
+            toggleAll(false);
         });
     };
 
     const handleScrapeCollegeData = () => {
-        setDisableCollegeData(true);
+        toggleAll(true);
         setProgressAlert(true);
         setProgressAlert(true);
         setErrorAlert(false);
@@ -82,12 +91,12 @@ const Admin = () => {
                 setSuccessAlert(true);
                 setSuccessMessage('CollegeData scraping complete.');
             }
-            setDisableCollegeData(false);
+            toggleAll(false);
         });
     };
 
     const handleDeleteAllStudents = () => {
-        setDisableDelete(true);
+        toggleAll(true);
         setProgressAlert(true);
         setErrorAlert(false);
         setSuccessAlert(false);
@@ -104,11 +113,12 @@ const Admin = () => {
                 setSuccessAlert(true);
                 setSuccessMessage('Delete student profiles complete');
             }
-            setDisableDelete(false);
+            toggleAll(false);
         });
     };
 
     const handleImportStudentProfiles = () => {
+        toggleAll(true);
         setDisableProfile(true);
         setProgressAlert(true);
         setProgressAlert(true);
@@ -145,6 +155,7 @@ const Admin = () => {
                     }
                 });
             }
+            toggleAll(false);
             setDisableProfile(false);
         });
     };
@@ -175,8 +186,8 @@ const Admin = () => {
                         <h2>Scrape College Rankings</h2>
                         <div>Overwrites the ranking of colleges in database with WSJ/THE 2020 rankings</div>
                     </Col>
-                    <Col sm="2">
-                        <Button onClick={(e) => { handleScrapeCollegeRankings(e); }} disabled={disableRanking} className="float-right">Scrape College Rankings</Button>
+                    <Col sm="2" >
+                        <Button onClick={(e) => { handleScrapeCollegeRankings(e); }} disabled={disableRanking} className={"float-right","btn1"}>Scrape College Rankings</Button>
                     </Col>
                 </Row>
                 <Row className="align-items-center mb-3">
@@ -184,8 +195,8 @@ const Admin = () => {
                         <h2>Import College Scorecard</h2>
                         <div>Overwrites Admission Rate, Institution Type, Location, Student Debt, and Size of colleges in database with information from the College Scorecard data file.</div>
                     </Col>
-                    <Col sm="2">
-                        <Button onClick={(e) => { handleImportCollegeScorecard(e); }} disabled={disableScorecard} className="float-right">Import College Scorecard</Button>
+                    <Col sm="2" className="btn">
+                        <Button onClick={(e) => { handleImportCollegeScorecard(e); }} disabled={disableScorecard} className={"float-right","btn1"}>Import College Scorecard</Button> 
                     </Col>
                 </Row>
                 <Row className="align-items-center mb-3">
@@ -193,16 +204,16 @@ const Admin = () => {
                         <h2>Scrape CollegeData.com</h2>
                         <div>Overwrites Cost of Attendance, Completion Rate, GPA, SAT and ACT scores of colleges in database with data from CollegeData.com</div>
                     </Col>
-                    <Col sm="2">
-                        <Button onClick={(e) => { handleScrapeCollegeData(e); }} disabled={disableCollegeData} className="float-right">Scrape CollegeData.com</Button>
+                    <Col sm="2" className="btn">
+                        <Button onClick={(e) => { handleScrapeCollegeData(e); }} disabled={disableCollegeData} className={"float-right","btn1"}>Scrape CollegeData.com</Button>
                     </Col>
                 </Row>
                 <Row className="align-items-center mb-3">
                     <Col sm="10">
                         <h2>Delete All Student Profiles</h2>
                     </Col>
-                    <Col sm="2">
-                        <Button onClick={(e) => { handleDeleteAllStudents(e); }} disabled={disableDelete} className="float-right">Delete All Student Profiles</Button>
+                    <Col sm="2" className="btn">
+                        <Button onClick={(e) => { handleDeleteAllStudents(e); }} disabled={disableDelete} className={"float-right","btn1"}>Delete All Student Profiles</Button>
                     </Col>
                 </Row>
                 <Row className="align-items-center mb-3">
@@ -210,8 +221,8 @@ const Admin = () => {
                         <h2>Import Student Profile Dataset</h2>
                         <div>Imports student profiles to system databse with information included in the students and applications csv files</div>
                     </Col>
-                    <Col sm="2">
-                        <Button onClick={(e) => { handleImportStudentProfiles(e); }} disabled={disableProfile} className="float-right">Import Student Profile Dataset</Button>
+                    <Col sm="2" className="btn">
+                        <Button onClick={(e) => { handleImportStudentProfiles(e); }} disabled={disableProfile} className={"float-right","btn1"}>Import Student Profile Dataset</Button>
                     </Col>
                 </Row>
             </Container>
