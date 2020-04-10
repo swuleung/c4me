@@ -1,16 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import {
-    Alert, Button, Container, Row, Col, Table, Form,
+    Alert, Button, Container, Row, Col, Table, Form, ListGroup,
 } from 'react-bootstrap';
 import './EditProfile.scss';
+import Autosuggest from 'react-autosuggest';
 import {
     getStudent, editStudent, getStudentApplications, editStudentApplications,
 } from '../../services/api/student';
+import { getAllHighSchools } from '../../services/api/highSchool';
 import CollegeDropdown from './CollegeDropdown';
+
 
 const EditProfile = (props) => {
     const [student, setStudent] = useState({});
     const [studentApplications, setStudentApplications] = useState([]);
+    const [highSchool, setHighSchool] = useState({Name: ''});
+    const [newHighSchool, setNewHighSchool] = useState({});
+    const [highSchools, setHighSchools] = useState([]);
+    const [displayOtherHS, setDisplayOtherHS] = useState(false);
+    const [displayAutosuggest, setDisplayAutosuggest] = useState(true);
+    const [suggestions, setSuggestions] = useState([]);
     const [errorAlert, setErrorAlert] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const { match } = props;
@@ -22,6 +31,13 @@ const EditProfile = (props) => {
         if (value === '') value = null;
         setStudent({ ...student, [id]: value });
     };
+
+    const handleHighSchoolChange = (e) => {
+        let { value } = e.target;
+        const { id } = e.target;
+        if (value === '') value = null;
+        setNewHighSchool({ ...newHighSchool, [id]: value });
+    }
 
     const handleApplicationChange = (e) => {
         const { value } = e.target;
@@ -66,7 +82,7 @@ const EditProfile = (props) => {
     };
 
     const handleEditSubmission = () => {
-        editStudent(username, student).then((result) => {
+        editStudent(username, student, newHighSchool).then((result) => {
             if (result.error) {
                 setErrorAlert(true);
                 setErrorMessage(result.error);
@@ -123,6 +139,21 @@ const EditProfile = (props) => {
             if (result.ok) {
                 setErrorAlert(false);
                 setStudent(result.student);
+                if(result.student.HighSchool) {
+                    setHighSchool(result.student.HighSchool);
+                    setNewHighSchool(result.student.HighSchool);
+                } else {
+                    setHighSchool({
+                        Name: '',
+                        HighSchoolCity: '',
+                        HighSchoolState: '',
+                    });
+                    setNewHighSchool({
+                        Name: '',
+                        HighSchoolCity: '',
+                        HighSchoolState: '',
+                    });
+                }
             }
         });
 
@@ -136,7 +167,83 @@ const EditProfile = (props) => {
                 setStudentApplications(result.applications);
             }
         });
+
+        getAllHighSchools().then((result) => {
+            if (result.error === 'No high schools in the db') {
+                setDisplayAutosuggest(false);
+                setDisplayOtherHS(true);
+            } else if (result.error) {
+                setErrorAlert(true);
+                setErrorMessage(result.error);
+            }
+            if (result.ok) {
+                setErrorAlert(false);
+                result.highSchools.unshift({Name: 'Other'});
+                setHighSchools(result.highSchools);
+            }
+        });
     }, [username]);
+
+    // Teach Autosuggest how to calculate suggestions for any given input value.
+    const getSuggestions = (value) => {
+        const inputValue = value.trim().toLowerCase();
+        const inputLength = inputValue.length;
+        return inputLength === 0 ? highSchools : highSchools.filter((hs) => hs.Name.toLowerCase().indexOf(inputValue.toLowerCase()) > -1);
+    };
+    const renderSuggestion = (suggestion) => {
+        if (suggestion.Name && suggestion.HighSchoolCity && suggestion.HighSchoolState) {
+            return (
+                <ListGroup.Item>
+                    {suggestion.Name.toLowerCase().split(' ').map((s) => {
+                        if (s !== 'and' && s !== 'of') return s.charAt(0).toUpperCase() + s.substring(1);
+                        return s;
+                    }).join(' ')}
+                    {' '}
+                    <small>
+                        {suggestion.HighSchoolCity}
+,
+                        {' '}
+                        {suggestion.HighSchoolState}
+                    </small>
+                </ListGroup.Item>
+            );
+        }
+        return (
+            <ListGroup.Item>
+                {suggestion.Name}
+            </ListGroup.Item>
+        );
+    };
+
+    const inputProps = {
+        placeholder: 'Enter high school name',
+        value: highSchool.Name,
+        onChange: (e, { newValue }) => {
+            if (displayOtherHS) setDisplayOtherHS(false);
+            if(typeof(newValue) === 'string') {
+                setHighSchool({Name: newValue});
+            } else {
+                setHighSchool(newValue);
+            }
+        },
+    };
+
+    const onSuggestionsFetchRequested = ({ value }) => {
+        setSuggestions(getSuggestions(value));
+    };
+
+    // Autosuggest will call this function every time you need to clear suggestions.
+    const onSuggestionsClearRequested = () => {
+        setSuggestions([]);
+    };
+
+    const handleSelectHighSchool = (event, { suggestion }) => {
+        if (suggestion.Name === 'Other') {
+            setDisplayOtherHS(true);
+        } else {
+            setNewHighSchool(suggestion);
+        }
+    };
 
     return (
         <div>
@@ -149,26 +256,66 @@ const EditProfile = (props) => {
                 <Form onSubmit={(e) => { e.preventDefault(); handleEditSubmission(); }}>
                     <Container>
                         <h1>{username}</h1>
-                        <Row>
-                            <Col>
-                                <Form.Group controlId="highschoolName">
-                                    <Form.Label>High School</Form.Label>
-                                    <Form.Control type="text" value={student.highschoolName || ''} placeholder="Name" onChange={(e) => { handleProfileChange(e); }} autoComplete="on" />
-                                </Form.Group>
-                            </Col>
-                            <Col>
-                                <Form.Group controlId="highschoolCity">
-                                    <Form.Label>High School</Form.Label>
-                                    <Form.Control type="text" value={student.highschoolCity || ''} placeholder="City" onChange={(e) => { handleProfileChange(e); }} autoComplete="on" />
-                                </Form.Group>
-                            </Col>
-                            <Col>
-                                <Form.Group controlId="highschoolState">
-                                    <Form.Label>High School</Form.Label>
-                                    <Form.Control type="text" value={student.highschoolState || ''} placeholder="State" onChange={(e) => { handleProfileChange(e); }} autoComplete="on" />
-                                </Form.Group>
-                            </Col>
-                        </Row>
+                        {displayAutosuggest && (
+                            <Row>
+                                <Col>
+                                    <Form.Group controlId="highSchool">
+                                        <Form.Label>High School</Form.Label>
+                                        <Autosuggest
+                                            suggestions={suggestions}
+                                            onSuggestionsFetchRequested={onSuggestionsFetchRequested}
+                                            onSuggestionsClearRequested={onSuggestionsClearRequested}
+                                            getSuggestionValue={(suggestion) => suggestion}
+                                            renderSuggestion={renderSuggestion}
+                                            shouldRenderSuggestions={() => true}
+                                            inputProps={inputProps}
+                                            onSuggestionSelected={handleSelectHighSchool}
+                                            theme={{
+                                                input: 'form-control',
+                                                container: 'react-autosuggest__container',
+                                                containerOpen: 'react-autosuggest__container--open',
+                                                inputOpen: 'react-autosuggest__input--open',
+                                                inputFocused: 'react-autosuggest__input--focused',
+                                                suggestionsContainer: 'react-autosuggest__suggestions-container',
+                                                suggestionsContainerOpen: 'react-autosuggest__suggestions-container--open',
+                                                suggestionsList: 'list-group',
+                                                suggestion: 'react-autosuggest__suggestion',
+                                                suggestionFirst: 'react-autosuggest__suggestion--first',
+                                                suggestionHighlighted: 'react-autosuggest__suggestion--highlighted',
+                                                sectionContainer: 'react-autosuggest__section-container',
+                                                sectionContainerFirst: 'react-autosuggest__section-container--first',
+                                                sectionTitle: 'react-autosuggest__section-title',
+                                            }}
+                                        />
+                                    </Form.Group>
+                                </Col>
+                            </Row>
+                        )}
+                        {displayOtherHS && (
+                            <Row>
+                                <Col>
+                                    <Form.Group controlId="Name">
+                                        <Form.Label>High School</Form.Label>
+                                        <Form.Control type="text" value={newHighSchool.Name || ''} placeholder="Name" onChange={(e) => { handleHighSchoolChange(e); }} autoComplete="on" required />
+                                    </Form.Group>
+                                </Col>
+                                <Col>
+                                    <Form.Group controlId="HighSchoolCity">
+                                        <Form.Label>City</Form.Label>
+                                        <Form.Control type="text" value={newHighSchool.HighSchoolCity || ''} placeholder="City" onChange={(e) => { handleHighSchoolChange(e); }} autoComplete="on" required />
+                                    </Form.Group>
+                                </Col>
+                                <Col>
+                                    <Form.Group controlId="HighSchoolState">
+                                        <Form.Label>State</Form.Label>
+                                        <Form.Control as="select" value={newHighSchool.HighSchoolState || ''} onChange={(e) => { handleHighSchoolChange(e); }} required>
+                                            <option value="" disabled>Select a State</option>
+                                            {generateStateOptions()}
+                                        </Form.Control>
+                                    </Form.Group>
+                                </Col>
+                            </Row>
+                        )}
                         <Row>
                             <Col>
                                 <Form.Group controlId="collegeClass">
@@ -179,7 +326,7 @@ const EditProfile = (props) => {
                             <Col>
                                 <Form.Group controlId="GPA">
                                     <Form.Label>GPA</Form.Label>
-                                    <Form.Control type="number" value={student.GPA || ''} min="0" max="4.00" step="0.01" placeholder="Enter GPA" onChange={(e) => { handleProfileChange(e); }} autoComplete="on" />
+                                    <Form.Control type="number" value={student.GPA || ''} min="0" max="4.00" step="0.01" placeholder="Enter GPA" onChange={(e) => { handleProfileChange(e); }} autoComplete="on" required />
                                 </Form.Group>
                             </Col>
                         </Row>
@@ -341,7 +488,7 @@ const EditProfile = (props) => {
                                     <Col>
                                         <Form.Group className="row" controlId="SATPhys">
                                             <Form.Label className="col">Physics</Form.Label>
-                                            <Form.Control className="col" type="number" value={student.SATPhys|| ''} min="200" max="800" placeholder="200-800" onChange={(e) => { handleProfileChange(e); }} autoComplete="on" />
+                                            <Form.Control className="col" type="number" value={student.SATPhys || ''} min="200" max="800" placeholder="200-800" onChange={(e) => { handleProfileChange(e); }} autoComplete="on" />
                                         </Form.Group>
                                     </Col>
                                 </Row>
