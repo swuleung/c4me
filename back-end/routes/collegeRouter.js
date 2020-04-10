@@ -73,7 +73,7 @@ router.get('/id/:collegeID/majors', async (req, res) => {
     }
 });
 
-router.post('/id/:collegeID/applications', async (req,res) => {
+router.post('/id/:collegeID/applications', async (req, res) => {
     if (!req.cookies.access_token) {
         res.status(400).send({ status: 'error', error: 'No token provided' });
     } else {
@@ -83,6 +83,7 @@ router.post('/id/:collegeID/applications', async (req,res) => {
             res.status(400).send(authorized);
         } else {
             let result = {};
+            // eslint-disable-next-line max-len
             result = await collegeController.getApplicationsByCollegeID(req.params.collegeID, req.body.filters);
             if (result.error) res.status(400);
             res.send(result);
