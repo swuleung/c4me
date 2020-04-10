@@ -3,6 +3,7 @@ const fs = require('fs');
 const puppeteer = require('puppeteer');
 const parse = require('csv-parse');
 const models = require('../models');
+const { scrapeHighSchoolData } = require('./highschoolController');
 
 let collegeFile = `${__dirname}/../assets/colleges.txt`;
 if (process.env.NODE_ENV === 'test') {
@@ -10,7 +11,7 @@ if (process.env.NODE_ENV === 'test') {
 }
 const colleges = fs.readFileSync(collegeFile).toString().split(/\r?\n/); // colleges.txt file into string array
 
-const config = require(__dirname + '/../config/config.json')["development"];
+const config = require(`${__dirname}/../config/config.json`).development;
 const rankingsURL = config.RANKING_URL;
 const collegeDataURL = config.COLLEGEDATA_URL;
 
@@ -172,7 +173,7 @@ exports.scrapeCollegeData = async () => {
             const listChildren = await page.evaluate((el) => el.textContent, majorEls[j]);
             preMajors = preMajors.concat(listChildren.trim().split('\n'));
         }
-        const majors = preMajors.map(m => m.trim());
+        const majors = preMajors.map((m) => m.trim());
         const collegeObject = {
             Name: colleges[i],
             CompletionRate: completionRate,
@@ -181,7 +182,7 @@ exports.scrapeCollegeData = async () => {
             GPA: gpa,
             SATMath: satMath,
             SATEBRW: satEbrw,
-            ACTComposite: actComposite
+            ACTComposite: actComposite,
         };
 
 
@@ -318,9 +319,15 @@ exports.deleteAllStudents = async () => {
     }
 };
 
+/**
+ * Import student data from CSV File.
+ * Every error is compiled into a `errors` list but will return 200.
+ */
 exports.importStudents = async () => {
     const errors = [];
     const users = [];
+
+    // read the csv file
     await new Promise(((resolve) => {
         let studentFile = `${__dirname}/../assets/students-1.csv`;
         if (process.env.NODE_ENV === 'test') {
@@ -332,14 +339,12 @@ exports.importStudents = async () => {
             })
             .pipe(parse({ delimiter: ',', columns: true, trim: true }))
             .on('data', async (row) => {
+                // create the user object
                 const user = {
                     username: row.userid,
                     password: row.password,
                     GPA: row.GPA,
                     residenceState: row.residence_state,
-                    highschoolName: row.high_school_name,
-                    highschoolCity: row.high_school_city,
-                    highschoolState: row.high_school_state,
                     collegeClass: row.college_class,
                     major1: row.major_1,
                     major2: row.major_2,
@@ -362,26 +367,94 @@ exports.importStudents = async () => {
                     APPassed: row.num_AP_passed,
                 };
 
+                // create the high school object
+                const highSchool = {
+                    Name: row.high_school_name,
+                    HighSchoolCity: row.high_school_city,
+                    HighSchoolState: row.high_school_state,
+                };
+
+                // change empty string to null values
                 Object.keys(user).forEach((key) => { if (user[key] === '') { user[key] = null; } });
-                users.push(user);
+
+                // remove high school properties with empty string values
+                Object.keys(highSchool).forEach((key) => { if (highSchool[key] === '') { delete highSchool[key]; } });
+
+                users.push({
+                    user: user,
+                    highSchool: highSchool,
+                });
             })
             .on('end', () => {
                 resolve(users);
             });
     }));
+
     /* eslint-disable no-await-in-loop */
+
+    // loop through each user from file & create it
     for (let userIndex = 0; userIndex < users.length; userIndex += 1) {
-        while (Object.keys(users[userIndex]).length > 1) {
+        const { user } = users[userIndex];
+        const { highSchool } = users[userIndex];
+        while (Object.keys(user).length > 1) {
             try {
-                await models.User.create(users[userIndex]);
-                break;
-            } catch (error) {
-                if (error instanceof sequelize.ValidationError
-                    && !(error instanceof sequelize.UniqueConstraintError)) {
-                    delete users[userIndex][error.errors[0].path];
+                // find the hs from informaton
+                let hs = await models.HighSchool.findAll({
+                    where: highSchool,
+                });
+
+                let highSchoolId = null;
+
+                // no high school found
+                if (hs.length === 0) {
+                    try {
+                        // scrape new high school
+                        const result = await scrapeHighSchoolData(highSchool.Name, highSchool.HighSchoolCity, highSchool.HighSchoolState);
+
+                        // if scraped, set hs to new hs
+                        if (result.ok) {
+                            hs = await models.HighSchool.findAll({
+                                where: highSchool,
+                            });
+                        }
+                    } catch (error) {
+                        errors.push({
+                            error: `Error in adding HS to ${user.username}: ${error.message} ${user.name}`,
+                            reason: error,
+                        });
+                    }
+                } else if (hs.length === 1) { // found a high school
+                    highSchoolId = hs[0].HighSchoolId;
                 } else {
                     errors.push({
-                        error: `Error in creating ${users[userIndex].username}: ${error.message} ${users[userIndex].name}`,
+                        error: `Error in adding HS to ${user.username}: Multiple high schools found based on: ${highSchool}`,
+                        reason: 'HS is not unique',
+                    });
+                }
+
+                // set high school id for the user
+                user.HighSchoolId = highSchoolId;
+
+                // create the user
+                await models.User.create(user);
+                break;
+            } catch (error) {
+                // check errors to see if it's invaliid
+                // invalid fields are removed and this is re-run
+                if (error instanceof sequelize.ValidationError
+                    && !(error instanceof sequelize.UniqueConstraintError)) {
+                    delete user[error.errors[0].path];
+                } else if (error instanceof sequelize.UniqueConstraintError) {
+                    // not unique username error
+                    errors.push({
+                        error: `Error in creating ${user.username}: Username is not unique`,
+                        reason: error.message,
+                    });
+                    break;
+                } else {
+                    // other error of adding in user
+                    errors.push({
+                        error: `Error in creating ${user.username}: ${error.message} ${user.name}`,
                         reason: error,
                     });
                     break;
@@ -390,12 +463,16 @@ exports.importStudents = async () => {
         }
     }
     /* eslint-enable no-await-in-loop */
+
+    // if there were any errors, report it
     if (errors.length) {
         return {
             error: 'Error importing students',
             reason: errors,
         };
     }
+
+    // no errors
     return {
         ok: 'Success',
     };
