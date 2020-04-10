@@ -19,6 +19,7 @@
         "no-console": "off",
         "indent": ["error", 4],
         "object-shorthand": ["error", "never"],
-        "global-require": 0
+        "global-require": 0,
+        "linebreak-style": "off"
     }
 }

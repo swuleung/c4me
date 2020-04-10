@@ -88,18 +88,18 @@ module.exports = (sequelize, DataTypes) => {
                 max: 36,
             },
             defaultValue: null,
-        }
+        },
     },
     {
         indexes: [
             {
                 unique: true,
-                fields: ['Name', 'HighSchoolCity', 'HighSchoolState']
-            }
-        ]
+                fields: ['Name', 'HighSchoolCity', 'HighSchoolState'],
+            },
+        ],
     });
     HighSchool.associate = (models) => {
-        HighSchool.hasMany(models.User, { foreignKey: 'HighSchoolId'});
+        HighSchool.hasMany(models.User, { foreignKey: 'HighSchoolId' });
     };
     return HighSchool;
 };
