@@ -178,8 +178,8 @@ const EditProfile = (props) => {
             }
             if (result.ok) {
                 setErrorAlert(false);
+                result.highSchools.unshift({Name: 'Other'});
                 setHighSchools(result.highSchools);
-                result.highSchools.push({Name: 'Other'});
             }
         });
     }, [username]);
