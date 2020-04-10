@@ -1,7 +1,7 @@
 const sequelize = require('sequelize');
-const models = require('../models');
 const puppeteer = require('puppeteer');
 const { getPathConfig } = require('../utils/readAppFiles');
+const models = require('../models');
 
 exports.getHighSchoolById = async (highSchoolId) => {
     let highSchool = {};
@@ -98,7 +98,7 @@ exports.deleteAllHighSchools = async () => {
     };
 };
 
-exports.scrapeHighSchoolData = async(highSchoolName, highSchoolCity, highSchoolState) => {
+exports.scrapeHighSchoolData = async (highSchoolName, highSchoolCity, highSchoolState) => {
     const browser = await puppeteer.launch({ headless: true });
     const page = await browser.newPage();
     await page.setViewport({ width: 1920, height: 926 });
@@ -142,12 +142,13 @@ exports.scrapeHighSchoolData = async(highSchoolName, highSchoolCity, highSchoolS
         ACTMath: ACTMath,
         ACTReading: ACTReading,
         ACTEnglish: ACTEnglish,
-        ACTScience: ACTScience
-    }
+        ACTScience: ACTScience,
+    };
 
     const errors = [];
     while (Object.keys(highSchoolObject).length > 1) {
         try {
+            // eslint-disable-next-line no-await-in-loop
             await models.HighSchool.upsert(highSchoolObject);
             break;
         } catch (error) {
@@ -174,4 +175,4 @@ exports.scrapeHighSchoolData = async(highSchoolName, highSchoolCity, highSchoolS
     await page.close();
     await browser.close();
     return { ok: `Success. Able to scrape ${highSchoolName} data.` };
-}
+};

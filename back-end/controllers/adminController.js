@@ -3,8 +3,8 @@ const fs = require('fs');
 const puppeteer = require('puppeteer');
 const parse = require('csv-parse');
 const models = require('../models');
-const { scrapeHighSchoolData } = require('./highschoolController');
 const { getCollegeList, getPathConfig } = require('../utils/readAppFiles');
+const { updateStudentHighSchool } = require('./studentController');
 
 exports.checkAdmin = async (username) => {
     let admin = {};
@@ -329,7 +329,7 @@ exports.importStudents = async () => {
     // read the csv file
     await new Promise(((resolve) => {
         const paths = getPathConfig();
-        let studentFile = `${__dirname}/${paths.ASSETS}/${paths.IMPORT_STUDENTS}`;
+        const studentFile = `${__dirname}/${paths.ASSETS}/${paths.IMPORT_STUDENTS}`;
         fs.createReadStream(studentFile)
             .on('error', (error) => {
                 console.log(error.message);
@@ -395,44 +395,15 @@ exports.importStudents = async () => {
         const { highSchool } = users[userIndex];
         while (Object.keys(user).length > 1) {
             try {
-                // find the hs from informaton
-                let hs = await models.HighSchool.findAll({
-                    where: highSchool,
-                });
-
-                let highSchoolId = null;
-
-                // no high school found
-                if (hs.length === 0) {
-                    try {
-                        // scrape new high school
-                        const result = await scrapeHighSchoolData(highSchool.Name, highSchool.HighSchoolCity, highSchool.HighSchoolState);
-
-                        // if scraped, set hs to new hs
-                        if (result.ok) {
-                            hs = await models.HighSchool.findAll({
-                                where: highSchool,
-                            });
-                        }
-                    } catch (error) {
-                        errors.push({
-                            error: `Error in adding HS to ${user.username}: ${error.message} ${user.name}`,
-                            reason: error,
-                        });
-                    }
-                } else if (hs.length === 1) { // found a high school
-                    highSchoolId = hs[0].HighSchoolId;
-                } else {
-                    errors.push({
-                        error: `Error in adding HS to ${user.username}: Multiple high schools found based on: ${highSchool}`,
-                        reason: 'HS is not unique',
-                    });
-                }
-
-                // set high school id for the user
-                user.HighSchoolId = highSchoolId;
                 // create the user
-                await models.User.create(user);
+                const student = await models.User.create(user);
+
+                const result = await updateStudentHighSchool(student, highSchool);
+                if (result.ok) {
+                    student.HighSchool = result.highSchool;
+                } else {
+                    errors.push(result);
+                }
                 break;
             } catch (error) {
                 // check errors to see if it's invaliid
@@ -479,7 +450,7 @@ exports.importApplications = async () => {
     const applications = [];
     await new Promise(((resolve) => {
         const paths = getPathConfig();
-        let applicationFile = `${__dirname}/${paths.ASSETS}/${paths.IMPORT_APPLICATIONS}`;
+        const applicationFile = `${__dirname}/${paths.ASSETS}/${paths.IMPORT_APPLICATIONS}`;
         fs.createReadStream(applicationFile)
             .on('error', (error) => {
                 errors.push({

@@ -2,7 +2,7 @@ const express = require('express');
 
 const router = express.Router();
 const authentication = require('../utils/auth');
-const highSchoolController = require('../controllers/highSchoolController');
+const highSchoolController = require('../controllers/highschoolController');
 
 router.get('/id/:highSchoolId', async (req, res) => {
     if (!req.cookies.access_token) {
@@ -15,7 +15,7 @@ router.get('/id/:highSchoolId', async (req, res) => {
         } else {
             let result = {};
             const { highSchoolId } = req.params;
-            result = await highSchoolController.getHighSchoolById(highSchoolID);
+            result = await highSchoolController.getHighSchoolById(highSchoolId);
             if (result.error) res.status(400);
             res.send(result);
         }
@@ -66,7 +66,11 @@ router.post('/scrapeHighSchoolData', async (req, res) => {
             res.status(400).send(authorized);
         } else {
             let result = {};
-            result = await highSchoolController.scrapeHighSchoolData(req.body.highSchoolName, req.body.highSchoolCity, req.body.highSchoolState);
+            result = await highSchoolController.scrapeHighSchoolData(
+                req.body.highSchoolName,
+                req.body.highSchoolCity,
+                req.body.highSchoolState,
+            );
             if (result.error) res.status(400);
             res.send(result);
         }
