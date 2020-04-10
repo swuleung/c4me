@@ -164,7 +164,10 @@ const EditProfile = (props) => {
         });
 
         getAllHighSchools().then((result) => {
-            if (result.error !== 'No high schools in the db') {
+            if (result.error === 'No high schools in the db') {
+                setDisplayAutosuggest(false);
+                setDisplayOtherHS(true);
+            } else if (result.error) {
                 setErrorAlert(true);
                 setErrorMessage(result.error);
             }
@@ -186,11 +189,6 @@ const EditProfile = (props) => {
                 setNewHighSchool(result.highSchool);
             }
         });
-
-        if (!highSchools.length) {
-            setDisplayAutosuggest(false);
-            setDisplayOtherHS(true);
-        }
     }, [username]);
 
     // Teach Autosuggest how to calculate suggestions for any given input value.
