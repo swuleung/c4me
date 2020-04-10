@@ -19,8 +19,16 @@ const Admin = () => {
     const [disableDelete, setDisableDelete] = useState(false);
     const [disableProfile, setDisableProfile] = useState(false);
 
+    const toggleAll = (b) =>{
+        setDisableRanking(b);
+        setDisableScorecard(b);
+        setDisableCollegeData(b);
+        setDisableDelete(b);
+        setDisableProfile(b);
+    }
+
     const handleScrapeCollegeRankings = () => {
-        setDisableRanking(true);
+        toggleAll(true);
         setProgressAlert(true);
         setErrorAlert(false);
         setSuccessAlert(false);
@@ -37,12 +45,12 @@ const Admin = () => {
                 setSuccessAlert(true);
                 setSuccessMessage('College ranking scraping complete.');
             }
-            setDisableRanking(false);
+            toggleAll(false);
         });
     };
 
     const handleImportCollegeScorecard = () => {
-        setDisableScorecard(true);
+        toggleAll(true);
         setProgressAlert(true);
         setErrorAlert(false);
         setSuccessAlert(false);
@@ -59,12 +67,12 @@ const Admin = () => {
                 setSuccessAlert(true);
                 setSuccessMessage('College scorecard import complete.');
             }
-            setDisableScorecard(false);
+            toggleAll(false);
         });
     };
 
     const handleScrapeCollegeData = () => {
-        setDisableCollegeData(true);
+        toggleAll(true);
         setProgressAlert(true);
         setProgressAlert(true);
         setErrorAlert(false);
@@ -82,12 +90,12 @@ const Admin = () => {
                 setSuccessAlert(true);
                 setSuccessMessage('CollegeData scraping complete.');
             }
-            setDisableCollegeData(false);
+            toggleAll(false);
         });
     };
 
     const handleDeleteAllStudents = () => {
-        setDisableDelete(true);
+        toggleAll(true);
         setProgressAlert(true);
         setErrorAlert(false);
         setSuccessAlert(false);
@@ -104,12 +112,12 @@ const Admin = () => {
                 setSuccessAlert(true);
                 setSuccessMessage('Delete student profiles complete');
             }
-            setDisableDelete(false);
+            toggleAll(false);
         });
     };
 
     const handleImportStudentProfiles = () => {
-        setDisableProfile(true);
+        toggleAll(true);
         setProgressAlert(true);
         setProgressAlert(true);
         setErrorAlert(false);
@@ -145,7 +153,7 @@ const Admin = () => {
                     }
                 });
             }
-            setDisableProfile(false);
+            toggleAll(false);
         });
     };
 
