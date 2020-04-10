@@ -194,7 +194,10 @@ const EditProfile = (props) => {
         if (suggestion.Name && suggestion.HighSchoolCity && suggestion.HighSchoolState) {
             return (
                 <ListGroup.Item>
-                    {suggestion.Name}
+                    {suggestion.Name.toLowerCase().split(' ').map((s) => {
+                        if (s !== 'and' && s !== 'of') return s.charAt(0).toUpperCase() + s.substring(1);
+                        return s;
+                    }).join(' ')}
                     {' '}
                     <small>
                         {suggestion.HighSchoolCity}

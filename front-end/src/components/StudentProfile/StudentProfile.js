@@ -89,7 +89,10 @@ const StudentProfile = (props) => {
                             </Row>
                             <p>
                             High School:&nbsp;
-                                {highSchool.Name ? highSchool.Name : 'No high school provided'}
+                                {highSchool.Name ? highSchool.Name.toLowerCase().split(' ').map((s) => {
+                                    if (s !== 'and' && s!== 'of') return s.charAt(0).toUpperCase() + s.substring(1);
+                                    return s;
+                                }).join(' ') : 'No high school provided'}
                             </p>
                             <p>
                             High School City:&nbsp;
