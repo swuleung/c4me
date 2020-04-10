@@ -433,7 +433,7 @@ exports.importStudents = async () => {
                 }
 
                 // set high school id for the user
-                user.HighSchoolHighSchoolId = highSchoolId;
+                user.HighSchoolId = highSchoolId;
                 // create the user
                 await models.User.create(user);
                 break;
