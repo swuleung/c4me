@@ -80,9 +80,9 @@ exports.updateStudent = async (username, newStudent, newHighSchool) => {
 };
 
 exports.updateStudentHighSchool = async (student, highSchool) => {
-    let newHighSchool = null;
+    let newHighSchool = {};
     try {
-        newHighSchool = await models.HighSchool.findAll({
+        newHighSchool = await models.HighSchool.findOne({
             where: highSchool,
         });
     } catch (error) {
@@ -91,7 +91,7 @@ exports.updateStudentHighSchool = async (student, highSchool) => {
             reason: error,
         };
     }
-    if (!newHighSchool.length) {
+    if (!newHighSchool) {
         try {
             newHighSchool = await models.HighSchool.create(highSchool);
         } catch (error) {
