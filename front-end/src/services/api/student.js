@@ -1,5 +1,5 @@
 module.exports = {
-    editStudent: async function editStudent(username, studentInfo) {
+    editStudent: async function editStudent(username, studentInfo, highSchoolInfo) {
         try {
             const student = await fetch(`http://localhost:9000/students/${username}/edit`, {
                 method: 'POST',
@@ -8,7 +8,7 @@ module.exports = {
                     Accept: 'application/json',
                     'Content-Type': 'application/json; charset=utf-8',
                 },
-                body: JSON.stringify(studentInfo),
+                body: JSON.stringify({student: studentInfo, highSchool: highSchoolInfo}),
             });
             return await student.json();
         } catch (error) {

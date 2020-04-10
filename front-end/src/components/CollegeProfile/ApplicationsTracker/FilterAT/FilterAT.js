@@ -106,7 +106,10 @@ const FilterAT = (props) => {
     const getSuggestionValue = (suggestion) => suggestion.Name;
     const renderSuggestion = (suggestion) => (
         <ListGroup.Item>
-            {suggestion.Name}
+            {suggestion.Name.toLowerCase().split(' ').map((s) => {
+                if (s !== 'and' && s !== 'of') return s.charAt(0).toUpperCase() + s.substring(1);
+                return s;
+            }).join(' ')}
         </ListGroup.Item>
     );
 
