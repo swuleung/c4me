@@ -1,27 +1,35 @@
 {
-    "RANKING_URL": "https://www.timeshighereducation.com/rankings/united-states/2020#!/page/0/length/-1/sort_by/rank/sort_order/asc/cols/stats",
-    "COLLEGEDATA_URL": "https://www.collegedata.com/college/",
-    "ASSETS": "../assets",
-    "NICHE_URL": "https://www.niche.com/k12/",
-    "COLLEGE_NAMES": "colleges.txt",
-    "COLLEGE_SCORECARD": "collegeScorecard.csv",
-    "IMPORT_STUDENTS": {
-        "10": "students/students-10.csv",
-        "100": "students/students-100.csv",
-        "1000": "students/students-1000.csv"
+    "development": {
+        "RANKING_URL": "https://www.timeshighereducation.com/rankings/united-states/2020#!/page/0/length/-1/sort_by/rank/sort_order/asc/cols/stats",
+        "COLLEGEDATA_URL": "https://www.collegedata.com/college/",
+        "ASSETS": "../assets",
+        "NICHE_URL": "http://allv22.all.cs.stonybrook.edu/~stoller/cse416/niche/",
+        "NICHE_URL_UNUSED": "https://www.niche.com/k12/",
+        "COLLEGE_NAMES": "colleges.txt",
+        "COLLEGE_SCORECARD": "collegeScorecard.csv",
+        "IMPORT_STUDENTS": "students/students-1000.csv",
+        "IMPORT_APPLICATIONS": "applications/applications-10000.csv"
     },
-    "IMPORT_APPLICATIONS": {
-        "100": "applications/applications-100.csv",
-        "1000": "applications/applications-1000.csv",
-        "a": "applications/applications-a.csv",
-        "b": "applications/applications-b.csv",
-        "c": "applications/applications-c.csv",
-        "d": "applications/applications-d.csv",
-        "e": "applications/applications-e.csv",
-        "f": "applications/applications-f.csv",
-        "g": "applications/applications-g.csv",
-        "h": "applications/applications-h.csv",
-        "i": "applications/applications-i.csv",
-        "j": "applications/applications-j.csv"
+    "test": {
+        "RANKING_URL": "https://www.timeshighereducation.com/rankings/united-states/2020#!/page/0/length/-1/sort_by/rank/sort_order/asc/cols/stats",
+        "COLLEGEDATA_URL": "https://www.collegedata.com/college/",
+        "ASSETS": "../tests/testData",
+        "NICHE_URL": "http://allv22.all.cs.stonybrook.edu/~stoller/cse416/niche/",
+        "NICHE_URL_UNUSED": "https://www.niche.com/k12/",
+        "COLLEGE_NAMES": "colleges.txt",
+        "COLLEGE_SCORECARD": "collegeScorecard.csv",
+        "IMPORT_STUDENTS": "students-1.csv",
+        "IMPORT_APPLICATIONS": "applications-1.csv"
+    },
+    "production": {
+        "RANKING_URL": "https://www.timeshighereducation.com/rankings/united-states/2020#!/page/0/length/-1/sort_by/rank/sort_order/asc/cols/stats",
+        "COLLEGEDATA_URL": "https://www.collegedata.com/college/",
+        "ASSETS": "../assets",
+        "NICHE_URL": "http://allv22.all.cs.stonybrook.edu/~stoller/cse416/niche/",
+        "NICHE_URL_UNUSED": "https://www.niche.com/k12/",
+        "COLLEGE_NAMES": "colleges.txt",
+        "COLLEGE_SCORECARD": "collegeScorecard.csv",
+        "IMPORT_STUDENTS": "students/students-1000.csv",
+        "IMPORT_APPLICATIONS": "applications/applications-10000.csv"
     }
 }
