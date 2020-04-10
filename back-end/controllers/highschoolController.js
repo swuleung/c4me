@@ -107,14 +107,16 @@ exports.getHighSchoolByUser = async (username) => {
             username: username
         }
     });
-    if(student.HighSchoolHighSchoolId) {
+    if(student[0].HighSchoolId) {
+        console.log('test');
         try {
             studentHighSchool = await models.HighSchool.findAll({
                 where: {
-                    HighSchoolId: student.HighSchoolHighSchoolId
+                    HighSchoolId: student[0].HighSchoolId
                 }
             });
         } catch(error) {
+            console.log(error);
             return {
                 error: 'Invalid high school',
                 reason: error,
@@ -128,7 +130,7 @@ exports.getHighSchoolByUser = async (username) => {
     }
     return {
         ok: 'Success',
-        highSchool: studentHighSchool,
+        highSchool: studentHighSchool[0],
     };
 }
 

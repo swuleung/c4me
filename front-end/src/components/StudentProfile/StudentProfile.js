@@ -4,12 +4,14 @@ import {
     Alert, Button, Container, Row, Col, Table,
 } from 'react-bootstrap';
 import { getStudent, getStudentApplications } from '../../services/api/student';
+import { getHighSchoolByUser } from '../../services/api/highSchool';
 import { getCollegeByID } from '../../services/api/college';
 import './StudentProfile.scss';
 
 const StudentProfile = (props) => {
     const [student, setStudent] = useState({});
     const [studentApplications, setStudentApplications] = useState(null);
+    const [highSchool, setHighSchool] = useState({});
     const [errorAlert, setErrorAlert] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const { match } = props;
@@ -64,6 +66,16 @@ const StudentProfile = (props) => {
                 });
             }
         }
+        getHighSchoolByUser(username).then((result) => {
+            if (result.error) {
+                setErrorAlert(true);
+                setErrorMessage(result.error);
+            }
+            if (result.ok) {
+                setErrorAlert(false);
+                setHighSchool(result.highSchool);
+            }
+        });
     }, [username, studentApplications]);
 
     return (
@@ -79,15 +91,15 @@ const StudentProfile = (props) => {
                             </Row>
                             <p>
                             High School:&nbsp;
-                                {student.highschoolName ? student.highschoolName : 'No high school provided'}
+                                {highSchool.Name ? highSchool.Name : 'No high school provided'}
                             </p>
                             <p>
                             High School City:&nbsp;
-                                {student.highschoolCity ? student.highschoolCity : 'No high school provided'}
+                                {highSchool.HighSchoolCity ? highSchool.HighSchoolCity : 'No high school provided'}
                             </p>
                             <p>
                             High School State:&nbsp;
-                                {student.highschoolState ? student.highschoolState : 'No high school provided'}
+                                {highSchool.HighSchoolState ? highSchool.HighSchoolState : 'No high school provided'}
                             </p>
                             <p>
                             Residence State:&nbsp;
