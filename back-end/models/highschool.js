@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
             validate: { isIn: [UsStates] },
             defaultValue: null,
         },
-        NicheAcademicScore: { 
+        NicheAcademicScore: {
             type: DataTypes.STRING,
             defaultValue: null,
         },
