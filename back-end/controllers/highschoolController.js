@@ -100,30 +100,75 @@ exports.deleteAllHighSchools = async () => {
     };
 };
 
-exports.updateHighSchool = async (username, highSchool) => {
-    const newHighSchool = await models.HighSchool.findAll({
+exports.getHighSchoolByUser = async (username) => {
+    let studentHighSchool = {};
+    const student = await models.User.findAll({
         where: {
-            Name: highSchool,
-        },
+            username: username
+        }
     });
+    if(student.HighSchoolHighSchoolId) {
+        try {
+            studentHighSchool = await models.HighSchool.findAll({
+                where: {
+                    HighSchoolId: student.HighSchoolHighSchoolId
+                }
+            });
+        } catch(error) {
+            return {
+                error: 'Invalid high school',
+                reason: error,
+            };
+        }
+    } else {
+        return {
+            ok: 'Success',
+            highSchool: { Name: '', HighSchoolCity: '', HighSchoolState: '' }
+        }
+    }
+    return {
+        ok: 'Success',
+        highSchool: studentHighSchool,
+    };
+}
+
+
+exports.updateHighSchool = async (username, highSchool) => {
+    const newHighSchool = null;
+    const errors = [];
+    try {
+        newHighSchool = await models.HighSchool.findAll({
+            where: {
+                Name: highSchool.Name,
+                HighSchoolCity: highSchool.HighSchoolCity,
+                HighSchoolState: highSchool.HighSchoolState
+            },
+        });
+        console.log(newHighSchool);
+    } catch(error) {
+        console.log(error);
+        errors.push({ 
+            error: 'Unable to find high school',
+            reason: error
+        });
+    }
     const student = await models.User.findAll({
         where: {
             username: username
         }
     });
     try {
-        newHighSchool.addUser(student);
+        student.setHighSchool(newHighSchool);
     } catch(error) {
-        return { 
+        errors.push({ 
             error: 'Unable to add student to high school',
             reason: error
-        };
+        });
     }
     return {
         ok: 'Success',
         highSchool: newHighSchool,
     };
-
 }
 
 exports.scrapeHighSchoolData = async(highSchoolName, highSchoolCity, highSchoolState) => {

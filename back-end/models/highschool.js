@@ -89,17 +89,9 @@ module.exports = (sequelize, DataTypes) => {
             },
             defaultValue: null,
         }
-    },
-    {
-        indexes: [
-            {
-                unique: true,
-                fields: ['Name'],
-            },
-        ],
     });
     HighSchool.associate = (models) => {
-        HighSchool.hasMany(models.User);
+        HighSchool.hasMany(models.User, {as: 'Students'});
     };
     return HighSchool;
 };
