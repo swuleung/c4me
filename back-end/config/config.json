@@ -5,7 +5,12 @@
     "database": "c4me",
     "host": "localhost",
     "dialect": "mysql",
-    "operatorsAliases": 0
+    "operatorsAliases": 0,
+    "JWT_COOKIE": "access_token",
+    "RANKING_URL": "https://www.timeshighereducation.com/rankings/united-states/2020#!/page/0/length/-1/sort_by/rank/sort_order/asc/cols/stats",
+    "COLLEGEDATA_URL": "https://www.collegedata.com/college/",
+    "COLLEGE_NAMES": "colleges.txt",
+    "NICHE_URL": "https://www.niche.com/k12/"
   },
   "test": {
     "username": "swuleung",
@@ -13,7 +18,12 @@
     "database": "swuleung",
     "host": "mysql3.cs.stonybrook.edu",
     "dialect": "mysql",
-    "operatorsAliases": 0
+    "operatorsAliases": 0,
+    "JWT_COOKIE": "access_token",
+    "RANKING_URL": "https://www.timeshighereducation.com/rankings/united-states/2020#!/page/0/length/-1/sort_by/rank/sort_order/asc/cols/stats",
+    "COLLEGEDATA_URL": "https://www.collegedata.com/college/",
+    "COLLEGE_NAMES": "colleges.txt",
+    "NICHE_URL": "https://www.niche.com/k12/"
   },
   "production": {
     "username": "swuleung",
@@ -21,6 +31,11 @@
     "database": "swuleung",
     "host": "mysql3.cs.stonybrook.edu",
     "dialect": "mysql",
-    "operatorsAliases": 0
+    "operatorsAliases": 0,
+    "JWT_COOKIE": "access_token",
+    "RANKING_URL": "https://www.timeshighereducation.com/rankings/united-states/2020#!/page/0/length/-1/sort_by/rank/sort_order/asc/cols/stats",
+    "COLLEGEDATA_URL": "https://www.collegedata.com/college/",
+    "COLLEGE_NAMES": "colleges.txt",
+    "NICHE_URL": "https://www.niche.com/k12/"
   }
 }

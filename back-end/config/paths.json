@@ -1,7 +1,10 @@
 {
     "RANKING_URL": "https://www.timeshighereducation.com/rankings/united-states/2020#!/page/0/length/-1/sort_by/rank/sort_order/asc/cols/stats",
     "COLLEGEDATA_URL": "https://www.collegedata.com/college/",
+    "ASSETS": "../assets",
+    "NICHE_URL": "https://www.niche.com/k12/",
     "COLLEGE_NAMES": "colleges.txt",
+    "COLLEGE_SCORECARD": "collegeScorecard.csv",
     "IMPORT_STUDENTS": {
         "10": "students/students-10.csv",
         "100": "students/students-100.csv",

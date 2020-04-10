@@ -1,9 +1,7 @@
 const sequelize = require('sequelize');
 const models = require('../models');
 const puppeteer = require('puppeteer');
-
-const config = require(__dirname + '/../config/config.json')["development"];
-const nicheURL = config.NICHE_URL;
+const { getPathConfig } = require('../utils/readAppFiles');
 
 exports.getHighSchoolById = async (highSchoolId) => {
     let highSchool = {};
@@ -105,6 +103,7 @@ exports.scrapeHighSchoolData = async(highSchoolName, highSchoolCity, highSchoolS
     const page = await browser.newPage();
     await page.setViewport({ width: 1920, height: 926 });
 
+    const nicheURL = getPathConfig().NICHE_URL;
     const nicheHSURL = `${nicheURL}${highSchoolName.replace('&', 'and').replace(/[^A-Za-z0-9_ ]/g, '').replace('and', '-and-')}-${highSchoolCity}-${highSchoolState}/academics/`.replace(/\s+/g, '-').toLowerCase();
     console.log(nicheHSURL);
 
