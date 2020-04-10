@@ -14,9 +14,11 @@ import CollegeDropdown from './CollegeDropdown';
 const EditProfile = (props) => {
     const [student, setStudent] = useState({});
     const [studentApplications, setStudentApplications] = useState([]);
-    const [highSchool, setHighSchool] = useState({});
+    const [highSchool, setHighSchool] = useState({Name: ''});
+    const [newHighSchool, setNewHighSchool] = useState({});
     const [highSchools, setHighSchools] = useState([]);
     const [displayOtherHS, setDisplayOtherHS] = useState(false);
+    const [displayAutosuggest, setDisplayAutosuggest] = useState(true);
     const [suggestions, setSuggestions] = useState([]);
     const [errorAlert, setErrorAlert] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
@@ -31,11 +33,11 @@ const EditProfile = (props) => {
     };
 
     const handleHighSchoolChange = (e) => {
-        console.log(highSchool);
+        console.log(newHighSchool);
         let { value } = e.target;
         const { id } = e.target;
         if (value === '') value = null;
-        setHighSchool({ ...highSchool, [id]: value });
+        setNewHighSchool({ ...newHighSchool, [id]: value });
     }
 
     const handleApplicationChange = (e) => {
@@ -99,7 +101,7 @@ const EditProfile = (props) => {
                 setErrorAlert(false);
             }
         });
-        editHighSchool(username, highSchool).then((result) => {
+        editHighSchool(username, newHighSchool).then((result) => {
             if (result.error) {
                 setErrorAlert(true);
                 setErrorMessage(result.error);
@@ -162,26 +164,33 @@ const EditProfile = (props) => {
         });
 
         getAllHighSchools().then((result) => {
-            if (result.error) {
+            if (result.error !== 'No high schools in the db') {
                 setErrorAlert(true);
                 setErrorMessage(result.error);
             }
             if (result.ok) {
                 setErrorAlert(false);
                 setHighSchools(result.highSchools);
+                result.highSchools.push({Name: 'Other'});
             }
         });
 
-        // getHighSchoolByUser(username).then((result) => {
-        //     if (result.error) {
-        //         setErrorAlert(true);
-        //         setErrorMessage(result.error);
-        //     }
-        //     if (result.ok) {
-        //         setErrorAlert(false);
-        //         setHighSchool(result.highSchool);
-        //     }
-        // });
+        getHighSchoolByUser(username).then((result) => {
+            if (result.error) {
+                setErrorAlert(true);
+                setErrorMessage(result.error);
+            }
+            if (result.ok) {
+                setErrorAlert(false);
+                setHighSchool(result.highSchool);
+                setNewHighSchool(result.highSchool);
+            }
+        });
+
+        if (!highSchools.length) {
+            setDisplayAutosuggest(false);
+            setDisplayOtherHS(true);
+        }
     }, [username]);
 
     // Teach Autosuggest how to calculate suggestions for any given input value.
@@ -214,10 +223,14 @@ const EditProfile = (props) => {
 
     const inputProps = {
         placeholder: 'Enter high school name',
-        value: highSchool,
+        value: highSchool.Name,
         onChange: (e, { newValue }) => {
             if (displayOtherHS) setDisplayOtherHS(false);
-            setHighSchool(newValue);
+            if(typeof(newValue) === 'string') {
+                setHighSchool({Name: newValue});
+            } else {
+                setHighSchool(newValue);
+            }
         },
     };
 
@@ -233,6 +246,8 @@ const EditProfile = (props) => {
     const handleSelectHighSchool = (event, { suggestion }) => {
         if (suggestion.Name === 'Other') {
             setDisplayOtherHS(true);
+        } else {
+            setNewHighSchool(suggestion);
         }
     };
 
@@ -247,57 +262,59 @@ const EditProfile = (props) => {
                 <Form onSubmit={(e) => { e.preventDefault(); handleEditSubmission(); }}>
                     <Container>
                         <h1>{username}</h1>
-                        <Row>
-                            <Col>
-                                <Form.Group controlId="highSchool">
-                                    <Form.Label>High School</Form.Label>
-                                    <Autosuggest
-                                        suggestions={suggestions}
-                                        onSuggestionsFetchRequested={onSuggestionsFetchRequested}
-                                        onSuggestionsClearRequested={onSuggestionsClearRequested}
-                                        getSuggestionValue={(suggestion) => suggestion.Name}
-                                        renderSuggestion={renderSuggestion}
-                                        shouldRenderSuggestions={() => true}
-                                        inputProps={inputProps}
-                                        onSuggestionSelected={handleSelectHighSchool}
-                                        theme={{
-                                            input: 'form-control',
-                                            container: 'react-autosuggest__container',
-                                            containerOpen: 'react-autosuggest__container--open',
-                                            inputOpen: 'react-autosuggest__input--open',
-                                            inputFocused: 'react-autosuggest__input--focused',
-                                            suggestionsContainer: 'react-autosuggest__suggestions-container',
-                                            suggestionsContainerOpen: 'react-autosuggest__suggestions-container--open',
-                                            suggestionsList: 'list-group',
-                                            suggestion: 'react-autosuggest__suggestion',
-                                            suggestionFirst: 'react-autosuggest__suggestion--first',
-                                            suggestionHighlighted: 'react-autosuggest__suggestion--highlighted',
-                                            sectionContainer: 'react-autosuggest__section-container',
-                                            sectionContainerFirst: 'react-autosuggest__section-container--first',
-                                            sectionTitle: 'react-autosuggest__section-title',
-                                        }}
-                                    />
-                                </Form.Group>
-                            </Col>
-                        </Row>
+                        {displayAutosuggest && (
+                            <Row>
+                                <Col>
+                                    <Form.Group controlId="highSchool">
+                                        <Form.Label>High School</Form.Label>
+                                        <Autosuggest
+                                            suggestions={suggestions}
+                                            onSuggestionsFetchRequested={onSuggestionsFetchRequested}
+                                            onSuggestionsClearRequested={onSuggestionsClearRequested}
+                                            getSuggestionValue={(suggestion) => suggestion}
+                                            renderSuggestion={renderSuggestion}
+                                            shouldRenderSuggestions={() => true}
+                                            inputProps={inputProps}
+                                            onSuggestionSelected={handleSelectHighSchool}
+                                            theme={{
+                                                input: 'form-control',
+                                                container: 'react-autosuggest__container',
+                                                containerOpen: 'react-autosuggest__container--open',
+                                                inputOpen: 'react-autosuggest__input--open',
+                                                inputFocused: 'react-autosuggest__input--focused',
+                                                suggestionsContainer: 'react-autosuggest__suggestions-container',
+                                                suggestionsContainerOpen: 'react-autosuggest__suggestions-container--open',
+                                                suggestionsList: 'list-group',
+                                                suggestion: 'react-autosuggest__suggestion',
+                                                suggestionFirst: 'react-autosuggest__suggestion--first',
+                                                suggestionHighlighted: 'react-autosuggest__suggestion--highlighted',
+                                                sectionContainer: 'react-autosuggest__section-container',
+                                                sectionContainerFirst: 'react-autosuggest__section-container--first',
+                                                sectionTitle: 'react-autosuggest__section-title',
+                                            }}
+                                        />
+                                    </Form.Group>
+                                </Col>
+                            </Row>
+                        )}
                         {displayOtherHS && (
                             <Row>
                                 <Col>
-                                    <Form.Group controlId="name">
+                                    <Form.Group controlId="Name">
                                         <Form.Label>High School</Form.Label>
-                                        <Form.Control type="text" value={highSchool.Name || ''} placeholder="Name" onChange={(e) => { handleHighSchoolChange(e); }} autoComplete="on" />
+                                        <Form.Control type="text" value={newHighSchool.Name || ''} placeholder="Name" onChange={(e) => { handleHighSchoolChange(e); }} autoComplete="on" required />
                                     </Form.Group>
                                 </Col>
                                 <Col>
-                                    <Form.Group controlId="highSchoolCity">
+                                    <Form.Group controlId="HighSchoolCity">
                                         <Form.Label>City</Form.Label>
-                                        <Form.Control type="text" value={highSchool.HighSchoolCity || ''} placeholder="City" onChange={(e) => { handleHighSchoolChange(e); }} autoComplete="on" />
+                                        <Form.Control type="text" value={newHighSchool.HighSchoolCity || ''} placeholder="City" onChange={(e) => { handleHighSchoolChange(e); }} autoComplete="on" required />
                                     </Form.Group>
                                 </Col>
                                 <Col>
-                                    <Form.Group controlId="highSchoolState">
+                                    <Form.Group controlId="HighSchoolState">
                                         <Form.Label>State</Form.Label>
-                                        <Form.Control as="select" value={highSchool.HighSchoolState || ''} onChange={(e) => { handleHighSchoolChange(e); }}>
+                                        <Form.Control as="select" value={newHighSchool.HighSchoolState || ''} onChange={(e) => { handleHighSchoolChange(e); }} required>
                                             <option value="" disabled>Select a State</option>
                                             {generateStateOptions()}
                                         </Form.Control>
@@ -315,7 +332,7 @@ const EditProfile = (props) => {
                             <Col>
                                 <Form.Group controlId="GPA">
                                     <Form.Label>GPA</Form.Label>
-                                    <Form.Control type="number" value={student.GPA || ''} min="0" max="4.00" step="0.01" placeholder="Enter GPA" onChange={(e) => { handleProfileChange(e); }} autoComplete="on" />
+                                    <Form.Control type="number" value={student.GPA || ''} min="0" max="4.00" step="0.01" placeholder="Enter GPA" onChange={(e) => { handleProfileChange(e); }} autoComplete="on" required />
                                 </Form.Group>
                             </Col>
                         </Row>

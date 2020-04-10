@@ -12,7 +12,7 @@ module.exports = {
             return await highSchools.json();
         } catch (error) {
             return {
-                error: `${error.message} college data`,
+                error: `${error.message} high school data`,
             };
         }
     },

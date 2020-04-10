@@ -134,36 +134,46 @@ exports.getHighSchoolByUser = async (username) => {
 
 
 exports.updateHighSchool = async (username, highSchool) => {
-    const newHighSchool = null;
+    let newHighSchool = null;
     const errors = [];
     try {
         newHighSchool = await models.HighSchool.findAll({
-            where: {
-                Name: highSchool.Name,
-                HighSchoolCity: highSchool.HighSchoolCity,
-                HighSchoolState: highSchool.HighSchoolState
-            },
+            where: highSchool
         });
-        console.log(newHighSchool);
     } catch(error) {
-        console.log(error);
         errors.push({ 
             error: 'Unable to find high school',
             reason: error
         });
     }
-    const student = await models.User.findAll({
-        where: {
-            username: username
+    if(!newHighSchool.length) {
+        try {
+            newHighSchool = await models.HighSchool.create(highSchool);
+            await this.scrapeHighSchoolData(highSchool.Name, highSchool.HighSchoolCity, highSchool.HighSchoolState);
+        } catch(error) {
+            errors.push({
+                error: 'Unable to create high school',
+                reason: error
+            });
         }
-    });
+    }
     try {
-        student.setHighSchool(newHighSchool);
+        models.User.update(
+            {HighSchoolId: newHighSchool.HighSchoolId}, 
+            {where: {username: username}}
+        );
     } catch(error) {
+        console.log(error);
         errors.push({ 
-            error: 'Unable to add student to high school',
+            error: 'Unable to add high school to student',
             reason: error
         });
+    }
+    if (errors.length) {
+        return {
+            error: 'Error updating high school data',
+            reason: errors,
+        };
     }
     return {
         ok: 'Success',
@@ -176,7 +186,7 @@ exports.scrapeHighSchoolData = async(highSchoolName, highSchoolCity, highSchoolS
     const page = await browser.newPage();
     await page.setViewport({ width: 1920, height: 926 });
 
-    const nicheHSURL = `${nicheURL}${highSchoolName.replace(/[^A-Za-z0-9_ ]/g, '')}-${highSchoolCity}-${highSchoolState}/academics/`.replace(/\s+/g, '-').toLowerCase();
+    const nicheHSURL = `${nicheURL}${highSchoolName.replace('&', 'and').replace(/[^A-Za-z0-9_ ]/g, '').replace('and', '-and-')}-${highSchoolCity}-${highSchoolState}/academics/`.replace(/\s+/g, '-').toLowerCase();
     console.log(nicheHSURL);
 
     await page.setUserAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36');

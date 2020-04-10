@@ -89,9 +89,17 @@ module.exports = (sequelize, DataTypes) => {
             },
             defaultValue: null,
         }
+    },
+    {
+        indexes: [
+            {
+                unique: true,
+                fields: ['Name', 'HighSchoolCity', 'HighSchoolState']
+            }
+        ]
     });
     HighSchool.associate = (models) => {
-        HighSchool.hasMany(models.User, {as: 'Students'});
+        HighSchool.hasMany(models.User, { foreignKey: 'HighSchoolId'});
     };
     return HighSchool;
 };
