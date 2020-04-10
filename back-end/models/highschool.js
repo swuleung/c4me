@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
             validate: { isIn: [UsStates] },
             defaultValue: null,
         },
-        NicheAcademicScore: { 
+        NicheAcademicScore: {
             type: DataTypes.STRING,
             defaultValue: null,
         },
@@ -88,15 +88,7 @@ module.exports = (sequelize, DataTypes) => {
                 max: 36,
             },
             defaultValue: null,
-        }
-    },
-    {
-        indexes: [
-            {
-                unique: true,
-                fields: ['Name'],
-            },
-        ],
+        },
     });
     HighSchool.associate = (models) => {
         HighSchool.hasMany(models.User);
