@@ -329,7 +329,7 @@ exports.importStudents = async () => {
 
     // read the csv file
     await new Promise(((resolve) => {
-        let studentFile = `${__dirname}/../assets/students-1.csv`;
+        let studentFile = `${__dirname}/../assets/students-2.csv`;
         if (process.env.NODE_ENV === 'test') {
             studentFile = `${__dirname}/../tests/testData/students-1.csv`;
         }
@@ -433,8 +433,7 @@ exports.importStudents = async () => {
                 }
 
                 // set high school id for the user
-                user.HighSchoolId = highSchoolId;
-
+                user.HighSchoolHighSchoolId = highSchoolId;
                 // create the user
                 await models.User.create(user);
                 break;
