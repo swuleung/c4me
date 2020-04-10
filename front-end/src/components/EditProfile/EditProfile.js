@@ -7,7 +7,7 @@ import Autosuggest from 'react-autosuggest';
 import {
     getStudent, editStudent, getStudentApplications, editStudentApplications,
 } from '../../services/api/student';
-import { getAllHighSchools, editHighSchool, getHighSchoolByUser } from '../../services/api/highSchool';
+import { getAllHighSchools } from '../../services/api/highSchool';
 import CollegeDropdown from './CollegeDropdown';
 
 
@@ -33,7 +33,6 @@ const EditProfile = (props) => {
     };
 
     const handleHighSchoolChange = (e) => {
-        console.log(newHighSchool);
         let { value } = e.target;
         const { id } = e.target;
         if (value === '') value = null;
@@ -83,7 +82,7 @@ const EditProfile = (props) => {
     };
 
     const handleEditSubmission = () => {
-        editStudent(username, student).then((result) => {
+        editStudent(username, student, newHighSchool).then((result) => {
             if (result.error) {
                 setErrorAlert(true);
                 setErrorMessage(result.error);
@@ -93,15 +92,6 @@ const EditProfile = (props) => {
             }
         });
         editStudentApplications(username, studentApplications).then((result) => {
-            if (result.error) {
-                setErrorAlert(true);
-                setErrorMessage(result.error);
-            }
-            if (result.ok) {
-                setErrorAlert(false);
-            }
-        });
-        editHighSchool(username, newHighSchool).then((result) => {
             if (result.error) {
                 setErrorAlert(true);
                 setErrorMessage(result.error);
@@ -149,6 +139,21 @@ const EditProfile = (props) => {
             if (result.ok) {
                 setErrorAlert(false);
                 setStudent(result.student);
+                if(result.student.HighSchool) {
+                    setHighSchool(result.student.HighSchool);
+                    setNewHighSchool(result.student.HighSchool);
+                } else {
+                    setHighSchool({
+                        Name: '',
+                        HighSchoolCity: '',
+                        HighSchoolState: '',
+                    });
+                    setNewHighSchool({
+                        Name: '',
+                        HighSchoolCity: '',
+                        HighSchoolState: '',
+                    });
+                }
             }
         });
 
@@ -175,18 +180,6 @@ const EditProfile = (props) => {
                 setErrorAlert(false);
                 setHighSchools(result.highSchools);
                 result.highSchools.push({Name: 'Other'});
-            }
-        });
-
-        getHighSchoolByUser(username).then((result) => {
-            if (result.error) {
-                setErrorAlert(true);
-                setErrorMessage(result.error);
-            }
-            if (result.ok) {
-                setErrorAlert(false);
-                setHighSchool(result.highSchool);
-                setNewHighSchool(result.highSchool);
             }
         });
     }, [username]);

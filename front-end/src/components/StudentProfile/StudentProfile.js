@@ -4,7 +4,6 @@ import {
     Alert, Button, Container, Row, Col, Table,
 } from 'react-bootstrap';
 import { getStudent, getStudentApplications } from '../../services/api/student';
-import { getHighSchoolByUser } from '../../services/api/highSchool';
 import { getCollegeByID } from '../../services/api/college';
 import './StudentProfile.scss';
 
@@ -43,6 +42,15 @@ const StudentProfile = (props) => {
             if (result.ok) {
                 setErrorAlert(false);
                 setStudent(result.student);
+                if(result.student.HighSchool) {
+                    setHighSchool(result.student.HighSchool);
+                } else {
+                    setHighSchool({
+                        Name: null,
+                        HighSchoolCity: null,
+                        HighSchoolState: null,
+                    })
+                }
             }
         });
         if (!studentApplications) {
@@ -66,16 +74,6 @@ const StudentProfile = (props) => {
                 });
             }
         }
-        getHighSchoolByUser(username).then((result) => {
-            if (result.error) {
-                setErrorAlert(true);
-                setErrorMessage(result.error);
-            }
-            if (result.ok) {
-                setErrorAlert(false);
-                setHighSchool(result.highSchool);
-            }
-        });
     }, [username, studentApplications]);
 
     return (
