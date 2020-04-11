@@ -149,6 +149,10 @@ const Admin = () => {
         });
     };
 
+    const handleViewApplications = () => {
+            return (<Button> Questionable</Button>);
+    };
+
     return (
         <div>
             {errorAlert
@@ -212,6 +216,17 @@ const Admin = () => {
                     </Col>
                     <Col sm="2">
                         <Button onClick={(e) => { handleImportStudentProfiles(e); }} disabled={disableProfile} className="float-right">Import Student Profile Dataset</Button>
+                    </Col>
+                </Row>
+                <Row className="align-items-center mb-3">
+                    <Col sm="4" onScroll={(e) => { handleViewApplications(e);}}>
+                       
+                    </Col>
+                    <Col sm="4">
+                        
+                    </Col>
+                    <Col sm="4">
+                        
                     </Col>
                 </Row>
             </Container>

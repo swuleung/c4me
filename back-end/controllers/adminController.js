@@ -385,6 +385,7 @@ exports.importStudents = async () => {
                     user: user,
                     highSchool: highSchool,
                 });
+                console.log(user);
             })
             .on('end', () => {
                 resolve(users);
