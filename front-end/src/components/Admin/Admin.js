@@ -3,7 +3,7 @@ import {
     Button, Alert, Container, Row, Col,
 } from 'react-bootstrap';
 import {
-    scrapeCollegeRanking, scrapeCollegeData, importCollegeScorecard, deleteAllStudents, importStudents, importStudentApplications,
+    scrapeCollegeRanking, scrapeCollegeData, importCollegeScorecard, deleteAllStudents, importStudents, importStudentApplications, getApplications
 } from '../../services/api/admin';
 
 const Admin = () => {
@@ -123,7 +123,7 @@ const Admin = () => {
                 errorString.push(<h4 key="importStudentError" className="alert-heading">{resultStudent.error}</h4>);
                 for (let i = 0; i < (resultStudent.reason).length; i += 1) {
                     errorString.push(<p key={`importStudentError-${i}`}>{resultStudent.reason[i].error}</p>);
-                }
+                } 
                 setErrorMessage(errorString);
             }
             if (resultStudent.ok) {
@@ -150,7 +150,10 @@ const Admin = () => {
     };
 
     const handleViewApplications = () => {
-            return (<Button> Questionable</Button>);
+        console.log("handleApps");
+        const allApps = getApplications();
+        console.log(allApps);
+        return (<Button> Questionable</Button>);
     };
 
     return (
@@ -219,14 +222,11 @@ const Admin = () => {
                     </Col>
                 </Row>
                 <Row className="align-items-center mb-3">
-                    <Col sm="4" onScroll={(e) => { handleViewApplications(e);}}>
-                       
+                    <Col sm="7">
+                        <h4>Questionable Applications</h4>
                     </Col>
-                    <Col sm="4">
-                        
-                    </Col>
-                    <Col sm="4">
-                        
+                    <Col sm="5">
+                       <Button onClick={(e) => { handleViewApplications(e);}}> View Applications </Button>                    
                     </Col>
                 </Row>
             </Container>

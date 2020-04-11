@@ -118,4 +118,23 @@ module.exports = {
             };
         }
     },
+
+    getApplications: async function getApplications(){
+        try {
+            console.log('getApps admin.js');
+            const result = await fetch('http://localhost:9000/admin/getApplications', {
+                method: 'GET',
+                credentials: 'include',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json; charset=utf-8',
+                },
+            });
+            return await result.json();
+        } catch (error) {
+            return {
+                error: `${error.message} sql data`,
+            };
+        }
+    }
 };

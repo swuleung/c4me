@@ -511,3 +511,26 @@ exports.importApplications = async () => {
         ok: 'Success',
     };
 };
+
+
+exports.getApplications = async () => {
+   try {
+        console.log('getApps');
+        const collegeApps = await models.Application.findAll({
+            where:{
+                status: {
+                    [Op.or]: ['accepted','denied']
+                }
+            }
+        });
+        return collegeApps; 
+   } catch (error){
+       console.log('ERR');
+       errors.push({
+           error: 'GET request for applications',
+           reason: errors
+       })
+   }
+};
+
+
