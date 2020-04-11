@@ -151,9 +151,10 @@ const Admin = () => {
 
     const handleViewApplications = () => {
         console.log("handleApps");
-        const allApps = getApplications();
-        console.log(allApps);
-        return (<Button> allApps</Button>);
+        const appsAD = getApplications();
+        console.log(appsAD);
+        //return (<Button> allApps</Button>);
+        console.log(appsAD);
     };
 
     return (

@@ -514,22 +514,29 @@ exports.importApplications = async () => {
 
 
 exports.getApplications = async () => {
+   let allApps = {};
    try {
-        const collegeApps = models.Application.findAll({
-            where:{
+        allApps = await models.Application.findAll({
+            where: {
                 status: {
-                    [Op.or]: ['accepted','denied']
+                  [sequelize.or]: ['accepted', 'denied']
                 }
-            }
-        });
-        return collegeApps; 
+              }
+        }); 
    } catch (error){
-       console.log('ERR');
-       errors.push({
-           error: 'GET request for applications',
-           reason: errors
-       })
+        return {
+             error: 'Failed Applications Get Request',
+             reason: error
+        }
+   }
+   if (allApps){
+       return { 
+            ok: 'Found Accepted / Denied Applications',
+            applications: allApps.toJSON()
+        }
+   }
+   return {
+       error: 'Applications not found',
+       reason: 'No Accepted/Denied Applications exist'
    }
 };
-
-

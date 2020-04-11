@@ -130,7 +130,7 @@ module.exports = {
                     'Content-Type': 'application/json; charset=utf-8',
                 },
             });
-            console.log(result);
+            console.log(result.allApps);
             return await result.json();
         } catch (error) {
             return {
