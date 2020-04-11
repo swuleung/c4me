@@ -1,9 +1,14 @@
 const { Op } = require('sequelize');
 const models = require('../models');
 
+/**
+ * Get a college's information using its ID
+ * @param {integer} collegeID
+ */
 exports.getCollegeByID = async (collegeID) => {
     let college = {};
     try {
+        // find with collegeID
         college = await models.College.findAll({
             limit: 1,
             where: {
@@ -16,6 +21,7 @@ exports.getCollegeByID = async (collegeID) => {
             reason: error,
         };
     }
+    // no colleges found (length === 0)
     if (!college.length) {
         return {
             error: 'College not found',
@@ -28,9 +34,14 @@ exports.getCollegeByID = async (collegeID) => {
     };
 };
 
+/**
+ * Get a college's information with the collegeName
+ * @param {string} collegeName
+ */
 exports.getCollegeByName = async (collegeName) => {
     let college = {};
     try {
+        // find with college name
         college = await models.College.findAll({
             limit: 1,
             where: {
@@ -43,6 +54,7 @@ exports.getCollegeByName = async (collegeName) => {
             reason: error,
         };
     }
+    // no college found (length === 0)
     if (!college.length) {
         return {
             error: 'College not found',
@@ -55,9 +67,13 @@ exports.getCollegeByName = async (collegeName) => {
     };
 };
 
+/**
+ * Get all colleges within the database
+ */
 exports.getAllColleges = async () => {
     let colleges = [];
     try {
+        // find all colleges and return with ascending order by name
         colleges = await models.College.findAll({
             raw: true,
             order: [
@@ -71,6 +87,7 @@ exports.getAllColleges = async () => {
         };
     }
 
+    // empty database
     if (!colleges.length) {
         return {
             error: 'No colleges in the db',
@@ -83,6 +100,9 @@ exports.getAllColleges = async () => {
     };
 };
 
+/**
+ * Delete all the colleges within the database
+ */
 exports.deleteAllColleges = async () => {
     try {
         models.College.destroy({
@@ -100,9 +120,14 @@ exports.deleteAllColleges = async () => {
     };
 };
 
+/**
+ * Get all the majors from a college using the college ID
+ * @param {integer} collegeID
+ */
 exports.getMajorsByCollegeID = async (collegeID) => {
     let majors = [];
     try {
+        // use major table to find all majors with collegeId
         majors = await models.Major.findAll({
             attributes: ['MajorId', 'Major'],
             include: [{
@@ -128,10 +153,9 @@ exports.getMajorsByCollegeID = async (collegeID) => {
 };
 
 /**
- * This computes the weights and averages
- * @param {*} applications
- * applications with user information for a college
- *
+ * Process the applications to count averages from a college
+ * Returns the applications with avereages and weight
+ * @param {[Applications]} applications
  */
 const processApplications = (applications) => {
     const processedApplications = [];
