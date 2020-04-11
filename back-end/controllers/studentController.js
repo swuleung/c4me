@@ -1,9 +1,14 @@
 const models = require('../models');
 const { scrapeHighSchoolData } = require('./highschoolController');
 
+/**
+ *  Get the student using sequelize
+ * @param {string} username
+ */
 exports.getStudent = async (username) => {
     let student = {};
     try {
+        // find the student including the high school information
         student = await models.User.findOne({
             where: {
                 username: username,
@@ -19,6 +24,7 @@ exports.getStudent = async (username) => {
             reason: error,
         };
     }
+    // student is null
     if (!student) {
         return {
             error: 'User not found',
@@ -31,9 +37,16 @@ exports.getStudent = async (username) => {
     };
 };
 
+/**
+ *  Update the student with new information
+ * @param {string} username
+ * @param {Student} newStudent
+ * @param {HighSchool} newHighSchool
+ */
 exports.updateStudent = async (username, newStudent, newHighSchool) => {
     let student = [];
     try {
+        // find the student in database
         student = await models.User.findAll({
             where: {
                 username: username,
@@ -46,12 +59,14 @@ exports.updateStudent = async (username, newStudent, newHighSchool) => {
             reason: error,
         };
     }
+    // student was not found
     if (!student.length) {
         return {
             error: 'User not found',
             reason: 'User does not exist in DB',
         };
     }
+    // update the student details
     try {
         await student[0].update(newStudent);
     } catch (error) {
@@ -61,6 +76,7 @@ exports.updateStudent = async (username, newStudent, newHighSchool) => {
         };
     }
     try {
+        // update the high school
         const result = await this.updateStudentHighSchool(student[0], newHighSchool);
         if (result.ok) {
             student[0].HighSchool = result.highSchool;
@@ -79,9 +95,15 @@ exports.updateStudent = async (username, newStudent, newHighSchool) => {
     };
 };
 
+/**
+ * Change a student's high school & scrape if it is new
+ * @param {Student} student Sequelize instance
+ * @param {HighSchool} highSchool Object with Name, City, and State
+ */
 exports.updateStudentHighSchool = async (student, highSchool) => {
     let newHighSchool = {};
     try {
+        // see if high school exists
         newHighSchool = await models.HighSchool.findOne({
             where: highSchool,
         });
@@ -91,8 +113,10 @@ exports.updateStudentHighSchool = async (student, highSchool) => {
             reason: error,
         };
     }
+    // newHighSchool is null
     if (!newHighSchool) {
         try {
+            // make a new high school
             newHighSchool = await models.HighSchool.create(highSchool);
         } catch (error) {
             return {
@@ -101,6 +125,7 @@ exports.updateStudentHighSchool = async (student, highSchool) => {
             };
         }
         try {
+            // scrape new high school
             scrapeHighSchoolData(
                 highSchool.Name,
                 highSchool.HighSchoolCity,
@@ -114,6 +139,7 @@ exports.updateStudentHighSchool = async (student, highSchool) => {
         }
     }
     try {
+        // update the student with new high school id
         await student.update({ HighSchoolId: newHighSchool.HighSchoolId });
     } catch (error) {
         return {
@@ -127,9 +153,14 @@ exports.updateStudentHighSchool = async (student, highSchool) => {
     };
 };
 
+/**
+ * Get a student's applications
+ * @param {string} username
+ */
 exports.getStudentApplications = async (username) => {
     let applications = {};
     try {
+        // use the username in where clause to get all
         applications = await models.Application.findAll({
             raw: true,
             where: {
@@ -148,8 +179,15 @@ exports.getStudentApplications = async (username) => {
     };
 };
 
+/**
+ * Update the students applications using the list
+ * @param {string} username
+ * @param {[Applications]} newApplications
+ */
 exports.updateStudentApplications = async (username, newApplications) => {
+    // copy the applications to not change paramater in function
     const copyApplications = [...newApplications];
+    // find the current applications in the db
     const allApplications = await models.Application.findAll({
         where: {
             username: username,
@@ -157,9 +195,12 @@ exports.updateStudentApplications = async (username, newApplications) => {
     });
     const errors = [];
     const changes = [];
+    // loop through the current applications and compare with new applications
     for (let i = 0; i < allApplications.length; i += 1) {
         // eslint-disable-line max-len
         const found = copyApplications.findIndex((app) => parseInt(app.college, 10) === allApplications[i].dataValues.college); // eslint-disable-line max-len
+
+        // if the application is found, update it
         if (found > -1) {
             changes.push(allApplications[i].update(copyApplications[found]).catch(
                 (error) => {
@@ -169,8 +210,10 @@ exports.updateStudentApplications = async (username, newApplications) => {
                     });
                 },
             ));
+            // remove it from the copy of applications
             copyApplications.splice(found, 1);
         } else {
+            // if the application was not found, delete it
             changes.push(allApplications[i].destroy().catch((error) => {
                 errors.push({
                     error: `Error deleting application: ${allApplications[i]}`,
@@ -179,6 +222,7 @@ exports.updateStudentApplications = async (username, newApplications) => {
             }));
         }
     }
+    // for all remaining new applications, create them
     if (copyApplications.length) {
         for (let i = 0; i < copyApplications.length; i += 1) {
             changes.push(models.Application.create(copyApplications[i]).catch((error) => {
@@ -189,6 +233,7 @@ exports.updateStudentApplications = async (username, newApplications) => {
             }));
         }
     }
+    // resolve all asynchronous calls
     await Promise.all(changes).catch((error) => errors.push(`Error in processing application changes ${error.message}`));
     if (errors.length) {
         return {

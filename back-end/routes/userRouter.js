@@ -30,6 +30,7 @@ router.post('/create', (req, res) => {
  * }
  */
 router.delete('/delete', async (req, res) => {
+    // authenticated checks
     if (!req.cookies.access_token) {
         res.status(400).send({ status: 'error', error: 'No token provided' });
     } else {
@@ -43,6 +44,7 @@ router.delete('/delete', async (req, res) => {
                 error: 'Cannot delete another user',
             });
         } else {
+            // delete the user if authenticated
             userController.deleteUser(req.body.username).then((result) => {
                 if (result.error) res.status(400);
                 res.send(result);
