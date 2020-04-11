@@ -4,10 +4,8 @@ import {
 } from 'react-bootstrap';
 import './EditProfile.scss';
 import Autosuggest from 'react-autosuggest';
-import {
-    getStudent, editStudent, getStudentApplications, editStudentApplications,
-} from '../../services/api/student';
-import { getAllHighSchools } from '../../services/api/highSchool';
+import studentAPI from '../../services/api/student';
+import highSchoolAPI from '../../services/api/highSchool';
 import CollegeDropdown from './CollegeDropdown';
 
 
@@ -82,7 +80,7 @@ const EditProfile = (props) => {
     };
 
     const handleEditSubmission = () => {
-        editStudent(username, student, newHighSchool).then((result) => {
+        studentAPI.editStudent(username, student, newHighSchool).then((result) => {
             if (result.error) {
                 setErrorAlert(true);
                 setErrorMessage(result.error);
@@ -91,7 +89,7 @@ const EditProfile = (props) => {
                 setErrorAlert(false);
             }
         });
-        editStudentApplications(username, studentApplications).then((result) => {
+        studentAPI.editStudentApplications(username, studentApplications).then((result) => {
             if (result.error) {
                 setErrorAlert(true);
                 setErrorMessage(result.error);
@@ -131,7 +129,7 @@ const EditProfile = (props) => {
     };
 
     useEffect(() => {
-        getStudent(username).then((result) => {
+        studentAPI.getStudent(username).then((result) => {
             if (result.error) {
                 setErrorAlert(true);
                 setErrorMessage(result.error);
@@ -157,7 +155,7 @@ const EditProfile = (props) => {
             }
         });
 
-        getStudentApplications(username).then((result) => {
+        studentAPI.getStudentApplications(username).then((result) => {
             if (result.error) {
                 setErrorAlert(true);
                 setErrorMessage(result.error);
@@ -168,7 +166,7 @@ const EditProfile = (props) => {
             }
         });
 
-        getAllHighSchools().then((result) => {
+        highSchoolAPI.getAllHighSchools().then((result) => {
             if (result.error === 'No high schools in the db') {
                 setDisplayAutosuggest(false);
                 setDisplayOtherHS(true);

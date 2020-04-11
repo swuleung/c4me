@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import {
     Button, Alert, Container, Row, Col,
 } from 'react-bootstrap';
-import {
-    scrapeCollegeRanking, scrapeCollegeData, importCollegeScorecard, deleteAllStudents, importStudents, importStudentApplications,
-} from '../../services/api/admin';
+import admin from '../../services/api/admin';
 
 const Admin = () => {
     const [errorAlert, setErrorAlert] = useState(false);
@@ -25,7 +23,7 @@ const Admin = () => {
         setErrorAlert(false);
         setSuccessAlert(false);
         setProgressMessage('Scraping college ranking');
-        scrapeCollegeRanking().then((result) => {
+        admin.scrapeCollegeRanking().then((result) => {
             if (result.error) {
                 setProgressAlert(false);
                 setErrorAlert(true);
@@ -47,7 +45,7 @@ const Admin = () => {
         setErrorAlert(false);
         setSuccessAlert(false);
         setProgressMessage('Importing college scorecard');
-        importCollegeScorecard().then((result) => {
+        admin.importCollegeScorecard().then((result) => {
             if (result.error) {
                 setProgressAlert(false);
                 setErrorAlert(true);
@@ -70,7 +68,7 @@ const Admin = () => {
         setErrorAlert(false);
         setSuccessAlert(false);
         setProgressMessage('Scraping CollegeData');
-        scrapeCollegeData().then((result) => {
+        admin.scrapeCollegeData().then((result) => {
             if (result.error) {
                 setProgressAlert(false);
                 setErrorAlert(true);
@@ -92,7 +90,7 @@ const Admin = () => {
         setErrorAlert(false);
         setSuccessAlert(false);
         setProgressMessage('Deleting student profiles');
-        deleteAllStudents().then((result) => {
+        admin.deleteAllStudents().then((result) => {
             if (result.error) {
                 setProgressAlert(false);
                 setErrorAlert(true);
@@ -115,7 +113,7 @@ const Admin = () => {
         setErrorAlert(false);
         setSuccessAlert(false);
         setProgressMessage('Importing student profiles');
-        importStudents().then((resultStudent) => {
+        admin.importStudents().then((resultStudent) => {
             const errorString = [];
             if (resultStudent.error) {
                 setProgressAlert(false);
@@ -127,7 +125,7 @@ const Admin = () => {
                 setErrorMessage(errorString);
             }
             if (resultStudent.ok) {
-                importStudentApplications().then((resultApp) => {
+                admin.importStudentApplications().then((resultApp) => {
                     if (resultApp.error) {
                         setProgressAlert(false);
                         setErrorAlert(true);

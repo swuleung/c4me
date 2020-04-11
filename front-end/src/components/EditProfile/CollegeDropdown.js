@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Alert, Form } from 'react-bootstrap';
 import './EditProfile.scss';
-import { getAllColleges } from '../../services/api/college';
+import collegeAPI from '../../services/api/college';
 
 const CollegeDropdown = (props) => {
     const [colleges, setColleges] = useState([]);
@@ -23,7 +23,7 @@ const CollegeDropdown = (props) => {
         return options;
     };
     useEffect(() => {
-        getAllColleges().then((result) => {
+        collegeAPI.getAllColleges().then((result) => {
             if (result.error) {
                 setErrorAlert(true);
                 setErrorMessage(result.error);
