@@ -16,9 +16,14 @@ const config = require(`${__dirname}/../config/config.json`).development;
 const rankingsURL = config.RANKING_URL;
 const collegeDataURL = config.COLLEGEDATA_URL;
 
+/**
+ * Check if a user is an admin with a DB call
+ * @param {string} username
+ */
 exports.checkAdmin = async (username) => {
     let admin = {};
     try {
+        // isAdmin is true
         admin = await models.User.findAll({
             limit: 1,
             raw: true,
@@ -30,6 +35,8 @@ exports.checkAdmin = async (username) => {
     } catch (error) {
         return false;
     }
+
+    // if admin user is not found, it is not an admin
     if (!admin.length) {
         return false;
     }
@@ -399,9 +406,9 @@ exports.importStudents = async () => {
         const { highSchool } = users[userIndex];
         while (Object.keys(user).length > 1) {
             try {
-                // create the user
+                er;
                 const student = await models.User.create(user);
-                
+
                 const result = await updateStudentHighSchool(student, highSchool);
                 if (result.ok) {
                     student.HighSchool = result.highSchool;
@@ -449,6 +456,10 @@ exports.importStudents = async () => {
     };
 };
 
+/**
+ * Import application data from CSV File.
+ * Every error is compiled into a `errors` list but will return 200.
+ */
 exports.importApplications = async () => {
     const errors = [];
     const applications = [];
