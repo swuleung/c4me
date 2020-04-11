@@ -402,6 +402,7 @@ exports.getApplicationsByCollegeID = async (collegeID, filters) => {
     }
 
     const processedFilteredApplications = processApplications(applications.toJSON().Users);
+    // eslint-disable-next-line max-len
     processedFilteredApplications.averages = { ...processedFilteredApplications.averages, ...acceptedAverages };
 
     return processedFilteredApplications;
