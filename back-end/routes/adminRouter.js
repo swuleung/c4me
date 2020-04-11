@@ -156,4 +156,22 @@ router.get('/verifyAdmin', async (req, res) => {
         });
     }
 });
+
+router.get('/getApplications', async (req,res) => {
+    if (!req.cookies.access_token) {
+        res.status(400).send({ status: 'error', error: 'No token provided' });
+    } else {
+        const authorized = await authentication.validateJWT(req.cookies.access_token);
+        if (!authorized.username) {
+            res.clearCookie('access_token');
+            res.status(400).send(authorized);
+        } else if (!adminController.checkAdmin(authorized.username)) {
+            res.status(400).send(authorized);
+        } else {
+            console.log("Hello admin Router");
+            const result = await adminController.getApplications();
+            res.send(result);
+        }
+    }
+});
 module.exports = router;
