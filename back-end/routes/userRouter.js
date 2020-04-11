@@ -4,8 +4,16 @@ const router = express.Router();
 const userController = require('../controllers/userController');
 const authentication = require('../utils/auth');
 
+/**
+ * Route to create an account
+ * POST with body:
+ * {
+ *   username: <username:>
+ *   password: <password>
+ * }
+ */
 router.post('/create', (req, res) => {
-    userController.createUser(req.body).then((result) => {
+    userController.createUser(req.body.username, req.body.password).then((result) => {
         if (result.error) {
             if (result.error === 'Something went wrong') res.status(500);
             else res.status(400);
@@ -14,6 +22,13 @@ router.post('/create', (req, res) => {
     });
 });
 
+/**
+ * Deletes one user if they are logged in as that user.
+ * DELETE with body:
+ * {
+ *   username: <username>
+ * }
+ */
 router.delete('/delete', async (req, res) => {
     if (!req.cookies.access_token) {
         res.status(400).send({ status: 'error', error: 'No token provided' });
@@ -36,8 +51,16 @@ router.delete('/delete', async (req, res) => {
     }
 });
 
+/**
+ *  Login as that user by setting access_token to a JWT token
+ * POST with body:
+ * {
+ *   username: <username>
+ *   password: <password>
+ * }
+ */
 router.post('/login', (req, res) => {
-    userController.login(req.body).then((result) => {
+    userController.login(req.body.username, req.body.password).then((result) => {
         if (result.error) {
             if (result.error === 'Something went wrong') res.status(500);
             else res.status(400);
