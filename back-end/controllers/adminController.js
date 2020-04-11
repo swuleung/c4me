@@ -3,18 +3,8 @@ const fs = require('fs');
 const puppeteer = require('puppeteer');
 const parse = require('csv-parse');
 const models = require('../models');
+const { getCollegeList, getPathConfig } = require('../utils/readAppFiles');
 const { updateStudentHighSchool } = require('./studentController');
-
-let collegeFile = `${__dirname}/../assets/colleges.txt`;
-if (process.env.NODE_ENV === 'test') {
-    collegeFile = `${__dirname}/../tests/testData/colleges.txt`;
-}
-const colleges = fs.readFileSync(collegeFile).toString().split(/\r?\n/); // colleges.txt file into string array
-
-// eslint-disable-next-line import/no-dynamic-require
-const config = require(`${__dirname}/../config/config.json`).development;
-const rankingsURL = config.RANKING_URL;
-const collegeDataURL = config.COLLEGEDATA_URL;
 
 exports.checkAdmin = async (username) => {
     let admin = {};
@@ -41,6 +31,7 @@ exports.scrapeCollegeRankings = async () => {
     const browser = await puppeteer.launch({ headless: true });
     const page = await browser.newPage();
     await page.setViewport({ width: 1920, height: 926 });
+    const rankingsURL = getPathConfig().RANKING_URL;
     await page.goto(rankingsURL);
 
     // Request interception to block css and images to speed up scraping
@@ -55,6 +46,7 @@ exports.scrapeCollegeRankings = async () => {
 
     const updates = [];
     const errors = [];
+    const colleges = getCollegeList();
     for (let i = 0; i < colleges.length; i += 1) {
         /* eslint-disable no-await-in-loop */
         const rankingEl = await page.$x(`//tr[contains(., '${colleges[i]}')]/td[1]`);
@@ -99,6 +91,8 @@ exports.scrapeCollegeData = async () => {
     });
 
     const errors = [];
+    const colleges = getCollegeList();
+    const collegeDataURL = getPathConfig().COLLEGEDATA_URL;
     /* eslint-disable no-await-in-loop */
     for (let i = 0; i < colleges.length; i += 1) {
         // removes all special chars and replaces spaces with -
@@ -244,8 +238,12 @@ exports.scrapeCollegeData = async () => {
 exports.importCollegeScorecard = async () => {
     const errors = [];
     const csvData = [];
+    const colleges = getCollegeList();
+    const paths = getPathConfig();
+    const collegeScorecardPath = `${__dirname}/${paths.ASSETS}/${paths.COLLEGE_SCORECARD}`;
+
     await new Promise(((resolve, reject) => {
-        fs.createReadStream('./assets/collegeScorecard.csv')
+        fs.createReadStream(collegeScorecardPath)
             .pipe(parse({ delimiter: ',', columns: true }))
             .on('data', (csvRow) => {
                 const collegeStr = csvRow.INSTNM.replace('-Bloomington', ' Bloomington').replace('-Amherst', ' Amherst').replace('The University', 'University').replace(' Saint ', ' St ')
@@ -330,10 +328,8 @@ exports.importStudents = async () => {
 
     // read the csv file
     await new Promise(((resolve) => {
-        let studentFile = `${__dirname}/../assets/students-100.csv`;
-        if (process.env.NODE_ENV === 'test') {
-            studentFile = `${__dirname}/../tests/testData/students-1.csv`;
-        }
+        const paths = getPathConfig();
+        const studentFile = `${__dirname}/${paths.ASSETS}/${paths.IMPORT_STUDENTS}`;
         fs.createReadStream(studentFile)
             .on('error', (error) => {
                 console.log(error.message);
@@ -401,11 +397,9 @@ exports.importStudents = async () => {
             try {
                 // create the user
                 const student = await models.User.create(user);
-                
+
                 const result = await updateStudentHighSchool(student, highSchool);
-                if (result.ok) {
-                    student.HighSchool = result.highSchool;
-                } else {
+                if (!result.ok) {
                     errors.push(result);
                 }
                 break;
@@ -453,10 +447,8 @@ exports.importApplications = async () => {
     const errors = [];
     const applications = [];
     await new Promise(((resolve) => {
-        let applicationFile = `${__dirname}/../assets/applications-1.csv`;
-        if (process.env.NODE_ENV === 'test') {
-            applicationFile = `${__dirname}/../tests/testData/applications-1.csv`;
-        }
+        const paths = getPathConfig();
+        const applicationFile = `${__dirname}/${paths.ASSETS}/${paths.IMPORT_APPLICATIONS}`;
         fs.createReadStream(applicationFile)
             .on('error', (error) => {
                 errors.push({

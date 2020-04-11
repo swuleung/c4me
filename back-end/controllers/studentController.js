@@ -60,18 +60,21 @@ exports.updateStudent = async (username, newStudent, newHighSchool) => {
             reason: error,
         };
     }
-    try {
-        const result = await this.updateStudentHighSchool(student[0], newHighSchool);
-        if (result.ok) {
-            student[0].HighSchool = result.highSchool;
-        } else {
-            return result;
+    // if the high school is supplied
+    if (newHighSchool) {
+        try {
+            const result = await this.updateStudentHighSchool(student[0], newHighSchool);
+            if (result.ok) {
+                student[0].HighSchool = result.highSchool;
+            } else {
+                return result;
+            }
+        } catch (error) {
+            return {
+                error: `Error adding high school to ${username}`,
+                reason: error,
+            };
         }
-    } catch (error) {
-        return {
-            error: `Error adding high school to ${username}`,
-            reason: error,
-        };
     }
     return {
         ok: 'Success',
@@ -81,6 +84,13 @@ exports.updateStudent = async (username, newStudent, newHighSchool) => {
 
 exports.updateStudentHighSchool = async (student, highSchool) => {
     let newHighSchool = {};
+    if (!(highSchool.Name && highSchool.HighSchoolCity && highSchool.HighSchoolState)) {
+        return {
+            ok: 'No high school provided',
+            highSchool: null,
+        };
+    }
+
     try {
         newHighSchool = await models.HighSchool.findOne({
             where: highSchool,

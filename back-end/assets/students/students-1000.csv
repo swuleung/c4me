@@ -1,0 +1,1001 @@
+userid,password,residence_state,high_school_name,high_school_city,high_school_state,GPA,college_class,major_1,major_2,SAT_math,SAT_EBRW,ACT_English,ACT_math,ACT_reading,ACT_science,ACT_composite,SAT_literature,SAT_US_hist,SAT_world_hist,SAT_math_I,SAT_math_II,SAT_eco_bio,SAT_mol_bio,SAT_chemistry,SAT_physics,num_AP_passed
+warbuckel0,asymmetric,TX,brooklyn technical high school,brooklyn,NY,2.61,2025,Mathematics,Creative Writing,422,654,30,3,5,32,7,702,262,778,507,293,317,502,589,298,10
+slabastida1,Persevering,IN,academic magnet high school,north charleston,SC,3.16,2022,English,Computer Engineering,763,775,27,27,28,2,21,312,769,525,790,689,626,700,245,268,10
+mhammerberger2,Monitored,OK,academy for information technology,scotch plains,NJ,3.91,2026,Mathematics,Computer Engineering,742,651,36,2,12,1,11,407,520,252,576,262,393,301,357,585,1
+lallot3,Visionary,OH,james madison high school,vienna,VA,3.37,2024,Mathematics,Computer Engineering,744,656,15,25,34,12,5,735,405,423,775,723,461,360,686,628,10
+bshowers4,optimal,TX,whitney high school,cerritos,CA,2.44,2022,Mathematics,Psychology,643,771,17,36,5,27,16,585,239,647,390,769,533,270,526,345,1
+jbrixey5,architecture,CA,brooklyn technical high school,brooklyn,NY,2.19,2022,Mathematics,Psychology,250,356,30,17,2,6,35,365,570,540,637,377,690,467,221,248,6
+cmacbane6,Business-focused,CA,academic magnet high school,north charleston,SC,3.84,2024,English,Psychology,208,429,14,26,33,21,6,293,521,435,224,363,298,293,302,223,0
+sgoodlife7,Optional,OH,academy for information technology,scotch plains,NJ,2.7,2024,Spanish,Creative Writing,705,568,28,13,35,19,32,538,296,666,710,219,625,213,370,453,7
+mmonaghan8,Open-source,HI,james madison high school,vienna,VA,2.88,2023,Mathematics,Sociology,227,505,16,33,18,32,18,629,688,301,628,435,307,428,477,588,3
+gralton9,software,WA,whitney high school,cerritos,CA,3.4,2024,Biology,Computer Engineering,558,356,12,35,26,3,7,486,733,592,534,385,709,362,345,582,7
+nelstuba,Exclusive,OR,brooklyn technical high school,brooklyn,NY,3.16,2025,Computer Science,Sociology,398,705,3,26,11,9,5,223,320,586,761,302,418,327,372,235,1
+cfennelowb,pricing structure,NY,academic magnet high school,north charleston,SC,3.46,2025,Biology,Sociology,700,271,22,34,4,30,32,466,265,745,693,468,204,244,685,492,8
+mgolthorppc,flexibility,GA,academy for information technology,scotch plains,NJ,2.93,2025,Spanish,Creative Writing,768,407,17,28,36,4,19,454,671,330,407,571,329,363,439,639,7
+ttanseyd,Profound,NY,james madison high school,vienna,VA,2.27,2023,Mathematics,Psychology,361,468,21,30,14,10,26,633,296,206,692,320,458,270,360,441,6
+tmarrablee,approach,TX,whitney high school,cerritos,CA,3.12,2022,Computer Science,Creative Writing,618,375,30,22,2,29,31,703,767,360,638,720,343,263,518,517,7
+etrunbyf,artificial intelligence,CO,brooklyn technical high school,brooklyn,NY,2.61,2025,Biology,Psychology,574,700,11,5,26,27,24,286,548,600,660,287,315,502,524,650,4
+smeadusg,Total,PA,academic magnet high school,north charleston,SC,3.62,2024,Computer Science,Psychology,798,314,8,3,22,16,11,592,404,561,303,323,402,340,682,256,9
+oroglierih,infrastructure,GA,academy for information technology,scotch plains,NJ,2.75,2023,Mathematics,Computer Engineering,799,301,26,29,31,20,35,376,519,550,629,403,767,225,216,346,8
+jtippettsi,success,TN,james madison high school,vienna,VA,3.01,2026,Biology,Computer Engineering,251,470,35,20,12,3,9,798,242,451,747,412,632,223,596,706,5
+jthainj,Profit-focused,DC,whitney high school,cerritos,CA,2.35,2026,Biology,Sociology,210,419,29,13,16,9,10,238,786,390,394,600,476,673,630,749,9
+thefferank,utilisation,TX,brooklyn technical high school,brooklyn,NY,3.8,2026,Biology,Sociology,424,406,16,3,20,25,33,643,402,710,708,413,638,258,733,759,0
+karnel,foreground,TX,academic magnet high school,north charleston,SC,2.19,2022,Spanish,Psychology,721,609,25,31,7,26,20,279,529,462,387,279,562,463,237,468,8
+lbagem,Advanced,FL,academy for information technology,scotch plains,NJ,3.8,2023,Spanish,Psychology,633,386,17,24,4,23,25,339,437,306,384,548,730,433,245,436,2
+akeirn,multi-tasking,GA,james madison high school,vienna,VA,2.81,2023,Spanish,Creative Writing,576,346,19,10,31,9,26,519,603,774,538,712,332,624,270,236,0
+vcurreyo,knowledge user,MO,whitney high school,cerritos,CA,2.29,2024,Mathematics,Computer Engineering,206,457,3,23,20,9,17,701,738,429,346,257,255,279,598,485,2
+iosbornep,hierarchy,LA,brooklyn technical high school,brooklyn,NY,3.26,2025,Spanish,Creative Writing,641,541,19,28,34,10,22,531,629,364,702,276,374,232,375,546,1
+dhindenbergerq,budgetary management,TX,academic magnet high school,north charleston,SC,3.2,2025,Biology,Sociology,346,561,3,27,32,18,2,547,454,579,307,716,667,312,549,269,5
+pjester,help-desk,IN,academy for information technology,scotch plains,NJ,3.07,2022,Biology,Computer Engineering,722,231,5,25,27,35,20,658,384,295,284,384,303,743,665,643,10
+cmalans,product,OH,james madison high school,vienna,VA,2.52,2024,Spanish,Computer Engineering,368,492,7,27,17,11,6,608,695,766,504,563,647,268,727,450,1
+lsutherelt,Extended,IL,whitney high school,cerritos,CA,2.99,2025,Mathematics,Computer Engineering,402,217,26,9,10,33,35,440,507,795,353,738,681,360,363,273,5
+kjaquestu,Reactive,VA,brooklyn technical high school,brooklyn,NY,3.82,2026,Biology,Computer Engineering,510,625,35,26,18,20,15,698,629,293,235,728,600,436,625,655,7
+lkeverenv,24/7,DC,academic magnet high school,north charleston,SC,2.2,2024,Biology,Creative Writing,725,769,26,33,20,7,33,702,267,390,255,742,628,514,228,272,5
+iwaytew,Future-proofed,TX,academy for information technology,scotch plains,NJ,3.21,2024,Computer Science,Psychology,332,697,31,25,18,6,12,594,408,473,602,795,554,281,388,240,0
+tbengalx,full-range,IL,james madison high school,vienna,VA,3.27,2026,Mathematics,Computer Engineering,672,297,23,24,8,7,29,621,403,419,654,271,411,555,531,510,9
+aowensony,tertiary,SC,whitney high school,cerritos,CA,2.41,2026,Spanish,Sociology,338,656,11,12,18,3,31,278,396,455,209,607,412,427,780,215,1
+tkemmisz,encoding,NY,brooklyn technical high school,brooklyn,NY,3.09,2024,Mathematics,Sociology,272,555,20,14,15,10,32,250,732,534,506,216,238,722,544,356,5
+msherbourne10,Persistent,NY,academic magnet high school,north charleston,SC,3.04,2024,English,Psychology,479,247,15,10,3,30,16,571,368,613,326,352,690,721,357,459,2
+prooze11,implementation,FL,academy for information technology,scotch plains,NJ,3.21,2023,Computer Science,Creative Writing,218,646,21,12,23,7,24,633,209,628,449,749,608,332,519,509,10
+pmaharey12,Versatile,TX,james madison high school,vienna,VA,3.92,2022,English,Creative Writing,579,563,14,28,14,33,26,677,701,241,526,301,677,461,267,796,9
+okhristyukhin13,frame,PA,whitney high school,cerritos,CA,2.4,2023,Spanish,Sociology,634,310,8,32,7,8,5,334,770,720,364,295,421,201,373,425,9
+mwinsper14,Decentralized,TX,brooklyn technical high school,brooklyn,NY,2.63,2022,Computer Science,Computer Engineering,310,664,26,34,1,23,19,349,629,478,273,465,404,676,611,323,3
+wstallworthy15,object-oriented,KY,academic magnet high school,north charleston,SC,2.54,2025,Mathematics,Sociology,514,525,29,12,28,35,30,285,440,414,202,442,241,561,348,663,3
+ahamstead16,knowledge base,PA,academy for information technology,scotch plains,NJ,2.26,2024,Mathematics,Creative Writing,491,681,33,5,8,28,35,355,495,258,524,706,493,561,304,516,8
+ageipel17,didactic,NY,james madison high school,vienna,VA,2.74,2025,Spanish,Computer Engineering,682,532,24,13,36,5,24,544,287,322,375,576,763,284,548,433,1
+tserrell18,didactic,WI,whitney high school,cerritos,CA,2.31,2026,Biology,Sociology,200,571,13,29,22,19,24,730,398,609,423,355,586,492,553,660,1
+priep19,attitude-oriented,AL,brooklyn technical high school,brooklyn,NY,3.39,2025,Spanish,Creative Writing,396,453,18,1,4,19,9,768,419,332,254,646,726,747,501,715,6
+rmackain1a,Reactive,WA,academic magnet high school,north charleston,SC,3.11,2024,English,Psychology,779,531,33,10,27,6,33,497,636,204,386,447,405,227,796,207,1
+sratcliffe1b,superstructure,NY,academy for information technology,scotch plains,NJ,2.66,2025,Biology,Creative Writing,525,719,2,15,6,4,12,336,577,734,215,545,367,779,464,205,9
+jstocks1c,optimizing,IA,james madison high school,vienna,VA,2.23,2026,Biology,Computer Engineering,650,355,12,35,18,25,11,200,595,422,669,727,548,592,342,686,0
+zmarchent1d,moratorium,CA,whitney high school,cerritos,CA,2.46,2023,Spanish,Creative Writing,530,793,12,16,27,27,32,403,503,282,217,531,557,315,512,509,1
+pphython1e,alliance,MA,brooklyn technical high school,brooklyn,NY,3.97,2025,Mathematics,Creative Writing,423,230,7,1,14,22,12,672,251,316,542,456,245,358,639,379,10
+ghabble1f,budgetary management,DC,academic magnet high school,north charleston,SC,2.13,2025,Computer Science,Psychology,738,444,5,11,19,7,2,761,639,391,475,361,710,530,372,618,0
+lcarlesso1g,knowledge user,NY,academy for information technology,scotch plains,NJ,3.82,2026,Spanish,Creative Writing,710,601,5,3,8,7,16,489,359,409,517,789,212,260,311,715,7
+acornew1h,Sharable,CA,james madison high school,vienna,VA,2.41,2022,Computer Science,Creative Writing,216,380,16,32,36,16,10,303,593,471,436,550,692,268,200,266,8
+bfranchyonok1i,regional,IL,whitney high school,cerritos,CA,3.06,2023,Computer Science,Computer Engineering,791,551,29,16,29,12,35,364,485,468,307,470,207,260,260,595,3
+hedes1j,circuit,TX,brooklyn technical high school,brooklyn,NY,3.24,2026,English,Computer Engineering,296,260,32,36,34,27,2,392,672,267,450,204,504,562,589,439,0
+pbuckbee1k,multi-state,UT,academic magnet high school,north charleston,SC,3.41,2023,Computer Science,Creative Writing,593,601,23,22,20,13,23,710,287,331,785,208,255,686,632,756,0
+inabarro1l,Seamless,TX,academy for information technology,scotch plains,NJ,3.9,2025,Spanish,Sociology,428,600,11,8,33,18,4,667,441,278,485,410,494,664,632,723,2
+mdoiley1m,Team-oriented,FL,james madison high school,vienna,VA,2.36,2025,Spanish,Psychology,222,310,18,11,32,1,8,573,392,333,779,217,212,440,548,516,3
+slanfranchi1n,moderator,TX,whitney high school,cerritos,CA,3.09,2022,Biology,Computer Engineering,450,722,35,11,3,26,36,348,761,334,685,239,703,630,309,530,0
+tswannie1o,radical,KS,brooklyn technical high school,brooklyn,NY,2.46,2024,Biology,Computer Engineering,216,754,9,34,11,17,17,416,679,697,737,530,581,642,338,292,6
+tkiebes1p,time-frame,AZ,academic magnet high school,north charleston,SC,3.88,2024,Computer Science,Sociology,533,513,10,27,7,6,5,310,611,512,710,226,732,745,255,286,10
+atilne1q,Operative,OH,academy for information technology,scotch plains,NJ,3.25,2024,Computer Science,Creative Writing,366,493,27,7,17,1,31,269,666,310,708,533,720,785,358,410,9
+kroust1r,project,IA,james madison high school,vienna,VA,3.13,2026,English,Computer Engineering,284,357,12,6,1,8,20,389,303,616,477,248,253,715,471,241,2
+istenner1s,Total,OH,whitney high school,cerritos,CA,3.27,2023,Mathematics,Computer Engineering,655,569,6,8,27,36,21,586,338,452,222,259,487,654,729,770,3
+wbierton1t,throughput,FL,brooklyn technical high school,brooklyn,NY,3.66,2023,Biology,Psychology,238,483,20,23,26,5,26,299,322,211,517,796,735,435,333,283,5
+cneighbour1u,impactful,VA,academic magnet high school,north charleston,SC,2.02,2026,English,Creative Writing,708,223,35,33,2,1,23,222,536,277,498,751,697,459,575,425,4
+tscala1v,Stand-alone,NY,academy for information technology,scotch plains,NJ,3.97,2023,Biology,Computer Engineering,647,542,3,36,22,16,27,472,740,767,712,699,753,763,783,773,6
+phammersley1w,eco-centric,FL,james madison high school,vienna,VA,3.52,2025,Computer Science,Psychology,566,320,3,16,11,5,28,431,443,472,696,677,735,490,795,466,0
+klinfoot1x,approach,NM,whitney high school,cerritos,CA,3.62,2026,Biology,Computer Engineering,563,596,10,2,21,28,27,443,662,543,502,768,218,669,736,322,8
+cguidotti1y,client-server,CA,brooklyn technical high school,brooklyn,NY,3.12,2023,Biology,Computer Engineering,510,571,27,1,13,36,30,482,661,376,361,631,570,473,411,766,3
+mmaccaughen1z,object-oriented,CA,academic magnet high school,north charleston,SC,3.32,2022,Biology,Creative Writing,227,285,35,21,27,31,6,580,302,464,536,314,706,360,233,336,3
+rcroney20,heuristic,CA,academy for information technology,scotch plains,NJ,2.12,2022,Computer Science,Sociology,482,425,4,21,17,29,21,779,380,207,617,279,694,683,448,754,8
+knurse21,Programmable,CA,james madison high school,vienna,VA,2.74,2023,Mathematics,Computer Engineering,713,339,25,28,8,26,27,748,518,476,429,323,375,406,639,753,7
+itousey22,Reduced,AZ,whitney high school,cerritos,CA,2.78,2026,Spanish,Psychology,748,725,36,32,26,26,14,406,730,506,246,528,472,677,360,772,6
+csidnell23,6th generation,GA,brooklyn technical high school,brooklyn,NY,3.04,2024,Computer Science,Computer Engineering,395,757,36,35,10,15,27,566,226,557,309,384,673,427,214,590,6
+mdow24,Up-sized,CA,academic magnet high school,north charleston,SC,2.34,2023,Biology,Computer Engineering,597,263,26,30,14,5,13,501,376,245,377,206,548,207,788,384,7
+mprimett25,Diverse,NY,academy for information technology,scotch plains,NJ,3.45,2025,Computer Science,Sociology,473,257,11,5,33,26,26,601,500,731,360,424,799,731,531,254,9
+tstiggles26,functionalities,NV,james madison high school,vienna,VA,3.49,2022,Mathematics,Psychology,425,743,5,28,22,1,15,699,503,711,354,480,620,668,659,673,2
+ftrott27,De-engineered,IA,whitney high school,cerritos,CA,3.05,2025,English,Creative Writing,251,287,28,10,29,17,18,419,330,347,282,339,491,430,401,670,3
+rvonsalzberg28,Polarised,NY,brooklyn technical high school,brooklyn,NY,3.22,2024,Spanish,Sociology,679,231,3,1,35,35,11,372,585,722,634,548,502,733,435,255,5
+cblackborough29,conglomeration,CT,academic magnet high school,north charleston,SC,2.2,2022,Computer Science,Creative Writing,461,267,25,7,8,30,31,662,305,692,217,317,652,700,450,564,10
+slapsley2a,multi-state,NJ,academy for information technology,scotch plains,NJ,2.68,2025,Computer Science,Psychology,433,398,5,34,31,8,28,277,778,202,689,583,641,382,527,326,3
+kaggas2b,regional,CA,james madison high school,vienna,VA,3.03,2024,Mathematics,Creative Writing,640,677,4,17,16,12,3,784,698,446,461,231,733,736,641,291,9
+geady2c,Digitized,AL,whitney high school,cerritos,CA,2.56,2023,Biology,Creative Writing,674,494,5,5,15,34,31,645,629,231,205,456,214,559,295,603,2
+ewaller2d,Re-contextualized,DC,brooklyn technical high school,brooklyn,NY,3.53,2025,English,Psychology,525,688,22,34,23,31,10,652,779,648,297,779,209,209,496,547,1
+spenk2e,full-range,MA,academic magnet high school,north charleston,SC,3.79,2024,Spanish,Creative Writing,622,514,31,30,33,3,26,340,435,369,396,443,792,479,451,277,6
+ftomlinson2f,extranet,IL,academy for information technology,scotch plains,NJ,3.45,2026,Spanish,Computer Engineering,428,582,19,32,6,6,5,777,275,708,425,318,592,684,434,691,10
+bphayre2g,Vision-oriented,WA,james madison high school,vienna,VA,2.04,2022,Computer Science,Sociology,776,275,3,19,28,1,30,388,246,318,480,733,581,427,676,631,3
+sbanaszczyk2h,Pre-emptive,IN,whitney high school,cerritos,CA,2.11,2025,English,Psychology,301,300,20,18,20,28,21,747,225,400,378,248,637,553,300,220,1
+hpattesall2i,heuristic,WI,brooklyn technical high school,brooklyn,NY,3.8,2023,Computer Science,Computer Engineering,764,271,34,9,5,20,19,237,418,399,483,597,475,371,697,567,7
+ralennikov2j,stable,OH,academic magnet high school,north charleston,SC,2.55,2026,Computer Science,Sociology,667,699,29,30,7,9,28,608,412,554,618,505,526,491,258,251,0
+olabdon2k,product,TX,academy for information technology,scotch plains,NJ,2.75,2022,English,Sociology,297,268,33,18,36,1,32,728,664,460,342,511,622,238,548,239,5
+cmackeeg2l,budgetary management,CA,james madison high school,vienna,VA,2.31,2022,Biology,Creative Writing,227,248,2,14,2,3,36,568,309,567,371,369,720,426,430,212,3
+loreilly2m,real-time,DC,whitney high school,cerritos,CA,2.33,2025,Spanish,Creative Writing,353,554,36,21,6,32,2,355,604,537,795,648,263,597,478,641,4
+jyelding2n,architecture,TX,brooklyn technical high school,brooklyn,NY,2.63,2024,Spanish,Psychology,703,629,14,23,3,34,18,517,621,561,358,238,332,314,230,766,2
+bludlow2o,Triple-buffered,CA,academic magnet high school,north charleston,SC,3.74,2024,Computer Science,Psychology,266,324,23,25,26,14,19,563,203,228,762,682,744,743,690,581,8
+eaviss2p,help-desk,IN,academy for information technology,scotch plains,NJ,3.58,2025,Biology,Psychology,321,433,16,28,3,31,34,659,262,761,606,580,652,709,539,334,2
+eivanikov2q,Diverse,WA,james madison high school,vienna,VA,2.11,2022,English,Sociology,768,290,15,34,7,35,5,762,588,327,648,592,702,429,350,333,9
+rclericoates2r,Expanded,TN,whitney high school,cerritos,CA,3.52,2022,Biology,Computer Engineering,551,385,26,16,8,24,23,383,739,713,736,643,691,633,455,622,6
+dfrancesch2s,Stand-alone,CA,brooklyn technical high school,brooklyn,NY,2.82,2022,Computer Science,Creative Writing,738,416,8,14,3,12,10,437,306,376,777,594,735,295,584,420,4
+ageffcock2t,solution,MD,academic magnet high school,north charleston,SC,3.27,2024,Biology,Computer Engineering,291,437,25,10,21,29,22,778,215,640,612,269,404,210,335,545,8
+lschohier2u,multimedia,DC,academy for information technology,scotch plains,NJ,3.54,2024,Computer Science,Creative Writing,778,403,17,36,28,34,36,618,409,780,353,560,468,342,614,644,7
+wgiabucci2v,interactive,SC,james madison high school,vienna,VA,2.03,2023,Computer Science,Sociology,413,538,4,1,25,17,36,557,567,492,212,716,468,493,704,749,9
+wtitmuss2w,Networked,CA,whitney high school,cerritos,CA,3.3,2022,English,Psychology,243,666,30,31,28,21,36,421,684,290,795,325,294,585,372,254,6
+mnucator2x,Quality-focused,DC,brooklyn technical high school,brooklyn,NY,2.55,2022,English,Computer Engineering,663,234,33,7,9,26,14,590,769,437,656,219,514,338,250,342,7
+cdurgan2y,moratorium,LA,academic magnet high school,north charleston,SC,3.38,2026,Biology,Computer Engineering,620,692,27,3,15,14,13,595,272,203,217,422,676,663,344,355,1
+kcotter2z,project,FL,academy for information technology,scotch plains,NJ,3.39,2025,Computer Science,Creative Writing,756,645,17,33,27,10,4,320,598,518,761,551,388,556,304,791,5
+fhordle30,clear-thinking,MO,james madison high school,vienna,VA,2.53,2025,Mathematics,Creative Writing,565,665,19,15,25,32,24,644,776,515,447,614,319,749,558,210,9
+lenzley31,cohesive,DC,whitney high school,cerritos,CA,2.96,2023,Computer Science,Creative Writing,560,215,35,18,7,5,20,477,201,461,615,252,252,465,294,554,5
+gdundendale32,human-resource,FL,brooklyn technical high school,brooklyn,NY,3.03,2026,Computer Science,Computer Engineering,268,732,9,33,21,28,16,653,672,569,237,579,306,429,208,641,5
+kvolkers33,archive,FL,academic magnet high school,north charleston,SC,2.65,2026,Biology,Psychology,695,782,28,10,9,15,21,320,686,289,634,420,647,267,568,290,7
+bcroughan34,Synchronised,TX,academy for information technology,scotch plains,NJ,2.13,2025,Mathematics,Psychology,589,626,2,1,19,25,19,710,736,522,460,277,457,722,665,472,5
+ggroom35,homogeneous,MN,james madison high school,vienna,VA,2.38,2023,Spanish,Sociology,395,685,34,17,13,23,18,428,502,750,511,577,214,736,381,754,10
+bocheltree36,Streamlined,MS,whitney high school,cerritos,CA,2.25,2024,Spanish,Sociology,473,517,21,13,26,34,10,648,289,435,731,572,315,682,462,521,0
+ttoppes37,Multi-tiered,TX,brooklyn technical high school,brooklyn,NY,2.24,2026,English,Creative Writing,780,506,1,20,13,22,18,398,227,232,486,363,315,371,443,394,1
+gshambroke38,Programmable,DC,academic magnet high school,north charleston,SC,3.67,2024,Computer Science,Creative Writing,344,705,9,25,1,35,25,273,780,405,706,588,700,761,751,648,7
+rboothroyd39,zero administration,CA,academy for information technology,scotch plains,NJ,2.67,2022,English,Sociology,689,426,8,9,1,22,23,650,446,361,313,532,775,722,350,547,5
+cmarfe3a,Re-contextualized,MO,james madison high school,vienna,VA,2.91,2023,English,Sociology,707,254,4,14,29,7,32,577,563,284,704,445,350,509,276,574,8
+vheigl3b,clear-thinking,TX,whitney high school,cerritos,CA,3.3,2023,English,Psychology,299,284,13,31,14,26,26,601,585,249,577,637,212,729,224,221,1
+sstaner3c,Enterprise-wide,IL,brooklyn technical high school,brooklyn,NY,2.52,2022,Biology,Sociology,428,306,31,26,2,6,7,439,498,431,495,269,461,635,449,736,7
+awilprecht3d,static,NE,academic magnet high school,north charleston,SC,3.41,2025,Biology,Computer Engineering,587,556,15,20,6,4,17,307,435,383,645,460,514,671,558,797,7
+khodgin3e,encompassing,OH,academy for information technology,scotch plains,NJ,2.97,2023,Biology,Computer Engineering,208,757,34,26,29,2,29,570,611,606,610,750,232,691,631,544,4
+enutting3f,customer loyalty,FL,james madison high school,vienna,VA,2.12,2022,Spanish,Psychology,252,674,11,31,5,13,5,504,427,453,233,368,200,685,250,552,5
+xbrum3g,Organic,NV,whitney high school,cerritos,CA,2.68,2024,English,Psychology,333,567,21,4,36,20,29,213,231,411,324,594,437,747,744,376,9
+smccullock3h,grid-enabled,IA,brooklyn technical high school,brooklyn,NY,2.63,2023,Spanish,Creative Writing,679,325,11,21,2,7,12,418,258,532,529,277,384,529,658,349,6
+flummasana3i,Optional,TX,academic magnet high school,north charleston,SC,3.95,2025,Mathematics,Computer Engineering,355,316,35,31,15,21,27,231,355,340,617,286,268,246,689,315,1
+cgiddy3j,Customer-focused,CA,academy for information technology,scotch plains,NJ,3.63,2023,Spanish,Creative Writing,422,709,6,3,14,30,17,534,586,625,557,421,493,770,283,250,3
+jtipler3k,Persistent,CA,james madison high school,vienna,VA,3.97,2026,Spanish,Psychology,240,644,9,33,20,34,16,622,236,746,698,388,696,766,454,798,7
+lsouthby3l,Open-architected,DE,whitney high school,cerritos,CA,3.48,2023,English,Creative Writing,690,788,34,26,34,1,1,566,253,694,297,630,646,632,426,582,5
+piveagh3m,concept,PA,brooklyn technical high school,brooklyn,NY,2.7,2026,English,Creative Writing,547,385,21,13,5,34,11,747,396,733,438,662,333,212,644,718,1
+pridding3n,Grass-roots,TX,academic magnet high school,north charleston,SC,2.17,2023,Mathematics,Psychology,341,314,13,36,4,25,12,477,693,328,692,485,793,254,731,252,10
+kdaubney3o,incremental,NY,academy for information technology,scotch plains,NJ,3.61,2022,English,Creative Writing,776,532,17,29,35,15,9,412,462,773,252,471,304,629,614,220,5
+graith3p,radical,TX,james madison high school,vienna,VA,3.81,2025,Computer Science,Psychology,421,544,2,26,2,1,34,467,547,602,351,664,267,787,602,605,1
+rtolhurst3q,strategy,VA,whitney high school,cerritos,CA,2.27,2026,English,Computer Engineering,613,311,6,35,23,14,15,797,530,414,723,435,343,397,450,220,1
+sdifranceshci3r,discrete,CA,brooklyn technical high school,brooklyn,NY,3.92,2026,Spanish,Sociology,685,505,25,9,26,21,17,682,330,791,538,617,674,710,502,316,8
+ibartholomew3s,Phased,CA,academic magnet high school,north charleston,SC,2.13,2026,Biology,Computer Engineering,216,326,19,18,27,14,31,787,788,206,203,513,606,546,420,595,5
+dringsell3t,object-oriented,IA,academy for information technology,scotch plains,NJ,3.18,2025,Computer Science,Sociology,239,766,8,8,8,31,32,484,224,609,777,563,623,369,739,427,8
+bbute3u,hub,IN,james madison high school,vienna,VA,3.43,2025,English,Psychology,753,725,31,28,13,3,20,460,365,386,411,629,263,272,778,275,4
+pgotch3v,intangible,FL,whitney high school,cerritos,CA,2.68,2025,Computer Science,Sociology,449,466,9,28,12,30,27,672,768,493,222,354,414,688,446,654,5
+dgladdis3w,User-friendly,MD,brooklyn technical high school,brooklyn,NY,3.07,2025,Biology,Sociology,261,255,36,9,11,1,6,600,222,539,622,648,229,330,546,502,8
+avanderbaaren3x,protocol,MN,academic magnet high school,north charleston,SC,2.31,2026,English,Sociology,661,570,35,32,25,28,26,422,537,536,625,509,551,789,502,660,6
+sturley3y,Optional,PA,academy for information technology,scotch plains,NJ,2.25,2022,Mathematics,Sociology,645,359,3,7,17,28,10,268,581,440,465,585,353,717,603,299,4
+jschneidar3z,circuit,TX,james madison high school,vienna,VA,3.88,2025,Biology,Sociology,217,539,2,31,14,7,3,597,218,490,633,489,221,788,319,346,10
+hwakeford40,mission-critical,NC,whitney high school,cerritos,CA,3.18,2022,Spanish,Sociology,534,446,20,12,12,34,28,645,760,636,608,447,612,210,781,606,1
+jcursons41,actuating,NV,brooklyn technical high school,brooklyn,NY,2.77,2025,Spanish,Sociology,660,593,9,10,21,21,29,651,248,643,231,318,413,695,241,535,8
+wmetzing42,cohesive,KY,academic magnet high school,north charleston,SC,2.45,2026,Computer Science,Creative Writing,239,599,30,9,11,14,2,416,783,785,448,704,383,413,549,473,7
+rchevolleau43,Grass-roots,CA,academy for information technology,scotch plains,NJ,2.56,2022,Biology,Creative Writing,496,677,35,31,1,28,21,231,757,241,429,499,573,696,357,301,2
+lmcpike44,hub,WA,james madison high school,vienna,VA,3.8,2023,English,Creative Writing,797,335,18,15,14,33,2,428,709,412,466,210,538,325,474,327,1
+alauder45,needs-based,TN,whitney high school,cerritos,CA,2.29,2025,Computer Science,Psychology,365,627,22,9,16,3,31,259,265,675,379,630,760,699,539,399,10
+rclemmey46,non-volatile,FL,brooklyn technical high school,brooklyn,NY,2.9,2023,English,Computer Engineering,527,567,6,8,28,7,20,699,488,212,247,707,649,210,457,771,8
+bgunderson47,Object-based,LA,academic magnet high school,north charleston,SC,2.61,2025,Computer Science,Creative Writing,336,458,35,36,5,7,31,234,688,734,585,662,242,504,267,274,4
+lfateley48,strategy,DC,academy for information technology,scotch plains,NJ,2.86,2024,Computer Science,Psychology,737,700,9,3,11,32,22,509,696,766,717,698,612,749,545,710,2
+jcolquyte49,methodology,TX,james madison high school,vienna,VA,2.41,2024,Computer Science,Creative Writing,214,613,28,32,1,27,33,415,597,496,530,341,443,575,321,409,6
+eolensby4a,secured line,TX,whitney high school,cerritos,CA,3.06,2023,English,Computer Engineering,366,594,19,11,2,23,13,457,630,358,662,328,639,323,499,675,3
+pvanderbaaren4b,national,NC,brooklyn technical high school,brooklyn,NY,2.52,2023,Mathematics,Computer Engineering,658,630,26,16,19,27,23,461,647,322,568,672,727,676,258,791,7
+ggrissett4c,Secured,TX,academic magnet high school,north charleston,SC,3.4,2025,Mathematics,Psychology,251,393,36,23,9,23,22,579,544,721,565,275,237,313,504,385,0
+dvockings4d,maximized,CA,academy for information technology,scotch plains,NJ,2.89,2026,Computer Science,Sociology,215,392,1,23,7,9,36,274,400,679,213,238,402,438,463,635,5
+fdulinty4e,Right-sized,NY,james madison high school,vienna,VA,2.96,2026,Mathematics,Computer Engineering,660,501,18,13,8,35,34,469,246,447,473,587,459,381,630,755,7
+lritson4f,Fully-configurable,GA,whitney high school,cerritos,CA,3.61,2024,Mathematics,Computer Engineering,539,715,17,14,33,22,5,509,720,476,220,634,217,586,223,468,4
+llindholm4g,Switchable,OH,brooklyn technical high school,brooklyn,NY,3.0,2022,Biology,Sociology,286,525,34,35,23,23,33,539,552,225,323,766,276,627,242,580,6
+mjentzsch4h,model,TX,academic magnet high school,north charleston,SC,3.04,2025,Spanish,Sociology,783,220,16,15,1,5,3,752,577,553,574,452,473,271,254,722,9
+cerasmus4i,paradigm,NE,academy for information technology,scotch plains,NJ,3.73,2025,English,Sociology,204,454,35,6,26,22,6,231,390,313,733,720,328,260,400,658,1
+breeve4j,software,AL,james madison high school,vienna,VA,2.24,2022,English,Creative Writing,322,447,26,14,23,9,26,249,525,272,228,371,500,231,462,765,1
+smcnamee4k,directional,DC,whitney high school,cerritos,CA,2.81,2025,Mathematics,Creative Writing,257,498,1,30,24,13,5,634,388,627,342,784,345,331,690,678,8
+rtombleson4l,real-time,FL,brooklyn technical high school,brooklyn,NY,2.73,2023,Biology,Sociology,794,578,3,13,26,10,3,663,446,707,661,223,471,246,417,361,7
+collett4m,24 hour,SD,academic magnet high school,north charleston,SC,3.33,2022,Mathematics,Sociology,456,394,12,19,27,10,28,648,625,447,581,562,634,595,426,419,8
+jvarney4n,Cloned,NY,academy for information technology,scotch plains,NJ,3.84,2022,Biology,Creative Writing,278,597,4,17,15,20,16,618,408,620,328,614,783,433,638,202,2
+llossman4o,solution-oriented,CA,james madison high school,vienna,VA,3.85,2023,Computer Science,Psychology,238,721,4,19,1,16,28,389,499,646,386,716,380,656,500,400,7
+ireisen4p,tertiary,CO,whitney high school,cerritos,CA,3.44,2026,Computer Science,Creative Writing,547,735,29,26,15,12,21,203,228,597,247,599,454,317,202,456,2
+cpierson4q,Up-sized,FL,brooklyn technical high school,brooklyn,NY,2.9,2026,English,Psychology,761,298,19,27,31,10,6,722,551,282,704,410,415,694,341,542,1
+ccomo4r,Graphical User Interface,VA,academic magnet high school,north charleston,SC,2.91,2026,Computer Science,Creative Writing,224,760,25,31,21,17,18,303,232,633,260,745,761,754,652,692,9
+aglanert4s,Seamless,VA,academy for information technology,scotch plains,NJ,3.63,2023,Mathematics,Creative Writing,422,630,21,29,3,24,13,727,353,441,696,603,420,292,543,278,0
+kdyte4t,circuit,KY,james madison high school,vienna,VA,2.46,2022,Spanish,Sociology,480,770,29,19,35,7,33,434,683,334,361,371,577,337,796,437,3
+kfloyd4u,Synergistic,DC,whitney high school,cerritos,CA,3.83,2022,Mathematics,Creative Writing,605,778,35,16,31,10,24,206,446,459,387,231,689,708,688,796,9
+ahuriche4v,structure,OH,brooklyn technical high school,brooklyn,NY,2.0,2024,Spanish,Psychology,672,366,11,2,5,3,34,323,339,796,589,734,528,509,308,540,1
+lsuttie4w,background,NY,academic magnet high school,north charleston,SC,3.76,2025,Computer Science,Sociology,514,734,29,29,12,33,9,279,219,595,487,252,700,248,719,591,2
+kmcalpin4x,next generation,MD,academy for information technology,scotch plains,NJ,3.4,2026,Computer Science,Psychology,461,294,6,16,30,4,4,465,675,498,517,729,798,277,319,487,8
+lvogel4y,encoding,VA,james madison high school,vienna,VA,3.94,2024,Computer Science,Psychology,406,607,6,26,10,32,11,612,234,225,768,689,376,436,519,271,0
+rbrowell4z,moratorium,UT,whitney high school,cerritos,CA,2.64,2023,Mathematics,Computer Engineering,757,328,9,2,3,35,30,700,394,303,272,727,221,760,694,660,7
+tdarthe50,content-based,CT,brooklyn technical high school,brooklyn,NY,3.86,2022,Spanish,Creative Writing,482,736,22,8,13,6,16,208,690,289,542,256,247,481,286,561,5
+dfollet51,installation,WI,academic magnet high school,north charleston,SC,2.93,2022,Spanish,Computer Engineering,338,265,26,28,31,21,16,362,763,508,353,736,693,329,242,388,1
+dgirkin52,knowledge base,OK,academy for information technology,scotch plains,NJ,2.29,2023,Spanish,Psychology,456,607,33,10,4,14,1,311,711,523,379,204,475,397,575,337,4
+rheake53,Fully-configurable,MI,james madison high school,vienna,VA,2.41,2024,Computer Science,Sociology,597,221,34,22,14,3,3,369,744,408,689,335,266,476,251,480,10
+asmidmore54,mobile,TX,whitney high school,cerritos,CA,2.24,2026,Biology,Creative Writing,547,404,33,11,20,2,7,497,201,552,543,543,497,519,251,398,0
+msudlow55,Phased,TX,brooklyn technical high school,brooklyn,NY,3.74,2022,Computer Science,Computer Engineering,391,208,21,8,33,4,3,310,647,705,601,356,645,433,277,549,10
+rsheilds56,leading edge,IL,academic magnet high school,north charleston,SC,2.83,2026,Spanish,Psychology,721,595,10,15,15,12,3,759,696,462,610,528,340,201,775,536,7
+adingle57,service-desk,FL,academy for information technology,scotch plains,NJ,3.58,2024,Biology,Sociology,761,661,12,33,6,3,9,488,697,262,429,653,288,259,208,732,8
+smuncaster58,solution-oriented,WA,james madison high school,vienna,VA,3.69,2024,Computer Science,Creative Writing,264,698,35,36,27,10,3,523,467,755,681,213,532,787,644,200,8
+cbeggini59,demand-driven,LA,whitney high school,cerritos,CA,3.7,2026,Computer Science,Sociology,631,266,5,7,25,20,16,347,286,437,618,714,369,211,418,678,5
+rmincini5a,incremental,CA,brooklyn technical high school,brooklyn,NY,3.19,2026,Biology,Sociology,612,460,18,3,9,28,10,377,776,454,756,523,588,655,293,244,8
+adanelutti5b,success,FL,academic magnet high school,north charleston,SC,2.52,2025,Mathematics,Psychology,529,796,8,36,7,8,14,397,372,692,296,471,233,275,639,320,4
+glazenby5c,Intuitive,OH,academy for information technology,scotch plains,NJ,2.07,2023,Spanish,Psychology,233,751,20,26,20,12,13,771,432,328,560,551,799,514,558,278,8
+gireson5d,Synergistic,TX,james madison high school,vienna,VA,3.91,2025,Spanish,Creative Writing,606,498,3,25,10,7,9,559,528,225,480,723,340,415,361,618,9
+mkeenleyside5e,4th generation,CA,whitney high school,cerritos,CA,3.14,2025,Spanish,Psychology,575,449,11,20,8,36,4,372,518,392,325,536,751,294,477,594,6
+lsealy5f,responsive,KY,brooklyn technical high school,brooklyn,NY,3.56,2026,Computer Science,Sociology,203,248,33,5,19,34,36,495,439,356,776,279,779,645,660,396,5
+llugton5g,architecture,CA,academic magnet high school,north charleston,SC,2.8,2023,Computer Science,Sociology,490,748,17,17,2,13,11,733,696,567,540,464,262,292,580,478,6
+pmace5h,real-time,WA,academy for information technology,scotch plains,NJ,2.19,2023,Mathematics,Computer Engineering,448,477,9,12,5,29,9,459,468,441,282,771,243,756,317,620,0
+urissom5i,Expanded,NY,james madison high school,vienna,VA,3.11,2022,Spanish,Creative Writing,255,775,30,6,35,11,4,502,502,343,661,791,539,444,515,645,1
+mshellard5j,neutral,NY,whitney high school,cerritos,CA,3.32,2026,English,Sociology,295,510,22,13,18,14,20,400,260,240,772,212,712,275,327,415,10
+pmacilriach5k,local area network,MO,brooklyn technical high school,brooklyn,NY,2.29,2022,Mathematics,Psychology,538,559,27,13,16,15,17,653,440,426,233,242,497,661,797,690,5
+fwestbrook5l,systemic,AZ,academic magnet high school,north charleston,SC,2.07,2025,Computer Science,Computer Engineering,450,733,23,15,29,17,28,202,482,650,277,556,787,584,573,445,2
+pchevolleau5m,flexibility,TX,academy for information technology,scotch plains,NJ,3.59,2022,Spanish,Psychology,578,669,27,15,26,2,29,278,317,694,573,560,334,460,281,603,1
+lkrelle5n,framework,NY,james madison high school,vienna,VA,3.34,2024,Computer Science,Psychology,552,796,28,34,1,22,31,320,616,727,436,764,760,541,201,696,2
+wtrapp5o,local area network,NY,whitney high school,cerritos,CA,3.96,2024,Computer Science,Computer Engineering,310,250,12,23,5,30,4,591,737,456,599,614,401,480,348,216,2
+kbraddick5p,Ameliorated,MO,brooklyn technical high school,brooklyn,NY,3.76,2023,Biology,Sociology,575,535,4,5,20,17,15,549,392,477,472,670,439,273,758,369,2
+gkeeltagh5q,Seamless,VA,academic magnet high school,north charleston,SC,2.29,2022,Mathematics,Computer Engineering,291,361,3,27,10,29,31,414,693,310,328,272,411,535,210,246,9
+fwalford5r,system engine,TX,academy for information technology,scotch plains,NJ,3.29,2024,Mathematics,Psychology,643,410,7,27,20,3,33,405,466,274,472,393,586,578,778,557,5
+jorgen5s,Pre-emptive,TX,james madison high school,vienna,VA,3.45,2026,Computer Science,Sociology,464,418,26,13,35,31,2,787,678,747,778,331,662,750,247,551,2
+mgregg5t,Customer-focused,VA,whitney high school,cerritos,CA,3.04,2026,Computer Science,Creative Writing,559,363,26,31,14,5,23,683,266,633,412,597,302,511,214,474,9
+bpinnion5u,frame,NV,brooklyn technical high school,brooklyn,NY,2.16,2025,Computer Science,Psychology,714,406,13,7,2,12,29,553,486,711,701,748,488,703,277,307,9
+mnansom5v,regional,NY,academic magnet high school,north charleston,SC,3.57,2023,Biology,Sociology,569,515,13,22,16,14,35,244,611,798,238,403,489,527,339,649,5
+bscrivener5w,context-sensitive,OK,academy for information technology,scotch plains,NJ,2.65,2023,Mathematics,Computer Engineering,337,795,14,24,15,29,11,362,611,513,641,356,206,627,705,578,0
+fingley5x,Integrated,PA,james madison high school,vienna,VA,2.86,2025,English,Creative Writing,223,229,1,11,10,18,28,625,594,607,224,744,537,309,235,225,8
+pduns5y,Persistent,FL,whitney high school,cerritos,CA,3.71,2026,Computer Science,Psychology,699,622,10,6,24,19,28,725,352,438,741,573,311,362,276,288,5
+kbesson5z,zero defect,DC,brooklyn technical high school,brooklyn,NY,3.76,2024,Mathematics,Sociology,426,668,22,25,33,28,13,573,564,390,768,573,483,666,756,741,5
+tmcarthur60,Graphic Interface,OH,academic magnet high school,north charleston,SC,2.63,2024,Spanish,Computer Engineering,704,514,6,35,21,29,25,408,631,673,260,780,705,402,718,633,10
+jdurram61,national,CA,academy for information technology,scotch plains,NJ,3.58,2026,English,Psychology,787,233,6,11,5,31,12,695,223,664,458,404,204,552,737,614,2
+hkasper62,Re-engineered,CA,james madison high school,vienna,VA,2.52,2022,Mathematics,Creative Writing,430,400,14,11,21,12,29,431,598,679,381,517,283,396,680,305,3
+lmarchant63,multi-state,VA,whitney high school,cerritos,CA,3.05,2025,English,Computer Engineering,495,769,20,6,20,1,14,453,593,408,360,670,634,591,591,489,4
+cbleier64,policy,SC,brooklyn technical high school,brooklyn,NY,3.19,2023,Biology,Creative Writing,477,268,24,19,27,10,15,419,413,636,282,282,363,747,658,422,8
+padin65,Re-contextualized,FL,academic magnet high school,north charleston,SC,3.63,2025,Mathematics,Computer Engineering,353,290,15,17,4,30,13,504,584,227,741,575,285,423,361,429,7
+bsabate66,Automated,VA,academy for information technology,scotch plains,NJ,2.9,2025,Biology,Creative Writing,307,741,22,17,2,28,16,612,554,292,283,533,582,626,800,763,7
+bheinschke67,value-added,TX,james madison high school,vienna,VA,2.62,2026,English,Sociology,337,739,34,17,8,13,14,319,596,627,456,396,214,509,383,296,7
+cdumbell68,Organic,FL,whitney high school,cerritos,CA,3.71,2026,Biology,Computer Engineering,433,292,19,28,16,22,14,448,222,731,266,692,284,309,781,673,5
+evellden69,bottom-line,MO,brooklyn technical high school,brooklyn,NY,2.66,2022,Biology,Psychology,665,699,4,18,2,19,17,558,211,380,532,375,386,261,700,660,9
+ajaquiss6a,concept,CA,academic magnet high school,north charleston,SC,3.32,2025,English,Psychology,718,413,28,2,36,6,11,767,217,267,473,634,682,552,574,788,10
+mschechter6b,context-sensitive,MN,academy for information technology,scotch plains,NJ,2.5,2025,Mathematics,Creative Writing,319,649,36,7,2,28,30,579,276,551,707,218,290,456,496,678,6
+tkiefer6c,Organized,TN,james madison high school,vienna,VA,3.35,2025,English,Psychology,265,330,15,20,36,9,18,409,433,391,759,353,789,394,640,477,7
+clewty6d,function,GA,whitney high school,cerritos,CA,3.89,2026,Biology,Sociology,705,617,16,13,30,12,23,717,379,613,256,260,558,329,213,708,0
+mmosco6e,artificial intelligence,KS,brooklyn technical high school,brooklyn,NY,3.99,2026,Spanish,Computer Engineering,647,748,8,4,11,21,27,500,268,618,637,662,483,703,505,519,0
+cschutte6f,De-engineered,TX,academic magnet high school,north charleston,SC,2.99,2024,Spanish,Computer Engineering,795,652,25,2,36,3,7,761,740,410,528,394,427,236,638,685,7
+jkoeppke6g,mission-critical,TX,academy for information technology,scotch plains,NJ,3.72,2024,English,Creative Writing,275,532,15,13,4,26,13,270,784,782,527,335,540,250,769,697,5
+mgert6h,context-sensitive,MN,james madison high school,vienna,VA,3.72,2023,Biology,Computer Engineering,658,615,11,14,35,6,31,397,452,603,309,386,608,558,286,429,0
+srankling6i,regional,DC,whitney high school,cerritos,CA,3.3,2023,Computer Science,Creative Writing,704,371,25,15,36,20,26,628,784,458,391,213,510,485,323,679,5
+estorer6j,orchestration,WI,brooklyn technical high school,brooklyn,NY,2.55,2022,Computer Science,Sociology,476,469,10,30,14,16,16,614,525,346,658,790,269,782,421,389,4
+dbabinski6k,web-enabled,CA,academic magnet high school,north charleston,SC,3.36,2025,Biology,Computer Engineering,444,352,14,33,12,35,30,708,799,404,329,266,395,611,345,741,7
+mdroogan6l,national,TX,academy for information technology,scotch plains,NJ,3.03,2022,Computer Science,Sociology,783,770,27,17,21,16,33,450,638,554,715,460,595,765,484,746,3
+mmulberry6m,demand-driven,CA,james madison high school,vienna,VA,3.48,2024,Biology,Psychology,751,474,12,27,30,22,32,672,318,473,296,315,708,686,336,336,8
+bpedrielli6n,stable,CA,whitney high school,cerritos,CA,2.26,2022,Spanish,Psychology,292,279,11,29,31,34,19,582,271,787,440,394,322,720,200,266,0
+gstraker6o,Customizable,NE,brooklyn technical high school,brooklyn,NY,3.19,2025,English,Psychology,310,295,12,8,30,29,36,537,720,607,575,264,443,220,208,799,4
+tkleiser6p,Ergonomic,KS,academic magnet high school,north charleston,SC,2.77,2025,English,Creative Writing,643,716,8,7,35,4,7,405,271,478,333,599,565,497,592,251,7
+gpayley6q,implementation,CA,academy for information technology,scotch plains,NJ,2.78,2026,Spanish,Creative Writing,635,211,13,12,28,29,14,261,307,598,624,645,650,547,345,628,10
+bgatchell6r,service-desk,OK,james madison high school,vienna,VA,2.91,2026,Computer Science,Creative Writing,683,590,22,23,3,20,8,752,468,634,612,677,697,204,318,617,3
+tetherson6s,array,AZ,whitney high school,cerritos,CA,3.65,2026,Mathematics,Psychology,652,733,17,4,6,32,4,212,700,796,561,349,391,514,499,562,3
+kprickett6t,concept,NY,brooklyn technical high school,brooklyn,NY,3.18,2024,English,Sociology,386,356,20,9,27,25,29,352,623,237,638,330,792,775,406,251,3
+kglanz6u,neutral,TX,academic magnet high school,north charleston,SC,3.68,2024,Mathematics,Sociology,411,772,25,30,23,9,35,721,504,504,614,707,234,572,328,485,0
+jsarjent6v,definition,IN,academy for information technology,scotch plains,NJ,3.53,2024,Biology,Computer Engineering,383,274,16,2,28,32,14,715,599,442,398,317,670,750,713,237,6
+mborkett6w,24/7,PA,james madison high school,vienna,VA,3.53,2026,Computer Science,Creative Writing,268,468,9,35,28,35,27,287,209,285,264,257,539,518,770,533,10
+kbeards6x,holistic,ID,whitney high school,cerritos,CA,3.01,2023,English,Psychology,586,338,28,18,3,16,16,734,726,563,448,416,653,450,780,394,9
+jromeo6y,Object-based,PA,brooklyn technical high school,brooklyn,NY,2.11,2022,English,Psychology,440,800,5,30,20,24,13,285,236,386,687,471,358,769,792,427,5
+dwyard6z,challenge,AR,academic magnet high school,north charleston,SC,2.1,2025,English,Psychology,481,674,16,36,8,33,23,508,534,501,659,387,723,288,648,347,9
+flightbourn70,Business-focused,IL,academy for information technology,scotch plains,NJ,2.9,2022,Mathematics,Psychology,542,204,17,13,17,22,4,618,483,294,656,657,320,272,395,257,8
+vrolin71,Front-line,MN,james madison high school,vienna,VA,3.42,2023,Spanish,Computer Engineering,557,468,14,9,34,32,6,765,543,502,309,591,445,221,215,681,3
+dshrawley72,De-engineered,DC,whitney high school,cerritos,CA,3.84,2026,Spanish,Computer Engineering,397,407,6,11,26,25,5,777,741,738,272,708,298,556,790,271,0
+ahevner73,heuristic,NC,brooklyn technical high school,brooklyn,NY,3.08,2026,Biology,Sociology,744,438,3,16,17,8,23,539,453,227,471,718,542,490,668,263,2
+mspringthorp74,internet solution,AL,academic magnet high school,north charleston,SC,2.11,2026,Mathematics,Creative Writing,381,792,24,24,12,3,4,448,703,602,245,315,257,555,240,640,4
+dfaulconbridge75,methodology,KS,academy for information technology,scotch plains,NJ,2.64,2022,Computer Science,Psychology,725,718,23,23,23,19,33,278,408,525,565,796,726,621,372,552,10
+llazer76,Down-sized,MO,james madison high school,vienna,VA,3.32,2025,English,Creative Writing,218,335,10,3,8,20,3,596,641,289,667,529,493,655,425,509,4
+mviney77,Centralized,TX,whitney high school,cerritos,CA,2.94,2024,English,Computer Engineering,569,695,19,26,3,29,26,367,382,568,800,329,504,480,510,360,1
+mroffey78,zero administration,ID,brooklyn technical high school,brooklyn,NY,2.97,2022,Spanish,Creative Writing,783,516,2,22,14,30,12,765,489,267,274,675,523,504,610,649,7
+fibberson79,array,NY,academic magnet high school,north charleston,SC,3.74,2022,Computer Science,Psychology,674,682,4,5,15,6,5,526,335,202,599,511,598,777,330,724,7
+asapir7a,Public-key,DC,academy for information technology,scotch plains,NJ,2.08,2024,Mathematics,Psychology,599,742,16,17,7,7,21,662,734,637,467,271,474,640,464,547,7
+jrotham7b,fault-tolerant,TX,james madison high school,vienna,VA,3.52,2024,Mathematics,Sociology,369,245,21,22,22,16,19,350,614,354,518,255,644,562,777,593,7
+rnelane7c,interface,MO,whitney high school,cerritos,CA,2.06,2024,English,Sociology,744,730,15,7,19,10,18,300,710,709,616,782,214,253,339,478,6
+omallatratt7d,Mandatory,NV,brooklyn technical high school,brooklyn,NY,2.76,2024,Computer Science,Creative Writing,586,218,25,17,28,17,13,799,593,603,511,563,299,565,297,284,7
+bswale7e,software,AZ,academic magnet high school,north charleston,SC,3.78,2022,Mathematics,Creative Writing,631,699,18,33,23,9,13,586,667,421,735,338,715,279,250,747,2
+amottershaw7f,directional,NY,academy for information technology,scotch plains,NJ,3.21,2023,Spanish,Computer Engineering,210,308,21,14,28,26,13,397,517,703,377,487,567,750,606,709,3
+mcellone7g,Down-sized,TX,james madison high school,vienna,VA,2.15,2026,Spanish,Creative Writing,255,258,25,21,36,1,25,699,733,302,284,674,331,315,629,584,0
+cleall7h,Fully-configurable,NY,whitney high school,cerritos,CA,3.36,2024,Biology,Creative Writing,257,735,30,27,34,29,27,275,682,303,583,529,380,532,515,382,2
+cleblond7i,well-modulated,CA,brooklyn technical high school,brooklyn,NY,2.23,2022,Mathematics,Sociology,614,336,25,31,14,11,19,477,655,628,590,607,672,357,747,667,6
+kbrissard7j,instruction set,TX,academic magnet high school,north charleston,SC,2.29,2022,Biology,Psychology,613,678,31,5,11,27,22,317,520,795,371,530,457,412,651,792,0
+sstatter7k,project,NY,academy for information technology,scotch plains,NJ,2.69,2022,Spanish,Computer Engineering,684,671,27,36,21,22,28,398,492,682,224,526,279,549,595,335,8
+llowth7l,Reverse-engineered,CO,james madison high school,vienna,VA,2.86,2023,English,Psychology,219,213,4,31,7,35,7,776,666,606,754,407,215,618,502,659,3
+rambroix7m,Open-architected,FL,whitney high school,cerritos,CA,2.11,2024,Biology,Creative Writing,434,760,10,25,29,29,35,774,731,338,655,548,741,394,651,695,9
+aioselev7n,Persistent,AK,brooklyn technical high school,brooklyn,NY,2.08,2024,Mathematics,Creative Writing,750,667,21,30,21,18,36,733,220,732,551,798,587,574,424,418,5
+tchastan7o,intranet,OK,academic magnet high school,north charleston,SC,2.45,2023,English,Creative Writing,355,566,20,22,20,28,19,548,305,787,767,622,661,462,254,266,10
+nmish7p,leverage,KS,academy for information technology,scotch plains,NJ,2.57,2023,English,Creative Writing,247,390,24,22,29,29,31,610,383,315,527,797,359,443,439,626,7
+stoffts7q,Upgradable,TX,james madison high school,vienna,VA,2.21,2025,Computer Science,Creative Writing,634,344,32,13,12,5,25,672,237,337,617,611,587,401,457,482,8
+gmarcome7r,foreground,UT,whitney high school,cerritos,CA,3.55,2023,Spanish,Sociology,280,428,20,11,8,20,26,713,589,706,494,461,666,769,269,614,3
+ttanslie7s,Customer-focused,CO,brooklyn technical high school,brooklyn,NY,2.27,2024,Computer Science,Computer Engineering,750,586,25,19,25,12,5,270,353,201,420,402,219,726,512,692,4
+bbosse7t,application,FL,academic magnet high school,north charleston,SC,3.86,2024,Biology,Sociology,704,629,15,16,34,1,32,768,634,660,709,400,392,365,478,698,4
+htierney7u,clear-thinking,GA,academy for information technology,scotch plains,NJ,2.71,2025,Mathematics,Creative Writing,738,330,27,21,8,6,24,412,464,754,612,207,714,796,682,749,3
+mborland7v,functionalities,SD,james madison high school,vienna,VA,2.47,2024,Spanish,Psychology,439,466,34,13,6,19,22,255,595,236,459,781,413,651,687,763,6
+ltolworthie7w,User-friendly,DC,whitney high school,cerritos,CA,2.9,2025,Spanish,Sociology,432,476,6,16,11,21,11,523,506,564,232,328,647,307,267,757,2
+hmargetson7x,project,NV,brooklyn technical high school,brooklyn,NY,3.36,2022,Biology,Sociology,641,761,34,32,31,5,2,498,614,773,447,401,304,636,261,348,7
+mvint7y,intangible,MO,academic magnet high school,north charleston,SC,2.32,2024,English,Sociology,515,768,32,7,9,34,36,724,727,351,374,297,250,479,443,331,3
+cloffill7z,application,OH,academy for information technology,scotch plains,NJ,2.41,2023,Biology,Creative Writing,690,335,27,31,32,7,27,252,541,776,382,400,490,386,420,659,8
+dcanape80,exuding,CA,james madison high school,vienna,VA,2.78,2023,Computer Science,Sociology,792,263,9,6,8,13,20,720,549,282,503,784,262,359,567,785,10
+smcgoldrick81,core,TN,whitney high school,cerritos,CA,3.26,2023,Mathematics,Psychology,223,684,12,33,27,31,27,706,764,496,475,565,363,717,676,554,3
+bharfoot82,capability,CT,brooklyn technical high school,brooklyn,NY,2.5,2022,Biology,Creative Writing,552,674,34,33,34,32,6,466,395,523,457,341,764,387,637,656,2
+oroskrug83,Implemented,VA,academic magnet high school,north charleston,SC,2.49,2022,Biology,Computer Engineering,346,737,10,10,5,31,27,578,796,716,395,533,756,599,440,367,3
+rcapelle84,orchestration,CA,academy for information technology,scotch plains,NJ,2.7,2025,Mathematics,Sociology,389,588,19,32,19,13,10,537,552,778,416,335,651,408,418,249,5
+bantonowicz85,time-frame,MI,james madison high school,vienna,VA,3.46,2026,English,Computer Engineering,485,712,16,1,9,6,12,664,365,709,666,697,357,746,276,466,2
+ffrance86,Switchable,KS,whitney high school,cerritos,CA,3.05,2022,Spanish,Psychology,600,624,36,35,35,26,8,496,472,723,275,216,213,433,767,217,1
+alukesch87,solution-oriented,IL,brooklyn technical high school,brooklyn,NY,3.8,2022,Spanish,Sociology,459,353,36,5,26,12,36,259,262,495,327,606,405,281,255,673,8
+mritmeier88,Automated,FL,academic magnet high school,north charleston,SC,2.91,2023,Computer Science,Psychology,674,754,1,2,25,9,29,422,220,553,753,407,632,751,733,226,9
+ebirks89,bandwidth-monitored,TX,academy for information technology,scotch plains,NJ,3.83,2026,Mathematics,Psychology,401,440,15,18,2,18,3,287,608,443,681,239,232,223,474,404,6
+nmeir8a,Face to face,IN,james madison high school,vienna,VA,3.66,2025,English,Sociology,569,776,32,10,14,24,25,215,209,371,204,245,614,770,238,221,7
+nspleving8b,system engine,CA,whitney high school,cerritos,CA,2.63,2026,Mathematics,Sociology,661,379,23,28,15,3,6,562,200,363,527,251,788,686,565,398,5
+kfilippazzo8c,Stand-alone,FL,brooklyn technical high school,brooklyn,NY,3.57,2022,Computer Science,Psychology,341,322,19,16,1,11,20,668,329,511,394,599,558,321,382,340,4
+chowcroft8d,customer loyalty,MA,academic magnet high school,north charleston,SC,3.75,2025,Biology,Computer Engineering,497,656,1,31,22,19,29,703,282,226,238,581,479,777,513,656,5
+wfoort8e,motivating,IL,academy for information technology,scotch plains,NJ,3.24,2023,English,Sociology,765,605,21,31,23,21,30,361,458,776,508,408,501,459,432,782,10
+bkyte8f,portal,SC,james madison high school,vienna,VA,2.31,2026,Spanish,Computer Engineering,529,713,22,18,5,14,25,421,284,686,369,758,428,606,730,617,9
+dnuschke8g,Persistent,TX,whitney high school,cerritos,CA,2.18,2025,Mathematics,Creative Writing,447,207,5,1,22,23,21,619,523,545,663,304,445,272,644,616,1
+fkeightley8h,service-desk,DC,brooklyn technical high school,brooklyn,NY,2.45,2022,English,Creative Writing,471,677,5,31,2,16,16,796,739,370,318,306,737,591,625,368,3
+ksadgrove8i,structure,TX,academic magnet high school,north charleston,SC,2.15,2025,English,Psychology,662,478,19,24,6,23,1,613,451,462,483,416,581,789,214,349,5
+blevet8j,approach,TX,academy for information technology,scotch plains,NJ,3.1,2022,Mathematics,Psychology,432,320,36,19,22,5,6,234,800,465,619,635,517,497,409,785,4
+colenikov8k,composite,CA,james madison high school,vienna,VA,3.12,2023,Spanish,Sociology,473,772,31,33,9,4,31,295,496,675,701,516,700,304,728,557,7
+hivanin8l,knowledge base,FL,whitney high school,cerritos,CA,2.77,2025,Spanish,Psychology,529,353,10,14,15,6,36,646,384,431,649,240,542,397,509,518,5
+cfilpi8m,Exclusive,CT,brooklyn technical high school,brooklyn,NY,2.96,2025,Spanish,Sociology,772,394,24,25,8,19,5,420,452,638,406,323,540,782,247,243,1
+acarpenter8n,web-enabled,DC,academic magnet high school,north charleston,SC,3.06,2023,Spanish,Psychology,669,448,32,22,14,29,17,470,243,426,300,384,730,455,213,253,8
+sgudd8o,fresh-thinking,IN,academy for information technology,scotch plains,NJ,2.48,2022,Biology,Computer Engineering,577,411,15,19,15,34,21,610,543,798,570,657,590,797,485,770,7
+vtruran8p,database,MN,james madison high school,vienna,VA,2.71,2025,Biology,Psychology,359,642,23,28,23,2,28,468,718,577,451,392,611,359,504,700,9
+soleahy8q,contextually-based,FL,whitney high school,cerritos,CA,3.65,2022,English,Sociology,405,701,8,16,18,29,10,329,435,249,698,754,655,536,767,374,7
+dlaurencot8r,methodical,CA,brooklyn technical high school,brooklyn,NY,2.77,2025,Mathematics,Sociology,761,595,5,14,26,2,26,274,594,472,717,245,594,329,459,614,6
+klassells8s,responsive,CA,academic magnet high school,north charleston,SC,3.58,2023,Mathematics,Sociology,800,206,26,8,35,3,24,482,783,585,365,577,788,235,702,337,3
+gcorbin8t,executive,MI,academy for information technology,scotch plains,NJ,2.44,2023,English,Computer Engineering,572,290,18,35,15,3,36,539,645,371,349,415,665,461,244,749,8
+imarchington8u,functionalities,VA,james madison high school,vienna,VA,2.12,2025,Spanish,Psychology,247,620,20,5,9,36,35,459,218,358,476,645,271,755,740,567,0
+ktudgay8v,strategy,FL,whitney high school,cerritos,CA,2.3,2025,Computer Science,Computer Engineering,696,644,21,7,27,15,4,553,394,206,367,586,735,238,310,202,8
+rtebbe8w,functionalities,TX,brooklyn technical high school,brooklyn,NY,3.86,2023,Computer Science,Psychology,718,603,36,25,27,32,2,589,577,307,539,626,317,425,621,717,0
+efarraway8x,bi-directional,NY,academic magnet high school,north charleston,SC,3.87,2022,Spanish,Computer Engineering,279,476,20,4,22,5,12,502,488,649,488,767,403,378,434,736,2
+ggaler8y,4th generation,VA,academy for information technology,scotch plains,NJ,2.91,2025,Mathematics,Computer Engineering,274,470,21,15,22,2,26,575,283,547,749,427,517,796,592,767,7
+noverington8z,directional,WA,james madison high school,vienna,VA,2.81,2022,Mathematics,Computer Engineering,238,515,11,2,7,24,3,611,212,226,266,483,264,326,703,222,2
+cbruna90,implementation,PA,whitney high school,cerritos,CA,3.76,2022,Computer Science,Creative Writing,719,240,24,22,34,36,32,767,672,518,374,254,273,358,576,242,2
+rgeater91,pricing structure,FL,brooklyn technical high school,brooklyn,NY,2.13,2022,Computer Science,Creative Writing,292,323,14,35,11,24,30,648,695,617,391,220,513,704,444,763,5
+edavydychev92,Mandatory,KY,academic magnet high school,north charleston,SC,2.79,2026,Mathematics,Sociology,442,644,19,9,36,19,24,418,715,552,376,772,426,256,324,648,1
+hsmethurst93,user-facing,VA,academy for information technology,scotch plains,NJ,3.94,2023,Biology,Computer Engineering,262,618,6,27,14,17,35,612,551,602,361,371,573,460,566,407,2
+ebulgen94,solution,NV,james madison high school,vienna,VA,2.67,2026,Spanish,Psychology,517,680,32,35,5,12,19,614,415,334,311,790,535,578,442,584,2
+afader95,Intuitive,CT,whitney high school,cerritos,CA,3.36,2022,English,Creative Writing,507,607,17,22,14,29,5,525,692,307,649,209,694,743,252,225,3
+onorval96,Automated,KY,brooklyn technical high school,brooklyn,NY,3.22,2022,Spanish,Sociology,515,719,11,16,30,4,9,551,216,208,740,570,611,531,725,431,1
+apail97,Business-focused,CA,academic magnet high school,north charleston,SC,3.42,2026,Computer Science,Sociology,738,751,11,9,17,6,15,510,673,570,480,691,717,470,374,780,2
+rduggary98,Compatible,TX,academy for information technology,scotch plains,NJ,3.09,2023,Spanish,Creative Writing,383,232,19,21,36,12,12,734,319,316,339,789,340,526,506,243,5
+kstorey99,Fundamental,DC,james madison high school,vienna,VA,2.87,2023,Computer Science,Creative Writing,740,405,10,25,7,8,27,376,484,263,771,558,473,364,309,682,2
+lower9a,pricing structure,KS,whitney high school,cerritos,CA,2.89,2025,Mathematics,Creative Writing,705,464,2,5,12,15,36,794,467,731,512,409,765,473,636,620,6
+gohagan9b,Organized,NY,brooklyn technical high school,brooklyn,NY,2.55,2026,Spanish,Sociology,531,494,23,10,9,3,15,346,239,444,388,615,546,342,514,278,2
+snys9c,Networked,CA,academic magnet high school,north charleston,SC,3.19,2024,Computer Science,Sociology,426,448,28,16,15,11,26,536,701,539,282,280,319,592,335,417,5
+nkelloway9d,matrices,NC,academy for information technology,scotch plains,NJ,2.38,2023,English,Sociology,304,301,34,29,22,14,17,605,338,267,671,346,317,635,556,231,6
+aleonardi9e,portal,LA,james madison high school,vienna,VA,2.22,2022,English,Psychology,537,758,19,25,13,11,18,519,244,767,528,238,610,757,328,564,5
+ereed9f,Adaptive,NC,whitney high school,cerritos,CA,3.36,2024,English,Creative Writing,793,793,22,23,31,8,14,257,477,762,252,424,680,631,727,591,1
+gkeggins9g,bifurcated,NY,brooklyn technical high school,brooklyn,NY,3.22,2023,Computer Science,Psychology,563,561,21,1,12,29,14,739,606,674,745,444,356,262,762,797,3
+cbeernt9h,6th generation,CA,academic magnet high school,north charleston,SC,3.68,2024,Mathematics,Creative Writing,743,399,24,1,25,33,29,312,595,527,525,685,709,588,734,353,10
+ckenneway9i,local area network,CA,academy for information technology,scotch plains,NJ,2.24,2024,Spanish,Creative Writing,713,408,20,6,21,19,36,334,260,594,617,634,253,335,377,379,3
+fpirouet9j,middleware,PA,james madison high school,vienna,VA,3.63,2024,Biology,Sociology,577,679,14,18,16,2,36,687,485,763,291,417,600,606,398,676,6
+egirardey9k,Digitized,FL,whitney high school,cerritos,CA,3.54,2026,Biology,Psychology,725,425,11,16,18,19,25,427,208,716,575,383,537,668,451,422,9
+ksellor9l,hybrid,TX,brooklyn technical high school,brooklyn,NY,3.44,2024,Mathematics,Computer Engineering,686,656,21,7,36,12,32,583,391,339,733,688,206,659,321,680,10
+bborless9m,Object-based,CA,academic magnet high school,north charleston,SC,3.63,2022,Spanish,Creative Writing,550,719,2,5,32,14,22,636,281,702,602,211,207,224,628,353,1
+vdelph9n,moratorium,FL,academy for information technology,scotch plains,NJ,3.92,2026,Computer Science,Computer Engineering,567,433,19,14,4,22,4,453,507,522,344,546,782,332,745,649,6
+jburgot9o,Multi-lateral,CA,james madison high school,vienna,VA,2.03,2023,Mathematics,Sociology,761,658,34,4,35,11,21,532,772,292,681,351,617,233,257,772,5
+qpalfreyman9p,frame,OR,whitney high school,cerritos,CA,2.96,2023,Mathematics,Sociology,292,640,27,34,33,31,35,350,527,559,683,223,706,420,528,281,5
+ktrineman9q,Automated,IA,brooklyn technical high school,brooklyn,NY,2.0,2023,Mathematics,Creative Writing,601,334,16,25,1,27,24,308,725,455,524,462,388,588,353,652,4
+agoldup9r,background,MA,academic magnet high school,north charleston,SC,2.2,2022,Spanish,Psychology,391,597,6,8,3,4,21,240,579,303,512,618,315,634,665,680,4
+bclandillon9s,emulation,VA,academy for information technology,scotch plains,NJ,2.27,2022,Computer Science,Creative Writing,639,247,22,6,26,21,9,570,329,253,774,498,745,451,435,652,8
+grubinowitsch9t,bandwidth-monitored,MD,james madison high school,vienna,VA,2.5,2022,English,Psychology,487,765,5,16,33,20,10,222,205,254,686,216,743,428,406,698,4
+ahamflett9u,grid-enabled,NC,whitney high school,cerritos,CA,2.16,2023,Biology,Sociology,711,256,14,18,13,33,1,374,661,318,799,426,283,617,418,522,3
+dshilvock9v,optimal,DC,brooklyn technical high school,brooklyn,NY,2.92,2024,Spanish,Computer Engineering,755,792,29,34,1,34,33,528,236,540,618,206,755,485,658,629,6
+slacy9w,Fundamental,CA,academic magnet high school,north charleston,SC,3.59,2022,Spanish,Sociology,457,390,8,30,35,26,15,584,528,511,414,497,400,358,683,640,1
+kseagrove9x,motivating,IN,academy for information technology,scotch plains,NJ,2.85,2025,Computer Science,Computer Engineering,390,243,24,10,12,10,34,634,383,297,644,431,631,295,442,666,4
+egaskarth9y,complexity,CA,james madison high school,vienna,VA,3.45,2025,Spanish,Psychology,633,583,29,27,13,15,27,485,693,521,591,387,612,766,293,664,2
+lmcilhatton9z,Organic,OH,whitney high school,cerritos,CA,3.86,2023,Biology,Sociology,233,606,35,12,7,19,33,451,289,457,270,746,415,212,624,666,3
+mkenricka0,strategy,IN,brooklyn technical high school,brooklyn,NY,3.06,2025,Computer Science,Creative Writing,620,326,22,16,36,13,5,586,554,700,457,419,560,731,432,475,3
+tbarsama1,static,FL,academic magnet high school,north charleston,SC,2.31,2024,English,Computer Engineering,393,725,29,20,12,29,16,626,542,352,382,668,396,682,322,691,3
+nraglesa2,static,AZ,academy for information technology,scotch plains,NJ,3.36,2025,Biology,Psychology,429,641,2,13,3,27,18,570,692,422,741,678,479,516,259,686,2
+btredgolda3,definition,TX,james madison high school,vienna,VA,3.56,2026,Spanish,Sociology,385,701,6,14,19,14,8,582,594,646,772,575,361,565,525,779,9
+kkinavana4,Exclusive,NY,whitney high school,cerritos,CA,2.72,2022,English,Psychology,760,553,23,34,29,1,7,246,215,358,410,314,407,333,289,442,8
+alatoura5,interactive,TX,brooklyn technical high school,brooklyn,NY,2.97,2026,Mathematics,Psychology,460,629,21,25,26,33,26,223,506,800,573,512,242,276,294,396,2
+sduffreea6,neutral,IL,academic magnet high school,north charleston,SC,3.68,2026,Computer Science,Creative Writing,594,439,23,27,10,14,19,385,680,530,768,660,626,646,536,601,0
+rabdeya7,instruction set,IL,academy for information technology,scotch plains,NJ,2.2,2026,Spanish,Creative Writing,693,402,13,24,12,17,33,799,388,445,567,702,564,285,406,620,3
+seaglesa8,circuit,OR,james madison high school,vienna,VA,3.85,2023,Spanish,Sociology,259,655,12,13,1,36,32,661,503,317,562,621,219,738,231,202,10
+sderislya9,Proactive,AZ,whitney high school,cerritos,CA,2.46,2023,English,Psychology,771,331,10,4,34,15,15,761,332,315,461,691,214,328,324,224,4
+pgrelikaa,Universal,IL,brooklyn technical high school,brooklyn,NY,2.58,2026,English,Psychology,614,397,18,11,4,22,33,763,461,258,796,592,672,677,246,443,6
+mdewolfeab,strategy,DC,academic magnet high school,north charleston,SC,3.43,2023,Computer Science,Computer Engineering,408,354,5,1,9,33,17,340,588,655,429,627,482,604,501,398,5
+fprobettsac,Triple-buffered,AZ,academy for information technology,scotch plains,NJ,3.8,2022,Spanish,Psychology,707,754,23,34,28,22,6,265,299,778,607,717,569,748,316,682,7
+mtremlettad,needs-based,TX,james madison high school,vienna,VA,3.88,2022,Biology,Sociology,511,499,1,12,23,4,36,305,213,527,223,373,614,744,563,517,10
+nolivetiae,alliance,OH,whitney high school,cerritos,CA,3.44,2025,Mathematics,Psychology,310,432,30,22,11,15,11,254,749,790,631,454,579,719,219,373,3
+leatonaf,Synchronised,MO,brooklyn technical high school,brooklyn,NY,2.9,2023,Mathematics,Psychology,687,226,17,26,3,18,1,201,259,236,376,291,618,573,704,771,2
+sshawag,system-worthy,NM,academic magnet high school,north charleston,SC,3.87,2022,Computer Science,Creative Writing,687,412,18,32,19,34,19,791,313,244,457,684,268,589,425,792,4
+wchamah,transitional,MO,academy for information technology,scotch plains,NJ,2.03,2024,Biology,Computer Engineering,397,482,7,8,17,7,29,388,634,782,649,729,600,547,713,600,3
+kaveriesai,Upgradable,WA,james madison high school,vienna,VA,2.79,2023,Computer Science,Creative Writing,608,457,16,24,30,9,34,668,636,510,339,311,205,278,429,306,2
+cdunnanaj,Right-sized,TX,whitney high school,cerritos,CA,2.96,2023,Biology,Sociology,552,581,11,18,3,5,5,276,324,432,501,537,615,484,797,448,2
+cdymottak,hub,MS,brooklyn technical high school,brooklyn,NY,2.79,2025,Biology,Creative Writing,349,332,7,32,12,4,10,443,381,284,526,503,414,422,471,278,9
+scasalettoal,Mandatory,CA,academic magnet high school,north charleston,SC,2.89,2023,Biology,Creative Writing,633,412,12,3,19,34,25,764,720,274,721,616,440,721,583,304,2
+apicardam,Intuitive,IA,academy for information technology,scotch plains,NJ,2.07,2022,Spanish,Sociology,266,659,6,31,18,5,35,794,324,699,549,528,554,377,793,667,7
+ccorrettan,Quality-focused,PA,james madison high school,vienna,VA,2.46,2025,Biology,Computer Engineering,591,512,2,15,21,26,25,238,360,494,259,462,463,695,752,400,1
+jcharlwoodao,fresh-thinking,MO,whitney high school,cerritos,CA,2.08,2025,English,Creative Writing,421,516,1,34,16,34,32,226,345,513,653,276,455,358,768,570,6
+kmaryanap,content-based,AL,brooklyn technical high school,brooklyn,NY,2.49,2025,Spanish,Sociology,243,691,29,5,20,25,9,437,746,668,296,567,365,628,285,441,3
+bcanbyaq,24/7,NJ,academic magnet high school,north charleston,SC,2.93,2026,Mathematics,Computer Engineering,568,500,20,22,20,18,7,715,579,604,636,483,557,517,472,452,8
+mticksallar,projection,AL,academy for information technology,scotch plains,NJ,2.92,2023,Spanish,Computer Engineering,425,658,12,9,12,28,22,496,545,297,693,337,712,519,478,583,3
+jalessandrinias,Stand-alone,KY,james madison high school,vienna,VA,3.58,2023,Computer Science,Sociology,504,271,14,32,11,30,31,695,404,585,636,378,306,574,436,259,4
+mgresswellat,Function-based,OR,whitney high school,cerritos,CA,2.27,2023,English,Creative Writing,651,327,29,9,18,6,17,206,465,743,676,483,639,445,734,211,1
+kcogginau,Universal,IL,brooklyn technical high school,brooklyn,NY,3.58,2022,Biology,Creative Writing,481,376,35,7,15,7,4,553,709,303,791,378,578,745,604,443,2
+ldraceyav,synergy,NY,academic magnet high school,north charleston,SC,2.29,2025,English,Computer Engineering,346,372,33,9,33,30,24,383,745,658,396,570,385,559,768,574,7
+ksimonettoaw,matrix,GA,academy for information technology,scotch plains,NJ,2.75,2022,English,Psychology,614,346,36,12,9,8,14,559,228,549,770,338,644,277,530,264,7
+grayerax,value-added,HI,james madison high school,vienna,VA,2.42,2024,English,Psychology,791,405,21,4,1,17,8,433,393,652,410,786,707,284,792,590,6
+tfantiniay,budgetary management,FL,whitney high school,cerritos,CA,3.55,2025,Spanish,Sociology,237,289,17,12,20,8,28,557,774,787,282,412,611,377,748,588,6
+lfilipponeaz,Business-focused,FL,brooklyn technical high school,brooklyn,NY,3.04,2024,Biology,Sociology,639,209,29,30,33,14,5,329,771,645,698,412,396,312,337,559,10
+gseedsb0,infrastructure,PA,academic magnet high school,north charleston,SC,3.23,2022,Spanish,Creative Writing,605,760,5,12,30,6,22,566,679,695,643,472,783,617,592,734,6
+dmechemb1,project,VA,academy for information technology,scotch plains,NJ,3.68,2024,Spanish,Sociology,746,577,23,32,33,32,16,542,260,445,503,508,269,303,520,247,9
+kredhollsb2,initiative,CO,james madison high school,vienna,VA,2.55,2025,Biology,Computer Engineering,304,624,36,5,5,3,2,579,549,436,365,395,513,597,225,328,2
+afranktonb3,function,VA,whitney high school,cerritos,CA,2.01,2025,English,Computer Engineering,248,233,4,34,26,24,17,618,771,593,702,641,465,598,526,366,3
+abreedb4,Seamless,CA,brooklyn technical high school,brooklyn,NY,2.12,2026,Spanish,Computer Engineering,428,722,29,24,11,33,29,268,254,620,470,654,318,382,320,335,4
+vashbrookb5,asynchronous,NY,academic magnet high school,north charleston,SC,2.45,2025,Spanish,Psychology,727,707,2,13,27,36,5,535,783,458,226,362,504,722,687,621,8
+kcleareb6,Progressive,FL,academy for information technology,scotch plains,NJ,3.68,2024,Spanish,Sociology,555,647,13,24,29,36,23,594,439,646,279,358,695,662,755,303,5
+bsamwellb7,optimal,WA,james madison high school,vienna,VA,3.67,2023,English,Creative Writing,664,652,3,19,23,18,16,648,792,361,412,796,410,221,786,684,2
+uhavikb8,disintermediate,WI,whitney high school,cerritos,CA,3.86,2022,Mathematics,Creative Writing,601,497,24,14,12,28,7,548,413,467,772,403,366,341,574,411,7
+rraynerb9,project,CT,brooklyn technical high school,brooklyn,NY,3.62,2025,English,Sociology,747,435,10,18,18,35,35,426,741,214,274,422,595,615,536,778,5
+bdesimoniba,Business-focused,PA,academic magnet high school,north charleston,SC,3.98,2023,Computer Science,Creative Writing,732,207,29,34,24,28,14,601,677,770,536,554,544,627,552,667,5
+cmunceybb,moderator,SC,academy for information technology,scotch plains,NJ,3.47,2026,Computer Science,Sociology,790,299,8,10,13,34,7,604,277,583,734,594,373,486,445,239,9
+astorrockbc,Graphical User Interface,PA,james madison high school,vienna,VA,3.54,2022,Mathematics,Sociology,569,417,7,8,4,29,10,236,605,791,777,656,281,615,757,376,5
+hrosinabd,moderator,NY,whitney high school,cerritos,CA,3.11,2026,Computer Science,Creative Writing,714,459,9,31,21,14,27,273,671,623,575,298,435,547,245,578,9
+ncasterotbe,matrices,FL,brooklyn technical high school,brooklyn,NY,2.01,2025,English,Psychology,532,719,34,2,2,22,9,388,776,792,741,374,330,439,756,220,5
+jmacklambf,attitude-oriented,KS,academic magnet high school,north charleston,SC,3.12,2026,Biology,Psychology,220,437,17,33,34,16,22,321,408,627,618,762,221,281,556,472,0
+slongwoodbg,radical,VA,academy for information technology,scotch plains,NJ,2.03,2022,Biology,Psychology,316,531,24,13,19,21,28,589,234,798,645,447,747,532,492,326,9
+rbernadebh,intangible,MO,james madison high school,vienna,VA,2.14,2025,Computer Science,Sociology,612,298,31,6,32,29,1,216,326,270,492,485,567,478,462,222,2
+vpayntonbi,well-modulated,NE,whitney high school,cerritos,CA,3.98,2022,English,Creative Writing,698,664,33,36,22,20,7,339,622,262,441,295,743,513,525,511,0
+wbrownsallbj,Profit-focused,DC,brooklyn technical high school,brooklyn,NY,2.04,2024,Computer Science,Computer Engineering,477,424,16,27,28,30,25,452,600,372,347,383,244,792,627,487,2
+etamblingbk,open architecture,NY,academic magnet high school,north charleston,SC,3.29,2024,Mathematics,Computer Engineering,214,484,7,12,36,14,30,290,416,739,571,282,202,658,350,671,3
+jreadbl,secondary,NV,academy for information technology,scotch plains,NJ,3.44,2022,Biology,Psychology,722,350,32,19,20,6,15,673,230,690,732,668,373,250,392,514,0
+bfairbournbm,4th generation,NY,james madison high school,vienna,VA,3.35,2024,Mathematics,Sociology,333,684,11,28,7,36,18,533,349,687,632,738,645,457,630,468,9
+efennerbn,Ameliorated,DC,whitney high school,cerritos,CA,3.94,2024,English,Creative Writing,566,412,29,27,23,15,10,348,594,738,784,604,465,240,627,712,4
+bcosleybo,logistical,TX,brooklyn technical high school,brooklyn,NY,2.01,2022,English,Psychology,674,232,9,14,26,34,16,378,237,792,429,277,471,410,301,343,5
+eroufbp,Adaptive,IL,academic magnet high school,north charleston,SC,3.21,2023,Biology,Computer Engineering,549,614,9,7,29,5,15,563,230,202,791,699,364,552,316,532,0
+dhaconbq,contextually-based,TX,academy for information technology,scotch plains,NJ,3.55,2026,Spanish,Creative Writing,480,740,7,27,25,7,14,788,338,585,608,780,577,595,718,630,7
+kantognonibr,Diverse,NY,james madison high school,vienna,VA,2.6,2026,Biology,Computer Engineering,272,344,36,1,34,8,3,678,789,757,466,428,360,330,599,288,3
+wglynnebs,Organized,TX,whitney high school,cerritos,CA,2.73,2022,English,Computer Engineering,711,251,34,36,23,10,12,672,627,525,213,793,376,210,778,310,4
+marrbt,Reactive,DC,brooklyn technical high school,brooklyn,NY,3.5,2023,Biology,Sociology,567,633,9,14,27,26,3,673,382,271,645,778,733,477,539,704,9
+tgrissbu,neutral,NY,academic magnet high school,north charleston,SC,2.84,2022,Computer Science,Computer Engineering,557,334,25,16,19,15,25,630,609,446,743,631,718,391,258,221,0
+hbrittonerbv,Virtual,KS,academy for information technology,scotch plains,NJ,2.68,2024,Biology,Psychology,672,785,26,4,20,8,12,332,389,670,726,255,246,543,531,538,6
+lmathesonbw,modular,NH,james madison high school,vienna,VA,2.6,2023,Computer Science,Psychology,740,632,34,22,18,24,31,453,601,691,415,496,300,790,534,399,4
+hsneppbx,implementation,LA,whitney high school,cerritos,CA,3.4,2022,English,Psychology,611,217,7,9,19,6,8,355,633,392,475,330,705,329,222,375,3
+ryeendby,encompassing,TX,brooklyn technical high school,brooklyn,NY,2.53,2024,Mathematics,Computer Engineering,688,717,36,36,7,17,33,666,628,357,606,383,202,778,207,528,8
+sbeinbz,intangible,GA,academic magnet high school,north charleston,SC,3.97,2026,Biology,Sociology,341,730,8,35,10,8,4,721,676,503,576,773,692,394,407,209,3
+cjermyc0,database,AL,academy for information technology,scotch plains,NJ,3.54,2026,Mathematics,Creative Writing,423,307,9,14,10,27,20,686,333,662,421,543,493,701,479,726,0
+grigtsc1,Intuitive,CA,james madison high school,vienna,VA,2.16,2024,Biology,Computer Engineering,245,244,22,11,11,15,6,765,663,401,457,534,794,301,361,223,2
+dboulsherc2,implementation,CA,whitney high school,cerritos,CA,3.1,2025,Spanish,Computer Engineering,428,688,3,13,4,27,8,721,556,789,688,478,404,519,631,784,8
+fbellochc3,Programmable,TX,brooklyn technical high school,brooklyn,NY,3.98,2025,Spanish,Computer Engineering,251,651,33,24,17,11,14,275,300,365,428,370,691,778,297,634,8
+ncaldwallc4,matrix,MO,academic magnet high school,north charleston,SC,2.75,2022,Biology,Creative Writing,613,783,31,3,6,1,24,328,381,333,690,799,411,303,793,408,5
+adarkec5,Grass-roots,TX,academy for information technology,scotch plains,NJ,2.4,2024,Mathematics,Creative Writing,242,359,18,35,6,7,25,576,319,718,564,368,477,376,707,318,6
+eitzcovichchc6,fresh-thinking,CA,james madison high school,vienna,VA,3.16,2025,Mathematics,Computer Engineering,347,415,11,30,7,2,27,697,339,717,749,283,479,290,759,438,3
+tradnagec7,leading edge,CA,whitney high school,cerritos,CA,2.95,2022,English,Psychology,205,296,4,31,28,7,31,456,644,760,248,612,758,499,654,343,3
+loganc8,conglomeration,PA,brooklyn technical high school,brooklyn,NY,3.79,2025,Computer Science,Psychology,542,574,23,33,9,22,12,779,425,788,471,710,370,451,456,744,1
+fgateleyc9,needs-based,DC,academic magnet high school,north charleston,SC,3.82,2024,Computer Science,Computer Engineering,294,493,12,18,16,11,23,641,589,446,664,553,607,369,318,710,9
+mplumbca,intangible,KY,academy for information technology,scotch plains,NJ,3.94,2023,Mathematics,Computer Engineering,545,573,25,14,28,17,20,676,695,671,476,641,787,774,362,396,10
+eriselycb,6th generation,IN,james madison high school,vienna,VA,3.82,2026,Mathematics,Psychology,518,330,7,31,31,13,30,438,404,541,489,405,692,499,540,470,1
+fpllucc,Upgradable,OH,whitney high school,cerritos,CA,3.78,2024,Computer Science,Sociology,330,397,11,25,26,30,22,493,480,428,653,491,794,274,488,710,6
+mlaweycd,contextually-based,NY,brooklyn technical high school,brooklyn,NY,3.95,2022,English,Computer Engineering,618,333,12,7,34,10,22,737,738,747,567,695,376,624,341,696,4
+gconiamce,logistical,KS,academic magnet high school,north charleston,SC,3.35,2026,English,Computer Engineering,743,692,11,36,24,32,24,525,707,507,689,572,487,634,275,552,5
+abasscf,help-desk,IA,academy for information technology,scotch plains,NJ,2.0,2026,English,Creative Writing,548,646,14,26,31,33,17,401,478,516,688,513,482,436,750,242,7
+ltymcg,data-warehouse,TX,james madison high school,vienna,VA,2.92,2022,Biology,Computer Engineering,505,273,21,20,6,30,15,591,378,284,629,446,392,717,203,554,5
+kcorkerch,Visionary,CO,whitney high school,cerritos,CA,2.57,2022,English,Creative Writing,493,331,16,19,36,7,17,369,692,314,558,355,292,322,640,414,5
+zarstallci,budgetary management,DC,brooklyn technical high school,brooklyn,NY,2.65,2026,Biology,Sociology,493,377,11,34,22,28,11,743,395,357,202,708,250,528,471,715,0
+chrinchishincj,tertiary,LA,academic magnet high school,north charleston,SC,2.02,2025,Spanish,Computer Engineering,271,582,23,17,16,25,36,304,491,569,212,582,535,573,688,703,5
+mmcgaughayck,optimizing,NJ,academy for information technology,scotch plains,NJ,3.75,2023,Mathematics,Psychology,793,211,34,30,31,3,13,279,256,504,756,329,201,507,696,223,4
+qrucklidgecl,Focused,CO,james madison high school,vienna,VA,2.09,2022,Spanish,Creative Writing,570,543,2,34,22,21,33,451,701,768,655,489,349,625,450,439,7
+fpolglazecm,pricing structure,WA,whitney high school,cerritos,CA,2.07,2025,Biology,Sociology,500,223,27,34,26,25,3,682,634,658,800,650,381,685,750,670,1
+khickenbottomcn,actuating,LA,brooklyn technical high school,brooklyn,NY,3.6,2025,English,Computer Engineering,265,576,4,34,22,1,16,578,270,742,653,489,310,683,564,349,5
+roscandallco,executive,GA,academic magnet high school,north charleston,SC,2.09,2022,Mathematics,Creative Writing,532,638,1,4,31,23,20,287,780,259,427,407,567,659,471,478,7
+gsidebothamcp,Switchable,IL,academy for information technology,scotch plains,NJ,2.04,2025,Computer Science,Computer Engineering,721,717,23,31,8,8,7,328,245,768,605,352,587,640,757,465,5
+scoramcq,cohesive,VA,james madison high school,vienna,VA,2.91,2023,Mathematics,Sociology,683,315,20,30,9,36,2,756,236,408,621,526,512,231,420,637,7
+naldiecr,Persistent,NY,whitney high school,cerritos,CA,2.89,2022,Computer Science,Psychology,394,321,24,7,30,7,12,594,500,470,305,749,630,406,751,477,1
+jbernakiewiczcs,background,CA,brooklyn technical high school,brooklyn,NY,3.3,2022,English,Sociology,692,291,35,5,8,1,7,665,690,338,711,630,498,565,585,240,6
+rannellct,context-sensitive,PA,academic magnet high school,north charleston,SC,3.18,2022,Spanish,Computer Engineering,250,505,33,22,33,15,26,499,785,789,693,485,410,291,200,611,8
+jpantonecu,protocol,MN,academy for information technology,scotch plains,NJ,3.1,2022,Spanish,Computer Engineering,217,446,16,17,5,30,21,296,242,588,511,687,280,528,787,328,5
+nbinesteadcv,info-mediaries,KS,james madison high school,vienna,VA,3.2,2024,Mathematics,Creative Writing,395,474,31,1,4,3,9,433,733,377,647,530,626,357,791,767,9
+hraschcw,systematic,FL,whitney high school,cerritos,CA,3.08,2023,Computer Science,Psychology,227,711,18,19,32,26,12,492,716,359,773,474,592,627,209,572,1
+kpenhallcx,eco-centric,IN,brooklyn technical high school,brooklyn,NY,2.01,2025,Spanish,Sociology,438,479,13,22,11,7,6,791,271,615,605,647,442,701,728,573,9
+hteschecy,4th generation,TX,academic magnet high school,north charleston,SC,3.13,2022,Biology,Computer Engineering,654,755,1,32,23,6,9,604,410,245,443,712,457,234,373,697,8
+flomiscz,function,FL,academy for information technology,scotch plains,NJ,2.14,2025,English,Computer Engineering,667,491,34,15,33,7,5,752,216,623,609,397,486,383,327,630,9
+awoodalld0,Synergized,CA,james madison high school,vienna,VA,2.45,2026,Computer Science,Sociology,241,461,6,36,8,2,18,308,478,541,389,584,511,663,717,246,4
+bkoppked1,logistical,WA,whitney high school,cerritos,CA,2.26,2025,Biology,Creative Writing,383,690,35,27,16,30,15,334,416,532,732,378,679,602,366,387,1
+lhollowsd2,analyzer,FL,brooklyn technical high school,brooklyn,NY,2.78,2025,English,Psychology,719,248,24,9,19,30,32,308,576,227,673,205,467,232,354,757,9
+ebilesd3,initiative,MA,academic magnet high school,north charleston,SC,2.13,2022,Spanish,Sociology,248,555,34,19,26,34,28,631,429,721,537,658,615,482,700,616,9
+rdraijerd4,Graphical User Interface,CA,academy for information technology,scotch plains,NJ,3.61,2025,Mathematics,Computer Engineering,756,502,36,1,35,3,8,782,592,259,465,452,272,373,788,614,2
+snorthcoted5,Function-based,TX,james madison high school,vienna,VA,3.46,2025,Spanish,Creative Writing,306,352,2,22,3,8,32,389,794,282,203,453,696,424,438,478,10
+llahertyd6,Total,IL,whitney high school,cerritos,CA,3.32,2022,Computer Science,Psychology,526,587,5,31,28,28,21,656,432,291,630,276,230,497,797,476,9
+msweedlandd7,user-facing,NC,brooklyn technical high school,brooklyn,NY,2.7,2022,Computer Science,Creative Writing,426,700,20,12,20,16,29,658,536,693,222,251,275,213,526,284,5
+tmeadwayd8,functionalities,MN,academic magnet high school,north charleston,SC,3.79,2022,English,Creative Writing,783,306,16,33,15,6,31,446,404,243,405,291,408,300,645,296,9
+gsillsd9,Reverse-engineered,WI,academy for information technology,scotch plains,NJ,2.26,2024,Biology,Psychology,698,561,19,23,25,29,26,364,704,589,732,277,688,505,771,298,2
+bseilmannda,system-worthy,MO,james madison high school,vienna,VA,3.52,2022,English,Creative Writing,509,406,13,15,15,24,1,615,450,755,695,564,355,617,478,352,8
+khynsondb,adapter,NC,whitney high school,cerritos,CA,3.57,2025,Spanish,Psychology,589,293,10,5,15,10,28,667,659,669,671,760,754,500,625,706,4
+cisaacsondc,mission-critical,NY,brooklyn technical high school,brooklyn,NY,2.62,2025,Mathematics,Psychology,237,476,21,6,23,36,3,792,338,226,224,725,313,470,342,249,4
+eplowelldd,grid-enabled,FL,academic magnet high school,north charleston,SC,2.58,2022,Spanish,Psychology,510,314,36,25,35,34,8,552,200,440,318,471,288,681,220,344,0
+mallchornde,Persevering,AL,academy for information technology,scotch plains,NJ,2.61,2023,Computer Science,Sociology,417,452,18,12,16,6,13,369,715,430,473,793,227,310,384,667,9
+mriddalldf,non-volatile,DC,james madison high school,vienna,VA,2.89,2022,Spanish,Sociology,643,509,27,36,22,22,30,790,548,242,727,329,210,513,240,536,2
+lmaidendg,24/7,OH,whitney high school,cerritos,CA,3.5,2025,Biology,Computer Engineering,321,462,1,5,14,8,6,644,795,204,268,488,382,756,488,456,2
+varrelldh,Triple-buffered,NY,brooklyn technical high school,brooklyn,NY,3.15,2026,Mathematics,Creative Writing,255,777,18,32,28,27,16,339,327,703,614,691,731,688,773,354,6
+rtowsdi,software,FL,academic magnet high school,north charleston,SC,2.84,2022,Spanish,Psychology,319,745,24,16,17,4,15,295,652,733,207,677,247,727,772,215,2
+rhandscombedj,project,CA,academy for information technology,scotch plains,NJ,2.51,2023,Mathematics,Creative Writing,383,656,36,32,33,14,1,258,622,656,668,672,700,273,567,238,8
+atitchmarshdk,content-based,CA,james madison high school,vienna,VA,2.04,2025,Computer Science,Creative Writing,476,585,29,33,35,32,19,608,627,566,469,632,608,416,647,234,9
+mcaudelierdl,dynamic,TX,whitney high school,cerritos,CA,3.25,2023,Computer Science,Sociology,229,223,6,14,8,9,7,274,400,300,652,389,339,430,450,693,0
+emedddm,Synchronised,TX,brooklyn technical high school,brooklyn,NY,3.18,2022,English,Psychology,796,561,7,3,26,3,2,456,441,341,282,790,783,557,682,495,1
+csenettdn,Networked,CA,academic magnet high school,north charleston,SC,3.01,2026,Biology,Computer Engineering,754,242,10,30,36,32,29,597,726,605,598,516,759,362,563,203,5
+rtrytsmando,Advanced,TX,academy for information technology,scotch plains,NJ,3.66,2022,Mathematics,Creative Writing,495,791,4,25,27,30,3,698,565,723,743,350,404,215,565,274,1
+athistletondp,circuit,DC,james madison high school,vienna,VA,3.61,2025,Biology,Creative Writing,263,369,9,29,28,15,8,761,358,458,321,260,484,627,745,364,0
+jbaggedq,solution,LA,whitney high school,cerritos,CA,3.83,2026,Biology,Psychology,768,386,21,36,2,29,1,404,684,769,668,251,399,724,760,691,0
+rdodsworthdr,Function-based,NY,brooklyn technical high school,brooklyn,NY,3.45,2024,English,Psychology,235,534,26,6,26,25,17,680,627,767,263,535,267,522,306,324,3
+csonghurstds,stable,FL,academic magnet high school,north charleston,SC,3.89,2023,Spanish,Computer Engineering,480,384,5,24,31,25,36,290,673,728,694,541,786,682,380,615,5
+mtozerdt,Up-sized,TX,academy for information technology,scotch plains,NJ,3.94,2026,Biology,Psychology,296,697,2,16,17,22,33,463,389,461,574,693,294,340,501,306,1
+mcoolingdu,discrete,TX,james madison high school,vienna,VA,2.78,2024,Biology,Psychology,488,300,4,19,31,3,32,752,344,680,471,718,456,764,355,778,5
+jfilippozzidv,object-oriented,PA,whitney high school,cerritos,CA,2.06,2023,Spanish,Creative Writing,477,795,18,15,19,23,3,531,414,391,745,527,422,762,350,203,5
+aputtrelldw,Ameliorated,MO,brooklyn technical high school,brooklyn,NY,3.01,2026,Computer Science,Computer Engineering,208,455,10,5,3,13,2,398,235,215,419,633,542,504,335,468,0
+smarriagedx,background,WA,academic magnet high school,north charleston,SC,3.01,2025,English,Computer Engineering,375,699,17,25,19,7,3,545,557,745,568,275,711,774,454,706,3
+diczokvitzdy,pricing structure,TX,academy for information technology,scotch plains,NJ,3.65,2026,Computer Science,Computer Engineering,664,304,33,32,24,17,21,300,715,455,518,328,648,297,279,362,7
+lpretswelldz,coherent,OK,james madison high school,vienna,VA,3.95,2025,Computer Science,Creative Writing,699,326,16,34,31,35,32,595,382,280,713,310,693,405,640,412,9
+agoshawke0,3rd generation,WY,whitney high school,cerritos,CA,3.59,2022,Spanish,Sociology,421,540,17,26,21,21,13,591,704,392,720,672,377,463,240,508,5
+bkintone1,fresh-thinking,CA,brooklyn technical high school,brooklyn,NY,2.67,2023,English,Psychology,270,275,2,18,16,11,13,288,263,606,433,247,271,744,334,728,9
+chamshawe2,forecast,TX,academic magnet high school,north charleston,SC,2.51,2025,Mathematics,Computer Engineering,311,734,5,12,26,18,6,654,748,514,224,447,499,334,503,636,8
+cdinwoodiee3,Team-oriented,AL,academy for information technology,scotch plains,NJ,3.52,2025,Computer Science,Psychology,203,510,6,4,33,12,5,711,347,322,435,669,654,798,349,770,3
+mjouannye4,Profit-focused,CA,james madison high school,vienna,VA,3.48,2025,Computer Science,Psychology,311,463,29,29,9,32,7,299,421,382,413,759,231,531,768,333,0
+rpreatore5,interface,VA,whitney high school,cerritos,CA,2.7,2022,Biology,Computer Engineering,363,785,4,26,9,14,7,742,210,603,288,749,764,789,709,332,0
+ohrinchishine6,Sharable,SC,brooklyn technical high school,brooklyn,NY,3.15,2022,Mathematics,Creative Writing,297,664,24,11,21,3,36,269,738,552,506,406,409,338,708,664,0
+pvaneedene7,core,AL,academic magnet high school,north charleston,SC,3.0,2022,Biology,Psychology,709,276,5,31,36,21,22,356,335,288,595,217,584,449,641,647,6
+menrigoe8,budgetary management,KY,academy for information technology,scotch plains,NJ,3.55,2023,Mathematics,Sociology,651,501,3,15,19,28,7,723,749,283,748,571,677,636,536,634,9
+rjarrete9,eco-centric,KS,james madison high school,vienna,VA,3.72,2024,Computer Science,Psychology,629,572,1,8,22,25,20,580,341,314,623,205,736,395,683,530,1
+asollarsea,access,TX,whitney high school,cerritos,CA,2.83,2023,Computer Science,Creative Writing,396,743,26,29,15,5,29,369,769,331,553,626,320,203,510,217,2
+bamayaeb,well-modulated,NY,brooklyn technical high school,brooklyn,NY,3.54,2022,Mathematics,Psychology,678,303,27,19,35,16,17,299,388,485,379,758,321,292,328,783,0
+agoldsec,3rd generation,VA,academic magnet high school,north charleston,SC,2.95,2023,Spanish,Computer Engineering,555,200,6,2,35,2,1,557,707,390,663,731,495,473,695,233,9
+wslattened,initiative,NM,academy for information technology,scotch plains,NJ,2.34,2023,Biology,Sociology,528,739,6,17,14,23,34,323,540,589,558,667,339,474,285,344,2
+msharpousee,product,FL,james madison high school,vienna,VA,3.35,2025,Spanish,Psychology,626,424,4,22,24,19,36,604,299,239,621,289,736,423,328,556,0
+gconwellef,asymmetric,WA,whitney high school,cerritos,CA,3.0,2025,Mathematics,Creative Writing,666,605,3,19,3,6,36,366,390,590,694,230,577,477,796,551,4
+rledinghameg,data-warehouse,VA,brooklyn technical high school,brooklyn,NY,3.43,2026,Mathematics,Creative Writing,260,556,3,16,29,34,22,306,701,505,301,779,583,448,670,671,0
+rpoldingeh,Multi-tiered,FL,academic magnet high school,north charleston,SC,3.34,2023,Biology,Computer Engineering,395,655,12,14,34,10,35,281,685,231,603,727,677,239,660,477,7
+uoxfordei,Multi-layered,VA,academy for information technology,scotch plains,NJ,2.69,2026,Biology,Creative Writing,493,694,22,9,19,3,14,212,636,606,709,276,441,612,543,417,7
+gtaylderej,Balanced,OK,james madison high school,vienna,VA,2.01,2023,Mathematics,Computer Engineering,282,268,10,33,13,27,5,482,779,493,227,445,429,456,650,490,4
+hmarczykek,portal,MN,whitney high school,cerritos,CA,2.56,2023,Computer Science,Sociology,269,710,22,34,5,34,33,297,426,327,478,765,478,417,322,602,3
+rbladenel,Vision-oriented,MA,brooklyn technical high school,brooklyn,NY,3.67,2025,Biology,Psychology,353,234,5,21,35,34,17,291,230,361,716,698,654,772,605,273,6
+lstandidgeem,Open-source,TX,academic magnet high school,north charleston,SC,2.2,2025,Spanish,Creative Writing,403,558,22,24,26,6,20,524,659,388,462,626,378,372,371,614,2
+aferebeeen,Diverse,FL,academy for information technology,scotch plains,NJ,3.41,2023,English,Psychology,576,598,17,36,1,22,31,361,478,476,382,299,256,703,513,608,2
+bclearyeo,forecast,FL,james madison high school,vienna,VA,2.29,2022,Computer Science,Psychology,354,566,1,11,14,4,4,554,433,354,639,544,252,787,248,208,6
+jpattenep,Open-architected,KY,whitney high school,cerritos,CA,2.96,2026,Biology,Sociology,272,503,17,5,3,34,36,603,370,408,502,407,647,479,786,590,1
+abesseq,installation,TX,brooklyn technical high school,brooklyn,NY,2.42,2022,Spanish,Sociology,265,267,13,1,8,28,35,668,774,286,364,601,357,593,574,452,2
+bchesshyreer,Open-source,NY,academic magnet high school,north charleston,SC,3.53,2025,Computer Science,Sociology,249,279,34,20,30,36,4,440,284,237,564,745,518,282,247,224,2
+psheptones,User-centric,VA,academy for information technology,scotch plains,NJ,2.51,2026,English,Sociology,437,312,31,12,6,32,3,335,791,244,426,341,508,653,464,570,8
+dneemet,Business-focused,KS,james madison high school,vienna,VA,3.72,2025,Mathematics,Sociology,744,351,7,9,21,4,17,387,773,565,203,286,428,510,406,575,2
+dgebuhreu,Customizable,MA,whitney high school,cerritos,CA,2.95,2024,English,Computer Engineering,454,403,32,21,6,16,15,288,321,201,630,239,409,357,656,445,8
+bhopferev,productivity,MN,brooklyn technical high school,brooklyn,NY,3.25,2025,Computer Science,Creative Writing,494,250,31,5,1,19,21,534,303,312,619,635,781,480,687,674,2
+goldcoteew,attitude-oriented,MA,academic magnet high school,north charleston,SC,3.78,2024,English,Psychology,450,704,12,26,5,33,33,719,464,293,615,781,675,204,351,620,5
+ldrableex,Fundamental,IL,academy for information technology,scotch plains,NJ,2.36,2024,English,Computer Engineering,235,754,26,21,1,21,33,202,206,718,655,685,698,492,355,317,8
+lgiddensey,Digitized,NY,james madison high school,vienna,VA,3.98,2023,Spanish,Psychology,684,306,5,31,25,25,8,782,677,343,627,553,740,671,449,248,2
+nbasdenez,matrices,FL,whitney high school,cerritos,CA,3.1,2025,Mathematics,Computer Engineering,783,379,6,8,4,17,11,241,209,654,451,756,336,401,716,539,5
+gbuttlerf0,Optional,NY,brooklyn technical high school,brooklyn,NY,3.27,2026,Biology,Creative Writing,695,468,12,15,19,16,16,473,237,629,337,549,501,681,241,259,9
+rloftinf1,Configurable,WI,academic magnet high school,north charleston,SC,3.83,2024,Spanish,Psychology,338,759,8,32,19,5,34,200,379,569,597,359,476,357,500,743,4
+bverlingf2,non-volatile,TX,academy for information technology,scotch plains,NJ,3.43,2022,Mathematics,Computer Engineering,556,798,5,18,34,4,27,243,491,682,582,368,454,246,495,540,2
+cbunnellf3,hybrid,MN,james madison high school,vienna,VA,3.89,2026,Mathematics,Creative Writing,215,437,36,10,34,33,14,531,419,285,584,306,201,498,224,631,8
+jgorgesf4,algorithm,TX,whitney high school,cerritos,CA,3.84,2025,English,Psychology,316,255,4,32,10,23,25,708,206,606,547,278,559,512,430,501,5
+atetherf5,Adaptive,MN,brooklyn technical high school,brooklyn,NY,2.84,2025,Biology,Computer Engineering,558,539,16,4,19,21,7,671,680,555,757,480,504,316,776,747,8
+anisenf6,didactic,CA,academic magnet high school,north charleston,SC,2.99,2025,Biology,Computer Engineering,750,630,7,33,32,35,14,691,339,252,579,220,557,497,355,393,8
+rmabbf7,Multi-layered,ND,academy for information technology,scotch plains,NJ,3.33,2026,Biology,Sociology,614,286,13,8,15,36,12,696,499,214,437,613,364,486,427,552,0
+lwatmoughf8,background,ND,james madison high school,vienna,VA,2.13,2022,Biology,Computer Engineering,722,774,1,20,18,29,14,687,403,607,665,317,246,487,558,318,10
+hhillbornef9,Progressive,NY,whitney high school,cerritos,CA,2.58,2022,English,Creative Writing,327,200,33,8,22,14,32,597,679,294,402,650,243,435,510,536,5
+phayzerfa,Decentralized,TX,brooklyn technical high school,brooklyn,NY,2.22,2023,Spanish,Sociology,797,291,22,29,33,7,10,604,450,588,303,281,242,470,341,724,7
+bneubiginfb,user-facing,MI,academic magnet high school,north charleston,SC,3.66,2023,English,Psychology,678,634,20,18,24,26,19,359,746,564,618,269,432,454,295,230,6
+sscolefc,Multi-channelled,FL,academy for information technology,scotch plains,NJ,2.36,2024,Mathematics,Creative Writing,789,497,11,31,35,1,12,456,762,707,230,602,472,581,741,324,2
+cbulleyfd,Visionary,NY,james madison high school,vienna,VA,2.09,2026,Biology,Sociology,378,760,18,34,3,17,36,594,751,526,784,317,496,601,210,394,9
+horumfe,groupware,TN,whitney high school,cerritos,CA,2.33,2025,Computer Science,Creative Writing,545,519,10,35,4,33,14,694,484,338,773,298,736,778,745,393,7
+mlorneff,pricing structure,VA,brooklyn technical high school,brooklyn,NY,2.68,2024,English,Computer Engineering,589,717,13,11,35,18,25,202,662,668,365,564,328,693,390,231,10
+bmetterickfg,matrices,ID,academic magnet high school,north charleston,SC,3.42,2026,Biology,Creative Writing,345,211,5,32,23,14,18,425,290,466,546,302,447,327,468,384,1
+wbosketfh,array,KY,academy for information technology,scotch plains,NJ,3.69,2023,Biology,Sociology,648,503,15,7,21,34,3,728,453,764,705,325,692,686,420,524,4
+alowndsbroughfi,Open-source,TX,james madison high school,vienna,VA,2.92,2025,Spanish,Computer Engineering,784,280,2,10,1,29,16,600,643,273,653,318,200,620,372,505,1
+lwaterstonefj,analyzing,AZ,whitney high school,cerritos,CA,2.19,2025,Computer Science,Computer Engineering,645,783,11,10,20,32,19,440,476,274,452,371,750,453,383,521,1
+glunamfk,didactic,MS,brooklyn technical high school,brooklyn,NY,2.32,2022,Mathematics,Psychology,706,265,14,32,14,1,30,270,773,555,494,508,726,726,585,413,6
+acrooksfl,flexibility,FL,academic magnet high school,north charleston,SC,3.33,2026,Spanish,Creative Writing,290,314,31,8,34,12,17,318,563,201,754,692,340,444,387,795,2
+cspightfm,firmware,GA,academy for information technology,scotch plains,NJ,3.19,2026,Computer Science,Computer Engineering,342,512,27,11,26,23,11,429,358,755,787,737,251,794,750,440,7
+hcorbetfn,Graphical User Interface,FL,james madison high school,vienna,VA,2.76,2025,Computer Science,Computer Engineering,457,357,32,23,3,23,30,293,379,740,632,325,422,689,479,393,0
+jpalphreymanfo,bandwidth-monitored,IN,whitney high school,cerritos,CA,2.93,2023,Spanish,Psychology,699,413,23,20,18,11,30,406,573,385,316,421,749,282,544,509,3
+imarquotfp,Stand-alone,GA,brooklyn technical high school,brooklyn,NY,2.55,2023,Computer Science,Computer Engineering,270,570,32,34,12,12,15,244,393,655,397,259,355,217,733,533,4
+jgeelanfq,3rd generation,NY,academic magnet high school,north charleston,SC,3.87,2024,Biology,Psychology,480,653,25,13,14,29,35,578,732,205,481,248,799,339,516,287,3
+dyessonfr,Automated,MA,academy for information technology,scotch plains,NJ,3.03,2025,Mathematics,Sociology,349,580,35,34,30,9,33,299,727,729,684,653,371,632,505,206,0
+ccrucesfs,Business-focused,CA,james madison high school,vienna,VA,3.91,2024,Biology,Creative Writing,212,703,16,25,2,29,28,288,384,346,310,737,273,225,409,378,6
+jcluelowft,uniform,FL,whitney high school,cerritos,CA,2.08,2025,Mathematics,Computer Engineering,257,639,26,3,29,7,17,220,615,419,474,442,698,628,547,435,1
+pbardillfu,Polarised,OH,brooklyn technical high school,brooklyn,NY,2.48,2023,Biology,Sociology,470,522,18,7,7,2,12,626,423,253,458,209,370,615,644,475,7
+nbrosekefv,forecast,OH,academic magnet high school,north charleston,SC,2.28,2023,Biology,Creative Writing,579,770,16,20,36,8,25,490,573,728,439,382,283,515,701,436,8
+agrzeszczykfw,task-force,CA,academy for information technology,scotch plains,NJ,3.31,2022,Biology,Psychology,419,249,21,32,34,33,16,445,791,727,765,443,650,299,522,233,4
+hmclernonfx,Fully-configurable,FL,james madison high school,vienna,VA,3.95,2025,Mathematics,Creative Writing,299,434,24,34,13,26,11,699,706,724,399,781,282,328,792,677,7
+speskinfy,Focused,TX,whitney high school,cerritos,CA,2.33,2024,Biology,Sociology,627,468,8,6,4,11,35,640,680,249,465,747,250,548,778,391,8
+gattreedfz,moderator,TX,brooklyn technical high school,brooklyn,NY,2.29,2024,Spanish,Psychology,775,586,16,25,2,15,24,768,343,713,524,219,577,306,468,773,0
+kveljesg0,service-desk,CA,academic magnet high school,north charleston,SC,3.02,2024,Computer Science,Psychology,395,262,7,33,16,32,32,611,505,719,517,283,564,220,695,229,2
+dmacalindeng1,Streamlined,MO,academy for information technology,scotch plains,NJ,3.32,2024,Computer Science,Computer Engineering,632,731,2,4,30,22,5,529,686,511,225,358,452,206,597,321,3
+cwythillg2,Future-proofed,MI,james madison high school,vienna,VA,2.76,2022,Mathematics,Computer Engineering,562,204,26,20,3,21,8,623,269,651,515,263,669,468,203,509,2
+rlangrishg3,firmware,VA,whitney high school,cerritos,CA,3.9,2026,Mathematics,Psychology,595,254,31,9,16,18,24,584,717,534,790,337,684,572,297,314,8
+jdelacosteg4,moderator,CA,brooklyn technical high school,brooklyn,NY,3.28,2022,Computer Science,Computer Engineering,565,287,22,36,27,29,21,398,475,683,513,530,753,224,740,272,7
+dduddyg5,open system,NC,academic magnet high school,north charleston,SC,3.29,2023,Biology,Psychology,258,406,15,29,8,32,23,454,504,322,568,352,462,343,254,752,4
+rfenbyg6,Extended,TX,academy for information technology,scotch plains,NJ,3.7,2023,Computer Science,Sociology,733,374,24,6,13,2,31,646,608,353,452,673,421,455,327,304,2
+bsibbeg7,interactive,DC,james madison high school,vienna,VA,2.08,2026,Mathematics,Creative Writing,619,535,34,11,36,6,21,336,291,200,204,331,777,202,440,734,7
+bseppeyg8,Open-architected,NY,whitney high school,cerritos,CA,3.11,2022,Computer Science,Psychology,739,235,12,6,17,33,3,696,439,350,489,632,249,277,310,540,1
+rhamlyg9,challenge,TX,brooklyn technical high school,brooklyn,NY,2.98,2024,Mathematics,Psychology,481,278,5,6,22,10,2,564,738,692,366,461,613,339,524,650,7
+hslaghtga,asymmetric,CA,academic magnet high school,north charleston,SC,2.52,2025,Computer Science,Psychology,631,351,23,20,34,36,34,695,350,546,452,313,561,509,548,681,3
+amattkegb,grid-enabled,RI,academy for information technology,scotch plains,NJ,3.5,2024,English,Creative Writing,409,431,20,9,28,3,9,578,571,555,397,338,453,212,348,452,1
+gdonnersberggc,Grass-roots,OK,james madison high school,vienna,VA,2.45,2026,Computer Science,Computer Engineering,434,470,7,9,28,16,33,542,758,312,360,620,476,448,356,745,6
+swylemangd,service-desk,OK,whitney high school,cerritos,CA,3.84,2022,Computer Science,Psychology,786,771,17,23,18,24,9,381,499,352,644,576,776,205,658,458,4
+ccreminge,algorithm,WA,brooklyn technical high school,brooklyn,NY,3.29,2024,Computer Science,Psychology,348,614,14,8,29,34,30,506,326,569,687,679,676,354,584,375,2
+norteltgf,demand-driven,CA,academic magnet high school,north charleston,SC,3.45,2026,Spanish,Computer Engineering,336,664,2,26,1,13,10,748,348,574,477,739,208,254,523,343,3
+tmecchigg,attitude-oriented,NY,academy for information technology,scotch plains,NJ,2.73,2024,English,Creative Writing,411,205,32,29,12,34,33,208,512,586,546,523,634,495,496,552,5
+hvigergh,full-range,IA,james madison high school,vienna,VA,2.11,2023,Mathematics,Computer Engineering,522,527,21,3,36,30,4,539,626,218,406,684,654,359,509,317,7
+jdavleygi,success,PA,whitney high school,cerritos,CA,3.28,2026,English,Sociology,437,381,3,4,22,13,1,415,221,545,678,340,265,568,466,712,0
+beplategj,interactive,TX,brooklyn technical high school,brooklyn,NY,3.51,2026,English,Computer Engineering,692,717,19,10,32,4,9,570,267,312,435,518,455,308,524,274,0
+elaurentygk,frame,IA,academic magnet high school,north charleston,SC,2.35,2026,Biology,Creative Writing,609,590,24,13,33,24,3,553,204,265,258,224,576,630,554,566,9
+fpielgl,firmware,AL,academy for information technology,scotch plains,NJ,2.15,2025,Computer Science,Computer Engineering,518,709,30,3,27,18,34,227,571,421,330,449,651,568,696,254,1
+lkomorowskigm,Switchable,PA,james madison high school,vienna,VA,3.08,2024,English,Computer Engineering,201,248,12,22,1,8,13,781,769,576,275,217,588,237,330,574,2
+jdaymentgn,installation,TN,whitney high school,cerritos,CA,2.58,2023,English,Computer Engineering,525,318,35,1,33,33,13,560,412,307,284,719,261,721,644,788,3
+bhastygo,Grass-roots,OK,brooklyn technical high school,brooklyn,NY,2.4,2025,Biology,Creative Writing,782,745,10,35,15,28,23,487,656,728,483,692,684,527,762,208,0
+kcookleygp,Business-focused,CA,academic magnet high school,north charleston,SC,2.7,2023,Mathematics,Creative Writing,369,524,18,4,14,2,27,317,766,334,519,602,276,590,645,311,6
+ptroygq,Vision-oriented,SC,academy for information technology,scotch plains,NJ,3.05,2022,Biology,Sociology,774,705,13,26,31,3,31,360,405,551,411,241,750,246,362,494,4
+kiglesiagr,coherent,ID,james madison high school,vienna,VA,3.37,2024,Mathematics,Sociology,639,498,13,12,20,13,22,553,610,577,341,563,670,472,710,752,10
+lfoadgs,Business-focused,NV,whitney high school,cerritos,CA,3.99,2023,Biology,Psychology,533,464,30,4,5,11,10,541,460,735,781,468,370,549,323,764,1
+cbrigdalegt,asynchronous,NJ,brooklyn technical high school,brooklyn,NY,3.21,2026,Mathematics,Computer Engineering,449,616,7,7,19,31,16,734,796,621,699,308,723,784,793,445,6
+dpitceathlygu,radical,MI,academic magnet high school,north charleston,SC,3.68,2023,Biology,Psychology,255,573,20,23,11,34,1,352,434,649,767,751,681,395,742,298,2
+bcrossgv,capability,GA,academy for information technology,scotch plains,NJ,3.73,2023,Computer Science,Creative Writing,504,720,30,8,20,32,1,201,360,511,330,662,443,431,529,702,4
+sribeygw,Switchable,KY,james madison high school,vienna,VA,3.06,2024,Biology,Creative Writing,701,712,20,25,35,20,20,773,450,652,270,752,689,776,457,442,8
+kgentilgx,Total,FL,whitney high school,cerritos,CA,3.65,2025,Biology,Computer Engineering,600,274,3,15,36,21,30,644,516,597,232,354,285,360,434,491,7
+granklingy,directional,OH,brooklyn technical high school,brooklyn,NY,3.89,2022,Spanish,Sociology,672,564,2,10,27,10,18,266,280,481,593,530,530,282,229,743,6
+kbresnergz,Quality-focused,TX,academic magnet high school,north charleston,SC,3.14,2024,Mathematics,Sociology,364,227,8,6,1,13,36,480,479,708,457,783,682,489,731,315,5
+lfardellh0,neutral,KY,academy for information technology,scotch plains,NJ,2.24,2025,Biology,Sociology,367,210,2,5,21,32,11,271,592,528,788,442,712,463,545,625,9
+pridsdoleh1,fresh-thinking,TX,james madison high school,vienna,VA,3.99,2022,English,Computer Engineering,533,565,11,32,34,20,17,300,419,696,200,744,312,470,340,632,4
+fmerrydewh2,Synergistic,IN,whitney high school,cerritos,CA,3.58,2025,Spanish,Computer Engineering,207,455,8,4,33,35,4,277,214,264,607,307,780,540,397,547,5
+pautonh3,Total,NY,brooklyn technical high school,brooklyn,NY,2.46,2024,Spanish,Computer Engineering,668,255,34,29,33,1,20,262,759,596,702,407,774,596,240,240,9
+gdanaharh4,Function-based,AL,academic magnet high school,north charleston,SC,3.79,2025,English,Computer Engineering,212,213,25,18,23,34,4,640,756,217,444,216,453,300,621,698,3
+rdyh5,Extended,TX,academy for information technology,scotch plains,NJ,2.82,2025,Computer Science,Sociology,369,798,33,19,33,22,35,222,470,450,622,455,749,450,778,630,5
+tbreakwellh6,Intuitive,CA,james madison high school,vienna,VA,3.77,2023,Computer Science,Creative Writing,526,442,36,21,23,35,22,641,404,700,747,567,792,406,359,466,3
+tbruckmanh7,bottom-line,WI,whitney high school,cerritos,CA,2.27,2024,Biology,Computer Engineering,642,563,12,9,20,16,27,660,545,268,301,455,323,200,256,346,3
+rcalvieh8,actuating,AL,brooklyn technical high school,brooklyn,NY,3.78,2023,Computer Science,Creative Writing,551,623,3,9,10,14,32,753,273,673,612,646,430,391,552,544,5
+tculshewh9,Business-focused,VA,academic magnet high school,north charleston,SC,2.02,2024,Spanish,Creative Writing,403,265,8,26,2,15,20,771,494,492,277,671,329,324,204,486,8
+cprescotha,access,VA,academy for information technology,scotch plains,NJ,2.04,2024,Computer Science,Computer Engineering,605,210,3,15,26,34,18,585,277,585,321,735,373,381,741,227,3
+adepinnahb,adapter,CT,james madison high school,vienna,VA,2.77,2025,English,Creative Writing,503,626,1,17,2,17,11,388,681,667,303,491,338,564,641,591,6
+atunnicliffehc,Cross-group,OH,whitney high school,cerritos,CA,3.79,2025,Computer Science,Psychology,435,695,26,19,15,24,30,730,578,766,228,343,313,293,492,639,0
+rlindophd,3rd generation,CA,brooklyn technical high school,brooklyn,NY,2.86,2025,English,Psychology,386,420,23,22,29,30,36,233,362,767,498,667,752,760,313,200,1
+slangelayhe,utilisation,TX,academic magnet high school,north charleston,SC,3.71,2024,Biology,Sociology,688,689,34,2,32,3,19,352,484,550,649,761,686,634,762,687,0
+pcochhf,database,TX,academy for information technology,scotch plains,NJ,2.16,2024,Spanish,Computer Engineering,509,773,10,27,19,13,32,628,234,506,478,788,432,717,744,721,3
+fmolenhg,Devolved,NY,james madison high school,vienna,VA,3.53,2023,Computer Science,Sociology,687,588,17,27,36,24,16,675,308,799,785,667,761,362,431,552,1
+labbetshh,circuit,CA,whitney high school,cerritos,CA,2.43,2024,Computer Science,Creative Writing,548,470,17,1,7,3,27,395,407,647,783,695,329,492,636,644,3
+rbyrehi,Horizontal,PA,brooklyn technical high school,brooklyn,NY,3.72,2023,Biology,Creative Writing,448,432,36,24,20,15,13,268,428,316,498,408,302,265,542,603,5
+lsearlhj,fresh-thinking,VA,academic magnet high school,north charleston,SC,2.04,2024,Mathematics,Creative Writing,740,543,5,20,30,7,3,618,726,562,550,465,602,433,513,316,5
+oskoyleshk,Cross-group,FL,academy for information technology,scotch plains,NJ,3.97,2022,Biology,Psychology,503,749,14,22,21,35,25,594,520,668,697,628,754,211,758,741,6
+ldrysdellhl,upward-trending,DC,james madison high school,vienna,VA,3.47,2025,Spanish,Creative Writing,677,380,4,28,19,17,23,695,623,367,710,365,696,410,341,432,0
+bdomenyhm,zero administration,TX,whitney high school,cerritos,CA,3.63,2025,Biology,Sociology,784,270,18,18,5,6,6,293,211,353,452,608,335,205,644,671,1
+bgoschalkhn,system engine,CA,brooklyn technical high school,brooklyn,NY,2.08,2023,Computer Science,Sociology,323,586,27,28,6,5,8,227,213,784,618,365,766,719,761,369,8
+pweeksho,frame,MN,academic magnet high school,north charleston,SC,3.58,2024,English,Creative Writing,258,356,3,20,8,23,27,375,421,336,427,715,264,704,760,442,5
+pagiolfingerhp,Organic,DC,academy for information technology,scotch plains,NJ,3.54,2026,Computer Science,Sociology,797,398,19,13,5,26,19,775,489,550,713,711,232,575,472,541,7
+tmurpheyhq,Devolved,MA,james madison high school,vienna,VA,2.28,2025,Biology,Creative Writing,302,780,36,32,29,14,18,470,375,232,334,243,729,629,795,260,5
+gmulvihillhr,Streamlined,OH,whitney high school,cerritos,CA,2.5,2024,Computer Science,Sociology,778,317,5,23,36,21,3,767,596,204,389,236,234,594,673,754,8
+jandreacciohs,flexibility,CA,brooklyn technical high school,brooklyn,NY,3.94,2026,Spanish,Computer Engineering,428,301,4,12,17,9,24,269,323,778,379,217,689,586,269,570,6
+tmquhargeht,Multi-channelled,MA,academic magnet high school,north charleston,SC,3.88,2026,Spanish,Creative Writing,280,573,21,20,20,36,2,451,221,705,733,252,759,693,740,331,5
+ckorthu,migration,PA,academy for information technology,scotch plains,NJ,3.72,2022,Spanish,Sociology,285,490,4,25,34,28,21,475,499,688,511,625,795,787,396,634,3
+gsavegehv,Streamlined,MI,james madison high school,vienna,VA,3.25,2023,English,Computer Engineering,242,783,27,31,15,31,3,374,777,780,261,574,702,452,284,282,10
+emacgorleyhw,approach,LA,whitney high school,cerritos,CA,3.07,2022,Computer Science,Sociology,521,546,26,5,1,18,5,614,356,429,399,392,202,705,331,745,2
+ecooneyhx,Customer-focused,VA,brooklyn technical high school,brooklyn,NY,2.21,2025,Mathematics,Psychology,506,698,2,6,24,21,31,521,383,780,685,580,223,422,800,264,1
+gledingtonhy,Synergized,PA,academic magnet high school,north charleston,SC,3.14,2022,Computer Science,Psychology,301,472,4,11,30,27,2,270,489,357,705,748,504,336,485,645,6
+crubinovitchhz,even-keeled,GA,academy for information technology,scotch plains,NJ,3.43,2026,English,Computer Engineering,238,532,29,13,33,35,17,480,663,489,584,660,369,664,208,607,8
+gpeiroi0,Innovative,CA,james madison high school,vienna,VA,3.22,2025,Mathematics,Sociology,251,398,18,2,13,27,10,518,792,471,749,221,208,310,243,531,9
+hhamleni1,hardware,WI,whitney high school,cerritos,CA,3.79,2025,Biology,Creative Writing,267,786,18,4,30,28,29,376,770,553,359,256,373,324,354,781,8
+loguzi2,encoding,CA,brooklyn technical high school,brooklyn,NY,3.88,2025,Computer Science,Computer Engineering,575,593,35,22,21,20,1,766,340,640,258,676,571,761,370,326,8
+caymeri3,dynamic,OH,academic magnet high school,north charleston,SC,3.11,2025,Biology,Creative Writing,461,322,25,36,31,6,19,471,439,235,398,459,731,461,541,695,4
+bzimmeri4,moderator,NC,academy for information technology,scotch plains,NJ,3.26,2025,Mathematics,Psychology,307,525,1,36,2,30,22,397,236,677,701,208,667,380,774,780,4
+alindroi5,impactful,FL,james madison high school,vienna,VA,3.58,2025,English,Creative Writing,596,297,30,10,25,19,22,506,310,592,671,350,629,323,299,676,6
+alighti6,User-friendly,KY,whitney high school,cerritos,CA,3.84,2024,Mathematics,Psychology,768,689,3,8,34,25,3,221,747,246,741,448,311,288,580,599,8
+hverzeyi7,superstructure,IL,brooklyn technical high school,brooklyn,NY,2.79,2025,Mathematics,Computer Engineering,264,589,23,29,18,4,32,242,677,328,676,602,580,526,647,593,2
+vcasassai8,actuating,FL,academic magnet high school,north charleston,SC,3.78,2026,Computer Science,Creative Writing,562,284,36,13,16,14,34,681,776,639,691,788,459,350,381,461,3
+tsandcrafti9,definition,MO,academy for information technology,scotch plains,NJ,3.76,2024,Computer Science,Computer Engineering,311,420,7,32,2,23,25,248,460,725,201,791,594,649,799,403,6
+cseaversia,solution,TX,james madison high school,vienna,VA,2.06,2024,English,Creative Writing,727,786,3,6,30,10,35,487,259,373,307,558,453,790,334,393,4
+alambdonib,hybrid,PA,whitney high school,cerritos,CA,2.39,2023,English,Computer Engineering,523,369,27,6,33,31,25,508,566,688,400,364,595,719,594,705,6
+pkeaveic,methodical,CA,brooklyn technical high school,brooklyn,NY,3.38,2025,Spanish,Computer Engineering,499,558,24,25,16,10,33,596,291,243,254,492,348,259,228,504,10
+gbrocktonid,6th generation,TX,academic magnet high school,north charleston,SC,3.81,2022,Biology,Psychology,297,491,10,32,3,12,1,419,712,540,664,787,529,273,597,349,0
+gcroncheyie,moratorium,OK,academy for information technology,scotch plains,NJ,3.56,2024,Mathematics,Computer Engineering,710,350,6,26,33,32,3,603,505,717,342,239,687,417,272,524,10
+tgonsaloif,Proactive,IL,james madison high school,vienna,VA,2.3,2024,Computer Science,Computer Engineering,757,349,12,2,20,13,25,614,536,256,726,639,660,669,474,250,1
+ntosspellig,24/7,TX,whitney high school,cerritos,CA,2.22,2026,Spanish,Creative Writing,379,488,36,2,7,23,18,454,540,736,781,549,385,598,751,377,7
+gfrottonih,Customizable,FL,brooklyn technical high school,brooklyn,NY,2.07,2022,Mathematics,Computer Engineering,257,456,12,4,7,9,34,709,232,517,686,252,730,429,456,424,6
+iankerii,Expanded,AZ,academic magnet high school,north charleston,SC,3.16,2026,Biology,Computer Engineering,599,718,15,15,27,17,18,794,281,606,208,536,504,531,611,333,8
+sgermanij,24/7,TX,academy for information technology,scotch plains,NJ,2.39,2025,Mathematics,Psychology,450,654,35,1,11,16,3,259,215,769,657,397,255,427,689,543,8
+etilfordik,grid-enabled,NY,james madison high school,vienna,VA,3.77,2024,Spanish,Creative Writing,517,517,32,14,14,1,2,486,571,208,548,282,437,332,520,782,9
+bnesterovil,workforce,AL,whitney high school,cerritos,CA,3.37,2022,Spanish,Sociology,351,356,29,28,9,22,14,726,670,268,427,783,272,619,738,579,7
+kurienim,Monitored,DE,brooklyn technical high school,brooklyn,NY,2.4,2022,Computer Science,Sociology,214,468,12,14,19,10,19,397,646,438,711,435,233,258,724,455,10
+sdeenyin,Multi-channelled,CA,academic magnet high school,north charleston,SC,3.2,2025,Biology,Sociology,440,473,33,4,10,5,15,526,558,472,536,353,765,779,545,719,6
+ccroyserio,De-engineered,LA,academy for information technology,scotch plains,NJ,2.92,2025,Biology,Sociology,522,483,22,24,9,34,32,647,695,783,668,687,730,642,385,401,1
+mdyetip,Streamlined,GA,james madison high school,vienna,VA,2.84,2022,Computer Science,Sociology,567,685,10,28,29,36,14,391,737,428,646,296,233,218,771,231,4
+asantelloiq,background,DC,whitney high school,cerritos,CA,3.51,2026,Computer Science,Creative Writing,655,279,30,13,18,35,13,607,418,756,639,332,625,799,556,445,0
+srochewellir,mission-critical,LA,brooklyn technical high school,brooklyn,NY,3.86,2026,Mathematics,Creative Writing,710,643,3,17,18,3,8,239,309,329,216,439,662,441,685,657,2
+charbinis,Progressive,FL,academic magnet high school,north charleston,SC,3.69,2026,Biology,Computer Engineering,491,799,13,27,35,27,30,248,598,581,318,706,502,505,593,371,3
+pearengeyit,software,SD,academy for information technology,scotch plains,NJ,3.73,2024,English,Sociology,718,308,17,5,9,3,15,671,671,501,495,749,777,437,427,383,8
+sneediu,foreground,FL,james madison high school,vienna,VA,3.82,2022,Mathematics,Sociology,687,734,12,15,27,24,10,652,237,304,445,482,469,250,604,774,8
+amittoniv,Persistent,CA,whitney high school,cerritos,CA,3.05,2022,Biology,Sociology,472,245,28,22,15,3,14,246,405,384,752,538,355,227,382,558,8
+fsachnoiw,Re-contextualized,TX,brooklyn technical high school,brooklyn,NY,3.87,2023,Computer Science,Computer Engineering,504,380,31,29,33,23,36,649,350,322,610,673,732,203,584,775,8
+acutressix,local,UT,academic magnet high school,north charleston,SC,2.04,2023,Mathematics,Sociology,773,614,16,9,9,26,3,368,230,752,217,546,713,343,718,679,3
+ltrippiy,national,TX,academy for information technology,scotch plains,NJ,2.76,2024,Mathematics,Psychology,710,733,32,20,28,14,3,658,260,616,253,546,664,312,415,492,5
+bwitardiz,maximized,MI,james madison high school,vienna,VA,2.02,2026,English,Creative Writing,737,717,34,9,1,27,24,592,349,586,692,206,304,258,461,671,7
+rdriverj0,motivating,CO,whitney high school,cerritos,CA,2.59,2025,English,Creative Writing,570,798,28,15,3,3,26,778,590,679,769,679,524,585,642,424,4
+cbroxholmej1,bi-directional,WA,brooklyn technical high school,brooklyn,NY,3.93,2023,Mathematics,Sociology,547,280,12,22,18,35,35,453,426,569,224,339,275,710,271,314,0
+cbaalhamj2,frame,DC,academic magnet high school,north charleston,SC,2.39,2023,Spanish,Creative Writing,369,482,2,27,14,36,5,378,788,472,358,767,453,486,736,336,5
+cthelwllj3,Multi-layered,VA,academy for information technology,scotch plains,NJ,2.06,2024,Biology,Psychology,693,743,33,1,17,6,27,345,752,753,565,670,317,780,761,498,5
+kfreakj4,paradigm,IN,james madison high school,vienna,VA,2.47,2026,Spanish,Sociology,380,545,5,13,29,21,5,681,358,249,566,520,360,528,466,207,3
+jlurnerj5,process improvement,CO,whitney high school,cerritos,CA,2.47,2025,Computer Science,Computer Engineering,623,649,7,5,13,9,16,330,799,466,772,588,605,463,356,708,10
+rbrydonj6,support,TX,brooklyn technical high school,brooklyn,NY,2.77,2022,Spanish,Computer Engineering,516,249,31,5,28,4,16,468,604,640,551,606,653,370,257,463,0
+nlucchij7,heuristic,LA,academic magnet high school,north charleston,SC,3.63,2025,Spanish,Creative Writing,268,286,29,7,32,8,24,692,376,433,463,323,536,408,372,351,10
+dgoringj8,Sharable,TX,academy for information technology,scotch plains,NJ,2.64,2026,Biology,Computer Engineering,395,798,27,6,8,13,7,778,540,593,370,385,344,636,661,447,10
+dabsonj9,Multi-tiered,ID,james madison high school,vienna,VA,3.53,2022,Computer Science,Sociology,634,683,9,4,8,12,4,482,343,718,276,641,733,782,778,207,1
+gcookesja,open architecture,CA,whitney high school,cerritos,CA,2.12,2026,English,Creative Writing,446,358,20,21,2,27,2,663,424,428,270,542,673,593,497,494,5
+mvossejb,Upgradable,TX,brooklyn technical high school,brooklyn,NY,2.51,2024,English,Sociology,246,506,35,30,29,36,5,306,722,559,394,330,371,586,399,593,5
+grhydderchjc,disintermediate,CA,academic magnet high school,north charleston,SC,2.25,2024,Biology,Creative Writing,715,597,1,18,26,12,9,442,571,575,784,778,756,371,235,475,6
+acreginjd,access,CA,academy for information technology,scotch plains,NJ,3.78,2022,Computer Science,Sociology,601,773,16,12,30,25,17,247,624,307,700,538,429,265,369,560,7
+dgimenezje,needs-based,NE,james madison high school,vienna,VA,3.07,2022,Biology,Sociology,300,240,23,33,18,15,7,625,289,664,649,761,638,213,671,790,3
+gfishburnjf,Decentralized,OR,whitney high school,cerritos,CA,3.31,2024,English,Computer Engineering,217,512,17,28,20,1,14,423,765,580,513,618,637,765,479,691,5
+ahadigatejg,software,CA,brooklyn technical high school,brooklyn,NY,2.12,2026,Computer Science,Creative Writing,435,217,25,6,5,35,10,301,224,712,344,597,740,465,264,337,1
+pindgsjh,alliance,CA,academic magnet high school,north charleston,SC,2.43,2024,Spanish,Sociology,278,690,8,27,16,23,15,527,298,774,754,636,471,708,230,695,9
+ndescoffierji,Stand-alone,TX,academy for information technology,scotch plains,NJ,2.15,2023,Computer Science,Creative Writing,691,350,15,3,34,13,20,619,323,662,602,550,326,651,786,625,5
+bgrayerjj,fresh-thinking,TX,james madison high school,vienna,VA,3.08,2025,Computer Science,Psychology,766,424,6,6,32,17,36,437,522,566,682,464,528,253,616,258,10
+obatesonjk,Configurable,MD,whitney high school,cerritos,CA,2.66,2025,Mathematics,Sociology,295,302,6,4,23,32,26,444,268,650,552,790,480,254,680,672,3
+apachecojl,didactic,NY,brooklyn technical high school,brooklyn,NY,3.29,2022,Spanish,Sociology,260,385,18,1,26,4,24,641,212,370,562,641,268,455,733,681,2
+bfiremanjm,Compatible,MO,academic magnet high school,north charleston,SC,3.78,2025,Computer Science,Creative Writing,588,291,19,6,6,2,3,524,467,662,314,697,691,344,572,477,4
+seaggerjn,Vision-oriented,CO,academy for information technology,scotch plains,NJ,2.58,2022,Mathematics,Computer Engineering,212,573,15,36,14,8,27,721,671,242,415,488,388,216,693,348,8
+kcowperjo,uniform,IL,james madison high school,vienna,VA,3.22,2024,Mathematics,Sociology,360,577,24,17,4,18,33,297,759,753,303,494,763,288,416,286,8
+llutonjp,multi-state,MI,whitney high school,cerritos,CA,3.53,2025,Computer Science,Computer Engineering,265,692,36,27,8,20,3,397,388,524,530,296,333,548,790,391,6
+isymesjq,initiative,NC,brooklyn technical high school,brooklyn,NY,2.93,2023,English,Psychology,440,509,30,25,35,9,19,214,526,573,788,654,584,538,715,473,8
+mswanjr,radical,DC,academic magnet high school,north charleston,SC,2.55,2025,Mathematics,Psychology,725,543,16,19,17,7,26,501,264,224,544,674,247,579,657,207,8
+cgerbjs,internet solution,FL,academy for information technology,scotch plains,NJ,3.28,2026,English,Psychology,348,592,17,18,21,28,5,744,405,224,652,430,205,394,373,552,1
+asellmanjt,maximized,DC,james madison high school,vienna,VA,2.27,2023,Spanish,Psychology,626,709,30,20,13,5,9,684,771,593,591,735,303,259,410,505,9
+rgheerhaertju,throughput,DC,whitney high school,cerritos,CA,2.42,2023,Computer Science,Psychology,459,378,35,3,2,28,16,788,657,486,695,492,646,724,278,779,4
+akerwickjv,structure,DE,brooklyn technical high school,brooklyn,NY,3.26,2025,Computer Science,Creative Writing,220,611,34,25,33,33,16,762,228,579,210,625,283,364,664,524,2
+cvalenssmithjw,Universal,CA,academic magnet high school,north charleston,SC,3.49,2024,Biology,Creative Writing,336,361,32,1,33,7,8,497,288,692,205,225,520,530,546,537,7
+egonthardjx,static,FL,academy for information technology,scotch plains,NJ,2.19,2026,Spanish,Psychology,541,672,17,22,11,15,25,526,792,369,542,221,294,401,562,375,0
+gjentinjy,Innovative,WV,james madison high school,vienna,VA,3.25,2022,Mathematics,Creative Writing,540,643,31,33,35,36,33,487,645,744,539,651,245,500,640,709,4
+kdigiorgiojz,middleware,WA,whitney high school,cerritos,CA,2.54,2022,Mathematics,Creative Writing,420,288,24,30,26,28,2,463,301,261,678,428,654,749,351,687,1
+emaccookk0,Centralized,IL,brooklyn technical high school,brooklyn,NY,3.68,2022,English,Psychology,486,747,8,26,28,36,17,343,389,314,729,273,517,209,227,705,9
+lharriskinek1,dedicated,GA,academic magnet high school,north charleston,SC,3.28,2025,Mathematics,Computer Engineering,756,722,11,19,19,28,7,612,588,477,762,761,584,498,553,660,3
+gtreharnek2,Configurable,CA,academy for information technology,scotch plains,NJ,3.82,2025,Mathematics,Creative Writing,499,240,25,25,21,5,29,676,671,657,724,222,791,561,292,321,8
+bdresserk3,Polarised,OH,james madison high school,vienna,VA,2.66,2024,Computer Science,Psychology,302,787,5,19,19,7,4,711,380,603,337,235,240,376,336,275,2
+febblesk4,Open-source,CA,whitney high school,cerritos,CA,2.42,2026,English,Psychology,652,557,24,34,15,27,11,387,636,701,252,263,719,649,408,229,6
+cneligank5,Exclusive,FL,brooklyn technical high school,brooklyn,NY,2.36,2024,Biology,Psychology,627,485,24,12,8,18,27,682,294,240,473,712,397,514,473,311,4
+rcoshamk6,Synchronised,NC,academic magnet high school,north charleston,SC,3.3,2025,Computer Science,Computer Engineering,533,653,28,15,8,22,17,750,738,796,538,359,278,508,406,563,4
+tbenezek7,well-modulated,CT,academy for information technology,scotch plains,NJ,3.9,2024,English,Psychology,418,441,11,10,24,15,15,379,426,773,602,787,277,519,782,608,5
+akitleek8,Graphic Interface,VA,james madison high school,vienna,VA,3.99,2023,English,Psychology,355,319,30,20,31,1,29,774,549,587,739,652,419,683,205,638,3
+kseagek9,multi-tasking,OR,whitney high school,cerritos,CA,2.21,2026,Computer Science,Creative Writing,210,509,34,33,34,23,10,539,496,770,630,771,590,445,768,537,10
+wgonzaleska,Graphic Interface,IA,brooklyn technical high school,brooklyn,NY,3.22,2024,Biology,Computer Engineering,413,587,14,34,35,6,33,488,711,569,575,574,740,527,769,626,7
+pwathankb,Business-focused,CA,academic magnet high school,north charleston,SC,2.43,2023,Spanish,Sociology,570,222,24,7,1,23,25,507,244,737,626,662,321,280,211,302,3
+tbartleetkc,tertiary,AL,academy for information technology,scotch plains,NJ,3.83,2024,Computer Science,Sociology,621,219,36,17,16,24,4,567,244,474,203,374,643,586,411,220,5
+zroelofsenkd,Exclusive,PA,james madison high school,vienna,VA,3.82,2024,Biology,Sociology,779,388,24,17,27,24,22,364,685,563,245,526,220,372,485,765,7
+mlingke,Front-line,AK,whitney high school,cerritos,CA,3.61,2025,Mathematics,Sociology,473,568,13,1,21,30,21,745,492,767,666,619,471,624,300,539,10
+sminguetkf,Profound,AZ,brooklyn technical high school,brooklyn,NY,2.16,2022,Computer Science,Psychology,766,798,2,9,27,23,8,765,438,781,703,688,746,471,269,620,0
+gpagettkg,Public-key,NY,academic magnet high school,north charleston,SC,2.52,2025,Mathematics,Computer Engineering,598,453,24,20,29,7,22,257,787,655,238,446,496,573,739,420,2
+esellerkh,interactive,AZ,academy for information technology,scotch plains,NJ,3.47,2023,Biology,Sociology,276,208,5,29,14,4,14,672,774,618,417,748,264,472,648,608,8
+cneesonki,customer loyalty,WV,james madison high school,vienna,VA,2.59,2023,Biology,Computer Engineering,769,393,29,10,36,6,26,559,219,255,335,655,297,399,481,789,8
+jgasonkj,radical,VA,whitney high school,cerritos,CA,3.13,2022,Spanish,Creative Writing,672,643,31,8,31,36,25,309,539,556,753,475,275,324,666,258,0
+cdrinankk,Focused,VA,brooklyn technical high school,brooklyn,NY,2.74,2024,Biology,Psychology,444,758,22,9,33,34,10,470,279,332,529,535,256,582,221,659,7
+bfettiplacekl,transitional,CA,academic magnet high school,north charleston,SC,3.18,2023,English,Creative Writing,377,704,20,14,15,12,23,662,672,607,549,651,406,406,378,309,9
+adesportkm,pricing structure,TN,academy for information technology,scotch plains,NJ,2.58,2024,Computer Science,Psychology,339,689,35,30,8,17,6,544,677,510,370,237,267,404,372,276,5
+rackensonkn,didactic,OH,james madison high school,vienna,VA,2.14,2026,Spanish,Computer Engineering,353,393,17,36,19,24,3,515,555,777,200,727,497,598,674,620,0
+kpetraitisko,Diverse,NY,whitney high school,cerritos,CA,3.63,2025,Mathematics,Creative Writing,471,414,16,31,32,31,5,487,657,259,422,376,782,238,361,682,0
+vcovottikp,5th generation,MA,brooklyn technical high school,brooklyn,NY,3.46,2023,Biology,Psychology,506,418,30,14,29,36,28,737,751,771,204,227,618,619,438,278,4
+cmosconkq,Monitored,MD,academic magnet high school,north charleston,SC,3.44,2026,Spanish,Sociology,263,643,5,2,24,29,15,261,623,571,541,451,574,495,726,407,1
+dduffreekr,paradigm,OH,academy for information technology,scotch plains,NJ,3.69,2025,Biology,Computer Engineering,382,718,6,4,10,9,16,793,411,350,383,250,360,542,611,207,5
+cfeatherbieks,intermediate,CT,james madison high school,vienna,VA,2.09,2026,Computer Science,Creative Writing,478,704,15,28,35,20,22,623,639,731,546,486,630,751,431,720,8
+nwhitneykt,internet solution,DC,whitney high school,cerritos,CA,3.83,2026,Mathematics,Creative Writing,340,605,10,10,20,2,18,673,466,611,509,780,598,455,500,393,6
+soreaganku,complexity,NM,brooklyn technical high school,brooklyn,NY,2.13,2025,English,Psychology,734,354,13,5,27,4,6,400,544,575,391,458,521,446,245,274,10
+lfairhamkv,eco-centric,CA,academic magnet high school,north charleston,SC,3.74,2023,Computer Science,Creative Writing,379,620,14,11,36,23,31,761,666,693,430,696,202,229,465,532,8
+jpaschokw,Operative,MN,academy for information technology,scotch plains,NJ,3.86,2022,Mathematics,Creative Writing,658,605,24,27,21,1,29,574,674,402,260,488,790,765,581,432,3
+cholbykx,encompassing,GA,james madison high school,vienna,VA,3.19,2025,Mathematics,Psychology,321,685,19,19,26,31,24,226,207,416,729,415,522,572,673,500,2
+ciashviliky,Compatible,MN,whitney high school,cerritos,CA,3.7,2024,Mathematics,Sociology,356,640,17,13,24,1,6,496,241,791,708,231,266,389,435,596,10
+kbulledkz,extranet,OH,brooklyn technical high school,brooklyn,NY,3.33,2023,Mathematics,Computer Engineering,538,496,23,9,29,28,20,624,383,664,639,696,500,404,538,703,8
+mcarlettil0,system engine,CA,academic magnet high school,north charleston,SC,2.21,2024,Mathematics,Sociology,562,201,18,8,29,30,3,289,611,237,309,329,393,322,206,672,5
+jvankovl1,real-time,FL,academy for information technology,scotch plains,NJ,2.05,2022,Computer Science,Psychology,660,384,12,18,12,5,33,664,613,273,530,564,528,711,553,778,2
+jbuttruml2,architecture,TX,james madison high school,vienna,VA,2.88,2024,Mathematics,Computer Engineering,786,690,7,5,15,3,20,558,416,310,456,655,732,707,729,314,3
+gfigliovannil3,Organic,TN,whitney high school,cerritos,CA,3.49,2026,Biology,Psychology,332,273,27,6,5,18,34,569,602,711,495,456,544,721,330,222,5
+kvarnalsl4,bi-directional,TX,brooklyn technical high school,brooklyn,NY,2.38,2025,English,Creative Writing,732,315,27,20,6,15,28,340,302,436,657,507,532,447,681,687,0
+mslixbyl5,Business-focused,LA,academic magnet high school,north charleston,SC,3.28,2022,Spanish,Sociology,700,214,33,21,1,17,22,262,468,266,297,745,715,625,417,342,0
+rfarryanl6,contingency,IN,academy for information technology,scotch plains,NJ,2.57,2025,Spanish,Creative Writing,407,649,23,6,21,31,32,776,304,631,656,471,558,317,424,550,7
+awaddamsl7,explicit,IN,james madison high school,vienna,VA,2.99,2025,Biology,Psychology,374,771,21,20,18,33,35,567,676,315,266,516,229,666,449,794,9
+jwitterl8,national,MI,whitney high school,cerritos,CA,3.0,2022,Spanish,Sociology,423,514,3,20,21,11,16,237,453,650,626,797,226,680,255,256,10
+gmundowl9,secondary,TN,brooklyn technical high school,brooklyn,NY,2.14,2024,Mathematics,Creative Writing,653,725,16,18,22,17,18,414,587,673,715,696,383,677,734,609,2
+cjouannotla,migration,MO,academic magnet high school,north charleston,SC,2.33,2024,Biology,Creative Writing,663,454,16,23,23,1,25,594,409,326,742,416,412,445,269,366,1
+jdesbrowlb,needs-based,PA,academy for information technology,scotch plains,NJ,3.84,2024,Biology,Psychology,593,210,11,15,29,1,13,532,224,597,447,602,333,704,746,474,9
+mfretwelllc,Exclusive,MI,james madison high school,vienna,VA,3.81,2024,English,Psychology,610,639,11,35,32,6,23,211,312,329,641,519,427,237,379,632,0
+jboddyld,strategy,IN,whitney high school,cerritos,CA,2.39,2024,English,Computer Engineering,300,593,7,4,14,13,29,503,503,749,787,771,251,555,776,723,2
+hdenisyevle,paradigm,MA,brooklyn technical high school,brooklyn,NY,2.67,2023,Spanish,Psychology,714,490,3,32,35,25,20,312,663,435,704,729,438,798,414,556,10
+aheggielf,implementation,AZ,academic magnet high school,north charleston,SC,3.29,2026,Spanish,Creative Writing,524,667,7,21,20,27,28,267,471,312,616,599,331,419,398,763,7
+ldracksfordlg,data-warehouse,NY,academy for information technology,scotch plains,NJ,3.86,2022,Computer Science,Computer Engineering,707,608,26,6,17,16,19,247,268,602,274,458,592,297,226,217,7
+mreadwinglh,framework,DC,james madison high school,vienna,VA,2.74,2023,Biology,Sociology,504,434,10,9,33,5,26,742,580,550,703,425,334,516,768,252,5
+tgrzelakli,multimedia,AZ,whitney high school,cerritos,CA,3.93,2023,Mathematics,Creative Writing,347,373,21,35,30,29,28,296,495,690,769,276,542,768,735,279,8
+nbiddlecombelj,Compatible,TX,brooklyn technical high school,brooklyn,NY,3.59,2023,Spanish,Creative Writing,625,753,22,29,13,12,29,792,660,332,751,278,645,609,356,513,0
+qpowdrilllk,moratorium,CA,academic magnet high school,north charleston,SC,3.66,2025,English,Creative Writing,267,527,10,18,16,13,26,527,278,755,481,274,411,668,282,560,6
+dmattevill,strategy,CA,academy for information technology,scotch plains,NJ,2.18,2025,Biology,Creative Writing,281,776,10,28,5,11,20,582,788,639,319,671,727,504,312,794,8
+mmisklm,Public-key,FL,james madison high school,vienna,VA,2.66,2023,Computer Science,Psychology,233,772,19,4,22,18,28,730,289,740,548,757,552,784,211,671,0
+nhawtinln,Implemented,TX,whitney high school,cerritos,CA,2.21,2022,Spanish,Psychology,391,243,8,27,29,5,20,690,401,223,317,494,441,360,239,327,4
+jcheavinlo,ability,WA,brooklyn technical high school,brooklyn,NY,3.02,2026,Mathematics,Computer Engineering,657,271,11,2,4,19,29,770,404,658,565,605,490,726,542,345,9
+tnewcomelp,De-engineered,OK,academic magnet high school,north charleston,SC,2.38,2022,Mathematics,Computer Engineering,367,689,31,26,26,30,1,270,260,228,768,548,528,473,401,350,5
+bparrishlq,Upgradable,OH,academy for information technology,scotch plains,NJ,3.62,2022,Spanish,Sociology,671,381,30,15,1,28,2,491,233,767,488,547,677,281,372,673,2
+dcancellariolr,Upgradable,MN,james madison high school,vienna,VA,3.37,2024,English,Creative Writing,703,320,4,30,28,26,36,526,464,244,650,444,716,538,281,298,4
+tornilsls,toolset,CA,whitney high school,cerritos,CA,3.85,2022,English,Computer Engineering,766,295,6,27,13,19,35,607,466,668,430,599,718,260,439,378,5
+csitlintonlt,systemic,NJ,brooklyn technical high school,brooklyn,NY,2.87,2022,Spanish,Sociology,780,479,3,29,21,8,8,319,594,205,554,206,677,528,553,392,9
+hgoodramlu,multimedia,NY,academic magnet high school,north charleston,SC,2.72,2022,Spanish,Computer Engineering,523,333,16,11,23,9,4,478,394,299,369,456,781,543,788,423,10
+cgricelv,initiative,NY,academy for information technology,scotch plains,NJ,2.64,2026,Spanish,Creative Writing,296,292,21,9,34,23,29,369,287,653,777,305,750,201,411,234,4
+kpetrichatlw,extranet,MD,james madison high school,vienna,VA,2.22,2024,Biology,Sociology,713,259,9,36,31,3,36,545,541,514,427,596,325,278,428,213,10
+gmedewaylx,Front-line,NY,whitney high school,cerritos,CA,3.1,2024,English,Creative Writing,437,252,23,30,35,32,18,617,762,464,699,510,658,261,776,697,10
+mrenakly,background,PA,brooklyn technical high school,brooklyn,NY,3.41,2022,Spanish,Psychology,367,661,25,32,14,24,13,322,386,714,559,462,543,394,330,475,10
+esmietonlz,leverage,CA,academic magnet high school,north charleston,SC,2.14,2024,Spanish,Psychology,384,727,1,34,30,25,25,296,327,748,420,332,705,508,397,534,8
+shappsm0,open architecture,MO,academy for information technology,scotch plains,NJ,3.95,2022,Mathematics,Sociology,233,558,1,14,4,18,34,468,415,573,621,265,576,210,550,406,1
+agillesonm1,radical,IL,james madison high school,vienna,VA,3.13,2025,English,Computer Engineering,671,257,19,32,1,9,9,340,242,548,619,765,282,441,618,518,2
+dgallicom2,product,OK,whitney high school,cerritos,CA,2.03,2022,Computer Science,Computer Engineering,678,282,3,15,29,9,23,208,703,659,704,287,670,633,797,715,7
+chowlerm3,homogeneous,FL,brooklyn technical high school,brooklyn,NY,2.62,2023,Computer Science,Creative Writing,633,426,30,32,8,14,3,585,765,349,342,367,447,343,618,684,4
+kgildeam4,Re-engineered,TX,academic magnet high school,north charleston,SC,2.04,2024,Biology,Creative Writing,337,349,1,12,26,17,16,722,673,645,599,629,709,543,524,541,4
+gstobbartm5,superstructure,CA,academy for information technology,scotch plains,NJ,3.29,2022,Mathematics,Computer Engineering,358,583,33,24,34,15,2,755,377,634,385,743,745,231,269,754,6
+acarnowm6,Grass-roots,NY,james madison high school,vienna,VA,3.52,2023,Mathematics,Computer Engineering,546,656,7,11,9,24,26,713,310,226,609,431,594,568,571,475,1
+jpowleslandm7,mission-critical,SC,whitney high school,cerritos,CA,3.68,2024,Computer Science,Creative Writing,740,633,5,36,17,32,11,332,305,542,251,565,536,741,596,704,8
+pbonasm8,next generation,NC,brooklyn technical high school,brooklyn,NY,2.9,2024,Mathematics,Sociology,611,368,8,17,28,9,11,294,517,261,522,363,313,646,363,733,1
+anittom9,Multi-layered,AZ,academic magnet high school,north charleston,SC,2.46,2022,Biology,Psychology,355,477,7,15,28,26,16,464,738,379,695,414,382,341,436,357,6
+trettiema,projection,GA,academy for information technology,scotch plains,NJ,2.18,2026,Biology,Psychology,238,708,16,34,5,21,36,661,332,598,415,451,273,752,368,559,1
+lantognellimb,tertiary,CT,james madison high school,vienna,VA,2.25,2022,Spanish,Psychology,508,681,3,36,29,16,30,558,642,668,731,218,588,591,566,472,2
+tjeaffresonmc,portal,PA,whitney high school,cerritos,CA,2.91,2022,Biology,Sociology,501,274,6,11,31,6,23,397,341,754,207,428,497,555,631,442,2
+htelegamd,neutral,CA,brooklyn technical high school,brooklyn,NY,2.9,2026,Spanish,Creative Writing,354,255,21,12,19,4,10,712,486,538,794,411,498,753,286,713,5
+bpritchittme,policy,NY,academic magnet high school,north charleston,SC,2.41,2025,Computer Science,Psychology,323,410,35,19,7,21,31,655,631,245,468,448,709,497,789,338,3
+fstokermf,Multi-layered,OK,academy for information technology,scotch plains,NJ,3.05,2026,Biology,Creative Writing,243,240,34,14,20,33,33,795,648,541,232,593,326,500,305,266,6
+fdillestonmg,foreground,IL,james madison high school,vienna,VA,2.01,2025,Computer Science,Computer Engineering,388,485,7,23,22,29,13,328,243,622,671,427,545,460,205,514,9
+vhubbinsmh,Horizontal,LA,whitney high school,cerritos,CA,2.49,2022,English,Psychology,701,600,27,12,30,30,32,444,565,266,783,301,569,684,532,290,4
+dhugkmi,focus group,OK,brooklyn technical high school,brooklyn,NY,3.4,2023,Computer Science,Creative Writing,260,404,32,13,28,9,20,410,665,451,244,523,627,753,403,450,3
+mcawkwellmj,parallelism,TX,academic magnet high school,north charleston,SC,2.46,2026,Spanish,Creative Writing,514,302,2,33,28,31,8,397,649,738,543,332,479,378,240,500,4
+kkolyaginmk,functionalities,CA,academy for information technology,scotch plains,NJ,2.38,2024,Biology,Psychology,373,345,21,5,26,36,4,211,464,528,284,791,576,232,441,326,10
+nsempillml,Re-contextualized,TX,james madison high school,vienna,VA,2.91,2024,Mathematics,Computer Engineering,464,526,11,24,2,9,19,432,500,468,548,508,737,730,455,203,4
+kkroutmm,optimizing,FL,whitney high school,cerritos,CA,2.04,2022,Biology,Computer Engineering,769,676,32,15,10,27,13,388,589,689,536,308,432,711,331,382,8
+lavramowmn,Team-oriented,OH,brooklyn technical high school,brooklyn,NY,3.55,2025,Mathematics,Creative Writing,297,357,28,5,27,1,14,586,443,534,439,553,218,399,501,389,2
+cbainbriggemo,matrix,IL,academic magnet high school,north charleston,SC,2.6,2023,Computer Science,Psychology,384,479,32,24,9,15,36,718,465,694,268,340,738,442,220,290,5
+kharlockmp,De-engineered,MO,academy for information technology,scotch plains,NJ,2.93,2026,Biology,Psychology,679,590,28,13,35,33,2,757,413,216,291,412,266,530,766,723,2
+mdorrancemq,optimizing,MI,james madison high school,vienna,VA,3.68,2022,Mathematics,Sociology,333,527,32,20,11,10,6,515,668,323,720,403,513,284,492,567,5
+amorsonmr,alliance,FL,whitney high school,cerritos,CA,2.7,2026,Biology,Computer Engineering,603,307,35,31,21,27,16,244,452,356,644,530,696,750,505,466,7
+jtayloems,task-force,DC,brooklyn technical high school,brooklyn,NY,2.96,2022,Computer Science,Psychology,264,454,20,24,25,7,31,272,348,675,429,456,267,213,681,784,9
+ctynewellmt,system-worthy,GA,academic magnet high school,north charleston,SC,2.5,2024,Mathematics,Sociology,263,253,19,27,23,6,5,747,527,312,405,598,798,538,658,482,2
+amacclenanmu,Distributed,FL,academy for information technology,scotch plains,NJ,3.68,2023,Biology,Sociology,440,343,13,3,10,13,3,339,339,565,282,556,648,418,656,732,3
+bmurgatroydmv,initiative,MO,james madison high school,vienna,VA,3.93,2024,Spanish,Creative Writing,523,676,36,6,4,14,31,266,739,434,631,270,647,447,390,502,9
+doxmw,multimedia,CT,whitney high school,cerritos,CA,2.19,2024,Biology,Creative Writing,723,542,6,32,18,35,25,235,648,409,472,593,643,509,651,709,5
+dhuncootmx,Progressive,NY,brooklyn technical high school,brooklyn,NY,2.45,2023,English,Creative Writing,463,569,7,18,30,31,19,410,202,641,331,376,667,587,580,344,7
+rdrevermy,Balanced,CA,academic magnet high school,north charleston,SC,2.36,2023,Mathematics,Computer Engineering,348,421,17,31,9,18,8,332,549,503,426,782,797,343,752,738,8
+wstannasmz,Networked,VA,academy for information technology,scotch plains,NJ,2.17,2025,Mathematics,Creative Writing,778,222,15,36,4,8,7,763,497,314,574,494,651,367,277,494,3
+cwardhawn0,Secured,PA,james madison high school,vienna,VA,2.67,2026,Mathematics,Creative Writing,796,629,33,5,28,20,29,380,465,382,800,723,280,318,595,210,6
+bjanssonn1,pricing structure,TX,whitney high school,cerritos,CA,2.76,2023,Mathematics,Computer Engineering,606,773,32,32,6,7,8,722,332,313,583,231,245,306,339,294,5
+cplastown2,artificial intelligence,LA,brooklyn technical high school,brooklyn,NY,2.57,2023,Biology,Sociology,622,776,10,22,28,1,32,642,372,251,590,225,723,630,748,659,5
+erudderhamn3,support,GA,academic magnet high school,north charleston,SC,2.98,2025,Computer Science,Sociology,621,296,9,14,2,30,30,258,735,244,551,264,607,326,532,585,5
+cprisen4,Ergonomic,NV,academy for information technology,scotch plains,NJ,3.38,2023,English,Computer Engineering,505,762,35,4,27,4,21,628,528,239,361,626,744,297,738,336,8
+rbrucen5,time-frame,ND,james madison high school,vienna,VA,2.07,2024,English,Creative Writing,627,785,31,12,3,32,23,274,691,390,671,626,567,222,710,330,5
+afilippovn6,dedicated,OR,whitney high school,cerritos,CA,2.88,2023,Mathematics,Psychology,497,451,31,10,12,23,8,532,359,699,741,616,669,241,300,471,8
+lharbertsonn7,Advanced,TX,brooklyn technical high school,brooklyn,NY,3.53,2026,Computer Science,Sociology,552,655,7,30,11,25,21,536,572,544,302,230,269,616,644,377,10
+chollingdalen8,web-enabled,FL,academic magnet high school,north charleston,SC,3.71,2023,Computer Science,Psychology,703,796,24,13,3,26,14,308,349,685,587,473,379,637,535,440,2
+ksalliern9,solution,FL,academy for information technology,scotch plains,NJ,3.64,2024,English,Sociology,475,413,21,5,4,22,17,645,334,431,708,575,442,258,293,578,8
+upetraccina,Total,TX,james madison high school,vienna,VA,2.9,2025,Biology,Creative Writing,669,495,19,34,7,6,16,468,723,681,232,542,344,551,408,275,0
+gritchmannb,regional,LA,whitney high school,cerritos,CA,3.69,2024,Computer Science,Sociology,756,515,6,16,22,2,27,661,553,773,779,382,690,462,432,307,5
+dtunnacliffenc,adapter,TX,brooklyn technical high school,brooklyn,NY,2.05,2025,Spanish,Computer Engineering,753,467,11,12,15,34,14,278,279,571,288,796,591,605,311,610,10
+arembrandtnd,Secured,NV,academic magnet high school,north charleston,SC,2.77,2023,Biology,Creative Writing,501,641,22,29,18,24,27,253,568,546,764,326,560,678,634,713,0
+llimmingne,moratorium,FL,academy for information technology,scotch plains,NJ,2.53,2025,Spanish,Psychology,313,718,34,11,31,20,20,578,684,297,315,589,591,353,238,778,4
+jlarkingsnf,Secured,MI,james madison high school,vienna,VA,2.92,2024,Spanish,Creative Writing,432,390,12,35,26,8,34,591,553,511,590,486,288,743,341,675,9
+dgardinerng,reciprocal,IN,whitney high school,cerritos,CA,2.01,2025,Spanish,Sociology,528,571,11,31,22,13,2,251,490,655,763,524,661,548,744,773,5
+smccuddennh,clear-thinking,TN,brooklyn technical high school,brooklyn,NY,3.43,2024,Computer Science,Psychology,415,272,3,27,16,26,23,799,322,395,367,739,632,262,350,405,1
+rtoffanellini,Cross-group,AL,academic magnet high school,north charleston,SC,3.89,2023,Mathematics,Creative Writing,778,449,14,11,22,4,25,556,652,385,381,520,465,671,340,219,6
+kfullbrooknj,directional,TX,academy for information technology,scotch plains,NJ,2.92,2023,English,Computer Engineering,608,372,36,5,2,35,10,562,571,533,678,555,495,242,268,610,4
+mtubblenk,Centralized,IN,james madison high school,vienna,VA,2.28,2024,Spanish,Creative Writing,249,268,10,30,17,28,4,288,270,239,530,593,586,377,752,209,5
+sbegwellnl,complexity,TX,whitney high school,cerritos,CA,3.09,2022,Mathematics,Sociology,475,232,36,2,12,32,28,441,518,737,767,545,266,467,369,762,8
+hkitchingnm,web-enabled,DC,brooklyn technical high school,brooklyn,NY,3.12,2024,English,Creative Writing,501,232,6,4,35,32,12,797,665,326,285,760,743,443,769,655,1
+kmullalynn,systemic,FL,academic magnet high school,north charleston,SC,2.36,2023,Spanish,Computer Engineering,255,311,32,11,33,7,2,667,697,681,638,777,455,768,345,785,10
+hwortmanno,Graphic Interface,MA,academy for information technology,scotch plains,NJ,2.48,2025,Biology,Creative Writing,573,351,13,14,19,18,4,231,781,757,526,437,657,429,222,673,7
+tfeltennp,clear-thinking,MN,james madison high school,vienna,VA,3.07,2026,English,Sociology,318,370,22,4,27,32,10,219,464,719,532,238,492,742,545,522,1
+amaccallisternq,composite,CA,whitney high school,cerritos,CA,2.51,2024,Spanish,Psychology,782,638,25,16,12,31,32,382,562,486,737,542,592,307,444,250,8
+nivanyushkinnr,strategy,PA,brooklyn technical high school,brooklyn,NY,3.28,2025,Spanish,Creative Writing,245,347,30,23,20,21,1,505,532,518,477,578,691,461,738,238,8
+bsextins,neutral,IA,academic magnet high school,north charleston,SC,2.46,2022,English,Sociology,718,361,8,24,25,32,8,314,638,284,269,505,228,213,546,704,7
+hleggesnt,paradigm,FL,academy for information technology,scotch plains,NJ,3.67,2026,Mathematics,Computer Engineering,395,422,4,16,33,34,17,289,684,617,625,238,710,476,372,459,8
+aspitaronu,core,CA,james madison high school,vienna,VA,2.05,2023,Mathematics,Psychology,491,607,20,8,9,12,21,464,409,715,465,353,287,578,507,529,0
+bgrottynv,capability,VA,whitney high school,cerritos,CA,3.48,2026,Biology,Computer Engineering,794,399,7,30,20,11,19,319,708,223,588,797,277,611,794,476,8
+aemmattnw,systemic,IL,brooklyn technical high school,brooklyn,NY,3.12,2022,Mathematics,Sociology,419,537,4,17,10,13,17,559,237,590,535,500,770,789,465,548,10
+kstainlandnx,Grass-roots,MO,academic magnet high school,north charleston,SC,2.42,2023,Computer Science,Creative Writing,555,301,24,24,34,14,3,220,541,737,569,259,728,379,436,545,7
+cgernerny,optimal,FL,academy for information technology,scotch plains,NJ,2.75,2026,Computer Science,Sociology,413,403,15,3,34,28,12,326,628,339,577,385,290,643,654,723,0
+cgodlipnz,tangible,FL,james madison high school,vienna,VA,3.17,2026,Computer Science,Sociology,369,393,19,22,2,11,27,711,362,747,347,318,269,642,466,540,9
+npricketto0,flexibility,OK,whitney high school,cerritos,CA,2.37,2026,Biology,Creative Writing,617,660,15,29,35,7,17,733,209,613,445,364,588,327,457,558,6
+wdestoopo1,portal,IN,brooklyn technical high school,brooklyn,NY,3.29,2022,Mathematics,Computer Engineering,631,366,32,26,7,36,26,770,336,348,709,300,726,701,468,309,8
+mkrebso2,grid-enabled,FL,academic magnet high school,north charleston,SC,2.97,2025,Spanish,Computer Engineering,791,786,28,29,29,10,31,381,307,728,230,330,676,378,399,704,2
+agarno3,orchestration,GA,academy for information technology,scotch plains,NJ,2.44,2026,Spanish,Psychology,711,393,8,10,4,10,22,766,554,644,233,441,701,407,635,337,5
+mroseborougho4,Total,VA,james madison high school,vienna,VA,3.45,2022,Computer Science,Sociology,563,532,13,12,17,15,16,511,790,710,703,527,689,724,517,435,0
+hfraczkiewiczo5,Expanded,IL,whitney high school,cerritos,CA,2.62,2026,Mathematics,Computer Engineering,593,737,29,15,36,36,15,740,338,365,683,602,792,789,686,402,8
+rlarkworthyo6,Right-sized,CA,brooklyn technical high school,brooklyn,NY,2.17,2024,Mathematics,Psychology,777,703,26,35,23,12,25,563,576,667,261,233,495,774,281,530,1
+bofahertyo7,Persevering,DC,academic magnet high school,north charleston,SC,3.46,2023,English,Sociology,450,366,31,1,11,26,31,335,738,326,468,778,253,412,736,514,3
+ljanjusevico8,multi-tasking,WA,academy for information technology,scotch plains,NJ,2.63,2026,English,Psychology,219,210,22,29,36,5,20,659,747,713,410,273,443,546,379,230,2
+edatono9,hub,TN,james madison high school,vienna,VA,2.93,2024,Computer Science,Sociology,290,477,8,32,13,24,24,726,531,773,211,579,579,706,400,291,0
+ogillamoa,fresh-thinking,CA,whitney high school,cerritos,CA,3.11,2025,Spanish,Psychology,270,351,14,26,13,30,15,345,789,297,285,798,461,206,730,269,6
+nlendremob,Automated,WI,brooklyn technical high school,brooklyn,NY,3.28,2025,Computer Science,Psychology,502,662,18,5,15,14,9,660,770,298,798,679,209,728,499,357,3
+tcottieoc,extranet,TX,academic magnet high school,north charleston,SC,3.6,2026,Computer Science,Sociology,483,479,11,18,21,2,2,502,276,689,594,408,224,451,462,461,6
+dduseyod,bifurcated,DC,academy for information technology,scotch plains,NJ,3.13,2025,Spanish,Computer Engineering,540,621,27,4,33,21,11,659,234,631,527,786,263,662,364,786,0
+gparelloe,grid-enabled,NC,james madison high school,vienna,VA,3.73,2024,English,Creative Writing,531,331,14,36,17,19,32,789,357,727,351,760,288,502,354,738,3
+rmidfordof,project,NC,whitney high school,cerritos,CA,2.14,2023,Mathematics,Creative Writing,768,686,13,5,25,18,24,718,243,700,747,313,289,442,769,408,9
+rromaintog,workforce,DC,brooklyn technical high school,brooklyn,NY,2.71,2026,Computer Science,Creative Writing,297,456,21,7,25,36,21,730,242,200,396,387,688,784,334,376,4
+cgoaksoh,dynamic,ID,academic magnet high school,north charleston,SC,3.58,2026,Computer Science,Sociology,579,233,35,4,36,35,1,567,406,329,440,622,754,305,295,697,2
+scockeroi,Enhanced,GA,academy for information technology,scotch plains,NJ,2.33,2024,Mathematics,Computer Engineering,535,537,2,16,11,33,24,613,788,306,271,452,482,528,502,504,1
+rgreatexoj,modular,GA,james madison high school,vienna,VA,2.43,2026,Biology,Sociology,352,305,1,4,9,7,12,325,355,790,356,746,416,437,674,346,4
+kstoyellok,instruction set,TX,whitney high school,cerritos,CA,3.64,2026,Spanish,Computer Engineering,658,392,25,26,29,19,16,604,336,480,382,524,311,589,569,558,9
+fyushkinol,Multi-channelled,IL,brooklyn technical high school,brooklyn,NY,3.29,2025,Biology,Computer Engineering,383,229,5,7,30,2,13,464,755,723,480,393,547,380,271,539,5
+mderuelom,hardware,MO,academic magnet high school,north charleston,SC,3.26,2026,Computer Science,Psychology,210,479,31,32,27,23,32,716,656,756,606,689,758,481,720,719,1
+tgaroghanon,local area network,LA,academy for information technology,scotch plains,NJ,3.3,2025,Mathematics,Sociology,793,350,29,22,5,19,19,264,314,325,389,571,264,356,636,325,2
+cbellinooo,core,NC,james madison high school,vienna,VA,2.02,2025,Spanish,Computer Engineering,390,401,36,11,5,9,31,671,338,236,584,785,291,424,780,616,10
+cpardalop,Grass-roots,MN,whitney high school,cerritos,CA,3.34,2026,Mathematics,Psychology,694,688,22,14,23,11,27,371,759,775,547,476,667,350,681,382,6
+hfavelleoq,upward-trending,FL,brooklyn technical high school,brooklyn,NY,2.14,2025,Spanish,Creative Writing,277,698,30,9,26,22,19,691,324,681,726,667,317,301,644,588,10
+isneesbyor,help-desk,KY,academic magnet high school,north charleston,SC,3.77,2024,Mathematics,Creative Writing,762,798,8,5,27,31,2,446,630,537,648,319,392,570,605,454,9
+mnormavilleos,asynchronous,MD,academy for information technology,scotch plains,NJ,3.4,2025,Spanish,Sociology,237,283,20,21,14,25,16,625,528,342,590,275,757,702,371,617,10
+amccarlot,Business-focused,WA,james madison high school,vienna,VA,3.66,2024,Mathematics,Creative Writing,624,636,17,5,26,9,19,324,561,652,310,623,479,566,308,613,3
+mpaleyou,system engine,GA,whitney high school,cerritos,CA,2.45,2023,Biology,Sociology,413,453,25,24,20,26,19,595,405,581,616,546,215,654,790,416,0
+eclynmanov,Graphic Interface,VA,brooklyn technical high school,brooklyn,NY,3.84,2022,Biology,Creative Writing,286,384,10,25,28,26,25,598,743,468,542,437,429,649,225,531,8
+dmitchleyow,background,MN,academic magnet high school,north charleston,SC,3.63,2025,Computer Science,Computer Engineering,660,632,27,21,3,2,8,769,753,488,383,736,582,380,613,366,2
+gscarffox,Self-enabling,VA,academy for information technology,scotch plains,NJ,2.69,2026,Computer Science,Sociology,721,243,1,32,19,33,4,258,510,350,431,443,311,370,680,266,0
+cbruinemanoy,demand-driven,UT,james madison high school,vienna,VA,3.02,2024,English,Sociology,355,412,31,4,22,3,9,376,738,700,254,233,266,574,285,505,8
+gmogenotoz,dedicated,TX,whitney high school,cerritos,CA,2.85,2025,English,Creative Writing,768,300,27,11,7,10,32,626,325,348,782,303,517,693,544,489,2
+pfarensp0,algorithm,FL,brooklyn technical high school,brooklyn,NY,2.33,2024,Mathematics,Psychology,373,207,14,35,22,23,27,412,685,303,764,766,632,272,331,443,6
+dsparyp1,capability,CA,academic magnet high school,north charleston,SC,2.83,2022,Spanish,Creative Writing,481,451,27,14,36,23,32,504,387,251,655,252,317,439,272,744,4
+pbiscop2,adapter,OK,academy for information technology,scotch plains,NJ,3.37,2026,Computer Science,Creative Writing,709,590,30,17,4,35,5,782,738,683,306,294,629,779,284,498,0
+fnancarrowp3,application,LA,james madison high school,vienna,VA,2.85,2026,Spanish,Computer Engineering,537,770,21,12,14,12,2,348,561,599,513,207,691,307,787,502,2
+cfewp4,support,NH,whitney high school,cerritos,CA,3.01,2023,English,Sociology,770,373,23,23,35,16,3,592,293,287,639,584,389,381,212,431,1
+hwoodwingp5,interactive,CA,brooklyn technical high school,brooklyn,NY,3.11,2023,Biology,Creative Writing,502,660,6,9,36,24,28,385,278,612,221,725,758,448,546,477,2
+ahallwellp6,solution,MN,academic magnet high school,north charleston,SC,3.07,2023,Computer Science,Computer Engineering,211,650,30,28,10,18,19,687,532,493,504,766,342,454,348,550,5
+rmarkovap7,static,NY,academy for information technology,scotch plains,NJ,2.2,2024,Spanish,Sociology,794,627,24,23,9,33,15,308,584,259,222,575,744,518,223,282,7
+lbachmanp8,reciprocal,NV,james madison high school,vienna,VA,2.63,2024,English,Creative Writing,480,290,10,6,22,33,17,698,651,390,573,543,714,387,769,634,3
+bdargavelp9,systemic,CA,whitney high school,cerritos,CA,2.87,2022,English,Sociology,266,345,36,22,22,10,31,442,737,380,326,473,771,648,706,372,3
+ekelingpa,matrix,WI,brooklyn technical high school,brooklyn,NY,3.21,2025,Spanish,Psychology,400,352,18,16,6,13,26,211,497,438,509,520,433,440,212,786,2
+mknevetpb,Graphical User Interface,MD,academic magnet high school,north charleston,SC,2.78,2024,Spanish,Sociology,443,429,31,15,32,26,20,284,318,408,666,526,782,308,329,422,4
+lovittspc,success,CA,academy for information technology,scotch plains,NJ,2.15,2022,Mathematics,Computer Engineering,440,741,34,24,17,6,27,751,475,332,349,701,537,312,692,662,5
+lblanningpd,task-force,MA,james madison high school,vienna,VA,3.82,2023,English,Creative Writing,522,434,23,16,23,29,31,666,248,366,463,288,435,335,648,797,1
+asotworthpe,zero tolerance,TX,whitney high school,cerritos,CA,3.97,2022,English,Sociology,608,651,26,36,20,24,17,410,413,681,747,350,652,271,238,721,6
+pmedfordpf,maximized,TX,brooklyn technical high school,brooklyn,NY,3.82,2022,Spanish,Psychology,292,524,20,28,35,32,9,280,496,368,235,257,590,255,436,448,3
+ejosephsenpg,open architecture,AZ,academic magnet high school,north charleston,SC,2.35,2022,Spanish,Psychology,211,404,21,29,10,6,16,460,452,764,553,698,329,531,613,518,3
+vdaughtreyph,optimal,CA,academy for information technology,scotch plains,NJ,2.85,2024,Computer Science,Creative Writing,482,793,31,17,36,5,32,696,473,397,670,529,455,388,427,390,6
+cminihanpi,Integrated,UT,james madison high school,vienna,VA,2.55,2025,Mathematics,Sociology,576,663,1,21,20,33,15,736,714,382,625,605,649,545,769,548,2
+gcogarpj,Enterprise-wide,AK,whitney high school,cerritos,CA,3.12,2022,English,Sociology,262,590,24,11,33,8,30,754,338,445,588,407,516,638,636,216,5
+eduddypk,Multi-lateral,CT,brooklyn technical high school,brooklyn,NY,2.21,2023,English,Computer Engineering,353,204,14,20,36,21,33,257,418,598,428,708,337,771,685,337,7
+rbertouloumepl,parallelism,TN,academic magnet high school,north charleston,SC,2.39,2025,Biology,Psychology,538,582,21,8,1,8,10,682,695,574,609,706,305,261,301,641,3
+tlacasepm,Object-based,CA,academy for information technology,scotch plains,NJ,2.77,2022,Biology,Computer Engineering,757,258,27,9,26,4,19,604,220,793,788,430,212,249,527,677,1
+mmcasgillpn,firmware,FL,james madison high school,vienna,VA,3.62,2026,Biology,Psychology,329,529,30,17,18,14,26,755,583,692,626,556,755,446,537,734,1
+gdaglishpo,solution-oriented,CO,whitney high school,cerritos,CA,2.85,2023,English,Sociology,526,240,21,17,8,17,31,222,394,265,508,394,707,257,693,425,4
+mgrebnerpp,Universal,NV,brooklyn technical high school,brooklyn,NY,3.71,2024,Mathematics,Creative Writing,206,645,34,36,29,5,10,403,279,220,411,342,718,241,384,596,6
+crichenspq,projection,WA,academic magnet high school,north charleston,SC,3.34,2024,Computer Science,Psychology,258,790,10,18,10,24,22,418,668,333,503,387,799,231,796,293,9
+rstablespr,encoding,NJ,academy for information technology,scotch plains,NJ,3.4,2026,Computer Science,Computer Engineering,540,555,33,25,6,28,12,441,592,654,664,545,644,702,742,225,10
+twabbps,homogeneous,NM,james madison high school,vienna,VA,3.5,2025,English,Sociology,453,377,11,15,14,27,27,227,643,616,617,370,452,442,368,543,1
+kgianettinipt,responsive,FL,whitney high school,cerritos,CA,2.05,2022,Computer Science,Creative Writing,516,736,33,32,18,31,2,465,573,648,639,527,751,361,291,630,8
+alivettpu,multi-state,GA,brooklyn technical high school,brooklyn,NY,3.59,2023,Spanish,Creative Writing,667,247,24,29,31,1,5,320,200,629,788,551,259,640,752,615,9
+ncervantespv,Inverse,FL,academic magnet high school,north charleston,SC,3.86,2024,Biology,Computer Engineering,623,257,17,29,36,30,9,483,233,716,509,346,330,654,673,710,2
+tkummerlowepw,data-warehouse,OK,academy for information technology,scotch plains,NJ,2.02,2022,Mathematics,Sociology,359,659,15,6,16,28,21,260,420,449,213,260,680,418,666,284,3
+pcatterallpx,Enterprise-wide,OH,james madison high school,vienna,VA,3.06,2026,Spanish,Psychology,577,577,30,2,15,29,34,226,771,543,510,451,578,281,786,708,7
+afranzonellopy,methodology,TN,whitney high school,cerritos,CA,3.38,2022,Spanish,Computer Engineering,668,716,13,32,6,29,7,613,733,391,204,441,292,495,543,290,3
+sspringhampz,3rd generation,FL,brooklyn technical high school,brooklyn,NY,2.11,2024,Spanish,Sociology,442,615,34,34,3,14,28,488,231,618,525,576,643,763,667,731,10
+jjacobovitchq0,interactive,NM,academic magnet high school,north charleston,SC,4.0,2025,Spanish,Sociology,386,498,16,2,2,24,33,678,567,482,486,257,454,480,684,674,0
+wscoughq1,Object-based,MN,academy for information technology,scotch plains,NJ,2.71,2026,Mathematics,Psychology,265,627,36,24,12,32,17,486,749,570,581,371,698,477,504,712,4
+jstobartq2,optimizing,TN,james madison high school,vienna,VA,2.22,2025,Computer Science,Creative Writing,495,338,15,11,35,21,25,415,270,285,460,463,683,336,375,786,5
+cpidgeleyq3,Focused,OH,whitney high school,cerritos,CA,2.77,2026,Computer Science,Sociology,558,571,32,2,15,12,19,265,221,304,760,597,557,673,773,775,2
+aspehrq4,high-level,NY,brooklyn technical high school,brooklyn,NY,3.76,2024,Computer Science,Psychology,628,764,11,19,10,14,22,345,649,794,799,479,309,379,735,762,9
+llefeuvreq5,neutral,PA,academic magnet high school,north charleston,SC,2.17,2026,Computer Science,Computer Engineering,403,438,6,34,16,34,26,433,536,448,678,214,442,686,647,698,6
+gbenyanq6,Object-based,WA,academy for information technology,scotch plains,NJ,3.72,2022,Spanish,Psychology,789,549,28,3,12,17,14,736,452,642,279,513,524,565,357,308,5
+atottieq7,User-friendly,OK,james madison high school,vienna,VA,2.27,2023,Spanish,Creative Writing,365,670,26,33,13,36,17,535,457,270,787,287,324,487,388,289,1
+gavesq8,Stand-alone,FL,whitney high school,cerritos,CA,3.27,2022,Biology,Creative Writing,800,270,2,10,28,6,18,328,433,645,677,287,658,353,362,444,6
+sputtenq9,Advanced,TX,brooklyn technical high school,brooklyn,NY,2.87,2026,Computer Science,Psychology,330,441,23,22,34,12,18,436,234,481,342,277,283,347,393,760,9
+slabonqa,zero tolerance,NC,academic magnet high school,north charleston,SC,3.67,2025,Computer Science,Sociology,771,335,29,28,30,15,16,596,770,748,273,443,470,377,634,690,0
+clembkeqb,Object-based,MN,academy for information technology,scotch plains,NJ,2.07,2023,Computer Science,Creative Writing,299,728,10,3,25,29,16,596,228,318,334,763,301,781,324,681,9
+fhanscomeqc,background,CA,james madison high school,vienna,VA,2.54,2022,Spanish,Psychology,461,334,34,12,13,16,33,221,704,239,603,707,573,590,345,467,6
+zlattinqd,support,FL,whitney high school,cerritos,CA,2.05,2023,Spanish,Psychology,577,765,7,15,22,12,21,494,624,442,434,712,256,392,566,694,6
+apurkessqe,Decentralized,WA,brooklyn technical high school,brooklyn,NY,2.72,2024,Spanish,Computer Engineering,479,660,13,21,9,8,25,565,785,613,332,553,517,218,219,535,0
+kdovydenasqf,mission-critical,AL,academic magnet high school,north charleston,SC,3.54,2024,Computer Science,Sociology,648,774,33,4,30,6,1,651,372,432,799,298,708,775,594,398,3
+vjilesqg,capability,FL,academy for information technology,scotch plains,NJ,3.44,2022,English,Psychology,380,783,32,33,11,24,27,564,293,615,438,690,235,525,796,453,9
+gmixterqh,access,TX,james madison high school,vienna,VA,2.11,2023,Biology,Computer Engineering,626,522,17,5,35,9,8,666,792,724,606,780,685,419,565,458,2
+garrellqi,client-server,SC,whitney high school,cerritos,CA,3.44,2024,Biology,Sociology,568,356,16,8,20,30,21,271,447,719,252,333,557,657,397,454,7
+adavidoviczqj,Upgradable,NC,brooklyn technical high school,brooklyn,NY,3.63,2022,Computer Science,Creative Writing,780,297,6,3,25,3,17,294,759,363,484,235,762,212,736,494,8
+bcarlettqk,Robust,FL,academic magnet high school,north charleston,SC,3.97,2023,Biology,Sociology,754,774,4,5,29,26,24,708,321,426,661,350,736,544,604,780,5
+grichardonql,architecture,GA,academy for information technology,scotch plains,NJ,3.11,2024,English,Computer Engineering,629,626,13,9,8,19,35,797,669,229,475,266,786,700,500,424,6
+agurtonqm,hub,PA,james madison high school,vienna,VA,3.21,2024,Spanish,Creative Writing,740,661,13,34,36,20,30,401,683,218,312,458,319,503,235,634,4
+jbradmoreqn,benchmark,PA,whitney high school,cerritos,CA,3.76,2023,Mathematics,Computer Engineering,452,523,36,2,24,13,34,790,488,322,329,234,331,278,578,358,5
+nboulsherqo,Persistent,PA,brooklyn technical high school,brooklyn,NY,3.54,2023,Mathematics,Creative Writing,582,527,34,36,6,9,12,696,709,535,556,780,529,390,232,667,0
+dbloxamqp,web-enabled,TX,academic magnet high school,north charleston,SC,2.89,2025,Spanish,Creative Writing,271,521,32,19,14,6,25,746,744,655,396,616,310,406,628,563,8
+tattwaterqq,demand-driven,GA,academy for information technology,scotch plains,NJ,3.0,2025,Computer Science,Creative Writing,333,613,6,30,29,17,22,389,221,600,470,500,725,772,232,799,7
+dstuddqr,structure,NY,james madison high school,vienna,VA,3.63,2026,Biology,Psychology,479,346,21,32,2,32,22,200,480,200,543,277,700,600,547,405,0
+hclowsleyqs,User-centric,OR,whitney high school,cerritos,CA,3.18,2024,Mathematics,Psychology,244,657,19,33,22,20,32,739,748,339,231,246,749,635,395,422,4
+tbrandinqt,core,OK,brooklyn technical high school,brooklyn,NY,3.62,2026,Spanish,Psychology,458,754,13,21,28,2,7,480,707,601,302,450,634,692,438,308,2
+btarpeyqu,extranet,CO,academic magnet high school,north charleston,SC,2.77,2024,Mathematics,Computer Engineering,394,437,4,11,35,1,5,539,477,238,314,512,632,299,434,235,5
+mduvalqv,non-volatile,TX,academy for information technology,scotch plains,NJ,2.9,2022,Computer Science,Psychology,273,462,23,29,13,27,16,684,505,771,683,212,568,637,297,642,10
+igeockleqw,dedicated,GA,james madison high school,vienna,VA,2.02,2026,Biology,Psychology,690,796,14,33,8,22,11,267,572,523,356,356,314,791,565,283,5
+kmclaneqx,Grass-roots,UT,whitney high school,cerritos,CA,2.47,2026,Spanish,Computer Engineering,364,396,24,2,24,17,34,686,723,283,798,779,739,483,300,284,2
+gmatevosianqy,Monitored,IA,brooklyn technical high school,brooklyn,NY,3.71,2025,Computer Science,Creative Writing,761,408,25,34,6,30,14,782,405,586,604,671,598,307,508,625,2
+mwatmanqz,Optional,WA,academic magnet high school,north charleston,SC,2.77,2023,Biology,Psychology,611,376,17,7,28,23,4,712,573,318,359,545,693,652,749,626,7
+lcampor0,Secured,CA,academy for information technology,scotch plains,NJ,3.95,2023,Computer Science,Creative Writing,765,546,20,35,4,11,25,300,322,463,444,600,619,250,541,553,9
+bkinnerleyr1,website,CA,james madison high school,vienna,VA,2.42,2024,Computer Science,Psychology,372,632,27,35,33,21,32,445,532,307,575,770,710,475,343,414,6
+rloftier2,dedicated,KS,whitney high school,cerritos,CA,2.82,2025,Spanish,Sociology,377,556,11,9,29,4,26,694,468,740,556,245,774,665,695,777,7
+crikkardr3,hybrid,TX,brooklyn technical high school,brooklyn,NY,3.81,2024,Spanish,Creative Writing,201,798,28,30,13,2,36,401,583,562,468,744,633,651,610,523,7
+jkarpfr4,mobile,AZ,academic magnet high school,north charleston,SC,3.88,2025,Biology,Creative Writing,391,236,13,32,23,19,8,475,630,593,741,284,724,298,751,652,7
+dlouther5,human-resource,MN,academy for information technology,scotch plains,NJ,3.41,2024,Mathematics,Creative Writing,584,736,33,29,7,24,18,319,234,489,321,696,453,401,697,732,4
+zdissr6,Triple-buffered,WV,james madison high school,vienna,VA,2.92,2024,Biology,Computer Engineering,249,786,31,20,35,8,24,667,351,641,486,741,492,697,702,566,9
+rarnor7,bandwidth-monitored,IL,whitney high school,cerritos,CA,2.09,2024,Biology,Computer Engineering,655,462,14,13,12,13,5,674,406,599,735,774,234,230,674,202,10
+drawdalesr8,Balanced,MS,brooklyn technical high school,brooklyn,NY,2.03,2022,Biology,Creative Writing,418,534,8,1,18,14,29,204,781,343,280,745,719,320,235,367,7
+hhuner9,impactful,VA,academic magnet high school,north charleston,SC,2.24,2025,Computer Science,Psychology,422,711,2,15,34,21,22,688,249,506,258,237,608,606,707,305,8
+aharrismithra,Realigned,PA,academy for information technology,scotch plains,NJ,3.81,2023,Computer Science,Sociology,394,637,15,27,32,20,13,699,517,262,532,275,605,662,740,710,2
+lantonowiczrb,systemic,TX,james madison high school,vienna,VA,2.94,2025,Computer Science,Creative Writing,716,737,35,4,18,26,10,470,691,411,706,627,349,721,742,338,4
+fschiementzrc,benchmark,TX,whitney high school,cerritos,CA,3.05,2025,Biology,Computer Engineering,717,586,18,35,9,22,27,307,508,306,519,335,431,223,750,428,9
+mstanclifferd,firmware,CA,brooklyn technical high school,brooklyn,NY,3.67,2025,Spanish,Creative Writing,388,573,29,24,10,34,34,233,790,209,513,246,435,227,310,785,3
+sjiruchre,Cross-group,TX,academic magnet high school,north charleston,SC,3.62,2026,Spanish,Computer Engineering,264,462,31,16,11,31,1,354,450,744,327,348,606,739,486,367,2
+eantwisrf,Enterprise-wide,IA,academy for information technology,scotch plains,NJ,2.1,2025,English,Computer Engineering,680,653,8,13,21,7,5,323,657,374,219,569,313,245,254,644,3
+hfayerbrotherrg,challenge,MS,james madison high school,vienna,VA,2.68,2024,Biology,Computer Engineering,491,515,11,23,2,17,36,766,360,324,774,636,405,533,240,361,2
+akleinlererrh,Universal,TX,whitney high school,cerritos,CA,3.46,2024,Mathematics,Sociology,311,609,10,1,5,4,22,520,602,520,547,520,364,573,722,714,3
+vmilillori,Seamless,NY,brooklyn technical high school,brooklyn,NY,2.72,2024,Mathematics,Creative Writing,255,640,23,3,34,12,9,210,717,476,287,430,365,800,729,745,9
+mlateyrj,didactic,FL,academic magnet high school,north charleston,SC,3.09,2026,Mathematics,Computer Engineering,779,408,31,23,11,4,6,618,759,417,628,668,689,697,514,596,0
+bfreddirk,Networked,FL,academy for information technology,scotch plains,NJ,2.22,2025,Computer Science,Creative Writing,424,578,31,10,8,28,32,566,635,262,395,693,719,290,613,610,10
+kphilliskirkrl,Down-sized,VA,james madison high school,vienna,VA,3.04,2023,Computer Science,Computer Engineering,447,325,17,11,31,14,11,201,696,423,782,678,315,445,534,643,0
+jchoatrm,initiative,NM,whitney high school,cerritos,CA,2.01,2025,Computer Science,Computer Engineering,766,746,3,4,32,26,1,682,743,536,525,693,497,594,721,393,7
+ccolefordrn,hybrid,AZ,brooklyn technical high school,brooklyn,NY,3.86,2023,Computer Science,Creative Writing,640,488,22,23,18,35,34,349,508,614,755,277,795,236,317,601,2
+apaskinsro,clear-thinking,DC,academic magnet high school,north charleston,SC,3.97,2024,Biology,Psychology,578,393,20,13,33,1,9,631,716,542,552,724,537,362,799,471,1
+dfargherrp,framework,CA,academy for information technology,scotch plains,NJ,3.15,2025,Computer Science,Creative Writing,361,429,31,35,29,29,26,236,490,331,511,612,753,596,296,445,8
+lmckernonrq,application,NY,james madison high school,vienna,VA,2.33,2026,Computer Science,Computer Engineering,698,691,24,11,28,5,25,792,690,265,536,207,560,336,716,758,4
+tampsrr,Persistent,VA,whitney high school,cerritos,CA,2.68,2025,Biology,Psychology,587,486,11,9,30,5,33,799,617,295,221,751,366,230,592,798,2
