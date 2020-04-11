@@ -152,6 +152,7 @@ exports.getMajorsByCollegeID = async (collegeID) => {
     };
 };
 
+
 /**
  * Process the applications to count averages from a college
  * Returns the applications with avereages and weight
@@ -169,24 +170,12 @@ const processApplications = (applications) => {
     let countACTComposite = 0;
     let averageWeight = 0;
 
-    let averageAcceptedGPA = 0;
-    let countAcceptedGPA = 0;
-    let averageAcceptedSATMath = 0;
-    let countAcceptedSATMath = 0;
-    let averageAcceptedSATEBRW = 0;
-    let countAcceptedSATEBRW = 0;
-    let averageAcceptedACTComposite = 0;
-    let countAcceptedACTComposite = 0;
     for (let i = 0; i < applications.length; i += 1) {
         const app = applications[i];
         let percent = 0;
         let weight = 0;
 
         if (app.GPA) {
-            if (app.Application.status === 'accepted') {
-                countAcceptedGPA += 1;
-                averageAcceptedGPA += parseFloat(app.GPA);
-            }
             countGPA += 1;
             averageGPA += parseFloat(app.GPA);
         }
@@ -238,28 +227,16 @@ const processApplications = (applications) => {
         // mainTests are the SATEBRW, SATMath, and ACTComposite
         let mainTests = 0;
         if (app.ACTComposite) {
-            if (app.Application.status === 'accepted') {
-                countAcceptedACTComposite += 1;
-                averageAcceptedACTComposite += app.ACTComposite;
-            }
             countACTComposite += 1;
             averageACTComposite += app.ACTComposite;
             mainTests += 1;
         }
         if (app.SATMath) {
-            if (app.Application.status === 'accepted') {
-                countAcceptedSATMath += 1;
-                averageAcceptedSATMath += app.SATMath;
-            }
             countSATMath += 1;
             averageSATMath += app.SATMath;
             mainTests += 1;
         }
         if (app.SATEBRW) {
-            if (app.Application.status === 'accepted') {
-                countAcceptedSATEBRW += 1;
-                averageAcceptedSATEBRW += app.SATEBRW;
-            }
             countSATEBRW += 1;
             averageSATEBRW += app.SATEBRW;
             mainTests += 1;
@@ -275,16 +252,11 @@ const processApplications = (applications) => {
         averageWeight += weight;
         processedApplications.push(processedApp);
     }
-    averageGPA /= countGPA;
-    averageSATMath /= countSATMath;
-    averageSATEBRW /= countSATEBRW;
-    averageACTComposite /= countACTComposite;
-    averageWeight /= applications.length;
-
-    averageAcceptedGPA /= countAcceptedGPA;
-    averageAcceptedSATMath /= countAcceptedSATMath;
-    averageAcceptedSATEBRW /= countAcceptedSATEBRW;
-    averageAcceptedACTComposite /= countAcceptedACTComposite;
+    if (countGPA) averageGPA /= countGPA;
+    if (countSATMath) averageSATMath /= countSATMath;
+    if (countSATEBRW) averageSATEBRW /= countSATEBRW;
+    if (countACTComposite) averageACTComposite /= countACTComposite;
+    if (applications.length) averageWeight /= applications.length;
 
     return {
         ok: 'Successfully got applications tracker data',
@@ -294,13 +266,51 @@ const processApplications = (applications) => {
             avgSATMath: Math.round(averageSATMath),
             avgSATEBRW: Math.round(averageSATEBRW),
             avgACTComposite: Math.round(averageACTComposite),
-            avgAcceptedGPA: averageAcceptedGPA.toFixed(2),
-            avgAcceptedSATMath: Math.round(averageAcceptedSATMath),
-            avgAcceptedSATEBRW: Math.round(averageAcceptedSATEBRW),
-            avgAcceptedACTComposite: Math.round(averageAcceptedACTComposite),
             avgWeight: Math.round(averageWeight),
         },
     };
+};
+
+exports.getAcceptedApplicationsByCollegeID = async (collegeID) => {
+    let applications = [];
+    const applicationWhereClause = {
+        isQuestionable: false,
+        status: {
+            [Op.eq]: 'accepted',
+        },
+    };
+
+    const query = {
+        where: { CollegeId: collegeID },
+        include: [{
+            model: models.User,
+            through: {
+                where: applicationWhereClause,
+                attributes: { exclude: ['isQuestionable', 'createdAt', 'updatedAt'] },
+            },
+            attributes: {
+                exclude: ['password', 'createdAt', 'updatedAt', 'APPassed', 'residenceState',
+                    'highschoolCity', 'highschoolState', 'major1', 'major2'],
+            },
+        }],
+    };
+    try {
+        applications = (await models.College.findOne(query));
+    } catch (error) {
+        return {
+            error: 'Unable to get applications for applications tracker',
+            reason: error.message,
+        };
+    }
+
+    if (!applications) {
+        return {
+            ok: 'No accepted data for college',
+            applications: [],
+            averages: {},
+        };
+    }
+    return processApplications(applications.toJSON().Users);
 };
 
 /**
@@ -362,37 +372,61 @@ exports.getApplicationsByCollegeID = async (collegeID, filters) => {
         userWhereClause.collegeClass = collegeClass;
     }
 
+    const query = {
+        where: { CollegeId: collegeID },
+        include: [{
+            model: models.User,
+            through: {
+                where: applicationWhereClause,
+                attributes: { exclude: ['isQuestionable', 'createdAt', 'updatedAt'] },
+            },
+            where: userWhereClause,
+            attributes: {
+                exclude: ['password', 'createdAt', 'updatedAt', 'APPassed', 'residenceState',
+                    'highschoolCity', 'highschoolState', 'major1', 'major2'],
+            },
+            include: [
+                includeHS,
+            ],
+        }],
+    };
     try {
-        applications = (await models.College.findOne({
-            where: { CollegeId: collegeID },
-            include: [{
-                model: models.User,
-                through: {
-                    where: applicationWhereClause,
-                    attributes: { exclude: ['isQuestionable', 'createdAt', 'updatedAt'] },
-                },
-                where: userWhereClause,
-                attributes: {
-                    exclude: ['password', 'createdAt', 'updatedAt', 'APPassed', 'residenceState',
-                        'highschoolCity', 'highschoolState', 'major1', 'major2'],
-                },
-                include: [
-                    includeHS,
-                ],
-            }],
-        }));
+        applications = await models.College.findOne(query);
     } catch (error) {
         return {
             error: 'Unable to get applications for applications tracker',
             reason: error.message,
         };
     }
+
+    let acceptedApplications = null;
+    try {
+        acceptedApplications = await this.getAcceptedApplicationsByCollegeID(collegeID);
+    } catch (error) {
+        return {
+            error: 'Unable to get applications for applications tracker',
+            reason: error.message,
+        };
+    }
+
+    const acceptedAverages = {
+        avgAcceptedGPA: acceptedApplications.averages.avgGPA,
+        avgAcceptedSATMath: acceptedApplications.averages.avgSATMath,
+        avgAcceptedSATEBRW: acceptedApplications.averages.avgSATEBRW,
+        avgAcceptedACTComposite: acceptedApplications.averages.avgACTComposite,
+    };
+
     if (!applications) {
         return {
             ok: 'No data for college',
             applications: [],
-            averages: {},
+            averages: { ...acceptedAverages },
         };
     }
-    return processApplications(applications.toJSON().Users);
+
+    const processedFilteredApplications = processApplications(applications.toJSON().Users);
+    // eslint-disable-next-line max-len
+    processedFilteredApplications.averages = { ...processedFilteredApplications.averages, ...acceptedAverages };
+
+    return processedFilteredApplications;
 };

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import {
-    Alert, Col, Row, Card, CardDeck, Button
+    Alert, Col, Row, Card, CardDeck, Button,
 } from 'react-bootstrap';
 import FilterAT from './FilterAT/FilterAT';
 import ATScatterplot from './ATScatterplot/ATScatterplot';
 import ATList from './ATList/ATList';
-import { getApplicationsTrackerData } from '../../../services/api/applicationsTracker';
+import applicationsTrackerAPI from '../../../services/api/applicationsTracker';
 import './ApplicationsTracker.scss';
 
 const ApplicationsTracker = (props) => {
@@ -21,16 +21,14 @@ const ApplicationsTracker = (props) => {
     } = college;
 
     useEffect(() => {
-        getApplicationsTrackerData(CollegeId, filters).then((results) => {
+        applicationsTrackerAPI.getApplicationsTrackerData(CollegeId, filters).then((results) => {
             if (results.error) {
                 setErrorAlert(true);
                 setErrorMessage(results.reason);
             }
             if (results.ok) {
                 setErrorAlert(false);
-                setApplications(results.applications.sort((a, b) => {
-                    return a.Application.status.localeCompare(b.Application.status) ? 1 : -1;
-                }));
+                setApplications(results.applications.sort((a, b) => (a.Application.status.localeCompare(b.Application.status) ? 1 : -1)));
                 setAverages(results.averages);
             }
         });
@@ -74,7 +72,7 @@ const ApplicationsTracker = (props) => {
                                         <Row>
                                             <Col>
                                                 <div className="at-title">GPA</div>
-                                                <div className="at-text">{averages.avgAcceptedGPA ? averages.avgAcceptedGPA : 'N/A'}</div>
+                                                <div className="at-text">{averages.avgAcceptedGPA !== '0.00' ? averages.avgAcceptedGPA : 'N/A'}</div>
                                             </Col>
                                             <Col>
                                                 <div className="at-title">SAT Math</div>
@@ -102,9 +100,13 @@ const ApplicationsTracker = (props) => {
                             <Col xs="8">
                                 <div className="list mb-2">
                                     <p className="mb-0">
-                                        <b>{applications.length} matching students</b>
+                                        <b>
+                                            {applications.length}
+                                            {' '}
+matching students
+                                        </b>
                                     </p>
-                                    <Button variant='outline-primary' onClick={() => setListATView(!listATView)}>
+                                    <Button variant="outline-primary" onClick={() => setListATView(!listATView)}>
                                         {
                                             listATView
                                                 ? 'Switch to Scatterplot View'

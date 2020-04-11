@@ -2,7 +2,7 @@ import React, { useState } from '../../../node_modules/react';
 import { Link } from '../../../node_modules/react-router-dom';
 import { Form, Button, Alert } from '../../../node_modules/react-bootstrap';
 import './CreateAccount.scss';
-import { createAccount } from '../../services/api/user';
+import userAPI from '../../services/api/user';
 
 const CreateAccount = (props) => {
     const [username, setUsername] = useState('');
@@ -11,7 +11,7 @@ const CreateAccount = (props) => {
     const [errorMessage, setErrorMessage] = useState('');
 
     const handleFormSubmission = () => {
-        createAccount(username, password).then(results => {
+        userAPI.createAccount(username, password).then(results => {
             if (results.error) {
                 setErrorAlert(true);
                 setErrorMessage(results.error);

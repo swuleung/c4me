@@ -14,7 +14,8 @@ describe('Scrape college information', () => {
     });
 
     describe('Import student and application', () => {
-        it('Import students: mochaImport & mochaImportWrong', (done) => {
+        it('Import students: mochaImport & mochaImportWrong', function importStudents(done) {
+            this.timeout(30000);
             agent
                 .get('/admin/importStudents')
                 .end((err, res) => {
@@ -29,18 +30,15 @@ describe('Scrape college information', () => {
                 .end((err, res) => {
                     res.should.have.status(200);
                     const { student } = res.body;
-                    expect(student).to.deep.equal({
+                    expect(student).to.shallowDeepEqual({
                         username: 'mochaImport',
                         GPA: '3.50',
                         residenceState: 'NJ',
-                        highschoolName: 'Ridgewood High School',
-                        highschoolCity: 'Ridegwood',
-                        highschoolState: 'NJ',
                         collegeClass: 2024,
                         major1: 'English',
                         major2: 'Spanish',
-                        SATEBRW: 750,
-                        SATMath: 670,
+                        SATEBRW: 800,
+                        SATMath: 800,
                         ACTEnglish: 35,
                         ACTMath: 28,
                         ACTReading: 33,
@@ -57,6 +55,22 @@ describe('Scrape college information', () => {
                         SATPhys: 434,
                         APPassed: 3,
                         isAdmin: false,
+                        HighSchool: {
+                            ACTEnglish: 30,
+                            ACTMath: 29,
+                            ACTReading: 30,
+                            ACTScience: 29,
+                            AverageACT: 30,
+                            AverageSAT: 1320,
+                            HighSchoolCity: 'Ridgewood',
+                            HighSchoolId: 2,
+                            HighSchoolState: 'NJ',
+                            Name: 'Ridgewood High School',
+                            NicheAcademicScore: 'A+',
+                            SATEBRW: 650,
+                            SATMath: 670,
+                        },
+                        HighSchoolId: 2,
                     });
                     done();
                 });
@@ -68,17 +82,14 @@ describe('Scrape college information', () => {
                 .end((err, res) => {
                     res.should.have.status(200);
                     const { student } = res.body;
-                    expect(student).to.deep.equal({
+                    expect(student).to.shallowDeepEqual({
                         username: 'mochaImportWrong',
                         GPA: '3.50',
                         residenceState: 'NJ',
-                        highschoolName: 'Ridgewood High School',
-                        highschoolCity: 'Ridegwood',
-                        highschoolState: 'NJ',
-                        collegeClass: 2024,
+                        collegeClass: 2028,
                         major1: 'English',
                         major2: 'Spanish',
-                        SATEBRW: 750,
+                        SATEBRW: 400,
                         SATMath: null,
                         ACTEnglish: 35,
                         ACTMath: 28,
@@ -96,6 +107,22 @@ describe('Scrape college information', () => {
                         SATPhys: 434,
                         APPassed: 3,
                         isAdmin: false,
+                        HighSchool: {
+                            ACTEnglish: 30,
+                            ACTMath: 29,
+                            ACTReading: 30,
+                            ACTScience: 29,
+                            AverageACT: 30,
+                            AverageSAT: 1320,
+                            HighSchoolCity: 'Ridgewood',
+                            HighSchoolId: 2,
+                            HighSchoolState: 'NJ',
+                            Name: 'Ridgewood High School',
+                            NicheAcademicScore: 'A+',
+                            SATEBRW: 650,
+                            SATMath: 670,
+                        },
+                        HighSchoolId: 2,
                     });
                     done();
                 });

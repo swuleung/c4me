@@ -1,7 +1,7 @@
-module.exports = {
+const admin = {
     scrapeCollegeRanking: async function scrapeCollegeRanking() {
         try {
-            const result = await fetch('http://localhost:9000/admin/scrapeCollegeRanking', {
+            const result = await fetch('/admin/scrapeCollegeRanking', {
                 method: 'GET',
                 credentials: 'include',
                 headers: {
@@ -18,7 +18,7 @@ module.exports = {
     },
     deleteAllStudents: async function deleteAllStudents() {
         try {
-            const result = fetch('http://localhost:9000/admin/deleteStudentProfiles', {
+            const result = fetch('/admin/deleteStudentProfiles', {
                 method: 'DELETE',
                 credentials: 'include',
                 headers: {
@@ -35,7 +35,7 @@ module.exports = {
     },
     scrapeCollegeData: async function scrapeCollegeData() {
         try {
-            const result = await fetch('http://localhost:9000/admin/scrapeCollegeData', {
+            const result = await fetch('/admin/scrapeCollegeData', {
                 method: 'GET',
                 credentials: 'include',
                 headers: {
@@ -52,7 +52,7 @@ module.exports = {
     },
     importCollegeScorecard: async function importCollegeScorecard() {
         try {
-            const result = await fetch('http://localhost:9000/admin/importCollegeScorecard', {
+            const result = await fetch('/admin/importCollegeScorecard', {
                 method: 'GET',
                 credentials: 'include',
                 headers: {
@@ -69,7 +69,7 @@ module.exports = {
     },
     importStudents: async function importStudents() {
         try {
-            const result = await fetch('http://localhost:9000/admin/importStudents', {
+            const result = await fetch('/admin/importStudents', {
                 method: 'GET',
                 credentials: 'include',
                 headers: {
@@ -86,7 +86,7 @@ module.exports = {
     },
     importStudentApplications: async function importStudentApplications() {
         try {
-            const result = await fetch('http://localhost:9000/admin/importApplications', {
+            const result = await fetch('/admin/importApplications', {
                 method: 'GET',
                 credentials: 'include',
                 headers: {
@@ -103,7 +103,7 @@ module.exports = {
     },
     verifyAdmin: async function verifyAdmin() {
         try {
-            const result = await fetch('http://localhost:9000/admin/verifyAdmin', {
+            const result = await fetch('/admin/verifyAdmin', {
                 method: 'GET',
                 credentials: 'include',
                 headers: {
@@ -119,3 +119,5 @@ module.exports = {
         }
     },
 };
+
+export default admin;
