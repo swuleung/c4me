@@ -93,7 +93,7 @@ models.sequelize.sync(
     server.listen(port, () => {
         debug(`Express server listening on port ${server.address().port}`);
     });
-    server.setTimeout(300000);
+    server.setTimeout(3000000);
     server.on('error', onError);
     server.on('listening', onListening);
 
