@@ -1,4 +1,5 @@
 const models = require('../models');
+const { scrapeHighSchoolData } = require('./highschoolController');
 
 exports.getStudent = async (username) => {
     let student = {};
@@ -8,6 +9,9 @@ exports.getStudent = async (username) => {
                 username: username,
                 isAdmin: false,
             },
+            include: [{
+                model: models.HighSchool,
+            }],
         });
     } catch (error) {
         return {
@@ -27,7 +31,7 @@ exports.getStudent = async (username) => {
     };
 };
 
-exports.updateStudent = async (username, newStudent) => {
+exports.updateStudent = async (username, newStudent, newHighSchool) => {
     let student = [];
     try {
         student = await models.User.findAll({
@@ -56,9 +60,70 @@ exports.updateStudent = async (username, newStudent) => {
             reason: error,
         };
     }
+    try {
+        const result = await this.updateStudentHighSchool(student[0], newHighSchool);
+        if (result.ok) {
+            student[0].HighSchool = result.highSchool;
+        } else {
+            return result;
+        }
+    } catch (error) {
+        return {
+            error: `Error adding high school to ${username}`,
+            reason: error,
+        };
+    }
     return {
         ok: 'Success',
         student: student[0],
+    };
+};
+
+exports.updateStudentHighSchool = async (student, highSchool) => {
+    let newHighSchool = {};
+    try {
+        newHighSchool = await models.HighSchool.findOne({
+            where: highSchool,
+        });
+    } catch (error) {
+        return {
+            error: 'Unable to query for high school',
+            reason: error,
+        };
+    }
+    if (!newHighSchool) {
+        try {
+            newHighSchool = await models.HighSchool.create(highSchool);
+        } catch (error) {
+            return {
+                error: 'Unable to create high school',
+                reason: error,
+            };
+        }
+        try {
+            scrapeHighSchoolData(
+                highSchool.Name,
+                highSchool.HighSchoolCity,
+                highSchool.HighSchoolState,
+            );
+        } catch (error) {
+            return {
+                error: `Unable to scrape data for ${highSchool.Name}-${highSchool.HighSchoolCity}, ${highSchool.HighSchoolState}`,
+                reason: error,
+            };
+        }
+    }
+    try {
+        await student.update({ HighSchoolId: newHighSchool.HighSchoolId });
+    } catch (error) {
+        return {
+            error: 'Unable to add high school to student',
+            reason: error,
+        };
+    }
+    return {
+        ok: 'Success',
+        highSchool: newHighSchool,
     };
 };
 

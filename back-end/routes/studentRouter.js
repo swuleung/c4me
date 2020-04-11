@@ -80,7 +80,11 @@ router.post('/:username/edit', async (req, res) => {
                 error: 'Cannot edit another user',
             });
         } else {
-            const result = await studentController.updateStudent(req.params.username, req.body);
+            const result = await studentController.updateStudent(
+                req.params.username,
+                req.body.student,
+                req.body.highSchool,
+            );
             if (result.error) {
                 if (result.error === 'Something went wrong') res.status(500);
                 else res.status(400);
