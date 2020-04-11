@@ -402,7 +402,6 @@ exports.importStudents = async () => {
         const { highSchool } = users[userIndex];
         while (Object.keys(user).length > 1) {
             try {
-                er;
                 const student = await models.User.create(user);
 
                 const result = await updateStudentHighSchool(student, highSchool);
@@ -446,7 +445,7 @@ exports.importStudents = async () => {
 
     // no errors
     return {
-        ok: 'Success',
+        ok: 'Successessfully imported students',
     };
 };
 
@@ -459,6 +458,7 @@ exports.importApplications = async () => {
     const applications = [];
     await new Promise(((resolve) => {
         const paths = getPathConfig();
+        // read from path in paths.json
         const applicationFile = `${__dirname}/${paths.ASSETS}/${paths.IMPORT_APPLICATIONS}`;
         fs.createReadStream(applicationFile)
             .on('error', (error) => {
@@ -469,6 +469,7 @@ exports.importApplications = async () => {
             })
             .pipe(parse({ delimiter: ',', columns: true }))
             .on('data', async (row) => {
+                // set up the application object
                 const application = {
                     collegeName: row.college,
                     username: row.userid,
@@ -481,13 +482,16 @@ exports.importApplications = async () => {
             });
     }));
     /* eslint-disable no-await-in-loop */
+    // for each application, try to add it
     for (let appIndex = 0; appIndex < applications.length; appIndex += 1) {
         try {
+            // find the college
             const college = await models.College.findOne({
                 where: { Name: applications[appIndex].collegeName },
                 raw: true,
             });
             if (college !== null) {
+                // add the application
                 applications[appIndex].college = college.CollegeId;
                 await models.Application.create(applications[appIndex]);
             } else {
@@ -505,11 +509,11 @@ exports.importApplications = async () => {
     /* eslint-enable no-await-in-loop */
     if (errors.length) {
         return {
-            error: 'Error importing applications',
+            error: 'Error importing some applications',
             reason: errors,
         };
     }
     return {
-        ok: 'Success',
+        ok: 'Successfully imported applications',
     };
 };

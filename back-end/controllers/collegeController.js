@@ -160,6 +160,8 @@ exports.getMajorsByCollegeID = async (collegeID) => {
  */
 const processApplications = (applications) => {
     const processedApplications = [];
+
+    // start the averages at 0
     let averageGPA = 0;
     let countGPA = 0;
     let averageSATMath = 0;
@@ -170,6 +172,7 @@ const processApplications = (applications) => {
     let countACTComposite = 0;
     let averageWeight = 0;
 
+    // for each application, calculate the weight and add their #s to the average
     for (let i = 0; i < applications.length; i += 1) {
         const app = applications[i];
         let percent = 0;
@@ -224,6 +227,7 @@ const processApplications = (applications) => {
             weight += (app.SATPhys / 800.0) * 5;
         }
 
+        // 100percent - previous tests is dided equally in maintests
         // mainTests are the SATEBRW, SATMath, and ACTComposite
         let mainTests = 0;
         if (app.ACTComposite) {
@@ -252,6 +256,9 @@ const processApplications = (applications) => {
         averageWeight += weight;
         processedApplications.push(processedApp);
     }
+
+    // calculate averages
+    // avoid 0 division with if statements
     if (countGPA) averageGPA /= countGPA;
     if (countSATMath) averageSATMath /= countSATMath;
     if (countSATEBRW) averageSATEBRW /= countSATEBRW;
@@ -262,7 +269,7 @@ const processApplications = (applications) => {
         ok: 'Successfully got applications tracker data',
         applications: processedApplications,
         averages: {
-            avgGPA: averageGPA.toFixed(2),
+            avgGPA: averageGPA.toFixed(2), // to 2 decimal places
             avgSATMath: Math.round(averageSATMath),
             avgSATEBRW: Math.round(averageSATEBRW),
             avgACTComposite: Math.round(averageACTComposite),
@@ -271,8 +278,13 @@ const processApplications = (applications) => {
     };
 };
 
+/**
+ *  Get only accepted applications with no other filters by collegeID
+ * @param {integer} collegeID
+ */
 exports.getAcceptedApplicationsByCollegeID = async (collegeID) => {
     let applications = [];
+    // no questionable applications
     const applicationWhereClause = {
         isQuestionable: false,
         status: {
@@ -314,19 +326,33 @@ exports.getAcceptedApplicationsByCollegeID = async (collegeID) => {
 };
 
 /**
- * This function is specifically used by the Applications tracker
+ *
+ * @param {integer} collegeID
+ * @param {object} filters
+ *    filters: {
+ *       lowerCollegeClass: <integer>
+ *       upperCollegeClass: <integer>
+ *       statuses: ['accepted', ...]
+ *       highSchools: [highSchoolId, ...]
+ *       lax: <boolean>
+ *    }
+ * Each filter is optional
  */
 exports.getApplicationsByCollegeID = async (collegeID, filters) => {
     let applications = [];
+    // query parts
     const userWhereClause = {};
     const applicationWhereClause = {
         isQuestionable: false,
     };
     const highSchoolWhereClause = {};
-
     let HighSchoolId = { [Op.or]: {} };
     let collegeClass = { [Op.or]: {} };
     let status = { [Op.or]: {} };
+    const includeHS = {
+        model: models.HighSchool,
+        attributes: [],
+    };
 
     // make the collegeClass filters optional if lax
     if (filters.lax) {
@@ -335,12 +361,10 @@ exports.getApplicationsByCollegeID = async (collegeID, filters) => {
         };
     }
 
-    const includeHS = {
-        model: models.HighSchool,
-        attributes: [],
-    };
 
+    // if there is a list of high schools, try
     if (filters.highSchools) {
+        // allow null if lax
         if (filters.lax) {
             HighSchoolId = {
                 [Op.or]: { [Op.eq]: null },
@@ -352,7 +376,9 @@ exports.getApplicationsByCollegeID = async (collegeID, filters) => {
         includeHS.where = highSchoolWhereClause;
     }
 
+    // if there are statuses, add the list in
     if (filters.statuses) {
+        // allow null if lax
         if (filters.lax) {
             status = {
                 [Op.or]: { [Op.eq]: null },
@@ -362,6 +388,7 @@ exports.getApplicationsByCollegeID = async (collegeID, filters) => {
         applicationWhereClause.status = status;
     }
 
+    // handle the collegeClasses
     if (filters.lowerCollegeClass) {
         collegeClass[Op.or][Op.and] = { [Op.gte]: filters.lowerCollegeClass };
     }
@@ -372,6 +399,7 @@ exports.getApplicationsByCollegeID = async (collegeID, filters) => {
         userWhereClause.collegeClass = collegeClass;
     }
 
+    // complete query
     const query = {
         where: { CollegeId: collegeID },
         include: [{
@@ -390,6 +418,7 @@ exports.getApplicationsByCollegeID = async (collegeID, filters) => {
             ],
         }],
     };
+
     try {
         applications = await models.College.findOne(query);
     } catch (error) {
@@ -399,6 +428,7 @@ exports.getApplicationsByCollegeID = async (collegeID, filters) => {
         };
     }
 
+    // get the accepted applications with no filters for averages
     let acceptedApplications = null;
     try {
         acceptedApplications = await this.getAcceptedApplicationsByCollegeID(collegeID);
@@ -409,6 +439,7 @@ exports.getApplicationsByCollegeID = async (collegeID, filters) => {
         };
     }
 
+    // change the names of the averages
     const acceptedAverages = {
         avgAcceptedGPA: acceptedApplications.averages.avgGPA,
         avgAcceptedSATMath: acceptedApplications.averages.avgSATMath,
