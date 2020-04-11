@@ -124,25 +124,23 @@ const Admin = () => {
                 }
                 setErrorMessage(errorString);
             }
-            if (resultStudent.ok) {
-                admin.importStudentApplications().then((resultApp) => {
-                    if (resultApp.error) {
-                        setProgressAlert(false);
-                        setErrorAlert(true);
-                        errorString.push(<h4 key="importAppError" className="alert-heading">{resultApp.error}</h4>);
-                        for (let i = 0; i < (resultApp.reason).length; i += 1) {
-                            errorString.push(<p key={`importAppError-${i}`}>{resultApp.reason[i].error}</p>);
-                        }
-                        setErrorMessage(errorString);
+            // import applications even with errors from import students
+            admin.importStudentApplications().then((resultApp) => {
+                if (resultApp.error) {
+                    setProgressAlert(false);
+                    setErrorAlert(true);
+                    errorString.push(<h4 key="importAppError" className="alert-heading">{resultApp.error}</h4>);
+                    for (let i = 0; i < (resultApp.reason).length; i += 1) {
+                        errorString.push(<p key={`importAppError-${i}`}>{resultApp.reason[i].error}</p>);
                     }
-                    if (resultApp.ok) {
-                        setErrorAlert(false);
-                        setProgressAlert(false);
-                        setSuccessAlert(true);
-                        setSuccessMessage('Student profile import complete.');
-                    }
-                });
-            }
+                    setErrorMessage([...errorMessage, ...errorString]);
+                }
+                if (resultApp.ok) {
+                    setProgressAlert(false);
+                    setSuccessAlert(true);
+                    setSuccessMessage('Student profile import complete.');
+                }
+            });
             setDisableProfile(false);
         });
     };

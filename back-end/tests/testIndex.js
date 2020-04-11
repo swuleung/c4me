@@ -11,4 +11,5 @@ describe('c4me', () => {
     importTest('adminCollege.js', './admin/adminCollege.js');
     importTest('adminStudent.js', './admin/adminStudent.js');
     importTest('college.js', './college/college');
+    importTest('appplicationsTracker.js', './college/applicationsTracker.js');
 });

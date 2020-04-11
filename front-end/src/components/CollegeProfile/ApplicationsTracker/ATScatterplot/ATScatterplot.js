@@ -1,13 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {
-    Alert, Container, Form,
+    // Alert,
+    Container,
+    Form,
 } from 'react-bootstrap';
 import Chart from 'chart.js';
 import studentAPI from '../../../../services/api/student';
 
 const ATScatterplot = (props) => {
-    const [errorAlert, setErrorAlert] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('');
+    // const [errorAlert, setErrorAlert] = useState(false);
+    // const [errorMessage, setErrorMessage] = useState('');
     const [student, setStudent] = useState(null);
     const canvasRef = useRef(null);
     const [selectedHorizontalAxis, setSelectedHorizontalAxis] = useState('SAT');
@@ -305,12 +307,9 @@ const ATScatterplot = (props) => {
         if (!student) {
             studentAPI.getStudent(localStorage.getItem('username')).then((result) => {
                 if (result.error) {
-                    setErrorAlert(true);
-                    setErrorMessage(result.error);
                     setStudent({});
                 }
                 if (result.ok) {
-                    setErrorAlert(false);
                     setStudent(result.student);
                 }
             });
@@ -324,24 +323,24 @@ const ATScatterplot = (props) => {
 
     return (
         <>
-            {' '}
+            {/* {' '}
             {errorAlert
                 ? <Alert variant="danger">{errorMessage}</Alert>
-                : (
-                    <Container>
-                        <div className="chart-container">
-                            <canvas id="chart-canvas" ref={canvasRef} />
-                        </div>
-                        <Form className="text-center">
-                            <Form.Control size="sm" as="select" value={selectedHorizontalAxis} onChange={(e) => setSelectedHorizontalAxis(e.target.value)}>
-                                <option value="disabled" disabled>Select Horizontal Axis</option>
-                                <option value="SAT">SAT EBRW + SAT Math</option>
-                                <option value="ACT">ACT Composite</option>
-                                <option value="weighted">Weighted Tests</option>
-                            </Form.Control>
-                        </Form>
-                    </Container>
-                )}
+                : ( */}
+            <Container>
+                <div className="chart-container">
+                    <canvas id="chart-canvas" ref={canvasRef} />
+                </div>
+                <Form className="text-center">
+                    <Form.Control size="sm" as="select" value={selectedHorizontalAxis} onChange={(e) => setSelectedHorizontalAxis(e.target.value)}>
+                        <option value="disabled" disabled>Select Horizontal Axis</option>
+                        <option value="SAT">SAT EBRW + SAT Math</option>
+                        <option value="ACT">ACT Composite</option>
+                        <option value="weighted">Weighted Tests</option>
+                    </Form.Control>
+                </Form>
+            </Container>
+            {/* )} */}
         </>
     );
 };

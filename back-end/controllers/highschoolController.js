@@ -1,10 +1,7 @@
 const sequelize = require('sequelize');
 const puppeteer = require('puppeteer');
+const { getPathConfig } = require('../utils/readAppFiles');
 const models = require('../models');
-
-// eslint-disable-next-line import/no-dynamic-require
-const config = require(`${__dirname}/../config/config.json`).development;
-const nicheURL = config.NICHE_URL;
 
 exports.getHighSchoolById = async (highSchoolId) => {
     let highSchool = {};
@@ -29,7 +26,7 @@ exports.getHighSchoolById = async (highSchoolId) => {
     }
     return {
         ok: 'Success',
-        college: highSchool[0].toJSON(),
+        highSchool: highSchool[0].toJSON(),
     };
 };
 
@@ -39,7 +36,7 @@ exports.getHighSchoolByName = async (highSchoolName) => {
         highSchool = await models.HighSchool.findAll({
             limit: 1,
             where: {
-                HighSchool: highSchoolName,
+                Name: highSchoolName,
             },
         });
     } catch (error) {
@@ -56,7 +53,7 @@ exports.getHighSchoolByName = async (highSchoolName) => {
     }
     return {
         ok: 'Success',
-        college: highSchool[0].toJSON(),
+        highSchool: highSchool[0].toJSON(),
     };
 };
 
@@ -106,6 +103,7 @@ exports.scrapeHighSchoolData = async (highSchoolName, highSchoolCity, highSchool
     const page = await browser.newPage();
     await page.setViewport({ width: 1920, height: 926 });
 
+    const nicheURL = getPathConfig().NICHE_URL;
     const nicheHSURL = `${nicheURL}${highSchoolName.replace('&', 'and').replace(/[^A-Za-z0-9_ ]/g, '').replace('and', '-and-')}-${highSchoolCity}-${highSchoolState}/academics/`.replace(/\s+/g, '-').toLowerCase();
     console.log(nicheHSURL);
 
