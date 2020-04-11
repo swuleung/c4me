@@ -399,9 +399,7 @@ exports.importStudents = async () => {
                 const student = await models.User.create(user);
 
                 const result = await updateStudentHighSchool(student, highSchool);
-                if (result.ok) {
-                    student.HighSchool = result.highSchool;
-                } else {
+                if (!result.ok) {
                     errors.push(result);
                 }
                 break;

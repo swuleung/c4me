@@ -26,7 +26,7 @@ exports.getHighSchoolById = async (highSchoolId) => {
     }
     return {
         ok: 'Success',
-        college: highSchool[0].toJSON(),
+        highSchool: highSchool[0].toJSON(),
     };
 };
 
@@ -36,7 +36,7 @@ exports.getHighSchoolByName = async (highSchoolName) => {
         highSchool = await models.HighSchool.findAll({
             limit: 1,
             where: {
-                HighSchool: highSchoolName,
+                Name: highSchoolName,
             },
         });
     } catch (error) {
@@ -53,7 +53,7 @@ exports.getHighSchoolByName = async (highSchoolName) => {
     }
     return {
         ok: 'Success',
-        college: highSchool[0].toJSON(),
+        highSchool: highSchool[0].toJSON(),
     };
 };
 

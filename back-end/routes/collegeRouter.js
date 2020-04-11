@@ -84,7 +84,7 @@ router.post('/id/:collegeID/applications', async (req, res) => {
         } else {
             let result = {};
             // eslint-disable-next-line max-len
-            result = await collegeController.getApplicationsByCollegeID(req.params.collegeID, req.body.filters);
+            result = await collegeController.getApplicationsByCollegeID(req.params.collegeID, req.body.filters ? req.body.filters : {});
             if (result.error) res.status(400);
             res.send(result);
         }

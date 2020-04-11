@@ -84,6 +84,13 @@ exports.updateStudent = async (username, newStudent, newHighSchool) => {
 
 exports.updateStudentHighSchool = async (student, highSchool) => {
     let newHighSchool = {};
+    if (!(highSchool.Name && highSchool.HighSchoolCity && highSchool.HighSchoolState)) {
+        return {
+            ok: 'No high school provided',
+            highSchool: null,
+        };
+    }
+
     try {
         newHighSchool = await models.HighSchool.findOne({
             where: highSchool,
