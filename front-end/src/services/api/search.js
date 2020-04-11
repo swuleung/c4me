@@ -1,7 +1,7 @@
 module.exports = {
-   searchCollege: async function searchCollege() {
+   getSearchResults: async function getSearchResults() {
         try {
-            let searchCollege = await fetch('http://localhost:9000/searcg/', {
+            let getSearchResults = await fetch('http://localhost:9000/searcg/', {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',
@@ -16,14 +16,14 @@ module.exports = {
                     name : name,
                     ACTCompositeMin : ACTCompositeMin,
                     ACTCompositeMax : ACTCompositeMax,
-                    costInStateMin : costInStateMin,
+                    costInStateMax : costInStateMax,
                     costOutOfStateMax : costOutOfStateMax,
                     major : major,
                     major2 : major2
                 }),
                 credentials: 'include',
             });
-            return await login.json();
+            return await getSearchResults.json();
         } catch (error) {
             return {
                 error: `Search failure ${error.message}`,

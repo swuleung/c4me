@@ -24,7 +24,7 @@ const westRegion = ["AK", "HI", "WA", "OR", "CA", "MT", "ID", "WY", "NV", "UT", 
 //     "name" : "University",
 //     "ACTCompositeMin" : 20,
 //     "ACTCompositeMax" : 30,
-//     "costInStateMin" : 10000,
+//     "costInStateMax" : 10000,
 //     "costOutOfStateMax" : 50000,
 //     "major" : "math",
 //     "major2" : "computer"
