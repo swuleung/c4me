@@ -1,4 +1,4 @@
-module.exports = {
+const student = {
     editStudent: async function editStudent(username, studentInfo, highSchoolInfo) {
         try {
             const student = await fetch(`http://localhost:9000/students/${username}/edit`, {
@@ -70,3 +70,5 @@ module.exports = {
         }
     },
 };
+
+export default student;

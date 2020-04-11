@@ -1,4 +1,4 @@
-module.exports = {
+const admin = {
     scrapeCollegeRanking: async function scrapeCollegeRanking() {
         try {
             const result = await fetch('http://localhost:9000/admin/scrapeCollegeRanking', {
@@ -119,3 +119,5 @@ module.exports = {
         }
     },
 };
+
+export default admin;

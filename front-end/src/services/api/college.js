@@ -1,4 +1,4 @@
-module.exports = {
+const college = {
     getCollegeByID: async function getCollegeByID(collegeID) {
         try {
             const college = await fetch(`http://localhost:9000/colleges/id/${collegeID}`, {
@@ -51,3 +51,5 @@ module.exports = {
         }
     },
 };
+
+export default college;

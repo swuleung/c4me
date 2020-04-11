@@ -4,7 +4,7 @@ import {
 } from '../../../node_modules/react-bootstrap';
 import Overview from './Overview/Overview';
 import ApplicationsTracker from './ApplicationsTracker/ApplicationsTracker';
-import { getCollegeByID } from '../../services/api/college';
+import college from '../../services/api/college';
 
 const CollegeProfile = (props) => {
     const [errorAlert, setErrorAlert] = useState(false);
@@ -14,7 +14,7 @@ const CollegeProfile = (props) => {
     const { collegeID } = match.params;
 
     useEffect(() => {
-        getCollegeByID(collegeID).then((results) => {
+        college.getCollegeByID(collegeID).then((results) => {
             if (results.error) {
                 setErrorAlert(true);
                 setErrorMessage(results.error);

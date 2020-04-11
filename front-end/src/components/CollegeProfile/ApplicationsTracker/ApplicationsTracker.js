@@ -5,7 +5,7 @@ import {
 import FilterAT from './FilterAT/FilterAT';
 import ATScatterplot from './ATScatterplot/ATScatterplot';
 import ATList from './ATList/ATList';
-import { getApplicationsTrackerData } from '../../../services/api/applicationsTracker';
+import applicationsTrackerAPI from '../../../services/api/applicationsTracker';
 import './ApplicationsTracker.scss';
 
 const ApplicationsTracker = (props) => {
@@ -21,7 +21,7 @@ const ApplicationsTracker = (props) => {
     } = college;
 
     useEffect(() => {
-        getApplicationsTrackerData(CollegeId, filters).then((results) => {
+        applicationsTrackerAPI.getApplicationsTrackerData(CollegeId, filters).then((results) => {
             if (results.error) {
                 setErrorAlert(true);
                 setErrorMessage(results.reason);
