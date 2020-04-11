@@ -228,12 +228,11 @@ const processApplications = (applications) => {
         averageWeight += weight;
         processedApplications.push(processedApp);
     }
-    averageGPA /= countGPA;
-    averageSATMath /= countSATMath;
-    averageSATEBRW /= countSATEBRW;
-    averageACTComposite /= countACTComposite;
-    averageWeight /= applications.length;
-
+    if (countGPA) averageGPA /= countGPA;
+    if (countSATMath) averageSATMath /= countSATMath;
+    if (countSATEBRW) averageSATEBRW /= countSATEBRW;
+    if (countACTComposite) averageACTComposite /= countACTComposite;
+    if (applications.length) averageWeight /= applications.length;
 
     return {
         ok: 'Successfully got applications tracker data',
