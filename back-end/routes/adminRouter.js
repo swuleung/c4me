@@ -168,7 +168,6 @@ router.get('/getApplications', async (req,res) => {
         } else if (!adminController.checkAdmin(authorized.username)) {
             res.status(400).send(authorized);
         } else {
-            console.log("Hello admin Router");
             const result = await adminController.getApplications();
             res.send(result);
         }

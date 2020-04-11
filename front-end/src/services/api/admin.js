@@ -121,7 +121,7 @@ module.exports = {
 
     getApplications: async function getApplications(){
         try {
-            console.log('getApps admin.js');
+            console.log('>');
             const result = await fetch('http://localhost:9000/admin/getApplications', {
                 method: 'GET',
                 credentials: 'include',
@@ -130,6 +130,7 @@ module.exports = {
                     'Content-Type': 'application/json; charset=utf-8',
                 },
             });
+            console.log(result);
             return await result.json();
         } catch (error) {
             return {

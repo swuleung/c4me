@@ -515,8 +515,7 @@ exports.importApplications = async () => {
 
 exports.getApplications = async () => {
    try {
-        console.log('getApps');
-        const collegeApps = await models.Application.findAll({
+        const collegeApps = models.Application.findAll({
             where:{
                 status: {
                     [Op.or]: ['accepted','denied']

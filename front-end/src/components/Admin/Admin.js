@@ -153,7 +153,7 @@ const Admin = () => {
         console.log("handleApps");
         const allApps = getApplications();
         console.log(allApps);
-        return (<Button> Questionable</Button>);
+        return (<Button> allApps</Button>);
     };
 
     return (
