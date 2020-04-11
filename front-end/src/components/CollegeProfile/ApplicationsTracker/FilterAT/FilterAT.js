@@ -6,7 +6,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuestionCircle } from '@fortawesome/free-regular-svg-icons';
 import Autosuggest from 'react-autosuggest';
-import { getAllHighSchools } from '../../../../services/api/highSchool';
+import highSchoolAPI from '../../../../services/api/highSchool';
 import './FilterAT.scss';
 
 const FilterAT = (props) => {
@@ -128,7 +128,7 @@ const FilterAT = (props) => {
         setSuggestions([]);
     };
     useEffect(() => {
-        getAllHighSchools().then((result) => {
+        highSchoolAPI.getAllHighSchools().then((result) => {
             if (result.error) {
                 setErrorAlert(true);
                 setErrorMessage(result.error);

@@ -1,7 +1,7 @@
-module.exports = {
+const applicationsTracker = {
     getApplicationsTrackerData: async function getApplicationsTrackerData(collegeID, filters) {
         try {
-            const applications = await fetch(`http://localhost:9000/colleges/id/${collegeID}/applications`, {
+            const applications = await fetch(`/colleges/id/${collegeID}/applications`, {
                 method: 'POST',
                 credentials: 'include',
                 headers: {
@@ -18,3 +18,5 @@ module.exports = {
         }
     },
 };
+
+export default applicationsTracker;

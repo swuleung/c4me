@@ -3,7 +3,7 @@ import {
     Alert, Container, Form,
 } from 'react-bootstrap';
 import Chart from 'chart.js';
-import { getStudent } from '../../../../services/api/student';
+import studentAPI from '../../../../services/api/student';
 
 const ATScatterplot = (props) => {
     const [errorAlert, setErrorAlert] = useState(false);
@@ -303,7 +303,7 @@ const ATScatterplot = (props) => {
         };
 
         if (!student) {
-            getStudent(localStorage.getItem('username')).then((result) => {
+            studentAPI.getStudent(localStorage.getItem('username')).then((result) => {
                 if (result.error) {
                     setErrorAlert(true);
                     setErrorMessage(result.error);

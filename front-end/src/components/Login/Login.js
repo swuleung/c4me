@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 import { Link } from '../../../node_modules/react-router-dom';
-import { login } from '../../services/api/user';
+import userAPI from '../../services/api/user';
 import './Login.scss';
 
 const Login = (props) => {
@@ -11,7 +11,7 @@ const Login = (props) => {
     const [errorMessage, setErrorMessage] = useState('');
 
     const handleFormSubmission = () => {
-        login(username, password).then(results => {
+        userAPI.login(username, password).then(results => {
             if (results.error) {
                 setErrorAlert(true);
                 setErrorMessage(results.error);
