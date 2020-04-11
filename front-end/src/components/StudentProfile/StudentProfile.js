@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import {
     Alert, Button, Container, Row, Col, Table,
 } from 'react-bootstrap';
-import { getStudent, getStudentApplications } from '../../services/api/student';
-import { getCollegeByID } from '../../services/api/college';
+import studentAPI from '../../services/api/student';
+import collegeAPI from '../../services/api/college';
 import './StudentProfile.scss';
 
 const StudentProfile = (props) => {
@@ -34,7 +34,7 @@ const StudentProfile = (props) => {
     };
 
     useEffect(() => {
-        getStudent(username).then((result) => {
+        studentAPI.getStudent(username).then((result) => {
             if (result.error) {
                 setErrorAlert(true);
                 setErrorMessage(result.error);
@@ -54,7 +54,7 @@ const StudentProfile = (props) => {
             }
         });
         if (!studentApplications) {
-            getStudentApplications(username).then((result) => {
+            studentAPI.getStudentApplications(username).then((result) => {
                 if (result.error) {
                     setErrorAlert(true);
                     setErrorMessage(result.error);
@@ -67,7 +67,7 @@ const StudentProfile = (props) => {
         }
         if (studentApplications && studentApplications.length !== 0 && !studentApplications[0].collegeName) {
             for (let i = 0; i < studentApplications.length; i += 1) {
-                getCollegeByID(studentApplications[i].college).then((coll) => {
+                collegeAPI.getCollegeByID(studentApplications[i].college).then((coll) => {
                     const apps = [...studentApplications];
                     apps[i].collegeName = coll.college.Name;
                     setStudentApplications(apps);

@@ -8,8 +8,8 @@
   },
   "devDependencies": {},
   "scripts": {
-    "front-end": "cd front-end && npm start",
-    "back-end": "cd back-end && npm start",
+    "front-end": "npm start --prefix front-end",
+    "back-end": "npm start --prefix back-end",
     "start": "concurrently \"npm run back-end\" \"npm run front-end\""
   },
   "repository": {

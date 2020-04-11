@@ -14,8 +14,8 @@ import StudentProfile from '../StudentProfile/StudentProfile';
 import EditProfile from '../EditProfile/EditProfile';
 import Admin from '../Admin/Admin';
 import CollegeProfile from '../CollegeProfile/CollegeProfile';
-import { logout } from '../../services/api/user';
-import { verifyAdmin } from '../../services/api/admin';
+import userAPI from '../../services/api/user';
+import adminAPI from '../../services/api/admin';
 
 function App() {
     const [username, setUsername] = useState(localStorage.getItem('username'));
@@ -24,7 +24,7 @@ function App() {
     const [isAdmin, setIsAdmin] = useState(false);
 
     const handleLogout = () => {
-        logout().then((results) => {
+        userAPI.logout().then((results) => {
             if (results.error) {
                 setErrorAlert(true);
                 setErrorMessage(results.error);
@@ -38,7 +38,7 @@ function App() {
     };
 
     useEffect(() => {
-        verifyAdmin().then((result) => {
+        adminAPI.verifyAdmin().then((result) => {
             if (result.error) {
                 setErrorAlert(true);
                 setErrorMessage(result.error);
