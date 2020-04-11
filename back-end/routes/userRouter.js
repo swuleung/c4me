@@ -70,6 +70,10 @@ router.post('/login', (req, res) => {
     });
 });
 
+/**
+ * Logout out of user by clearing access_token
+ * GET request with no params
+ */
 router.get('/logout', (req, res) => {
     res.clearCookie('access_token');
     res.send({
