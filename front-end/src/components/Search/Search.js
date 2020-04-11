@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import {
-    Alert, Col, Row, Card, CardDeck, Button
+    Alert, Col, Row, Card, CardDeck, Button, Form,
 } from 'react-bootstrap';
 
-import { getSearchResults } from '../../services/api/searchCollege';
+import { getSearchResults } from '../../services/api/search';
 
-const Search(props) => {
+const Search = (props) => {
 	const [name, setName] = useState('');
 	useEffect( () => {}
 

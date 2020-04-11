@@ -14,6 +14,7 @@ import StudentProfile from '../StudentProfile/StudentProfile';
 import EditProfile from '../EditProfile/EditProfile';
 import Admin from '../Admin/Admin';
 import CollegeProfile from '../CollegeProfile/CollegeProfile';
+import Search from '../Search/Search';
 import { logout } from '../../services/api/user';
 import { verifyAdmin } from '../../services/api/admin';
 
