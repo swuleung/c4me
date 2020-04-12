@@ -1,7 +1,10 @@
-// TODO
+
 const { agent } = require('../shared');
 const { expect } = require('../shared');
 
+/**
+ * Tests are described with "describe" & "it"
+ */
 describe('College', () => {
     describe('Checks college table', () => {
         it('get all colleges', (done) => {

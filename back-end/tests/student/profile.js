@@ -1,6 +1,9 @@
 const { agent } = require('../shared');
 const { expect } = require('../shared');
 
+/**
+ * Tests are described with "describe" & "it"
+ */
 describe('Student Profile', () => {
     describe('Create & login as mochaStudent', () => {
         it('Creates mochaStudent', (done) => {

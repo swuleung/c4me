@@ -5,6 +5,7 @@ import {
 import admin from '../../services/api/admin';
 
 const Admin = () => {
+    // state variables
     const [errorAlert, setErrorAlert] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [progressAlert, setProgressAlert] = useState(false);
@@ -17,6 +18,9 @@ const Admin = () => {
     const [disableDelete, setDisableDelete] = useState(false);
     const [disableProfile, setDisableProfile] = useState(false);
 
+    /**
+     * Handle the button click for scrape college rankings
+     */
     const handleScrapeCollegeRankings = () => {
         setDisableRanking(true);
         setProgressAlert(true);
@@ -39,6 +43,9 @@ const Admin = () => {
         });
     };
 
+    /**
+     * Handle the button click for import college scorecard
+     */
     const handleImportCollegeScorecard = () => {
         setDisableScorecard(true);
         setProgressAlert(true);
@@ -61,6 +68,9 @@ const Admin = () => {
         });
     };
 
+    /**
+     * Handle the button click for scrape college data
+     */
     const handleScrapeCollegeData = () => {
         setDisableCollegeData(true);
         setProgressAlert(true);
@@ -84,6 +94,9 @@ const Admin = () => {
         });
     };
 
+    /**
+     * Handle button click for delete all students
+     */
     const handleDeleteAllStudents = () => {
         setDisableDelete(true);
         setProgressAlert(true);
@@ -106,6 +119,9 @@ const Admin = () => {
         });
     };
 
+    /**
+     * Handle the button click for import student profiles  
+     */
     const handleImportStudentProfiles = () => {
         setDisableProfile(true);
         setProgressAlert(true);
@@ -145,6 +161,7 @@ const Admin = () => {
         });
     };
 
+    // display the Admin page
     return (
         <div>
             {errorAlert

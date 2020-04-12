@@ -10,7 +10,7 @@
   "scripts": {
     "front-end": "npm start --prefix front-end",
     "back-end": "npm start --prefix back-end",
-    "start": "concurrently \"npm run back-end\" \"npm run front-end\""
+    "start": "concurrently \"npm run back-end\" \"npm run front-end\""
   },
   "repository": {
     "type": "git",

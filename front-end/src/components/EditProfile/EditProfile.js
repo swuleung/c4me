@@ -10,6 +10,7 @@ import CollegeDropdown from './CollegeDropdown';
 
 
 const EditProfile = (props) => {
+    // state variables
     const [student, setStudent] = useState({});
     const [studentApplications, setStudentApplications] = useState([]);
     const [highSchool, setHighSchool] = useState({Name: ''});
@@ -23,6 +24,10 @@ const EditProfile = (props) => {
     const { match } = props;
     const { username } = match.params;
 
+    /**
+     * Updates the student state with data from form
+     * @param {event} e 
+     */
     const handleProfileChange = (e) => {
         let { value } = e.target;
         const { id } = e.target;
@@ -30,6 +35,10 @@ const EditProfile = (props) => {
         setStudent({ ...student, [id]: value });
     };
 
+    /**
+     * Updates the high school state with data from form
+     * @param {event} e 
+     */
     const handleHighSchoolChange = (e) => {
         let { value } = e.target;
         const { id } = e.target;
@@ -37,6 +46,10 @@ const EditProfile = (props) => {
         setNewHighSchool({ ...newHighSchool, [id]: value });
     }
 
+    /**
+     * Updates the applications state with data from form
+     * @param {event} e 
+     */
     const handleApplicationChange = (e) => {
         const { value } = e.target;
         const index = e.target.getAttribute('index');
@@ -45,6 +58,10 @@ const EditProfile = (props) => {
         setStudentApplications(newApplications);
     };
 
+    /**
+     * Updates the application's college with data from form
+     * @param {event} e 
+     */
     const handleApplicationCollegeChange = (e) => {
         const { value } = e.target;
         const index = e.target.getAttribute('index');
@@ -53,6 +70,10 @@ const EditProfile = (props) => {
         setStudentApplications(newApplications);
     };
 
+    /**
+     * Deletes the associated application by button click
+     * @param {event} e 
+     */
     const handleDeleteApplication = (e) => {
         const index = e.target.getAttribute('index');
         const newApplications = [...studentApplications];
@@ -60,6 +81,9 @@ const EditProfile = (props) => {
         setStudentApplications(newApplications);
     };
 
+    /**
+     * Adds a new row for an application
+     */
     const handleAddApplication = () => {
         const newApplications = [...studentApplications];
         newApplications.push({
@@ -70,6 +94,9 @@ const EditProfile = (props) => {
         setStudentApplications(newApplications);
     };
 
+    /**
+     * Creates the options for state dropdown menu
+     */
     const generateStateOptions = () => {
         const stateCode = ['AK', 'AL', 'AR', 'AZ', 'CA', 'CO', 'CT', 'DC', 'DE', 'FL', 'GA', 'GU', 'HI', 'IA', 'ID', 'IL', 'IN', 'KS', 'KY', 'LA', 'MA', 'MD', 'ME', 'MH', 'MI', 'MN', 'MO', 'MS', 'MT', 'NC', 'ND', 'NE', 'NH', 'NJ', 'NM', 'NV', 'NY', 'OH', 'OK', 'OR', 'PA', 'PR', 'PW', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VA', 'VI', 'VT', 'WA', 'WI', 'WV', 'WY'];
         const states = [];
@@ -79,6 +106,9 @@ const EditProfile = (props) => {
         return states;
     };
 
+    /**
+     * Sends student data to backend after form submission
+     */
     const handleEditSubmission = () => {
         studentAPI.editStudent(username, student, newHighSchool).then((result) => {
             if (result.error) {
@@ -101,6 +131,9 @@ const EditProfile = (props) => {
         });
     };
 
+    /**
+     * Creates the application components to be rendered
+     */
     const generateStudentApplications = () => {
         const applications = [];
         for (let i = 0; i < studentApplications.length; i += 1) {
@@ -128,6 +161,9 @@ const EditProfile = (props) => {
         return applications;
     };
 
+    /**
+     * Fetches student and high school data
+     */
     useEffect(() => {
         studentAPI.getStudent(username).then((result) => {
             if (result.error) {
@@ -181,13 +217,18 @@ const EditProfile = (props) => {
             }
         });
     }, [username]);
-
+    
+    /**
+     * The next several functions with suggestion in the name are to pass through to the Autosuggest box
+     */
     // Teach Autosuggest how to calculate suggestions for any given input value.
     const getSuggestions = (value) => {
         const inputValue = value.trim().toLowerCase();
         const inputLength = inputValue.length;
         return inputLength === 0 ? highSchools : highSchools.filter((hs) => hs.Name.toLowerCase().indexOf(inputValue.toLowerCase()) > -1);
     };
+
+    // display the suggestion
     const renderSuggestion = (suggestion) => {
         if (suggestion.Name && suggestion.HighSchoolCity && suggestion.HighSchoolState) {
             return (
@@ -213,6 +254,7 @@ const EditProfile = (props) => {
         );
     };
 
+    // input properties for Autosuggest
     const inputProps = {
         placeholder: 'Enter high school name',
         value: highSchool.Name,
@@ -226,6 +268,7 @@ const EditProfile = (props) => {
         },
     };
 
+    // what happens when a suggestion is asked to be fetched
     const onSuggestionsFetchRequested = ({ value }) => {
         setSuggestions(getSuggestions(value));
     };
@@ -235,6 +278,11 @@ const EditProfile = (props) => {
         setSuggestions([]);
     };
 
+    /**
+     * Handles selection of high school from autosuggest box
+     * @param {event} event 
+     * @param {Object} param1 
+     */
     const handleSelectHighSchool = (event, { suggestion }) => {
         if (suggestion.Name === 'Other') {
             setDisplayOtherHS(true);
@@ -243,6 +291,7 @@ const EditProfile = (props) => {
         }
     };
 
+    // display the edit profile form
     return (
         <div>
             {errorAlert && (

@@ -4,12 +4,18 @@ import './EditProfile.scss';
 import collegeAPI from '../../services/api/college';
 
 const CollegeDropdown = (props) => {
+    // state variables
     const [colleges, setColleges] = useState([]);
     const [errorAlert, setErrorAlert] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const { index, selectedValue, onChange } = props;
+
+    /**
+     * Creates the options for college dropdown menu
+     */
     const getCollegeOptions = () => {
         const options = [];
+        // removes the colleges that have already been added as an application
         for (let i = 0; i < colleges.length; i += 1) {
             const value = props.selectedValue ? props.selectedValue.toString() : '';
             if (value === colleges[i].CollegeId.toString()
@@ -22,6 +28,8 @@ const CollegeDropdown = (props) => {
         }
         return options;
     };
+
+    // Gets all colleges
     useEffect(() => {
         collegeAPI.getAllColleges().then((result) => {
             if (result.error) {
@@ -34,6 +42,8 @@ const CollegeDropdown = (props) => {
             }
         });
     }, []);
+
+    // display the college dropdown
     return (
         <div>
             {errorAlert
