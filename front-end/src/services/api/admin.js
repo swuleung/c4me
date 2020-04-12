@@ -1,4 +1,7 @@
 const admin = {
+    /**
+     * Send a GET request to scrape college ranking and return response
+     */
     scrapeCollegeRanking: async function scrapeCollegeRanking() {
         try {
             const result = await fetch('/admin/scrapeCollegeRanking', {
@@ -12,10 +15,13 @@ const admin = {
             return await result.json();
         } catch (error) {
             return {
-                error: `${error.message} sql data`,
+                error: `${error.message}`,
             };
         }
     },
+    /**
+     * Send a GET request to delete all students and return response
+     */
     deleteAllStudents: async function deleteAllStudents() {
         try {
             const result = fetch('/admin/deleteStudentProfiles', {
@@ -33,6 +39,9 @@ const admin = {
             };
         }
     },
+    /**
+     * Send a GET request to scrape college data and return response
+     */
     scrapeCollegeData: async function scrapeCollegeData() {
         try {
             const result = await fetch('/admin/scrapeCollegeData', {
@@ -46,10 +55,13 @@ const admin = {
             return await result.json();
         } catch (error) {
             return {
-                error: `${error.message} sql data`,
+                error: `${error.message}`,
             };
         }
     },
+    /**
+     * Send a GET request to import college score card and return response
+     */
     importCollegeScorecard: async function importCollegeScorecard() {
         try {
             const result = await fetch('/admin/importCollegeScorecard', {
@@ -63,10 +75,13 @@ const admin = {
             return await result.json();
         } catch (error) {
             return {
-                error: `${error.message} sql data`,
+                error: `${error.message}`,
             };
         }
     },
+    /**
+     * Send a GET request to import students and return response
+     */
     importStudents: async function importStudents() {
         try {
             const result = await fetch('/admin/importStudents', {
@@ -80,10 +95,13 @@ const admin = {
             return await result.json();
         } catch (error) {
             return {
-                error: `${error.message} sql data`,
+                error: `${error.message}`,
             };
         }
     },
+    /**
+     * Send a GET request to import applications and return response
+     */
     importStudentApplications: async function importStudentApplications() {
         try {
             const result = await fetch('/admin/importApplications', {
@@ -97,10 +115,13 @@ const admin = {
             return await result.json();
         } catch (error) {
             return {
-                error: `${error.message} sql data`,
+                error: `${error.message}`,
             };
         }
     },
+    /**
+     * Send a GET request to verify admin status of current user and return response
+     */
     verifyAdmin: async function verifyAdmin() {
         try {
             const result = await fetch('/admin/verifyAdmin', {
@@ -114,7 +135,7 @@ const admin = {
             return await result.json();
         } catch (error) {
             return {
-                error: `${error.message} sql data`,
+                error: `${error.message}`,
             };
         }
     },
