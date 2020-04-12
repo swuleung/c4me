@@ -20,7 +20,7 @@ const admin = {
         }
     },
     /**
-     * Send a GET request to delete all students and return response
+     * Send a DELETE request to delete all students and return response
      */
     deleteAllStudents: async function deleteAllStudents() {
         try {

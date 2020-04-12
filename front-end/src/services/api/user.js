@@ -1,4 +1,9 @@
 const user = {
+    /**
+     * Creates an accounts with a POST
+     * @param {string} username 
+     * @param {string} password 
+     */
     createAccount: async function createAccount(username, password) {
         try {
             const account = await fetch('/users/create', {
@@ -21,6 +26,11 @@ const user = {
         }
     },
 
+    /**
+     * Login user with a POST
+     * @param {string} username 
+     * @param {string} password 
+     */
     login: async function login(username, password) {
         try {
             let login = await fetch('/users/login', {
@@ -42,6 +52,9 @@ const user = {
             };
         }
     },
+    /**
+     * Logout user with a GET
+     */
     logout: async function logout() {
         try {
             let login = await fetch('/users/logout', {

@@ -1,4 +1,7 @@
 const highSchool = {
+    /**
+     * Get all high schools from the database with a GET
+     */
     getAllHighSchools: async function getAllHighSchools() {
         try {
             const highSchools = await fetch('/highSchools/all', {
