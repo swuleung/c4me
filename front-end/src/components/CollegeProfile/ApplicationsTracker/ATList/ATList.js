@@ -14,8 +14,8 @@ const ATList = (props) => {
     // map all the applications to the HTML below
     return (
         <>
-            {applications.map((app) => (
-                <div className="border mb-2 student-container" key={app.Application.status}>
+            {applications.map((app, i) => (
+                <div className="border mb-2 student-container" key={app.Application.status+i}>
                     <Row className="student-title mb-3">
                         <Col className="font-weight-bold student-name">
                             {app.username}

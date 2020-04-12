@@ -67,7 +67,7 @@ const FilterAT = (props) => {
     const generateHighSchoolList = () => {
         const highSchoolsHTML = [];
         for (let i = 0; i < highSchoolList.length; i += 1) {
-            highSchools.push(
+            highSchoolsHTML.push(
                 <tr className="mb-0" key={`hs-${i}`}>
                     <td>
                         {highSchoolList[i].Name}
