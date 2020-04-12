@@ -19,11 +19,11 @@
         "NICHE_URL": "http://allv22.all.cs.stonybrook.edu/~stoller/cse416/niche/",
         "NICHE_URL_UNUSED": "https://www.niche.com/k12/",
         "COLLEGE_NAMES": "colleges.txt",
-        "COLLEGE_SCORECARD": "collegeScorecard.csv",
+        "COLLEGE_SCORECARD": "../../assets/collegeScorecard.csv",
         "IMPORT_STUDENTS": "students-1.csv",
         "IMPORT_APPLICATIONS": "applications-1.csv",
-        "PUBLIC_KEY": "keys/c4meJWT.pub",
-        "PRIVATE_KEY": "keys/c4meJWT"
+        "PUBLIC_KEY": "../../assets/keys/c4meJWT.pub",
+        "PRIVATE_KEY": "../../assets/keys/c4meJWT"
     },
     "production": {
         "RANKING_URL": "https://www.timeshighereducation.com/rankings/united-states/2020#!/page/0/length/-1/sort_by/rank/sort_order/asc/cols/stats",
