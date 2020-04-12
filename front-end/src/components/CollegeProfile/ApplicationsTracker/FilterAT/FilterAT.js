@@ -68,7 +68,10 @@ const FilterAT = (props) => {
             highSchoolsHTML.push(
                 <tr className="mb-0" key={`hs-${i}`}>
                     <td>
-                        {highSchoolList[i].Name}
+                        {highSchoolList[i].Name.toLowerCase().split(' ').map((s) => {
+                            if (s !== 'and' && s !== 'of') return s.charAt(0).toUpperCase() + s.substring(1);
+                            return s;
+                        }).join(' ')}
                     </td>
                     <td>
                         <span role="button" className="delete text-right" tabIndex={i} index={`${i}`} onClick={(e) => handleDeleteHighSchool(e)} onKeyDown={(e) => handleDeleteHighSchool(e)}>&#10005;</span>
