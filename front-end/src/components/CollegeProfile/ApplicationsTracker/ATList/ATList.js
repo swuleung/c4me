@@ -10,12 +10,13 @@ import { Link } from 'react-router-dom';
 import './ATList.scss';
 
 const ATList = (props) => {
-    const { applications } = props;
+    const { applications, allHighSchools } = props;
     // map all the applications to the HTML below
     return (
         <>
             {applications.map((app, i) => (
-                <div className="border mb-2 student-container" key={app.Application.status+i}>
+                // eslint-disable-next-line react/no-array-index-key
+                <div className="border mb-2 student-container" key={app.Application.status + i}>
                     <Row className="student-title mb-3">
                         <Col className="font-weight-bold student-name">
                             {app.username}
@@ -63,6 +64,19 @@ const ATList = (props) => {
                                     </div>
                                 </Card>
                             </CardDeck>
+                        </Col>
+                    </Row>
+                    <Row className="student-title mt-3">
+                        <Col>
+                            {allHighSchools[allHighSchools.findIndex((hs) => hs.highSchoolId === app.highSchoolId)].Name.toLowerCase().split(' ').map((s) => {
+                                if (s !== 'and' && s !== 'of') return s.charAt(0).toUpperCase() + s.substring(1);
+                                return s;
+                            }).join(' ')}
+                        </Col>
+                        <Col className="text-right">
+                            Class of
+                            {' '}
+                            {app.collegeClass}
                         </Col>
                     </Row>
                 </div>

@@ -9,6 +9,7 @@ import FilterAT from './FilterAT/FilterAT';
 import ATScatterplot from './ATScatterplot/ATScatterplot';
 import ATList from './ATList/ATList';
 import applicationsTrackerAPI from '../../../services/api/applicationsTracker';
+import highSchoolAPI from '../../../services/api/highSchool';
 import './ApplicationsTracker.scss';
 
 const ApplicationsTracker = (props) => {
@@ -19,6 +20,8 @@ const ApplicationsTracker = (props) => {
     const [applications, setApplications] = useState([]);
     const [averages, setAverages] = useState({});
     const [listATView, setListATView] = useState(true);
+    const [highSchools, setHighSchools] = useState([]);
+
     // deconstruct props
     const { college } = props;
     const {
@@ -34,8 +37,20 @@ const ApplicationsTracker = (props) => {
             }
             if (results.ok) {
                 setErrorAlert(false);
+                console.log(results.applications);
                 setApplications(results.applications.sort((a, b) => (a.Application.status.localeCompare(b.Application.status))));
                 setAverages(results.averages);
+            }
+        });
+
+        highSchoolAPI.getAllHighSchools().then((result) => {
+            if (result.error) {
+                setErrorAlert(true);
+                setErrorMessage(result.error);
+            }
+            if (result.ok) {
+                setErrorAlert(false);
+                setHighSchools(result.highSchools);
             }
         });
     }, [CollegeId, filters]);
@@ -102,7 +117,7 @@ const ApplicationsTracker = (props) => {
                         </Row>
                         <Row>
                             <Col xs="4">
-                                <FilterAT handleFilterChange={setFilters} />
+                                <FilterAT allHighSchools={highSchools} handleFilterChange={setFilters} />
                             </Col>
                             <Col xs="8">
                                 <div className="list mb-2">
@@ -122,7 +137,7 @@ matching students
                                     </Button>
                                 </div>
                                 {listATView
-                                    ? <ATList applications={applications} />
+                                    ? <ATList allHighSchools={highSchools} applications={applications} />
                                     : <ATScatterplot applications={applications} averages={averages} />}
                             </Col>
                         </Row>
