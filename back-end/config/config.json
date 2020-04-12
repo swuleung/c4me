@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "root",
-    "password": "password",
-    "database": "c4me",
-    "host": "localhost",
+    "username": "swuleung",
+    "password": "111065204",
+    "database": "swuleung",
+    "host": "mysql3.cs.stonybrook.edu",
     "dialect": "mysql",
     "operatorsAliases": 0,
     "JWT_COOKIE": "access_token",
