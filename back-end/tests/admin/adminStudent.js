@@ -1,6 +1,9 @@
 const { agent } = require('../shared');
 const { expect } = require('../shared');
 
+/**
+ * Tests are described with "describe" & "it"
+ */
 describe('Scrape college information', () => {
     describe('Delete all users', () => {
         it('Deletes all users', (done) => {

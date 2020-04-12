@@ -4,6 +4,7 @@ function importTest(name, path) {
     });
 }
 
+// import all the tests
 describe('c4me', () => {
     importTest('user.js', './user/simple');
     importTest('profile.js', './student/profile');

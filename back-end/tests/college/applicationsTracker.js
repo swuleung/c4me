@@ -1,7 +1,9 @@
-// TODO
 const { agent } = require('../shared');
 const { expect } = require('../shared');
 
+/**
+ * Tests are described with "describe" & "it"
+ */
 describe('Applications Tracker', () => {
     let SBUCollegeId = -1;
     it('Get unfiltered applications', (done) => {

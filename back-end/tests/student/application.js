@@ -1,6 +1,9 @@
 const { agent } = require('../shared');
 const { expect } = require('../shared');
 
+/**
+ * Tests are described with "describe" & "it"
+ */
 describe('Student Profile', () => {
     describe('Create a new application', () => {
         it('Make sure mochaStudent\'s has no applications', (done) => {
@@ -14,7 +17,8 @@ describe('Student Profile', () => {
                 });
         });
 
-        describe('Add one student application', () => {
+ 
+     describe('Add one student application', () => {
 
             it('Add one a non-existing college', (done) => {
                 agent
@@ -22,7 +26,7 @@ describe('Student Profile', () => {
                     .send({
                         applications: [{
                             college: -1,
-                            status: 'deferred',
+                    ,        status: 'deferred',
                         }]
                     })
                     .end((err, res) => {
@@ -42,12 +46,12 @@ describe('Student Profile', () => {
                                 applications: [{
                                     college: college.CollegeId,
                                     status: 'deferred',
-                                    username: 'mochaStudent'
+      ,                              usern,ame: 'mochaStudent'
                                 }]
                             })
                             .end((err, res) => {
                                 res.should.have.status(200);
-                                expect(res.body.applications).to.deep.equal([ { college: college.CollegeId, status: 'deferred', username: 'mochaStudent' } ]);
+                               expect(res.body.applications).to.deep.equal([ { college: college.ColegeId, status: 'deferred', username: 'mochaStudent' } ]);
                                 done();
                             });
                     });
