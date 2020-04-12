@@ -1,14 +1,17 @@
 const sequelize = require('sequelize');
 const puppeteer = require('puppeteer');
+const { getPathConfig } = require('../utils/readAppFiles');
 const models = require('../models');
 
-// eslint-disable-next-line import/no-dynamic-require
-const config = require(`${__dirname}/../config/config.json`).development;
-const nicheURL = config.NICHE_URL;
 
+/**
+ * Get a high school's information using its id
+ * @param {integer} highSchoolId
+ */
 exports.getHighSchoolById = async (highSchoolId) => {
     let highSchool = {};
     try {
+        // find with highSchoolId
         highSchool = await models.HighSchool.findAll({
             limit: 1,
             where: {
@@ -21,6 +24,7 @@ exports.getHighSchoolById = async (highSchoolId) => {
             reason: error,
         };
     }
+    // no high schools found (length === 0)
     if (!highSchool.length) {
         return {
             error: 'High school not found',
@@ -29,17 +33,23 @@ exports.getHighSchoolById = async (highSchoolId) => {
     }
     return {
         ok: 'Success',
-        college: highSchool[0].toJSON(),
+        highSchool: highSchool[0].toJSON(),
     };
 };
 
+
+/**
+ * Get a high school's information using its name
+ * @param {string} highSchoolName
+ */
 exports.getHighSchoolByName = async (highSchoolName) => {
     let highSchool = {};
     try {
+        // find with high school name
         highSchool = await models.HighSchool.findAll({
             limit: 1,
             where: {
-                HighSchool: highSchoolName,
+                Name: highSchoolName,
             },
         });
     } catch (error) {
@@ -48,6 +58,7 @@ exports.getHighSchoolByName = async (highSchoolName) => {
             reason: error,
         };
     }
+    // no high schools found (length === 0)
     if (!highSchool.length) {
         return {
             error: 'High school not found',
@@ -56,13 +67,17 @@ exports.getHighSchoolByName = async (highSchoolName) => {
     }
     return {
         ok: 'Success',
-        college: highSchool[0].toJSON(),
+        highSchool: highSchool[0].toJSON(),
     };
 };
 
+/**
+ * Get all high schools within the database
+ */
 exports.getAllHighSchools = async () => {
     let highSchools = [];
     try {
+        // find all high schools
         highSchools = await models.HighSchool.findAll({
             raw: true,
         });
@@ -72,6 +87,7 @@ exports.getAllHighSchools = async () => {
             reason: error,
         };
     }
+    // no high schools found (length === 0)
     if (!highSchools.length) {
         return {
             error: 'No high schools in the db',
@@ -84,6 +100,9 @@ exports.getAllHighSchools = async () => {
     };
 };
 
+/**
+ * Delete all the high schools within the database
+ */
 exports.deleteAllHighSchools = async () => {
     try {
         models.HighSchool.destroy({
@@ -101,16 +120,29 @@ exports.deleteAllHighSchools = async () => {
     };
 };
 
+/**
+ * Scrapes Niche.com for high school data
+ * Every error is compiled into a `errors` list but will return 200.
+ * @param {string} highSchoolName
+ * @param {string} highSchoolCity
+ * @param {string} highSchoolState
+ */
 exports.scrapeHighSchoolData = async (highSchoolName, highSchoolCity, highSchoolState) => {
     const browser = await puppeteer.launch({ headless: true });
     const page = await browser.newPage();
     await page.setViewport({ width: 1920, height: 926 });
 
+    // read from path in paths.json
+    const nicheURL = getPathConfig().NICHE_URL;
+    // takes inputted high school data and creates url
     const nicheHSURL = `${nicheURL}${highSchoolName.replace('&', 'and').replace(/[^A-Za-z0-9_ ]/g, '').replace('and', '-and-')}-${highSchoolCity}-${highSchoolState}/academics/`.replace(/\s+/g, '-').toLowerCase();
     console.log(nicheHSURL);
 
+    // sets the user agent for puppeteer
     await page.setUserAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36');
     await page.goto(nicheHSURL);
+
+    // finds elements for data values and takes the text values
     const nicheAcademicScoreEl = await page.$x('//div[contains(@class, \'niche__grade--section\')]');
     const nicheAcademicScore = await page.evaluate((el) => el.textContent, nicheAcademicScoreEl[0]);
 
@@ -132,6 +164,7 @@ exports.scrapeHighSchoolData = async (highSchoolName, highSchoolCity, highSchool
     const ACTScienceEl = await page.$x('//div[contains(., \'Average ACT\')]/div[contains(., \'Science\')]/div[@class=\'scalar__value\']');
     const ACTScience = await page.evaluate((el) => el.textContent, ACTScienceEl[0]);
 
+    // creates the high school object
     const highSchoolObject = {
         Name: highSchoolName,
         HighSchoolCity: highSchoolCity,
@@ -148,6 +181,7 @@ exports.scrapeHighSchoolData = async (highSchoolName, highSchoolCity, highSchool
     };
 
     const errors = [];
+    // updates the high school model data without errors
     while (Object.keys(highSchoolObject).length > 1) {
         try {
             // eslint-disable-next-line no-await-in-loop

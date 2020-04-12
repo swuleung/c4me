@@ -8,9 +8,9 @@
   },
   "devDependencies": {},
   "scripts": {
-    "front-end": "cd front-end && npm start",
-    "back-end": "cd back-end && npm start",
-    "start": "concurrently \"npm run back-end\" \"npm run front-end\""
+    "front-end": "npm start --prefix front-end",
+    "back-end": "npm start --prefix back-end",
+    "start": "concurrently \"npm run back-end\" \"npm run front-end\""
   },
   "repository": {
     "type": "git",

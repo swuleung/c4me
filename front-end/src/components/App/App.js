@@ -15,17 +15,21 @@ import EditProfile from '../EditProfile/EditProfile';
 import Admin from '../Admin/Admin';
 import CollegeProfile from '../CollegeProfile/CollegeProfile';
 import Search from '../Search/Search';
-import { logout } from '../../services/api/user';
-import { verifyAdmin } from '../../services/api/admin';
+import userAPI from '../../services/api/user';
+import adminAPI from '../../services/api/admin';
 
 function App() {
+    // state variables
     const [username, setUsername] = useState(localStorage.getItem('username'));
     const [errorAlert, setErrorAlert] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [isAdmin, setIsAdmin] = useState(false);
 
+    /**
+     * Handle the button click for logout
+     */
     const handleLogout = () => {
-        logout().then((results) => {
+        userAPI.logout().then((results) => {
             if (results.error) {
                 setErrorAlert(true);
                 setErrorMessage(results.error);
@@ -38,8 +42,9 @@ function App() {
         });
     };
 
+    // Confirm if user is admin
     useEffect(() => {
-        verifyAdmin().then((result) => {
+        adminAPI.verifyAdmin().then((result) => {
             if (result.error) {
                 setErrorAlert(true);
                 setErrorMessage(result.error);

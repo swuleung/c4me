@@ -1,7 +1,12 @@
-module.exports = {
+const user = {
+    /**
+     * Creates an accounts with a POST
+     * @param {string} username 
+     * @param {string} password 
+     */
     createAccount: async function createAccount(username, password) {
         try {
-            const account = await fetch('http://localhost:9000/users/create', {
+            const account = await fetch('/users/create', {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',
@@ -21,9 +26,14 @@ module.exports = {
         }
     },
 
+    /**
+     * Login user with a POST
+     * @param {string} username 
+     * @param {string} password 
+     */
     login: async function login(username, password) {
         try {
-            let login = await fetch('http://localhost:9000/users/login', {
+            let login = await fetch('/users/login', {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',
@@ -42,9 +52,12 @@ module.exports = {
             };
         }
     },
+    /**
+     * Logout user with a GET
+     */
     logout: async function logout() {
         try {
-            let login = await fetch('http://localhost:9000/users/logout', {
+            let login = await fetch('/users/logout', {
                 method: 'GET',
                 headers: {
                     Accept: 'application/json',
@@ -60,3 +73,5 @@ module.exports = {
         };
     }
 }
+
+export default user;

@@ -1,7 +1,10 @@
-module.exports = {
+const highSchool = {
+    /**
+     * Get all high schools from the database with a GET
+     */
     getAllHighSchools: async function getAllHighSchools() {
         try {
-            const highSchools = await fetch('http://localhost:9000/highSchools/all', {
+            const highSchools = await fetch('/highSchools/all', {
                 method: 'GET',
                 credentials: 'include',
                 headers: {
@@ -16,4 +19,6 @@ module.exports = {
             };
         }
     }
-}
+};
+
+export default highSchool;

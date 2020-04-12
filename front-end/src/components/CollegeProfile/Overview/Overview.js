@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {
     Alert, Container, Row, Col,
 } from 'react-bootstrap';
-import { getMajorsByCollegeID } from '../../../services/api/college';
+import collegeAPI from '../../../services/api/college';
 import './Overview.scss';
 
 const Overview = (props) => {
@@ -45,7 +45,7 @@ const Overview = (props) => {
         );
     };
     useEffect(() => {
-        getMajorsByCollegeID(CollegeId).then((results) => {
+        collegeAPI.getMajorsByCollegeID(CollegeId).then((results) => {
             if (results.error) {
                 setErrorAlert(true);
                 setErrorMessage(results.reason);

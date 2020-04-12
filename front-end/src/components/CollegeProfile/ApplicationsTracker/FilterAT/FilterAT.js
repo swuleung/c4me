@@ -1,3 +1,6 @@
+/**
+ * This component is the filter box for the Applications Tracker
+ */
 import React, { useState, useEffect } from 'react';
 import {
     Container, Form, Col, OverlayTrigger, Popover, Table, Button, ListGroup, Alert,
@@ -6,15 +9,17 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuestionCircle } from '@fortawesome/free-regular-svg-icons';
 import Autosuggest from 'react-autosuggest';
-import { getAllHighSchools } from '../../../../services/api/highSchool';
+import highSchoolAPI from '../../../../services/api/highSchool';
 import './FilterAT.scss';
 
 const FilterAT = (props) => {
+    // state variables
     const [lax, setLax] = useState('lax');
     const [collegeClass, setCollegeCLass] = useState({
         lowerCollegeClass: '',
         upperCollegeClass: '',
     });
+    // status list
     const [statuses, setStatuses] = useState({
         accepted: false,
         deferred: false,
@@ -26,11 +31,17 @@ const FilterAT = (props) => {
     const [highSchool, setHighSchool] = useState('');
     const [highSchools, setHighSchools] = useState([]);
     const [highSchoolList, setHighSchoolList] = useState([]);
+    // pass filter changes to main Applications Tracker
     const { handleFilterChange } = props;
     const [suggestions, setSuggestions] = useState([]);
     const [errorAlert, setErrorAlert] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
 
+    /**
+     * Handle the change in high school list
+     * @param {event} event
+     * @param {highSchool} suggestion
+     */
     const handleAddHighSchool = (event, { suggestion }) => {
         const newHighSchools = [...highSchoolList];
         newHighSchools.push(suggestion);
@@ -38,6 +49,11 @@ const FilterAT = (props) => {
         setHighSchoolList(newHighSchools);
     };
 
+
+    /**
+     *  Handle the changes in deleting a high school from list
+     * @param {event} e
+     */
     const handleDeleteHighSchool = (e) => {
         const index = e.target.getAttribute('index');
         const newHighSchools = [...highSchoolList];
@@ -45,6 +61,9 @@ const FilterAT = (props) => {
         setHighSchoolList(newHighSchools);
     };
 
+    /**
+     * Generate html for the high school list to display under the autosuggest
+     */
     const generateHighSchoolList = () => {
         const highSchoolsHTML = [];
         for (let i = 0; i < highSchoolList.length; i += 1) {
@@ -62,6 +81,9 @@ const FilterAT = (props) => {
         return highSchoolsHTML;
     };
 
+    /**
+     * Build the query for filters before passing it up to Applications Tracker
+     */
     const buildATQuery = () => {
         const filters = {};
 
@@ -79,6 +101,7 @@ const FilterAT = (props) => {
         }
 
         let selectedStatuses = [];
+        // get the selected statuses
         const entries = Object.entries(statuses);
         for (let i = 0; i < entries.length; i += 1) {
             if (entries[i][1]) {
@@ -94,16 +117,24 @@ const FilterAT = (props) => {
         if (highSchoolList.length) {
             filters.highSchools = [highSchoolList.map((hs) => hs.HighSchoolId)];
         }
+        // pass this up to ApplicationsTracker
         handleFilterChange(filters);
     };
 
-    // Teach Autosuggest how to calculate suggestions for any given input value.
+    /**
+     * The next several functions with suggestion in the name are to pass through to the Autosuggest box
+     */
+    // Get suggestions from text box
     const getSuggestions = (value) => {
         const inputValue = value.trim().toLowerCase();
         const inputLength = inputValue.length;
         return inputLength === 0 ? highSchools : highSchools.filter((hs) => hs.Name.toLowerCase().indexOf(inputValue.toLowerCase()) > -1);
     };
+
+    // get the value of a suggestion
     const getSuggestionValue = (suggestion) => suggestion.Name;
+
+    // display the suggestion
     const renderSuggestion = (suggestion) => (
         <ListGroup.Item>
             {suggestion.Name.toLowerCase().split(' ').map((s) => {
@@ -113,12 +144,14 @@ const FilterAT = (props) => {
         </ListGroup.Item>
     );
 
+    // input properties for Autosuggest
     const inputProps = {
         placeholder: 'Enter a high school name',
         value: highSchool,
         onChange: (e, { newValue }) => setHighSchool(newValue),
     };
 
+    // what happens when a suggestion is asked to be fetched
     const onSuggestionsFetchRequested = ({ value }) => {
         setSuggestions(getSuggestions(value));
     };
@@ -127,8 +160,10 @@ const FilterAT = (props) => {
     const onSuggestionsClearRequested = () => {
         setSuggestions([]);
     };
+
+    // load high schoools
     useEffect(() => {
-        getAllHighSchools().then((result) => {
+        highSchoolAPI.getAllHighSchools().then((result) => {
             if (result.error) {
                 setErrorAlert(true);
                 setErrorMessage(result.error);
@@ -140,6 +175,7 @@ const FilterAT = (props) => {
         });
     }, []);
 
+    // display the filter box
     return (
         <>
             {' '}

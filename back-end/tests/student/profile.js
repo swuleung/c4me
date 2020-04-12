@@ -1,6 +1,9 @@
 const { agent } = require('../shared');
 const { expect } = require('../shared');
 
+/**
+ * Tests are described with "describe" & "it"
+ */
 describe('Student Profile', () => {
     describe('Create & login as mochaStudent', () => {
         it('Creates mochaStudent', (done) => {
@@ -54,7 +57,7 @@ describe('Student Profile', () => {
             agent
                 .post('/students/mochaStudent/edit')
                 .send({
-                    GPA: 3.0,
+                    student: { GPA: 3.0 },
                 })
                 .end((err, res) => {
                     res.should.have.status(200);
@@ -68,7 +71,7 @@ describe('Student Profile', () => {
             agent
                 .post('/students/mochaStudent/edit')
                 .send({
-                    ACTComposite: 37,
+                    student: { ACTComposite: 37 },
                 })
                 .end((err, res) => {
                     res.should.have.status(400);
@@ -79,7 +82,7 @@ describe('Student Profile', () => {
             agent
                 .post('/students/mochaStudent/edit')
                 .send({
-                    ACTComposite: 2,
+                    student: { ACTComposite: 2 },
                 })
                 .end((err, res) => {
                     res.should.have.status(200);
@@ -93,7 +96,7 @@ describe('Student Profile', () => {
             agent
                 .post('/students/mochaStudent/edit')
                 .send({
-                    residenceState: 'ZZ',
+                    student: { residenceState: 'ZZ' },
                 })
                 .end((err, res) => {
                     res.should.have.status(400);
@@ -104,7 +107,7 @@ describe('Student Profile', () => {
             agent
                 .post('/students/mochaStudent/edit')
                 .send({
-                    residenceState: 'AL',
+                    student: { residenceState: 'AL' },
                 })
                 .end((err, res) => {
                     res.should.have.status(200);
@@ -118,7 +121,7 @@ describe('Student Profile', () => {
             agent
                 .post('/students/mochaStudent/edit')
                 .send({
-                    SATMath: 801,
+                    student: { SATMath: 801 },
                 })
                 .end((err, res) => {
                     res.should.have.status(400);
@@ -129,7 +132,7 @@ describe('Student Profile', () => {
             agent
                 .post('/students/mochaStudent/edit')
                 .send({
-                    SATMath: 200,
+                    student: { SATMath: 200 },
                 })
                 .end((err, res) => {
                     res.should.have.status(200);
@@ -143,7 +146,7 @@ describe('Student Profile', () => {
             agent
                 .post('/students/mochaStudent/edit')
                 .send({
-                    APPassed: 39,
+                    student: { APPassed: 39 },
                 })
                 .end((err, res) => {
                     res.should.have.status(400);
@@ -154,7 +157,7 @@ describe('Student Profile', () => {
             agent
                 .post('/students/mochaStudent/edit')
                 .send({
-                    APPassed: 1,
+                    student: { APPassed: 1 },
                 })
                 .end((err, res) => {
                     res.should.have.status(200);
