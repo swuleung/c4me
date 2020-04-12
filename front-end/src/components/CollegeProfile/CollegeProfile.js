@@ -17,7 +17,7 @@ const CollegeProfile = (props) => {
     const { match } = props;
     const { collegeID } = match.params;
 
-    // Get the college infromation
+    // Get the college information
     useEffect(() => {
         collegeAPI.getCollegeByID(collegeID).then((results) => {
             if (results.error) {

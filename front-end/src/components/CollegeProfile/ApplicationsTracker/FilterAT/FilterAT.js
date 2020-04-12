@@ -131,10 +131,10 @@ const FilterAT = (props) => {
         return inputLength === 0 ? highSchools : highSchools.filter((hs) => hs.Name.toLowerCase().indexOf(inputValue.toLowerCase()) > -1);
     };
 
-    // get the value of a suggesion
+    // get the value of a suggestion
     const getSuggestionValue = (suggestion) => suggestion.Name;
 
-    // display the sussion
+    // display the suggestion
     const renderSuggestion = (suggestion) => (
         <ListGroup.Item>
             {suggestion.Name.toLowerCase().split(' ').map((s) => {
@@ -151,7 +151,7 @@ const FilterAT = (props) => {
         onChange: (e, { newValue }) => setHighSchool(newValue),
     };
 
-    // what happens when a suggestion is  asked to be fetched
+    // what happens when a suggestion is asked to be fetched
     const onSuggestionsFetchRequested = ({ value }) => {
         setSuggestions(getSuggestions(value));
     };

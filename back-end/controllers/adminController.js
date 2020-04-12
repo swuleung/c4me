@@ -34,10 +34,15 @@ exports.checkAdmin = async (username) => {
     return true;
 };
 
+/**
+ * Scrapes college rankings from WSJ/THE.
+ * Every error is compiled into a `errors` list but will return 200.
+ */
 exports.scrapeCollegeRankings = async () => {
     const browser = await puppeteer.launch({ headless: true });
     const page = await browser.newPage();
     await page.setViewport({ width: 1920, height: 926 });
+    // read from path in paths.json
     const rankingsURL = getPathConfig().RANKING_URL;
     await page.goto(rankingsURL);
 
@@ -54,11 +59,13 @@ exports.scrapeCollegeRankings = async () => {
     const updates = [];
     const errors = [];
     const colleges = getCollegeList();
+    // for each college in colleges.txt scrape the ranking and update the database
     for (let i = 0; i < colleges.length; i += 1) {
         /* eslint-disable no-await-in-loop */
         const rankingEl = await page.$x(`//tr[contains(., '${colleges[i]}')]/td[1]`);
         const ranking = await page.evaluate((el) => el.textContent, rankingEl[0]);
         /* eslint-enable no-await-in-loop */
+        // updates the rankings for college and add to the updates
         updates.push(models.College.upsert({
             Name: colleges[i],
             Ranking: ranking.replace('=', ''),
@@ -81,7 +88,10 @@ exports.scrapeCollegeRankings = async () => {
     return { ok: 'Successfully scraped college rankings' };
 };
 
-// Scrapes CollegeData.com for Cost of Attendance, Completion Rate, GPA, SAT and ACT scores
+/**
+ * Scrapes CollegeData.com for Cost of Attendance, Completion Rate, GPA, SAT and ACT scores
+ * Every error is compiled into a `errors` list but will return 200.
+ */
 exports.scrapeCollegeData = async () => {
     const browser = await puppeteer.launch({ headless: true });
     const page = await browser.newPage();
@@ -99,8 +109,10 @@ exports.scrapeCollegeData = async () => {
 
     const errors = [];
     const colleges = getCollegeList();
+    // read from path in paths.json
     const collegeDataURL = getPathConfig().COLLEGEDATA_URL;
     /* eslint-disable no-await-in-loop */
+    // for each college in colleges.txt scrape college data and update the database
     for (let i = 0; i < colleges.length; i += 1) {
         // removes all special chars and replaces spaces with -
         const collegeStr = colleges[i].replace(/The\s/g, '').replace(/[^A-Z0-9]+/ig, ' ').replace(/\s/g, '-').replace('SUNY', 'State-University-of-New-York');
@@ -115,11 +127,13 @@ exports.scrapeCollegeData = async () => {
         const satEbrwEl = await page.$x('//dt[contains(., \'SAT EBRW\')]//following-sibling::dd[1]');
         const actCompositeEl = await page.$x('//dt[contains(., \'ACT Composite\')]//following-sibling::dd[1]');
 
+        // takes the text value of element and determines the completion rate
         const completionRateFull = await page.evaluate((el) => el.textContent, completionRateEl[0]);
         let completionRate = null;
         if (completionRateFull === 'Not reported') completionRate = null;
         else completionRate = parseFloat(completionRateFull.substring(0, completionRateFull.indexOf('%')));
 
+        // takes the text value of element and determines the cost of attendance
         let costOfAttendance = await page.evaluate((el) => el.textContent, costOfAttendanceEl[0]);
         let costOfAttendanceInState = null;
         let costOfAttendanceOutOfState = null;
@@ -133,9 +147,11 @@ exports.scrapeCollegeData = async () => {
             costOfAttendanceOutOfState = attendanceCost;
         }
 
+        // takes the text value of element and determines the gpa
         let gpa = await page.evaluate((el) => el.textContent, gpaEl[0]);
         if (gpa.includes('Not reported')) gpa = null;
 
+        // takes the text value of element and determines the sat math
         const satMathFull = await page.evaluate((el) => el.textContent, satMathEl[0]);
         let satMathNums = null;
         let satMath = null;
@@ -147,6 +163,7 @@ exports.scrapeCollegeData = async () => {
             satMath = (parseInt(satMathNums[0], 10) + parseInt(satMathNums[1], 10)) / 2.0;
         }
 
+        // takes the text value of element and determines the sat ebrw
         const satEbrwFull = await page.evaluate((el) => el.textContent, satEbrwEl[0]);
         let satEbrwhNums = null;
         let satEbrw = null;
@@ -158,6 +175,7 @@ exports.scrapeCollegeData = async () => {
             satEbrw = (parseInt(satEbrwhNums[0], 10) + parseInt(satEbrwhNums[1], 10)) / 2.0;
         }
 
+        // takes the text value of element and determines the act composite
         const actCompositeFull = await page.evaluate((el) => el.textContent, actCompositeEl[0]);
         let actCompositeNums = null;
         let actComposite = null;
@@ -169,13 +187,16 @@ exports.scrapeCollegeData = async () => {
             actComposite = (parseInt(actCompositeNums[0], 10) + parseInt(actCompositeNums[1], 10)) / 2.0; // eslint-disable-line max-len
         }
 
+        // find elements containing majors
         const majorEls = await page.$x('(//div[contains(., \'Undergraduate Majors\')])[last()]//ul');
         let preMajors = [];
+        // loops through elements and stores the majors to be added
         for (let j = 0; j < majorEls.length; j += 1) {
             const listChildren = await page.evaluate((el) => el.textContent, majorEls[j]);
             preMajors = preMajors.concat(listChildren.trim().split('\n'));
         }
         const majors = preMajors.map((m) => m.trim());
+        // create the college object
         const collegeObject = {
             Name: colleges[i],
             CompletionRate: completionRate,
@@ -187,7 +208,7 @@ exports.scrapeCollegeData = async () => {
             ACTComposite: actComposite,
         };
 
-
+        // updates the college model data without errors
         while (Object.keys(collegeObject).length > 1) {
             try {
                 await models.College.upsert(collegeObject);
@@ -205,6 +226,7 @@ exports.scrapeCollegeData = async () => {
             }
         }
         try {
+            // finds the added college to add majors
             const addedCollege = await models.College.findOne({ where: { Name: colleges[i] } });
             majors.forEach(async (major) => {
                 try {
@@ -242,20 +264,27 @@ exports.scrapeCollegeData = async () => {
     return { ok: 'Success. Able to scrape all colleges in file.' };
 };
 
+/**
+ * Import admission rate, institution type, student debt, location, and size from CSV File.
+ * Every error is compiled into a `errors` list but will return 200.
+ */
 exports.importCollegeScorecard = async () => {
     const errors = [];
     const csvData = [];
     const colleges = getCollegeList();
     const paths = getPathConfig();
+    // read from path in paths.json
     const collegeScorecardPath = `${__dirname}/${paths.ASSETS}/${paths.COLLEGE_SCORECARD}`;
 
     await new Promise(((resolve, reject) => {
         fs.createReadStream(collegeScorecardPath)
             .pipe(parse({ delimiter: ',', columns: true }))
             .on('data', (csvRow) => {
+                // fixes any issues with the college name in the csv vs. colleges.txt
                 const collegeStr = csvRow.INSTNM.replace('-Bloomington', ' Bloomington').replace('-Amherst', ' Amherst').replace('The University', 'University').replace(' Saint ', ' St ')
                     .replace('Franklin and Marshall', 'Franklin & Marshall')
                     .replace('-', ', ');
+                // if colleges.txt has the current row in the csv
                 if (colleges.includes(collegeStr)) {
                     const college = collegeStr;
                     const admissionRate = csvRow.ADM_RATE !== 'NULL' ? csvRow.ADM_RATE * 100 : null;
@@ -263,6 +292,7 @@ exports.importCollegeScorecard = async () => {
                     const studentDebt = csvRow.GRAD_DEBT_MDN;
                     const location = csvRow.STABBR;
                     const size = csvRow.UG !== 'NULL' ? csvRow.UG : csvRow.UGDS;
+                    // adds the college object to the data
                     csvData.push({
                         Name: college,
                         AdmissionRate: admissionRate,
@@ -280,6 +310,7 @@ exports.importCollegeScorecard = async () => {
     }));
 
     /* eslint-disable no-await-in-loop */
+    // for each college, try to add it
     for (let row = 0; row < csvData.length; row += 1) {
         while (Object.keys(csvData[row]).length > 1) {
             try {
@@ -310,6 +341,9 @@ exports.importCollegeScorecard = async () => {
     return { ok: 'Success. Able to scrape all colleges in file.' };
 };
 
+/**
+ * Deletes all the student profiles and associated applications from the database.
+ */
 exports.deleteAllStudents = async () => {
     try {
         await models.User.destroy({

@@ -18,11 +18,15 @@ import userAPI from '../../services/api/user';
 import adminAPI from '../../services/api/admin';
 
 function App() {
+    // state variables
     const [username, setUsername] = useState(localStorage.getItem('username'));
     const [errorAlert, setErrorAlert] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [isAdmin, setIsAdmin] = useState(false);
 
+    /**
+     * Handle the button click for logout
+     */
     const handleLogout = () => {
         userAPI.logout().then((results) => {
             if (results.error) {
@@ -37,6 +41,7 @@ function App() {
         });
     };
 
+    // Confirm if user is admin
     useEffect(() => {
         adminAPI.verifyAdmin().then((result) => {
             if (result.error) {
