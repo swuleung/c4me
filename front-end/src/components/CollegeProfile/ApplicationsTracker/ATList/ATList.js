@@ -1,6 +1,9 @@
+/**
+ * This is the list view of Applicationst Tracker
+ */
 import React from 'react';
 import {
-    Col, Row, Card, CardDeck
+    Col, Row, Card, CardDeck,
 } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
@@ -8,9 +11,10 @@ import './ATList.scss';
 
 const ATList = (props) => {
     const { applications } = props;
+    // map all the applications to the HTML below
     return (
         <>
-            {applications.map(app => (
+            {applications.map((app) => (
                 <div className="border mb-2 student-container" key={app.Application.status}>
                     <Row className="student-title mb-3">
                         <Col className="font-weight-bold student-name">
@@ -20,7 +24,7 @@ const ATList = (props) => {
                             {app.Application.status}
                         </Col>
                         <Col className="text-right">
-                            <Link to={`/profile/${app.username}`} target="_blank" >Go to Profile↗</Link>
+                            <Link to={`/profile/${app.username}`} target="_blank">Go to Profile↗</Link>
                         </Col>
                     </Row>
                     <Row>

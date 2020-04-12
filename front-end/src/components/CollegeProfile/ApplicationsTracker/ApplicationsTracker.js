@@ -1,3 +1,6 @@
+/**
+ * Applications Tracker component within the CollegeProfile
+ */
 import React, { useState, useEffect } from 'react';
 import {
     Alert, Col, Row, Card, CardDeck, Button,
@@ -9,18 +12,21 @@ import applicationsTrackerAPI from '../../../services/api/applicationsTracker';
 import './ApplicationsTracker.scss';
 
 const ApplicationsTracker = (props) => {
+    // state veriables
     const [errorAlert, setErrorAlert] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [filters, setFilters] = useState({});
     const [applications, setApplications] = useState([]);
     const [averages, setAverages] = useState({});
     const [listATView, setListATView] = useState(true);
+    // deconstruct props
     const { college } = props;
     const {
         CollegeId,
     } = college;
 
     useEffect(() => {
+        // fetch application data based on the filters passed from FilterAT
         applicationsTrackerAPI.getApplicationsTrackerData(CollegeId, filters).then((results) => {
             if (results.error) {
                 setErrorAlert(true);
@@ -34,6 +40,7 @@ const ApplicationsTracker = (props) => {
         });
     }, [CollegeId, filters]);
 
+    // display the ApplicationTracker
     return (
         <>
             {' '}
