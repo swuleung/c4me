@@ -4,3 +4,11 @@ import {
 } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
+const ATList = (props) => {
+
+	return (
+
+		);
+};
+
+export default ResultList;

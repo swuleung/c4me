@@ -1,3 +1,6 @@
+/**
+ * Login page/component
+ */
 import React, { useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 import { Link } from '../../../node_modules/react-router-dom';
@@ -5,13 +8,17 @@ import userAPI from '../../services/api/user';
 import './Login.scss';
 
 const Login = (props) => {
+    // state variables
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [errorAlert, setErrorAlert] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
 
+    /**
+     * Handle the login form submission with call to API
+     */
     const handleFormSubmission = () => {
-        userAPI.login(username, password).then(results => {
+        userAPI.login(username, password).then((results) => {
             if (results.error) {
                 setErrorAlert(true);
                 setErrorMessage(results.error);
@@ -24,6 +31,7 @@ const Login = (props) => {
         });
     };
 
+    // display the login page
     return (
         <div>
             <div className="center-card">

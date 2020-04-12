@@ -4,8 +4,16 @@ const router = express.Router();
 const userController = require('../controllers/userController');
 const authentication = require('../utils/auth');
 
+/**
+ * Route to create an account
+ * POST with body:
+ * {
+ *   username: <username:>
+ *   password: <password>
+ * }
+ */
 router.post('/create', (req, res) => {
-    userController.createUser(req.body).then((result) => {
+    userController.createUser(req.body.username, req.body.password).then((result) => {
         if (result.error) {
             if (result.error === 'Something went wrong') res.status(500);
             else res.status(400);
@@ -14,7 +22,15 @@ router.post('/create', (req, res) => {
     });
 });
 
+/**
+ * Deletes one user if they are logged in as that user.
+ * DELETE with body:
+ * {
+ *   username: <username>
+ * }
+ */
 router.delete('/delete', async (req, res) => {
+    // authenticated checks
     if (!req.cookies.access_token) {
         res.status(400).send({ status: 'error', error: 'No token provided' });
     } else {
@@ -28,6 +44,7 @@ router.delete('/delete', async (req, res) => {
                 error: 'Cannot delete another user',
             });
         } else {
+            // delete the user if authenticated
             userController.deleteUser(req.body.username).then((result) => {
                 if (result.error) res.status(400);
                 res.send(result);
@@ -36,17 +53,30 @@ router.delete('/delete', async (req, res) => {
     }
 });
 
+/**
+ *  Login as that user by setting access_token to a JWT token
+ * POST with body:
+ * {
+ *   username: <username>
+ *   password: <password>
+ * }
+ */
 router.post('/login', (req, res) => {
-    userController.login(req.body).then((result) => {
+    userController.login(req.body.username, req.body.password).then((result) => {
         if (result.error) {
             if (result.error === 'Something went wrong') res.status(500);
             else res.status(400);
         }
-        res.cookie('access_token', result.access_token);
+        // set cookie for 7 days
+        res.cookie('access_token', result.access_token, { maxAge: new Date(Date.now() + (1000 * 60 * 60 * 24 * 7)) });
         res.send(result);
     });
 });
 
+/**
+ * Logout out of user by clearing access_token
+ * GET request with no params
+ */
 router.get('/logout', (req, res) => {
     res.clearCookie('access_token');
     res.send({

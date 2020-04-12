@@ -8,6 +8,7 @@ import collegeAPI from '../../services/api/college';
 import './StudentProfile.scss';
 
 const StudentProfile = (props) => {
+    // state variables
     const [student, setStudent] = useState({});
     const [studentApplications, setStudentApplications] = useState(null);
     const [highSchool, setHighSchool] = useState({});
@@ -16,6 +17,9 @@ const StudentProfile = (props) => {
     const { match } = props;
     const { username } = match.params;
 
+    /**
+     * Creates the application components to be rendered
+     */
     const generateStudentApplications = () => {
         const applications = [];
         for (let i = 0; i < studentApplications.length; i += 1) {
@@ -33,6 +37,7 @@ const StudentProfile = (props) => {
         return applications;
     };
 
+    // gets student and application data
     useEffect(() => {
         studentAPI.getStudent(username).then((result) => {
             if (result.error) {
@@ -53,6 +58,7 @@ const StudentProfile = (props) => {
                 }
             }
         });
+        // if student applications have not been set fetch them
         if (!studentApplications) {
             studentAPI.getStudentApplications(username).then((result) => {
                 if (result.error) {
@@ -65,6 +71,7 @@ const StudentProfile = (props) => {
                 }
             });
         }
+        // fetches the college names of applied colleges
         if (studentApplications && studentApplications.length !== 0 && !studentApplications[0].collegeName) {
             for (let i = 0; i < studentApplications.length; i += 1) {
                 collegeAPI.getCollegeByID(studentApplications[i].college).then((coll) => {
@@ -76,6 +83,7 @@ const StudentProfile = (props) => {
         }
     }, [username, studentApplications]);
 
+    // displays the student profile
     return (
         <div>
             {errorAlert

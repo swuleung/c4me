@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "root",
-    "password": "password",
-    "database": "c4me",
-    "host": "localhost",
+    "username": "jaquach",
+    "password": "111019384",
+    "database": "jaquach",
+    "host": "mysql3.cs.stonybrook.edu",
     "dialect": "mysql",
     "operatorsAliases": 0,
     "JWT_COOKIE": "access_token",
