@@ -514,19 +514,21 @@ exports.importApplications = async () => {
 
 
 exports.getApplications = async () => {
-   let allApps = {};
+   let allApps = [];
    try {
         allApps = await models.Application.findAll({
             where: {
-                status: {
-                  [sequelize.or]: ['accepted', 'denied']
-                }
+                [sequelize.or]: [
+                  { status: accepted },
+                  { status: denied }
+                ]
               }
         }); 
    } catch (error){
         return {
              error: 'Failed Applications Get Request',
-             reason: error
+             reason: error,
+             status: error.status
         }
    }
    if (allApps){

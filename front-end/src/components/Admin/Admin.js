@@ -149,12 +149,17 @@ const Admin = () => {
         });
     };
 
+
     const handleViewApplications = () => {
         console.log("handleApps");
         const appsAD = getApplications();
-        console.log(appsAD);
-        //return (<Button> allApps</Button>);
-        console.log(appsAD);
+        const ApplicationButtons = [];
+        console.log(appsAD.status);
+        // // for (el in appsAD){
+        //     ApplicationButtons.push( <Button onClick = {console.log("hello")}></Button>
+        //     );
+        // // }
+        // return (<Row sm="12">{ApplicationButtons} </Row>)
     };
 
     return (
