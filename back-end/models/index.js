@@ -11,7 +11,13 @@ const db = {};
 let sequelize;
 if (process.env.NODE_ENV === 'test') {
     sequelize = new Sequelize(config.database, config.username, config.password, {
-        logging: false, ...config,
+        logging: false,
+        dialectOptions: {
+            ssl: {
+                ca: fs.readFileSync(`${__dirname}../assets/ca-cert_1.pem`),
+            },
+        },
+        ...config,
     });
 } else if (config.use_env_variable) {
     sequelize = new Sequelize(process.env[config.use_env_variable], config);
