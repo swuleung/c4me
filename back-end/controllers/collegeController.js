@@ -1,9 +1,14 @@
 const { Op } = require('sequelize');
 const models = require('../models');
 
+/**
+ * Get a college's information using its ID
+ * @param {integer} collegeID
+ */
 exports.getCollegeByID = async (collegeID) => {
     let college = {};
     try {
+        // find with collegeID
         college = await models.College.findAll({
             limit: 1,
             where: {
@@ -16,6 +21,7 @@ exports.getCollegeByID = async (collegeID) => {
             reason: error,
         };
     }
+    // no colleges found (length === 0)
     if (!college.length) {
         return {
             error: 'College not found',
@@ -28,9 +34,14 @@ exports.getCollegeByID = async (collegeID) => {
     };
 };
 
+/**
+ * Get a college's information with the collegeName
+ * @param {string} collegeName
+ */
 exports.getCollegeByName = async (collegeName) => {
     let college = {};
     try {
+        // find with college name
         college = await models.College.findAll({
             limit: 1,
             where: {
@@ -43,6 +54,7 @@ exports.getCollegeByName = async (collegeName) => {
             reason: error,
         };
     }
+    // no college found (length === 0)
     if (!college.length) {
         return {
             error: 'College not found',
@@ -55,9 +67,13 @@ exports.getCollegeByName = async (collegeName) => {
     };
 };
 
+/**
+ * Get all colleges within the database
+ */
 exports.getAllColleges = async () => {
     let colleges = [];
     try {
+        // find all colleges and return with ascending order by name
         colleges = await models.College.findAll({
             raw: true,
             order: [
@@ -71,6 +87,7 @@ exports.getAllColleges = async () => {
         };
     }
 
+    // empty database
     if (!colleges.length) {
         return {
             error: 'No colleges in the db',
@@ -83,6 +100,9 @@ exports.getAllColleges = async () => {
     };
 };
 
+/**
+ * Delete all the colleges within the database
+ */
 exports.deleteAllColleges = async () => {
     try {
         models.College.destroy({
@@ -100,9 +120,14 @@ exports.deleteAllColleges = async () => {
     };
 };
 
+/**
+ * Get all the majors from a college using the college ID
+ * @param {integer} collegeID
+ */
 exports.getMajorsByCollegeID = async (collegeID) => {
     let majors = [];
     try {
+        // use major table to find all majors with collegeId
         majors = await models.Major.findAll({
             attributes: ['MajorId', 'Major'],
             include: [{
@@ -127,14 +152,16 @@ exports.getMajorsByCollegeID = async (collegeID) => {
     };
 };
 
+
 /**
- * This computes the weights and averages
- * @param {*} applications
- * applications with user information for a college
- *
+ * Process the applications to count averages from a college
+ * Returns the applications with avereages and weight
+ * @param {[Applications]} applications
  */
 const processApplications = (applications) => {
     const processedApplications = [];
+
+    // start the averages at 0
     let averageGPA = 0;
     let countGPA = 0;
     let averageSATMath = 0;
@@ -145,24 +172,13 @@ const processApplications = (applications) => {
     let countACTComposite = 0;
     let averageWeight = 0;
 
-    let averageAcceptedGPA = 0;
-    let countAcceptedGPA = 0;
-    let averageAcceptedSATMath = 0;
-    let countAcceptedSATMath = 0;
-    let averageAcceptedSATEBRW = 0;
-    let countAcceptedSATEBRW = 0;
-    let averageAcceptedACTComposite = 0;
-    let countAcceptedACTComposite = 0;
+    // for each application, calculate the weight and add their #s to the average
     for (let i = 0; i < applications.length; i += 1) {
         const app = applications[i];
         let percent = 0;
         let weight = 0;
 
         if (app.GPA) {
-            if (app.Application.status === 'accepted') {
-                countAcceptedGPA += 1;
-                averageAcceptedGPA += parseFloat(app.GPA);
-            }
             countGPA += 1;
             averageGPA += parseFloat(app.GPA);
         }
@@ -211,31 +227,20 @@ const processApplications = (applications) => {
             weight += (app.SATPhys / 800.0) * 5;
         }
 
+        // 100percent - previous tests is dided equally in maintests
         // mainTests are the SATEBRW, SATMath, and ACTComposite
         let mainTests = 0;
         if (app.ACTComposite) {
-            if (app.Application.status === 'accepted') {
-                countAcceptedACTComposite += 1;
-                averageAcceptedACTComposite += app.ACTComposite;
-            }
             countACTComposite += 1;
             averageACTComposite += app.ACTComposite;
             mainTests += 1;
         }
         if (app.SATMath) {
-            if (app.Application.status === 'accepted') {
-                countAcceptedSATMath += 1;
-                averageAcceptedSATMath += app.SATMath;
-            }
             countSATMath += 1;
             averageSATMath += app.SATMath;
             mainTests += 1;
         }
         if (app.SATEBRW) {
-            if (app.Application.status === 'accepted') {
-                countAcceptedSATEBRW += 1;
-                averageAcceptedSATEBRW += app.SATEBRW;
-            }
             countSATEBRW += 1;
             averageSATEBRW += app.SATEBRW;
             mainTests += 1;
@@ -251,48 +256,102 @@ const processApplications = (applications) => {
         averageWeight += weight;
         processedApplications.push(processedApp);
     }
-    averageGPA /= countGPA;
-    averageSATMath /= countSATMath;
-    averageSATEBRW /= countSATEBRW;
-    averageACTComposite /= countACTComposite;
-    averageWeight /= applications.length;
 
-    averageAcceptedGPA /= countAcceptedGPA;
-    averageAcceptedSATMath /= countAcceptedSATMath;
-    averageAcceptedSATEBRW /= countAcceptedSATEBRW;
-    averageAcceptedACTComposite /= countAcceptedACTComposite;
+    // calculate averages
+    // avoid 0 division with if statements
+    if (countGPA) averageGPA /= countGPA;
+    if (countSATMath) averageSATMath /= countSATMath;
+    if (countSATEBRW) averageSATEBRW /= countSATEBRW;
+    if (countACTComposite) averageACTComposite /= countACTComposite;
+    if (applications.length) averageWeight /= applications.length;
 
     return {
         ok: 'Successfully got applications tracker data',
         applications: processedApplications,
         averages: {
-            avgGPA: averageGPA.toFixed(2),
+            avgGPA: averageGPA.toFixed(2), // to 2 decimal places
             avgSATMath: Math.round(averageSATMath),
             avgSATEBRW: Math.round(averageSATEBRW),
             avgACTComposite: Math.round(averageACTComposite),
-            avgAcceptedGPA: averageAcceptedGPA.toFixed(2),
-            avgAcceptedSATMath: Math.round(averageAcceptedSATMath),
-            avgAcceptedSATEBRW: Math.round(averageAcceptedSATEBRW),
-            avgAcceptedACTComposite: Math.round(averageAcceptedACTComposite),
             avgWeight: Math.round(averageWeight),
         },
     };
 };
 
 /**
- * This function is specifically used by the Applications tracker
+ *  Get only accepted applications with no other filters by collegeID
+ * @param {integer} collegeID
+ */
+exports.getAcceptedApplicationsByCollegeID = async (collegeID) => {
+    let applications = [];
+    // no questionable applications
+    const applicationWhereClause = {
+        isQuestionable: false,
+        status: {
+            [Op.eq]: 'accepted',
+        },
+    };
+
+    const query = {
+        where: { CollegeId: collegeID },
+        include: [{
+            model: models.User,
+            through: {
+                where: applicationWhereClause,
+                attributes: { exclude: ['isQuestionable', 'createdAt', 'updatedAt'] },
+            },
+            attributes: {
+                exclude: ['password', 'createdAt', 'updatedAt', 'APPassed', 'residenceState',
+                    'highschoolCity', 'highschoolState', 'major1', 'major2'],
+            },
+        }],
+    };
+    try {
+        applications = (await models.College.findOne(query));
+    } catch (error) {
+        return {
+            error: 'Unable to get applications for applications tracker',
+            reason: error.message,
+        };
+    }
+
+    if (!applications) {
+        return {
+            ok: 'No accepted data for college',
+            applications: [],
+            averages: {},
+        };
+    }
+    return processApplications(applications.toJSON().Users);
+};
+
+/**
+ *
+ * @param {integer} collegeID
+ * @param {object} filters
+ *    filters: {
+ *       lowerCollegeClass: <integer>
+ *       upperCollegeClass: <integer>
+ *       statuses: ['accepted', ...]
+ *       highSchools: [highSchoolId, ...]
+ *       lax: <boolean>
+ *    }
+ * Each filter is optional
  */
 exports.getApplicationsByCollegeID = async (collegeID, filters) => {
     let applications = [];
-    const userWhereClause = {};
+    // query parts
     const applicationWhereClause = {
         isQuestionable: false,
     };
-    const highSchoolWhereClause = {};
-
-    let HighSchoolId = { [Op.or]: {} };
+    const userWhereClause = {
+    };
     let collegeClass = { [Op.or]: {} };
     let status = { [Op.or]: {} };
+    const includeHS = {
+        model: models.HighSchool,
+        attributes: [],
+    };
 
     // make the collegeClass filters optional if lax
     if (filters.lax) {
@@ -301,24 +360,26 @@ exports.getApplicationsByCollegeID = async (collegeID, filters) => {
         };
     }
 
-    const includeHS = {
-        model: models.HighSchool,
-        attributes: [],
-    };
-
+    // if there is a list of high schools, try
     if (filters.highSchools) {
+        // allow null if lax
         if (filters.lax) {
-            HighSchoolId = {
-                [Op.or]: { [Op.eq]: null },
+            userWhereClause.HighSchoolId = {
+                [Op.or]: {
+                    [Op.eq]: null,
+                    [Op.in]: filters.highSchools[0],
+                },
             };
-            includeHS.required = false;
+        } else {
+            userWhereClause.HighSchoolId = {
+                [Op.in]: filters.highSchools[0],
+            };
         }
-        HighSchoolId[Op.or][Op.in] = filters.highSchools;
-        highSchoolWhereClause.HighSchoolId = HighSchoolId;
-        includeHS.where = highSchoolWhereClause;
     }
 
+    // if there are statuses, add the list in
     if (filters.statuses) {
+        // allow null if lax
         if (filters.lax) {
             status = {
                 [Op.or]: { [Op.eq]: null },
@@ -328,6 +389,7 @@ exports.getApplicationsByCollegeID = async (collegeID, filters) => {
         applicationWhereClause.status = status;
     }
 
+    // handle the collegeClasses
     if (filters.lowerCollegeClass) {
         collegeClass[Op.or][Op.and] = { [Op.gte]: filters.lowerCollegeClass };
     }
@@ -337,38 +399,66 @@ exports.getApplicationsByCollegeID = async (collegeID, filters) => {
     if (filters.upperCollegeClass || filters.lowerCollegeClass) {
         userWhereClause.collegeClass = collegeClass;
     }
+    // complete query
+    const query = {
+        where: { CollegeId: collegeID },
+        include: [{
+            model: models.User,
+            through: {
+                where: applicationWhereClause,
+                attributes: { exclude: ['isQuestionable', 'createdAt', 'updatedAt'] },
+            },
+            where: userWhereClause,
+            attributes: {
+                exclude: ['password', 'createdAt', 'updatedAt', 'APPassed', 'residenceState',
+                    'highschoolCity', 'highschoolState', 'major1', 'major2'],
+            },
+            include: [
+                includeHS,
+            ],
+        }],
+    };
 
+    // execute query
     try {
-        applications = (await models.College.findOne({
-            where: { CollegeId: collegeID },
-            include: [{
-                model: models.User,
-                through: {
-                    where: applicationWhereClause,
-                    attributes: { exclude: ['isQuestionable', 'createdAt', 'updatedAt'] },
-                },
-                where: userWhereClause,
-                attributes: {
-                    exclude: ['password', 'createdAt', 'updatedAt', 'APPassed', 'residenceState',
-                        'highschoolCity', 'highschoolState', 'major1', 'major2'],
-                },
-                include: [
-                    includeHS,
-                ],
-            }],
-        }));
+        applications = await models.College.findOne(query);
     } catch (error) {
         return {
             error: 'Unable to get applications for applications tracker',
             reason: error.message,
         };
     }
+
+    // get the accepted applications with no filters for averages
+    let acceptedApplications = null;
+    try {
+        acceptedApplications = await this.getAcceptedApplicationsByCollegeID(collegeID);
+    } catch (error) {
+        return {
+            error: 'Unable to get applications for applications tracker',
+            reason: error.message,
+        };
+    }
+
+    // change the names of the averages
+    const acceptedAverages = {
+        avgAcceptedGPA: acceptedApplications.averages.avgGPA,
+        avgAcceptedSATMath: acceptedApplications.averages.avgSATMath,
+        avgAcceptedSATEBRW: acceptedApplications.averages.avgSATEBRW,
+        avgAcceptedACTComposite: acceptedApplications.averages.avgACTComposite,
+    };
+
     if (!applications) {
         return {
             ok: 'No data for college',
             applications: [],
-            averages: {},
+            averages: { ...acceptedAverages },
         };
     }
-    return processApplications(applications.toJSON().Users);
+
+    const processedFilteredApplications = processApplications(applications.toJSON().Users);
+    // eslint-disable-next-line max-len
+    processedFilteredApplications.averages = { ...processedFilteredApplications.averages, ...acceptedAverages };
+
+    return processedFilteredApplications;
 };

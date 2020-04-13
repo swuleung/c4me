@@ -3,22 +3,17 @@ const fs = require('fs');
 const puppeteer = require('puppeteer');
 const parse = require('csv-parse');
 const models = require('../models');
+const { getCollegeList, getPathConfig } = require('../utils/readAppFiles');
 const { updateStudentHighSchool } = require('./studentController');
 
-let collegeFile = `${__dirname}/../assets/colleges.txt`;
-if (process.env.NODE_ENV === 'test') {
-    collegeFile = `${__dirname}/../tests/testData/colleges.txt`;
-}
-const colleges = fs.readFileSync(collegeFile).toString().split(/\r?\n/); // colleges.txt file into string array
-
-// eslint-disable-next-line import/no-dynamic-require
-const config = require(`${__dirname}/../config/config.json`).development;
-const rankingsURL = config.RANKING_URL;
-const collegeDataURL = config.COLLEGEDATA_URL;
-
+/**
+ * Check if a user is an admin with a DB call
+ * @param {string} username
+ */
 exports.checkAdmin = async (username) => {
     let admin = {};
     try {
+        // isAdmin is true
         admin = await models.User.findAll({
             limit: 1,
             raw: true,
@@ -30,6 +25,8 @@ exports.checkAdmin = async (username) => {
     } catch (error) {
         return false;
     }
+
+    // if admin user is not found, it is not an admin
     if (!admin.length) {
         return false;
     }
@@ -37,10 +34,16 @@ exports.checkAdmin = async (username) => {
     return true;
 };
 
+/**
+ * Scrapes college rankings from WSJ/THE.
+ * Every error is compiled into a `errors` list but will return 200.
+ */
 exports.scrapeCollegeRankings = async () => {
     const browser = await puppeteer.launch({ headless: true });
     const page = await browser.newPage();
     await page.setViewport({ width: 1920, height: 926 });
+    // read from path in paths.json
+    const rankingsURL = getPathConfig().RANKING_URL;
     await page.goto(rankingsURL);
 
     // Request interception to block css and images to speed up scraping
@@ -55,11 +58,14 @@ exports.scrapeCollegeRankings = async () => {
 
     const updates = [];
     const errors = [];
+    const colleges = getCollegeList();
+    // for each college in colleges.txt scrape the ranking and update the database
     for (let i = 0; i < colleges.length; i += 1) {
         /* eslint-disable no-await-in-loop */
         const rankingEl = await page.$x(`//tr[contains(., '${colleges[i]}')]/td[1]`);
         const ranking = await page.evaluate((el) => el.textContent, rankingEl[0]);
         /* eslint-enable no-await-in-loop */
+        // updates the rankings for college and add to the updates
         updates.push(models.College.upsert({
             Name: colleges[i],
             Ranking: ranking.replace('=', ''),
@@ -82,7 +88,10 @@ exports.scrapeCollegeRankings = async () => {
     return { ok: 'Successfully scraped college rankings' };
 };
 
-// Scrapes CollegeData.com for Cost of Attendance, Completion Rate, GPA, SAT and ACT scores
+/**
+ * Scrapes CollegeData.com for Cost of Attendance, Completion Rate, GPA, SAT and ACT scores
+ * Every error is compiled into a `errors` list but will return 200.
+ */
 exports.scrapeCollegeData = async () => {
     const browser = await puppeteer.launch({ headless: true });
     const page = await browser.newPage();
@@ -99,7 +108,11 @@ exports.scrapeCollegeData = async () => {
     });
 
     const errors = [];
+    const colleges = getCollegeList();
+    // read from path in paths.json
+    const collegeDataURL = getPathConfig().COLLEGEDATA_URL;
     /* eslint-disable no-await-in-loop */
+    // for each college in colleges.txt scrape college data and update the database
     for (let i = 0; i < colleges.length; i += 1) {
         // removes all special chars and replaces spaces with -
         const collegeStr = colleges[i].replace(/The\s/g, '').replace(/[^A-Z0-9]+/ig, ' ').replace(/\s/g, '-').replace('SUNY', 'State-University-of-New-York');
@@ -114,11 +127,13 @@ exports.scrapeCollegeData = async () => {
         const satEbrwEl = await page.$x('//dt[contains(., \'SAT EBRW\')]//following-sibling::dd[1]');
         const actCompositeEl = await page.$x('//dt[contains(., \'ACT Composite\')]//following-sibling::dd[1]');
 
+        // takes the text value of element and determines the completion rate
         const completionRateFull = await page.evaluate((el) => el.textContent, completionRateEl[0]);
         let completionRate = null;
         if (completionRateFull === 'Not reported') completionRate = null;
         else completionRate = parseFloat(completionRateFull.substring(0, completionRateFull.indexOf('%')));
 
+        // takes the text value of element and determines the cost of attendance
         let costOfAttendance = await page.evaluate((el) => el.textContent, costOfAttendanceEl[0]);
         let costOfAttendanceInState = null;
         let costOfAttendanceOutOfState = null;
@@ -132,9 +147,11 @@ exports.scrapeCollegeData = async () => {
             costOfAttendanceOutOfState = attendanceCost;
         }
 
+        // takes the text value of element and determines the gpa
         let gpa = await page.evaluate((el) => el.textContent, gpaEl[0]);
         if (gpa.includes('Not reported')) gpa = null;
 
+        // takes the text value of element and determines the sat math
         const satMathFull = await page.evaluate((el) => el.textContent, satMathEl[0]);
         let satMathNums = null;
         let satMath = null;
@@ -146,6 +163,7 @@ exports.scrapeCollegeData = async () => {
             satMath = (parseInt(satMathNums[0], 10) + parseInt(satMathNums[1], 10)) / 2.0;
         }
 
+        // takes the text value of element and determines the sat ebrw
         const satEbrwFull = await page.evaluate((el) => el.textContent, satEbrwEl[0]);
         let satEbrwhNums = null;
         let satEbrw = null;
@@ -157,6 +175,7 @@ exports.scrapeCollegeData = async () => {
             satEbrw = (parseInt(satEbrwhNums[0], 10) + parseInt(satEbrwhNums[1], 10)) / 2.0;
         }
 
+        // takes the text value of element and determines the act composite
         const actCompositeFull = await page.evaluate((el) => el.textContent, actCompositeEl[0]);
         let actCompositeNums = null;
         let actComposite = null;
@@ -168,13 +187,16 @@ exports.scrapeCollegeData = async () => {
             actComposite = (parseInt(actCompositeNums[0], 10) + parseInt(actCompositeNums[1], 10)) / 2.0; // eslint-disable-line max-len
         }
 
+        // find elements containing majors
         const majorEls = await page.$x('(//div[contains(., \'Undergraduate Majors\')])[last()]//ul');
         let preMajors = [];
+        // loops through elements and stores the majors to be added
         for (let j = 0; j < majorEls.length; j += 1) {
             const listChildren = await page.evaluate((el) => el.textContent, majorEls[j]);
             preMajors = preMajors.concat(listChildren.trim().split('\n'));
         }
         const majors = preMajors.map((m) => m.trim());
+        // create the college object
         const collegeObject = {
             Name: colleges[i],
             CompletionRate: completionRate,
@@ -186,7 +208,7 @@ exports.scrapeCollegeData = async () => {
             ACTComposite: actComposite,
         };
 
-
+        // updates the college model data without errors
         while (Object.keys(collegeObject).length > 1) {
             try {
                 await models.College.upsert(collegeObject);
@@ -204,6 +226,7 @@ exports.scrapeCollegeData = async () => {
             }
         }
         try {
+            // finds the added college to add majors
             const addedCollege = await models.College.findOne({ where: { Name: colleges[i] } });
             majors.forEach(async (major) => {
                 try {
@@ -241,16 +264,27 @@ exports.scrapeCollegeData = async () => {
     return { ok: 'Success. Able to scrape all colleges in file.' };
 };
 
+/**
+ * Import admission rate, institution type, student debt, location, and size from CSV File.
+ * Every error is compiled into a `errors` list but will return 200.
+ */
 exports.importCollegeScorecard = async () => {
     const errors = [];
     const csvData = [];
+    const colleges = getCollegeList();
+    const paths = getPathConfig();
+    // read from path in paths.json
+    const collegeScorecardPath = `${__dirname}/${paths.ASSETS}/${paths.COLLEGE_SCORECARD}`;
+
     await new Promise(((resolve, reject) => {
-        fs.createReadStream('./assets/collegeScorecard.csv')
+        fs.createReadStream(collegeScorecardPath)
             .pipe(parse({ delimiter: ',', columns: true }))
             .on('data', (csvRow) => {
+                // fixes any issues with the college name in the csv vs. colleges.txt
                 const collegeStr = csvRow.INSTNM.replace('-Bloomington', ' Bloomington').replace('-Amherst', ' Amherst').replace('The University', 'University').replace(' Saint ', ' St ')
                     .replace('Franklin and Marshall', 'Franklin & Marshall')
                     .replace('-', ', ');
+                // if colleges.txt has the current row in the csv
                 if (colleges.includes(collegeStr)) {
                     const college = collegeStr;
                     const admissionRate = csvRow.ADM_RATE !== 'NULL' ? csvRow.ADM_RATE * 100 : null;
@@ -258,6 +292,7 @@ exports.importCollegeScorecard = async () => {
                     const studentDebt = csvRow.GRAD_DEBT_MDN;
                     const location = csvRow.STABBR;
                     const size = csvRow.UG !== 'NULL' ? csvRow.UG : csvRow.UGDS;
+                    // adds the college object to the data
                     csvData.push({
                         Name: college,
                         AdmissionRate: admissionRate,
@@ -275,6 +310,7 @@ exports.importCollegeScorecard = async () => {
     }));
 
     /* eslint-disable no-await-in-loop */
+    // for each college, try to add it
     for (let row = 0; row < csvData.length; row += 1) {
         while (Object.keys(csvData[row]).length > 1) {
             try {
@@ -305,6 +341,9 @@ exports.importCollegeScorecard = async () => {
     return { ok: 'Success. Able to scrape all colleges in file.' };
 };
 
+/**
+ * Deletes all the student profiles and associated applications from the database.
+ */
 exports.deleteAllStudents = async () => {
     try {
         await models.User.destroy({
@@ -330,10 +369,8 @@ exports.importStudents = async () => {
 
     // read the csv file
     await new Promise(((resolve) => {
-        let studentFile = `${__dirname}/../assets/students-100.csv`;
-        if (process.env.NODE_ENV === 'test') {
-            studentFile = `${__dirname}/../tests/testData/students-1.csv`;
-        }
+        const paths = getPathConfig();
+        const studentFile = `${__dirname}/${paths.ASSETS}/${paths.IMPORT_STUDENTS}`;
         fs.createReadStream(studentFile)
             .on('error', (error) => {
                 console.log(error.message);
@@ -399,13 +436,10 @@ exports.importStudents = async () => {
         const { highSchool } = users[userIndex];
         while (Object.keys(user).length > 1) {
             try {
-                // create the user
                 const student = await models.User.create(user);
-                
+
                 const result = await updateStudentHighSchool(student, highSchool);
-                if (result.ok) {
-                    student.HighSchool = result.highSchool;
-                } else {
+                if (!result.ok) {
                     errors.push(result);
                 }
                 break;
@@ -445,18 +479,21 @@ exports.importStudents = async () => {
 
     // no errors
     return {
-        ok: 'Success',
+        ok: 'Successessfully imported students',
     };
 };
 
+/**
+ * Import application data from CSV File.
+ * Every error is compiled into a `errors` list but will return 200.
+ */
 exports.importApplications = async () => {
     const errors = [];
     const applications = [];
     await new Promise(((resolve) => {
-        let applicationFile = `${__dirname}/../assets/applications-1.csv`;
-        if (process.env.NODE_ENV === 'test') {
-            applicationFile = `${__dirname}/../tests/testData/applications-1.csv`;
-        }
+        const paths = getPathConfig();
+        // read from path in paths.json
+        const applicationFile = `${__dirname}/${paths.ASSETS}/${paths.IMPORT_APPLICATIONS}`;
         fs.createReadStream(applicationFile)
             .on('error', (error) => {
                 errors.push({
@@ -466,6 +503,7 @@ exports.importApplications = async () => {
             })
             .pipe(parse({ delimiter: ',', columns: true }))
             .on('data', async (row) => {
+                // set up the application object
                 const application = {
                     collegeName: row.college,
                     username: row.userid,
@@ -478,13 +516,16 @@ exports.importApplications = async () => {
             });
     }));
     /* eslint-disable no-await-in-loop */
+    // for each application, try to add it
     for (let appIndex = 0; appIndex < applications.length; appIndex += 1) {
         try {
+            // find the college
             const college = await models.College.findOne({
                 where: { Name: applications[appIndex].collegeName },
                 raw: true,
             });
             if (college !== null) {
+                // add the application
                 applications[appIndex].college = college.CollegeId;
                 await models.Application.create(applications[appIndex]);
             } else {
@@ -502,11 +543,11 @@ exports.importApplications = async () => {
     /* eslint-enable no-await-in-loop */
     if (errors.length) {
         return {
-            error: 'Error importing applications',
+            error: 'Error importing some applications',
             reason: errors,
         };
     }
     return {
-        ok: 'Success',
+        ok: 'Successfully imported applications',
     };
 };
