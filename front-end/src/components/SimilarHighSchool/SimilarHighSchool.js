@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {
     Alert, Col, Row, Container
 } from 'react-bootstrap';
+import './SimilarHighSchool.scss';
 import highSchoolAPI from '../../services/api/highSchool';
 import studentAPI from '../../services/api/student';
 
@@ -64,26 +65,25 @@ const SimilarHighSchool = (props) => {
                             <h1>Similar High Schools</h1>
                             {highSchools.map(highSchool => (
                                 highSchool.Name !== student.HighSchool.Name
-                                ? <div className="border mb-2" key={highSchool.HighSchoolId}>
-                                    <Row className="high-school-title mb-3">
-                                        <Col className="font-weight-bold high-school-title">
-                                            {highSchool.Name}
+                                ? <div className="border mb-2 p-3" key={highSchool.HighSchoolId}>
+                                    <Row className="mb-2">
+                                        <Col>
+                                            <Row className="h5 font-weight-bold mb-0"><Col>{highSchool.Name}</Col></Row>
+                                            <Row>
+                                                <Col>{`${highSchool.HighSchoolCity}, ${highSchool.HighSchoolState}`}</Col>
+                                            </Row>
                                         </Col>
-                                        <Col className="text-center">
+                                        <Col className="h5 text-center">
                                             {highSchool.GraduationRate}% Graduation
                                         </Col>
                                         <Col className="text-right">
                                             <Row>
-                                                <Col className="niche-academic-score">{highSchool.NicheAcademicScore}</Col>
-                                                <Col>Academics</Col>
+                                                <Col><span className="niche-academic-score font-weight-bold text-center h3">{highSchool.NicheAcademicScore}</span></Col>
                                             </Row>
                                         </Col>
                                     </Row>
                                     <Row>
-                                        {`${highSchool.HighSchoolCity}, ${highSchool.HighSchoolState}`}
-                                    </Row>
-                                    <Row>
-                                        <Col>
+                                        <Col className="text-center">
                                             <div className="overview-title">Average SAT</div>
                                             <div className="overview-text">{highSchool.AverageSAT ? highSchool.AverageSAT : 'N/A'}</div>
                                         </Col>
@@ -98,7 +98,7 @@ const SimilarHighSchool = (props) => {
                                             </Row>
                                         </Col>
                                         <Col></Col>
-                                        <Col>
+                                        <Col className="text-center">
                                             <div className="overview-title">Average ACT</div>
                                             <div className="overview-text">{highSchool.AverageACT ? highSchool.AverageACT : 'N/A'}</div>
                                         </Col>
