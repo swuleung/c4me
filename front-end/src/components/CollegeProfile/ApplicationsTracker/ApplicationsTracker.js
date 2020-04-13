@@ -79,7 +79,7 @@ const ApplicationsTracker = (props) => {
                                         </Row>
                                         <Row>
                                             <Col>
-                                                <div className="at-title">SAR EBRW</div>
+                                                <div className="at-title">SAT EBRW</div>
                                                 <div className="at-text">{averages.avgSATEBRW ? averages.avgSATEBRW : 'N/A'}</div>
                                             </Col>
                                             <Col>
@@ -102,7 +102,7 @@ const ApplicationsTracker = (props) => {
                                         </Row>
                                         <Row>
                                             <Col>
-                                                <div className="at-title">SAR EBRW</div>
+                                                <div className="at-title">SAT EBRW</div>
                                                 <div className="at-text">{averages.avgAcceptedSATEBRW ? averages.avgAcceptedSATEBRW : 'N/A'}</div>
                                             </Col>
                                             <Col>
