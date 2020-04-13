@@ -16,7 +16,7 @@ const westRegion = ["AK", "HI", "WA", "OR", "CA", "MT", "ID", "WY", "NV", "UT", 
 //  e.g. admissionRateMin and admissionRateMax
 //  An example filter:
 // {
-//     "region" : "northeast",
+//     "region" : "west",
 //     "SATEBRWMin": 500,
 //     "SATEBRWMax": 800,
 //     "SATMathMin" : 500,
@@ -28,9 +28,13 @@ const westRegion = ["AK", "HI", "WA", "OR", "CA", "MT", "ID", "WY", "NV", "UT", 
 //     "costOutOfStateMax" : 50000,
 //     "major" : "math",
 //     "major2" : "computer",
+//     "rankingMin" : 0,
+//     "rankingMax" : 1000,
+//     "sizeMin" : 0,
+//     "sizeMax" : 50000,
 //     "sortAttribute" : "name",
 //     "sortDirection" : "ASC",
-//     "filters" : "lax"
+//     "lax" : "True"
 // }
 exports.searchCollege = async ( filters ) => {
     let searchResults = {};

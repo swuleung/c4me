@@ -96,7 +96,7 @@ function App() {
                                 <Route exact path="/profile/:username" component={StudentProfile} />
                                 <Route exact path="/profile/:username/edit" username={username} render={(props) => (props.match.params.username === username ? <EditProfile {...props} /> : <Redirect to="/" />)} />
                                 <Route exact path="/colleges/:collegeID" component={CollegeProfile} />
-                                <Route exact path="/search" component={Search} />
+                                
                                 <Route
                                     exact
                                     path="/admin"
