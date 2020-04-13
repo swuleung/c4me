@@ -13,7 +13,7 @@ const EditProfile = (props) => {
     // state variables
     const [student, setStudent] = useState({});
     const [studentApplications, setStudentApplications] = useState([]);
-    const [highSchool, setHighSchool] = useState({Name: ''});
+    const [highSchool, setHighSchool] = useState({ Name: '' });
     const [newHighSchool, setNewHighSchool] = useState({});
     const [highSchools, setHighSchools] = useState([]);
     const [displayOtherHS, setDisplayOtherHS] = useState(false);
@@ -26,7 +26,7 @@ const EditProfile = (props) => {
 
     /**
      * Updates the student state with data from form
-     * @param {event} e 
+     * @param {event} e
      */
     const handleProfileChange = (e) => {
         let { value } = e.target;
@@ -37,18 +37,18 @@ const EditProfile = (props) => {
 
     /**
      * Updates the high school state with data from form
-     * @param {event} e 
+     * @param {event} e
      */
     const handleHighSchoolChange = (e) => {
         let { value } = e.target;
         const { id } = e.target;
         if (value === '') value = null;
         setNewHighSchool({ ...newHighSchool, [id]: value });
-    }
+    };
 
     /**
      * Updates the applications state with data from form
-     * @param {event} e 
+     * @param {event} e
      */
     const handleApplicationChange = (e) => {
         const { value } = e.target;
@@ -60,7 +60,7 @@ const EditProfile = (props) => {
 
     /**
      * Updates the application's college with data from form
-     * @param {event} e 
+     * @param {event} e
      */
     const handleApplicationCollegeChange = (e) => {
         const { value } = e.target;
@@ -72,7 +72,7 @@ const EditProfile = (props) => {
 
     /**
      * Deletes the associated application by button click
-     * @param {event} e 
+     * @param {event} e
      */
     const handleDeleteApplication = (e) => {
         const index = e.target.getAttribute('index');
@@ -173,7 +173,7 @@ const EditProfile = (props) => {
             if (result.ok) {
                 setErrorAlert(false);
                 setStudent(result.student);
-                if(result.student.HighSchool) {
+                if (result.student.HighSchool) {
                     setHighSchool(result.student.HighSchool);
                     setNewHighSchool(result.student.HighSchool);
                 } else {
@@ -212,12 +212,12 @@ const EditProfile = (props) => {
             }
             if (result.ok) {
                 setErrorAlert(false);
-                result.highSchools.unshift({Name: 'Other'});
+                result.highSchools.unshift({ Name: 'Other - New School' });
                 setHighSchools(result.highSchools);
             }
         });
     }, [username]);
-    
+
     /**
      * The next several functions with suggestion in the name are to pass through to the Autosuggest box
      */
@@ -225,7 +225,8 @@ const EditProfile = (props) => {
     const getSuggestions = (value) => {
         const inputValue = value.trim().toLowerCase();
         const inputLength = inputValue.length;
-        return inputLength === 0 ? highSchools : highSchools.filter((hs) => hs.Name.toLowerCase().indexOf(inputValue.toLowerCase()) > -1);
+        const result = inputLength === 0 ? highSchools : highSchools.filter((hs) => hs.Name.toLowerCase().indexOf(inputValue.toLowerCase()) > -1);
+        return result;
     };
 
     // display the suggestion
@@ -260,8 +261,8 @@ const EditProfile = (props) => {
         value: highSchool.Name,
         onChange: (e, { newValue }) => {
             if (displayOtherHS) setDisplayOtherHS(false);
-            if(typeof(newValue) === 'string') {
-                setHighSchool({Name: newValue});
+            if (typeof (newValue) === 'string') {
+                setHighSchool({ Name: newValue });
             } else {
                 setHighSchool(newValue);
             }
@@ -280,11 +281,12 @@ const EditProfile = (props) => {
 
     /**
      * Handles selection of high school from autosuggest box
-     * @param {event} event 
-     * @param {Object} param1 
+     * @param {event} event
+     * @param {Object} param1
      */
     const handleSelectHighSchool = (event, { suggestion }) => {
-        if (suggestion.Name === 'Other') {
+        if (suggestion.Name === 'Other - New School') {
+            setNewHighSchool({});
             setDisplayOtherHS(true);
         } else {
             setNewHighSchool(suggestion);
