@@ -5,6 +5,7 @@ import {
 import admin from '../../services/api/admin';
 
 const Admin = () => {
+    // state variables
     const [errorAlert, setErrorAlert] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [progressAlert, setProgressAlert] = useState(false);
@@ -17,6 +18,9 @@ const Admin = () => {
     const [disableDelete, setDisableDelete] = useState(false);
     const [disableProfile, setDisableProfile] = useState(false);
 
+    /**
+     * Handle the button click for scrape college rankings
+     */
     const handleScrapeCollegeRankings = () => {
         setDisableRanking(true);
         setProgressAlert(true);
@@ -39,6 +43,9 @@ const Admin = () => {
         });
     };
 
+    /**
+     * Handle the button click for import college scorecard
+     */
     const handleImportCollegeScorecard = () => {
         setDisableScorecard(true);
         setProgressAlert(true);
@@ -61,6 +68,9 @@ const Admin = () => {
         });
     };
 
+    /**
+     * Handle the button click for scrape college data
+     */
     const handleScrapeCollegeData = () => {
         setDisableCollegeData(true);
         setProgressAlert(true);
@@ -84,6 +94,9 @@ const Admin = () => {
         });
     };
 
+    /**
+     * Handle button click for delete all students
+     */
     const handleDeleteAllStudents = () => {
         setDisableDelete(true);
         setProgressAlert(true);
@@ -106,6 +119,9 @@ const Admin = () => {
         });
     };
 
+    /**
+     * Handle the button click for import student profiles
+     */
     const handleImportStudentProfiles = () => {
         setDisableProfile(true);
         setProgressAlert(true);
@@ -119,34 +135,41 @@ const Admin = () => {
                 setProgressAlert(false);
                 setErrorAlert(true);
                 errorString.push(<h4 key="importStudentError" className="alert-heading">{resultStudent.error}</h4>);
-                for (let i = 0; i < (resultStudent.reason).length; i += 1) {
-                    errorString.push(<p key={`importStudentError-${i}`}>{resultStudent.reason[i].error}</p>);
+                if (resultStudent.reason) {
+                    for (let i = 0; i < (resultStudent.reason).length; i += 1) {
+                        errorString.push(<p key={`importStudentError-${i}`}>{resultStudent.reason[i].error}</p>);
+                    }
+                    setErrorMessage(errorString);
+                } else {
+                    setErrorMessage('Process may have timed out');
                 }
-                setErrorMessage(errorString);
             }
-            if (resultStudent.ok) {
-                admin.importStudentApplications().then((resultApp) => {
-                    if (resultApp.error) {
-                        setProgressAlert(false);
-                        setErrorAlert(true);
-                        errorString.push(<h4 key="importAppError" className="alert-heading">{resultApp.error}</h4>);
+            // import applications even with errors from import students
+            admin.importStudentApplications().then((resultApp) => {
+                if (resultApp.error) {
+                    setProgressAlert(false);
+                    setErrorAlert(true);
+                    errorString.push(<h4 key="importAppError" className="alert-heading">{resultApp.error}</h4>);
+                    if (resultApp.reason) {
                         for (let i = 0; i < (resultApp.reason).length; i += 1) {
                             errorString.push(<p key={`importAppError-${i}`}>{resultApp.reason[i].error}</p>);
                         }
-                        setErrorMessage(errorString);
+                        setErrorMessage([...errorMessage, ...errorString]);
+                    } else {
+                        setErrorMessage('Process may have timed out');
                     }
-                    if (resultApp.ok) {
-                        setErrorAlert(false);
-                        setProgressAlert(false);
-                        setSuccessAlert(true);
-                        setSuccessMessage('Student profile import complete.');
-                    }
-                });
-            }
+                }
+                if (resultApp.ok) {
+                    setProgressAlert(false);
+                    setSuccessAlert(true);
+                    setSuccessMessage('Student profile import complete.');
+                }
+            });
             setDisableProfile(false);
         });
     };
 
+    // display the Admin page
     return (
         <div>
             {errorAlert

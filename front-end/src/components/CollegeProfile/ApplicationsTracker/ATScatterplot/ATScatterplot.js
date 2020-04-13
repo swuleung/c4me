@@ -1,13 +1,16 @@
+/**
+ * This is the scatterplot view of the Applications Tracker
+ */
 import React, { useState, useEffect, useRef } from 'react';
 import {
-    Alert, Container, Form,
+    Container,
+    Form,
 } from 'react-bootstrap';
 import Chart from 'chart.js';
 import studentAPI from '../../../../services/api/student';
 
 const ATScatterplot = (props) => {
-    const [errorAlert, setErrorAlert] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('');
+    // state variables
     const [student, setStudent] = useState(null);
     const canvasRef = useRef(null);
     const [selectedHorizontalAxis, setSelectedHorizontalAxis] = useState('SAT');
@@ -97,13 +100,15 @@ const ATScatterplot = (props) => {
      * The weights used in the weighted average are: 5% for each SAT subject test
      * taken, and the remainder for SAT or ACT Composite (or split evenly between
      * SAT and ACT Composite, if the student took both).
+     *
+     * This function puts each type of score into their own list and adds the point
      */
         const transformApplicationsData = () => {
             const accepted = [];
             const denied = [];
             const other = [];
             let backgroundColor = '#1091b3';
-
+            let minGPA = 4;
             for (let applicationIndex = 0; applicationIndex < applications.length; applicationIndex += 1) {
                 const app = applications[applicationIndex];
                 if (localStorage.getItem('username') === app.username) {
@@ -118,6 +123,7 @@ const ATScatterplot = (props) => {
                     continue;
                 }
                 const GPA = parseFloat(app.GPA);
+                if (GPA !== 0 && GPA < minGPA) minGPA = GPA;
                 if (app.Application.status === 'accepted') {
                     if (selectedHorizontalAxis === 'SAT') {
                         accepted.push({
@@ -170,6 +176,7 @@ const ATScatterplot = (props) => {
                 }
             }
 
+            // different Current user point to its own dataset
             const you = { y: parseFloat(student.GPA) };
             const average = { y: averages.avgGPA };
             if (selectedHorizontalAxis === 'SAT') {
@@ -190,9 +197,11 @@ const ATScatterplot = (props) => {
                 you: you,
                 average: average,
                 backgroundColor: backgroundColor,
+                minGPA: minGPA,
             };
         };
 
+        // sets up the chart configuration for Chart JS
         const getChartConfiguration = (data) => {
             let xAxisStepSize = 1;
             let xAxisSuggestedMin = 0;
@@ -204,6 +213,7 @@ const ATScatterplot = (props) => {
             } else if (selectedHorizontalAxis === 'ACT') {
                 xAxisSuggestedMax = 36;
             }
+            // options for style and adding in the data
             const options = {
                 type: 'scatter',
                 data: {
@@ -255,8 +265,8 @@ const ATScatterplot = (props) => {
                             },
                             ticks: {
                                 stepSize: 0.2,
-                                suggestedMin: 0,
                                 suggestedMax: 4,
+                                suggestedMin: data.minGPA - 0.2 > 0 ? data.minGPA - 0.2 : 0,
                             },
                         }],
                     },
@@ -294,54 +304,53 @@ const ATScatterplot = (props) => {
             return options;
         };
 
+        // update the chart with new infromation
         const updateChart = () => {
             const configuration = getChartConfiguration(transformApplicationsData());
 
             scatterplot.data = configuration.data;
             scatterplot.options = configuration.options;
+
+            // change the scatterplot data
             scatterplot.update();
         };
 
+        // student info has not loaded
         if (!student) {
             studentAPI.getStudent(localStorage.getItem('username')).then((result) => {
                 if (result.error) {
-                    setErrorAlert(true);
-                    setErrorMessage(result.error);
                     setStudent({});
                 }
                 if (result.ok) {
-                    setErrorAlert(false);
                     setStudent(result.student);
                 }
             });
+            // add the scatterplot if it has not been added
         } else if (!scatterplot && canvasRef && canvasRef.current) {
             const chartJS = new Chart(canvasRef.current, getChartConfiguration(transformApplicationsData()));
             setScatterplot(chartJS);
         } else if (scatterplot) {
+            // change in data
             updateChart();
         }
     }, [canvasRef, applications, averages, student, selectedHorizontalAxis, scatterplot]);
 
     return (
         <>
-            {' '}
-            {errorAlert
-                ? <Alert variant="danger">{errorMessage}</Alert>
-                : (
-                    <Container>
-                        <div className="chart-container">
-                            <canvas id="chart-canvas" ref={canvasRef} />
-                        </div>
-                        <Form className="text-center">
-                            <Form.Control size="sm" as="select" value={selectedHorizontalAxis} onChange={(e) => setSelectedHorizontalAxis(e.target.value)}>
-                                <option value="disabled" disabled>Select Horizontal Axis</option>
-                                <option value="SAT">SAT EBRW + SAT Math</option>
-                                <option value="ACT">ACT Composite</option>
-                                <option value="weighted">Weighted Tests</option>
-                            </Form.Control>
-                        </Form>
-                    </Container>
-                )}
+            <Container>
+                <div className="chart-container">
+                    <canvas id="chart-canvas" ref={canvasRef} />
+                </div>
+                <Form className="text-center">
+                    <Form.Control size="sm" as="select" value={selectedHorizontalAxis} onChange={(e) => setSelectedHorizontalAxis(e.target.value)}>
+                        <option value="disabled" disabled>Select Horizontal Axis</option>
+                        <option value="SAT">SAT EBRW + SAT Math</option>
+                        <option value="ACT">ACT Composite</option>
+                        <option value="weighted">Weighted Tests</option>
+                    </Form.Control>
+                </Form>
+            </Container>
+            {/* )} */}
         </>
     );
 };
