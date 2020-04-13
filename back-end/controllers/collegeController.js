@@ -341,12 +341,11 @@ exports.getAcceptedApplicationsByCollegeID = async (collegeID) => {
 exports.getApplicationsByCollegeID = async (collegeID, filters) => {
     let applications = [];
     // query parts
-    const userWhereClause = {};
     const applicationWhereClause = {
         isQuestionable: false,
     };
-    const highSchoolWhereClause = {};
-    let HighSchoolId = { [Op.or]: {} };
+    const userWhereClause = {
+    };
     let collegeClass = { [Op.or]: {} };
     let status = { [Op.or]: {} };
     const includeHS = {
@@ -361,19 +360,21 @@ exports.getApplicationsByCollegeID = async (collegeID, filters) => {
         };
     }
 
-
     // if there is a list of high schools, try
     if (filters.highSchools) {
         // allow null if lax
         if (filters.lax) {
-            HighSchoolId = {
-                [Op.or]: { [Op.eq]: null },
+            userWhereClause.HighSchoolId = {
+                [Op.or]: {
+                    [Op.eq]: null,
+                    [Op.in]: filters.highSchools[0],
+                },
             };
-            includeHS.required = false;
+        } else {
+            userWhereClause.HighSchoolId = {
+                [Op.in]: filters.highSchools,
+            };
         }
-        HighSchoolId[Op.or][Op.in] = filters.highSchools;
-        highSchoolWhereClause.HighSchoolId = HighSchoolId;
-        includeHS.where = highSchoolWhereClause;
     }
 
     // if there are statuses, add the list in
@@ -398,7 +399,6 @@ exports.getApplicationsByCollegeID = async (collegeID, filters) => {
     if (filters.upperCollegeClass || filters.lowerCollegeClass) {
         userWhereClause.collegeClass = collegeClass;
     }
-
     // complete query
     const query = {
         where: { CollegeId: collegeID },
@@ -419,6 +419,7 @@ exports.getApplicationsByCollegeID = async (collegeID, filters) => {
         }],
     };
 
+    // execute query
     try {
         applications = await models.College.findOne(query);
     } catch (error) {

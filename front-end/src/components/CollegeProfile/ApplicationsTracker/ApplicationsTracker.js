@@ -37,7 +37,6 @@ const ApplicationsTracker = (props) => {
             }
             if (results.ok) {
                 setErrorAlert(false);
-                console.log(results.applications);
                 setApplications(results.applications.sort((a, b) => (a.Application.status.localeCompare(b.Application.status))));
                 setAverages(results.averages);
             }
@@ -124,8 +123,7 @@ const ApplicationsTracker = (props) => {
                                     <p className="mb-0">
                                         <b>
                                             {applications.length}
-                                            {' '}
-matching students
+                                            {' matching students'}
                                         </b>
                                     </p>
                                     <Button variant="outline-primary" onClick={() => setListATView(!listATView)}>
