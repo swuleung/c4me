@@ -346,7 +346,7 @@ exports.getApplicationsByCollegeID = async (collegeID, filters) => {
     };
     const userWhereClause = {
     };
-    let collegeClass = { };
+    let collegeClass = {};
     let status = { [Op.or]: {} };
     const includeHS = {
         model: models.HighSchool,
@@ -390,15 +390,19 @@ exports.getApplicationsByCollegeID = async (collegeID, filters) => {
     }
 
     // handle the collegeClasses
-    if (filters.lowerCollegeClass) {
-        collegeClass[Op.and] = { [Op.gte]: filters.lowerCollegeClass };
+    if (filters.lowerCollegeClass && filters.upperCollegeClass) {
+        collegeClass = {
+            [Op.and]: {
+                [Op.gte]: filters.lowerCollegeClass,
+                [Op.lte]: filters.upperCollegeClass,
+            },
+        };
+    } else if (filters.lowerCollegeClass) {
+        collegeClass[Op.gte] = filters.lowerCollegeClass;
+    } else if (filters.upperCollegeClass) {
+        collegeClass[Op.lte] = filters.upperCollegeClass;
     }
-    if (filters.upperCollegeClass) {
-        collegeClass[Op.and] = { [Op.lte]: filters.upperCollegeClass };
-    }
-    if (filters.upperCollegeClass || filters.lowerCollegeClass) {
-        userWhereClause.collegeClass = collegeClass;
-    }
+
     // complete query
     const query = {
         where: { CollegeId: collegeID },
