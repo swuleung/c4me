@@ -146,7 +146,7 @@ exports.updateStudentHighSchool = async (student, highSchool) => {
         }
         try {
             // scrape new high school
-            scrapeHighSchoolData(
+            await scrapeHighSchoolData(
                 highSchool.Name,
                 highSchool.HighSchoolCity,
                 highSchool.HighSchoolState,
