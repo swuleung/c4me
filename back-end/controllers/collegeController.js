@@ -367,12 +367,12 @@ exports.getApplicationsByCollegeID = async (collegeID, filters) => {
             userWhereClause.HighSchoolId = {
                 [Op.or]: {
                     [Op.eq]: null,
-                    [Op.in]: filters.highSchools[0],
+                    [Op.in]: filters.highSchools,
                 },
             };
         } else {
             userWhereClause.HighSchoolId = {
-                [Op.in]: filters.highSchools[0],
+                [Op.in]: filters.highSchools,
             };
         }
     }
