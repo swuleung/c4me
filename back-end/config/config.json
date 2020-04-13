@@ -10,7 +10,7 @@
     "RANKING_URL": "https://www.timeshighereducation.com/rankings/united-states/2020#!/page/0/length/-1/sort_by/rank/sort_order/asc/cols/stats",
     "COLLEGEDATA_URL": "https://www.collegedata.com/college/",
     "COLLEGE_NAMES": "colleges.txt",
-    "NICHE_URL": "https://www.niche.com/k12/"
+    "NICHE_URL": "http://allv22.all.cs.stonybrook.edu/~stoller/cse416/niche/"
   },
   "test": {
     "username": "swuleung",
