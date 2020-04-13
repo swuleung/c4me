@@ -212,6 +212,7 @@ const EditProfile = (props) => {
             }
             if (result.ok) {
                 setErrorAlert(false);
+                result.highSchools.sort((a, b) => (a.Name.localeCompare(b.Name)));
                 result.highSchools.unshift({ Name: 'Other - New School' });
                 setHighSchools(result.highSchools);
             }

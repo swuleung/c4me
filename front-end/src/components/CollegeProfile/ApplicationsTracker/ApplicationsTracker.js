@@ -49,7 +49,7 @@ const ApplicationsTracker = (props) => {
             }
             if (result.ok) {
                 setErrorAlert(false);
-                setHighSchools(result.highSchools);
+                setHighSchools(result.highSchools.sort((a, b) => (a.Name.localeCompare(b.Name))));
             }
         });
     }, [CollegeId, filters]);
