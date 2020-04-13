@@ -37,10 +37,10 @@ const Search = (props) => {
 					<h1 className="card-title">Search For Colleges</h1>
 					<Row>
 						<Col xs="4">
-							Settings Filters
+							Settings Filters Placeholder
 						</Col>
 						<Col xs="8">
-							Results List
+							Results List Placeholder
 						</Col>
 					</Row>
 				</div>

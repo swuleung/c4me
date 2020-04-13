@@ -18,16 +18,19 @@ const westRegion = ["AK", "HI", "WA", "OR", "CA", "MT", "ID", "WY", "NV", "UT", 
 // {
 //     "region" : "northeast",
 //     "SATEBRWMin": 500,
-//     "SATEBRWMax": 600,
+//     "SATEBRWMax": 800,
 //     "SATMathMin" : 500,
-//     "SATMathMax" : 600,
+//     "SATMathMax" : 800,
 //     "name" : "University",
 //     "ACTCompositeMin" : 20,
-//     "ACTCompositeMax" : 30,
-//     "costInStateMax" : 10000,
+//     "ACTCompositeMax" : 35,
+//     "costInStateMax" : 50000,
 //     "costOutOfStateMax" : 50000,
 //     "major" : "math",
-//     "major2" : "computer"
+//     "major2" : "computer",
+//     "sortAttribute" : "name",
+//     "sortDirection" : "ASC",
+//     "filters" : "lax"
 // }
 exports.searchCollege = async ( filters ) => {
     let searchResults = {};
@@ -38,11 +41,23 @@ exports.searchCollege = async ( filters ) => {
 
         if ( filters.name )
             criteria.Name = { [Op.substring] : filters.name };
-        if ( filters.admissionRateMin && filters.admissionRateMax )
-            criteria.AdmissionRate = { [Op.between] : [ filters.admissionRateMin, filters.admissionRateMax] };
+        if ( filters.admissionRateMin && filters.admissionRateMax ) {
+            if ( filters.lax ) {
+                criteria.AdmissionRate = { [Op.or]: [{ [Op.eq]: null }, { [Op.between] : [ filters.admissionRateMin, filters.admissionRateMax] }] };
+            }
+            else {
+                criteria.AdmissionRate = { [Op.between] : [ filters.admissionRateMin, filters.admissionRateMax] };
+            }
+        }
         if ( filters.costInStateMax && filters.costOutOfStateMax ) {
-            criteria.CostOfAttendanceInState = { [Op.lte] : filters.costInStateMax };
-            criteria.CostOfAttendanceOutOfState = { [Op.lte] : filters.costOutOfStateMax };
+            if ( filters.lax ) {
+                criteria.CostOfAttendanceInState = { [Op.or]: [{ [Op.eq]: null }, { [Op.lte] : filters.costInStateMax } ] };
+                criteria.CostOfAttendanceOutOfState = { [Op.or]: [{ [Op.eq]: null }, { [Op.lte] : filters.costOutOfStateMax } ] };
+            }
+            else {
+                criteria.CostOfAttendanceInState = { [Op.lte] : filters.costInStateMax };
+                criteria.CostOfAttendanceOutOfState = { [Op.lte] : filters.costOutOfStateMax };
+            }
         }
         if ( filters.region ) {
             switch ( filters.region ) {
@@ -67,12 +82,30 @@ exports.searchCollege = async ( filters ) => {
             criteria.Ranking = { [Op.between] : [ filters.rankingMin, filters.rankingMax] };
         if ( filters.sizeMin && filters.sizeMax )
             criteria.Size = { [Op.between] : [ filters.sizeMin, filters.sizeMax] };
-        if ( filters.SATMathMin && filters.SATMathMax )
-            criteria.SATMath = { [Op.between] : [ filters.SATMathMin, filters.SATMathMax] };
-        if ( filters.SATEBRWMin && filters.SATEBRWMax )
-            criteria.SATEBRW = { [Op.between] : [ filters.SATEBRWMin, filters.SATEBRWMax] };
-        if ( filters.ACTCompositeMin && filters.ACTCompositeMax )
-            criteria.ACTComposite = { [Op.between] : [ filters.ACTCompositeMin, filters.ACTCompositeMax] };
+        if ( filters.SATMathMin && filters.SATMathMax ) {
+            if ( filters.lax ) {
+                criteria.SATMath = { [Op.or]: [{ [Op.eq]: null }, { [Op.between] : [ filters.SATMathMin, filters.SATMathMax] }] };
+            }
+            else {
+                criteria.SATMath = { [Op.between] : [ filters.SATMathMin, filters.SATMathMax] };
+            }
+        }
+        if ( filters.SATEBRWMin && filters.SATEBRWMax ) {
+            if ( filters.lax ) {
+                criteria.SATEBRW = { [Op.or]: [{ [Op.eq]: null }, { [Op.between] : [ filters.SATEBRWMin, filters.SATEBRWMax] }] };
+            }
+            else {
+                criteria.SATEBRW = { [Op.between] : [ filters.SATEBRWMin, filters.SATEBRWMax] };
+            }
+        }
+        if ( filters.ACTCompositeMin && filters.ACTCompositeMax ) {
+            if ( filters.lax ) {
+                criteria.ACTComposite = { [Op.or]: [{ [Op.eq]: null }, { [Op.between] : [ filters.ACTCompositeMin, filters.ACTCompositeMax] }] };
+            }
+            else {
+                criteria.ACTComposite = { [Op.between] : [ filters.ACTCompositeMin, filters.ACTCompositeMax] };
+            }
+        }
         
         // the major filter is a bit weird since their can be 1 or 2 majors.
         // I stuck with this solution for now.
@@ -108,6 +141,12 @@ exports.searchCollege = async ( filters ) => {
                 }
              }];
         }
+
+        // this part of the code is for sorting the search results
+        // sortAttribute is expected to be one of the attribute names of the college database
+        // sortDirection is expected to be either 'DESC' or 'ASC'
+        if ( filters.sortAttribute && filters.sortDirection )
+            query.order = [ [filters.sortAttribute, filters.sortDirection] ];
 
         query.raw = true;
         query.where = criteria;
