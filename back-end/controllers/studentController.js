@@ -125,8 +125,19 @@ exports.updateStudentHighSchool = async (student, highSchool) => {
     // newHighSchool is null
     if (!newHighSchool) {
         try {
+            const casedHS = { ...highSchool };
+            // fix string
+            casedHS.Name = casedHS.Name.toLowerCase().split(' ').map((s) => {
+                if (s !== 'and' && s !== 'of') return s.charAt(0).toUpperCase() + s.substring(1);
+                return s;
+            }).join(' ');
+            casedHS.HighSchoolCity = casedHS.HighSchoolCity.toLowerCase().split(' ').map((s) => {
+                if (s !== 'and' && s !== 'of') return s.charAt(0).toUpperCase() + s.substring(1);
+                return s;
+            }).join(' ');
+
             // make a new high school
-            newHighSchool = await models.HighSchool.create(highSchool);
+            newHighSchool = await models.HighSchool.create(casedHS);
         } catch (error) {
             return {
                 error: 'Unable to create high school',

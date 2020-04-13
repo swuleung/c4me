@@ -213,7 +213,6 @@ const EditProfile = (props) => {
             if (result.ok) {
                 setErrorAlert(false);
                 result.highSchools.sort((a, b) => (a.Name.localeCompare(b.Name)));
-                result.highSchools.unshift({ Name: 'Other - New School' });
                 setHighSchools(result.highSchools);
             }
         });
@@ -226,7 +225,10 @@ const EditProfile = (props) => {
     const getSuggestions = (value) => {
         const inputValue = value.trim().toLowerCase();
         const inputLength = inputValue.length;
-        const result = inputLength === 0 ? highSchools : highSchools.filter((hs) => hs.Name.toLowerCase().indexOf(inputValue.toLowerCase()) > -1);
+        const highSchoolSuggestions = [...highSchools];
+        const result = inputLength === 0 ? highSchoolSuggestions : highSchoolSuggestions.filter((hs) => hs.Name.toLowerCase().indexOf(inputValue.toLowerCase()) > -1);
+        // always add the other option
+        result.unshift({ Name: 'Other - New School' });
         return result;
     };
 
@@ -235,10 +237,7 @@ const EditProfile = (props) => {
         if (suggestion.Name && suggestion.HighSchoolCity && suggestion.HighSchoolState) {
             return (
                 <ListGroup.Item>
-                    {suggestion.Name.toLowerCase().split(' ').map((s) => {
-                        if (s !== 'and' && s !== 'of') return s.charAt(0).toUpperCase() + s.substring(1);
-                        return s;
-                    }).join(' ')}
+                    {suggestion.Name}
                     {' '}
                     <small>
                         {suggestion.HighSchoolCity}
