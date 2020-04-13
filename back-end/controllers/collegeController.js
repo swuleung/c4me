@@ -392,10 +392,13 @@ exports.getApplicationsByCollegeID = async (collegeID, filters) => {
     // handle the collegeClasses
     if (filters.lowerCollegeClass && filters.upperCollegeClass) {
         collegeClass[Op.or][Op.between] = [filters.lowerCollegeClass, filters.upperCollegeClass];
+        userWhereClause.collegeClass = collegeClass;
     } else if (filters.lowerCollegeClass) {
         collegeClass[Op.or][Op.gte] = filters.lowerCollegeClass;
+        userWhereClause.collegeClass = collegeClass;
     } else if (filters.upperCollegeClass) {
         collegeClass[Op.or][Op.lte] = filters.upperCollegeClass;
+        userWhereClause.collegeClass = collegeClass;
     }
 
     // complete query
