@@ -7,7 +7,7 @@ const student = {
      */
     editStudent: async function editStudent(username, studentInfo, highSchoolInfo) {
         try {
-            const student = await fetch(`/students/${username}/edit`, {
+            const stud = await fetch(`/students/${username}/edit`, {
                 method: 'POST',
                 credentials: 'include',
                 headers: {
@@ -16,7 +16,7 @@ const student = {
                 },
                 body: JSON.stringify({ student: studentInfo, highSchool: highSchoolInfo }),
             });
-            return await student.json();
+            return await stud.json();
         } catch (error) {
             return {
                 error: `${error.message} student data`,
@@ -29,7 +29,7 @@ const student = {
      */
     getStudent: async function getStudent(username) {
         try {
-            const student = await fetch(`/students/${username}`, {
+            const stud = await fetch(`/students/${username}`, {
                 method: 'GET',
                 credentials: 'include',
                 headers: {
@@ -37,7 +37,7 @@ const student = {
                     'Content-Type': 'application/json; charset=utf-8',
                 },
             });
-            return await student.json();
+            return await stud.json();
         } catch (error) {
             return {
                 error: `${error.message} student data`,
