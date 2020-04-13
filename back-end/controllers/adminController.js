@@ -204,10 +204,6 @@ exports.scrapeCollegeData = async () => {
                 preMajors = preMajors.concat(listChildren.trim().split('\n'));
             }
 
-            // close browser and pages since there is no more need
-            await page.close();
-            await browser.close();
-
             const majors = preMajors.map((m) => m.trim());
             // create the college object
             const collegeObject = {
@@ -264,6 +260,9 @@ exports.scrapeCollegeData = async () => {
                 });
             }
         }
+        // close browser and pages since there is no more need
+        await page.close();
+        await browser.close();
     } catch (error) {
         return {
             error: 'Unable to scrape data',
