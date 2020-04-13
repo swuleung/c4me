@@ -372,7 +372,7 @@ exports.getApplicationsByCollegeID = async (collegeID, filters) => {
             };
         } else {
             userWhereClause.HighSchoolId = {
-                [Op.in]: filters.highSchools,
+                [Op.in]: filters.highSchools[0],
             };
         }
     }

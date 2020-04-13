@@ -80,7 +80,7 @@ const ATList = (props) => {
                                 {highSchoolName}
                             </Col>
                             <Col className="text-right">
-                                {app.collegeClass ? `Class of${app.collegeClass}` : 'No college class provided'}
+                                {app.collegeClass ? `Class of ${app.collegeClass}` : 'No college class provided'}
                             </Col>
                         </Row>
                     </div>
