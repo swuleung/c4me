@@ -25,6 +25,14 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             defaultValue: null,
         },
+        GraduationRate: {
+            type: DataTypes.INTEGER,
+            validate: {
+                min: 0,
+                max: 100,
+            },
+            defaultValue: null,
+        },
         AverageSAT: {
             type: DataTypes.INTEGER,
             validate: {
