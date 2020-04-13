@@ -108,7 +108,7 @@ const ATScatterplot = (props) => {
             const denied = [];
             const other = [];
             let backgroundColor = '#1091b3';
-
+            let minGPA = 4;
             for (let applicationIndex = 0; applicationIndex < applications.length; applicationIndex += 1) {
                 const app = applications[applicationIndex];
                 if (localStorage.getItem('username') === app.username) {
@@ -123,6 +123,7 @@ const ATScatterplot = (props) => {
                     continue;
                 }
                 const GPA = parseFloat(app.GPA);
+                if (GPA !== 0 && GPA < minGPA) minGPA = GPA;
                 if (app.Application.status === 'accepted') {
                     if (selectedHorizontalAxis === 'SAT') {
                         accepted.push({
@@ -196,6 +197,7 @@ const ATScatterplot = (props) => {
                 you: you,
                 average: average,
                 backgroundColor: backgroundColor,
+                minGPA: minGPA,
             };
         };
 
@@ -263,8 +265,8 @@ const ATScatterplot = (props) => {
                             },
                             ticks: {
                                 stepSize: 0.2,
-                                suggestedMin: 0,
                                 suggestedMax: 4,
+                                suggestedMin: data.minGPA - 0.2 > 0 ? data.minGPA - 0.2 : 0,
                             },
                         }],
                     },
