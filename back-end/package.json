@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www",
+    "start": "node --tls-min-v1.0 ./bin/www",
     "test": "mocha --timeout 3000 --recursive tests/testIndex.js --reporter nyan --sort --exit"
   },
   "dependencies": {
