@@ -14,6 +14,7 @@ import StudentProfile from '../StudentProfile/StudentProfile';
 import EditProfile from '../EditProfile/EditProfile';
 import Admin from '../Admin/Admin';
 import CollegeProfile from '../CollegeProfile/CollegeProfile';
+import Search from '../Search/Search';
 import SimilarHighSchool from '../SimilarHighSchool/SimilarHighSchool';
 import userAPI from '../../services/api/user';
 import adminAPI from '../../services/api/admin';
@@ -67,7 +68,7 @@ function App() {
                                 <Navbar.Brand id="logo" as={Link} to="/">C4Me</Navbar.Brand>
                                 <Nav className="mr-auto">
                                     <Nav.Link as={Link} to="/">Home</Nav.Link>
-                                    <Nav.Link as={Link} to="/search-colleges">Search Colleges</Nav.Link>
+                                    <Nav.Link as={Link} to="/search">Search Colleges</Nav.Link>
                                     <Nav.Link as={Link} to="/find-similar-hs">Similar High Schools</Nav.Link>
                                 </Nav>
                                 <Nav className="ml-auto">
@@ -97,7 +98,9 @@ function App() {
                                 <Route exact path="/profile/:username" component={StudentProfile} />
                                 <Route exact path="/profile/:username/edit" username={username} render={(props) => (props.match.params.username === username ? <EditProfile {...props} /> : <Redirect to="/" />)} />
                                 <Route exact path="/colleges/:collegeID" component={CollegeProfile} />
+
                                 <Route exact path="/find-similar-hs" username={username} component={SimilarHighSchool} />
+
                                 <Route
                                     exact
                                     path="/admin"
