@@ -1,8 +1,8 @@
 const user = {
     /**
      * Creates an accounts with a POST
-     * @param {string} username 
-     * @param {string} password 
+     * @param {string} username
+     * @param {string} password
      */
     createAccount: async function createAccount(username, password) {
         try {
@@ -28,12 +28,12 @@ const user = {
 
     /**
      * Login user with a POST
-     * @param {string} username 
-     * @param {string} password 
+     * @param {string} username
+     * @param {string} password
      */
     login: async function login(username, password) {
         try {
-            let login = await fetch('/users/login', {
+            const loginReq = await fetch('/users/login', {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',
@@ -45,7 +45,7 @@ const user = {
                 }),
                 credentials: 'include',
             });
-            return await login.json();
+            return await loginReq.json();
         } catch (error) {
             return {
                 error: `Login failure ${error.message}`,
@@ -57,21 +57,21 @@ const user = {
      */
     logout: async function logout() {
         try {
-            let login = await fetch('/users/logout', {
+            const login = await fetch('/users/logout', {
                 method: 'GET',
                 headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json; charset=utf-8',
                 },
-                credentials: "include",
+                credentials: 'include',
             });
             return await login.json();
         } catch (error) {
             return {
                 error: `Logout failure ${error.message}`,
             };
-        };
-    }
-}
+        }
+    },
+};
 
 export default user;

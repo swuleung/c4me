@@ -18,7 +18,7 @@ const highSchool = {
                 error: `${error.message} high school data`,
             };
         }
-    }
+    },
 };
 
 export default highSchool;
