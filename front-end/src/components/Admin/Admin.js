@@ -18,6 +18,11 @@ const Admin = () => {
     const [disableDelete, setDisableDelete] = useState(false);
     const [disableProfile, setDisableProfile] = useState(false);
 
+    const toggleProfiles = (b) =>{
+        setDisableDelete(b);
+        setDisableProfile(b);
+    }
+    
     /**
      * Handle the button click for scrape college rankings
      */
@@ -98,7 +103,7 @@ const Admin = () => {
      * Handle button click for delete all students
      */
     const handleDeleteAllStudents = () => {
-        setDisableDelete(true);
+        toggleProfiles(true);
         setProgressAlert(true);
         setErrorAlert(false);
         setSuccessAlert(false);
@@ -115,7 +120,7 @@ const Admin = () => {
                 setSuccessAlert(true);
                 setSuccessMessage('Delete student profiles complete');
             }
-            setDisableDelete(false);
+            toggleProfiles(false);
         });
     };
 
@@ -123,7 +128,7 @@ const Admin = () => {
      * Handle the button click for import student profiles
      */
     const handleImportStudentProfiles = () => {
-        setDisableProfile(true);
+        toggleProfiles(true);
         setProgressAlert(true);
         setProgressAlert(true);
         setErrorAlert(false);
@@ -165,6 +170,7 @@ const Admin = () => {
                     setSuccessMessage('Student profile import complete.');
                 }
             });
+            toggleProfiles(false);
             setDisableProfile(false);
         });
     };
