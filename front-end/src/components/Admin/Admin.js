@@ -18,6 +18,11 @@ const Admin = () => {
     const [disableDelete, setDisableDelete] = useState(false);
     const [disableProfile, setDisableProfile] = useState(false);
 
+    const toggleProfiles = (b) =>{
+        setDisableDelete(b);
+        setDisableProfile(b);
+    }
+    
     /**
      * Handle the button click for scrape college rankings
      */
@@ -98,7 +103,7 @@ const Admin = () => {
      * Handle button click for delete all students
      */
     const handleDeleteAllStudents = () => {
-        setDisableDelete(true);
+        toggleProfiles(true);
         setProgressAlert(true);
         setErrorAlert(false);
         setSuccessAlert(false);
@@ -115,15 +120,15 @@ const Admin = () => {
                 setSuccessAlert(true);
                 setSuccessMessage('Delete student profiles complete');
             }
-            setDisableDelete(false);
+            toggleProfiles(false);
         });
     };
 
     /**
-     * Handle the button click for import student profiles  
+     * Handle the button click for import student profiles
      */
     const handleImportStudentProfiles = () => {
-        setDisableProfile(true);
+        toggleProfiles(true);
         setProgressAlert(true);
         setProgressAlert(true);
         setErrorAlert(false);
@@ -135,10 +140,14 @@ const Admin = () => {
                 setProgressAlert(false);
                 setErrorAlert(true);
                 errorString.push(<h4 key="importStudentError" className="alert-heading">{resultStudent.error}</h4>);
-                for (let i = 0; i < (resultStudent.reason).length; i += 1) {
-                    errorString.push(<p key={`importStudentError-${i}`}>{resultStudent.reason[i].error}</p>);
+                if (resultStudent.reason) {
+                    for (let i = 0; i < (resultStudent.reason).length; i += 1) {
+                        errorString.push(<p key={`importStudentError-${i}`}>{resultStudent.reason[i].error}</p>);
+                    }
+                    setErrorMessage(errorString);
+                } else {
+                    setErrorMessage('Process may have timed out');
                 }
-                setErrorMessage(errorString);
             }
             // import applications even with errors from import students
             admin.importStudentApplications().then((resultApp) => {
@@ -146,10 +155,14 @@ const Admin = () => {
                     setProgressAlert(false);
                     setErrorAlert(true);
                     errorString.push(<h4 key="importAppError" className="alert-heading">{resultApp.error}</h4>);
-                    for (let i = 0; i < (resultApp.reason).length; i += 1) {
-                        errorString.push(<p key={`importAppError-${i}`}>{resultApp.reason[i].error}</p>);
+                    if (resultApp.reason) {
+                        for (let i = 0; i < (resultApp.reason).length; i += 1) {
+                            errorString.push(<p key={`importAppError-${i}`}>{resultApp.reason[i].error}</p>);
+                        }
+                        setErrorMessage([...errorMessage, ...errorString]);
+                    } else {
+                        setErrorMessage('Process may have timed out');
                     }
-                    setErrorMessage([...errorMessage, ...errorString]);
                 }
                 if (resultApp.ok) {
                     setProgressAlert(false);
@@ -157,6 +170,7 @@ const Admin = () => {
                     setSuccessMessage('Student profile import complete.');
                 }
             });
+            toggleProfiles(false);
             setDisableProfile(false);
         });
     };

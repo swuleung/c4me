@@ -47,14 +47,14 @@ const StudentProfile = (props) => {
             if (result.ok) {
                 setErrorAlert(false);
                 setStudent(result.student);
-                if(result.student.HighSchool) {
+                if (result.student.HighSchool) {
                     setHighSchool(result.student.HighSchool);
                 } else {
                     setHighSchool({
                         Name: null,
                         HighSchoolCity: null,
                         HighSchoolState: null,
-                    })
+                    });
                 }
             }
         });
@@ -97,10 +97,7 @@ const StudentProfile = (props) => {
                             </Row>
                             <p>
                             High School:&nbsp;
-                                {highSchool.Name ? highSchool.Name.toLowerCase().split(' ').map((s) => {
-                                    if (s !== 'and' && s!== 'of') return s.charAt(0).toUpperCase() + s.substring(1);
-                                    return s;
-                                }).join(' ') : 'No high school provided'}
+                                {highSchool.Name ? highSchool.Name : 'No high school provided'}
                             </p>
                             <p>
                             High School City:&nbsp;

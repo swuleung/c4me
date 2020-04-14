@@ -9,7 +9,6 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuestionCircle } from '@fortawesome/free-regular-svg-icons';
 import Autosuggest from 'react-autosuggest';
-
 import './FilterAT.scss';
 
 const FilterAT = (props) => {
@@ -116,7 +115,7 @@ const FilterAT = (props) => {
         filters.statuses = selectedStatuses;
 
         if (highSchoolList.length) {
-            filters.highSchools = [highSchoolList.map((hs) => hs.HighSchoolId)];
+            filters.highSchools = highSchoolList.map((hs) => hs.HighSchoolId);
         }
         // pass this up to ApplicationsTracker
         handleFilterChange(filters);

@@ -8,17 +8,17 @@
     "operatorsAliases": 0
   },
   "test": {
-    "username": "swuleung",
-    "password": "111065204",
-    "database": "swuleung",
+    "username": "jaquach",
+    "password": "111019384",
+    "database": "jaquach",
     "host": "mysql4.cs.stonybrook.edu",
     "dialect": "mysql",
     "operatorsAliases": 0
   },
   "production": {
-    "username": "swuleung",
-    "password": "111065204",
-    "database": "swuleung",
+    "username": "jaquach",
+    "password": "111019384",
+    "database": "jaquach",
     "host": "mysql4.cs.stonybrook.edu",
     "dialect": "mysql",
     "operatorsAliases": 0

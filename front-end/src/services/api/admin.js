@@ -24,7 +24,7 @@ const admin = {
      */
     deleteAllStudents: async function deleteAllStudents() {
         try {
-            const result = fetch('/admin/deleteStudentProfiles', {
+            const result = await fetch('/admin/deleteStudentProfiles', {
                 method: 'DELETE',
                 credentials: 'include',
                 headers: {

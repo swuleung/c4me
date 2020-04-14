@@ -58,22 +58,6 @@ describe('Scrape college information', () => {
                         SATPhys: 434,
                         APPassed: 3,
                         isAdmin: false,
-                        HighSchool: {
-                            ACTEnglish: 30,
-                            ACTMath: 29,
-                            ACTReading: 30,
-                            ACTScience: 29,
-                            AverageACT: 30,
-                            AverageSAT: 1320,
-                            HighSchoolCity: 'Ridgewood',
-                            HighSchoolId: 2,
-                            HighSchoolState: 'NJ',
-                            Name: 'Ridgewood High School',
-                            NicheAcademicScore: 'A+',
-                            SATEBRW: 650,
-                            SATMath: 670,
-                        },
-                        HighSchoolId: 2,
                     });
                     done();
                 });
@@ -110,22 +94,6 @@ describe('Scrape college information', () => {
                         SATPhys: 434,
                         APPassed: 3,
                         isAdmin: false,
-                        HighSchool: {
-                            ACTEnglish: 30,
-                            ACTMath: 29,
-                            ACTReading: 30,
-                            ACTScience: 29,
-                            AverageACT: 30,
-                            AverageSAT: 1320,
-                            HighSchoolCity: 'Ridgewood',
-                            HighSchoolId: 2,
-                            HighSchoolState: 'NJ',
-                            Name: 'Ridgewood High School',
-                            NicheAcademicScore: 'A+',
-                            SATEBRW: 650,
-                            SATMath: 670,
-                        },
-                        HighSchoolId: 2,
                     });
                     done();
                 });

@@ -32,7 +32,7 @@ const westRegion = ["AK", "HI", "WA", "OR", "CA", "MT", "ID", "WY", "NV", "UT", 
 //     "sizeMax" : 50000,
 //     "sortAttribute" : "name",
 //     "sortDirection" : "ASC",
-//     "lax": "true"
+//     "lax" : "True"
 // }
 exports.searchCollege = async ( filters ) => {
     let searchResults = {};

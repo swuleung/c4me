@@ -124,9 +124,20 @@ exports.updateStudentHighSchool = async (student, highSchool) => {
     }
     // newHighSchool is null
     if (!newHighSchool) {
+        const casedHS = { ...highSchool };
+        // fix string to uppercase each word
+        casedHS.Name = casedHS.Name.toLowerCase().split(' ').map((s) => {
+            if (s !== 'and' && s !== 'of') return s.charAt(0).toUpperCase() + s.substring(1);
+            return s;
+        }).join(' ');
+        casedHS.HighSchoolCity = casedHS.HighSchoolCity.toLowerCase().split(' ').map((s) => {
+            if (s !== 'and' && s !== 'of') return s.charAt(0).toUpperCase() + s.substring(1);
+            return s;
+        }).join(' ');
+
         try {
             // make a new high school
-            newHighSchool = await models.HighSchool.create(highSchool);
+            newHighSchool = await models.HighSchool.create(casedHS);
         } catch (error) {
             return {
                 error: 'Unable to create high school',
@@ -135,10 +146,10 @@ exports.updateStudentHighSchool = async (student, highSchool) => {
         }
         try {
             // scrape new high school
-            scrapeHighSchoolData(
-                highSchool.Name,
-                highSchool.HighSchoolCity,
-                highSchool.HighSchoolState,
+            await scrapeHighSchoolData(
+                casedHS.Name,
+                casedHS.HighSchoolCity,
+                casedHS.HighSchoolState,
             );
         } catch (error) {
             return {

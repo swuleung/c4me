@@ -135,7 +135,7 @@ exports.scrapeHighSchoolData = async (highSchoolName, highSchoolCity, highSchool
     // read from path in paths.json
     const nicheURL = getPathConfig().NICHE_URL;
     // takes inputted high school data and creates url
-    const nicheHSURL = `${nicheURL}${highSchoolName.replace('&', 'and').replace(/[^A-Za-z0-9_ ]/g, '').replace('and', '-and-')}-${highSchoolCity}-${highSchoolState}/academics/`.replace(/\s+/g, '-').toLowerCase();
+    const nicheHSURL = `${nicheURL}${highSchoolName.replace('&', '-and-').replace(/[^A-Za-z0-9_\- ]/g, '')}-${highSchoolCity}-${highSchoolState}/academics/`.replace(/\s+/g, '-').toLowerCase();
     console.log(nicheHSURL);
 
     // sets the user agent for puppeteer
@@ -144,28 +144,45 @@ exports.scrapeHighSchoolData = async (highSchoolName, highSchoolCity, highSchool
 
     // finds elements for data values and takes the text values
     const nicheAcademicScoreEl = await page.$x('//div[contains(@class, \'niche__grade--section\')]');
-    const nicheAcademicScore = await page.evaluate((el) => el.textContent, nicheAcademicScoreEl[0]);
-
-    const graduationRateEl =  await page.$x('//div[contains(., \'Average Graduation Rate\')]/following-sibling::div[@class=\'scalar__value\']');
-    const graduationRate = parseInt(await page.evaluate((el) => el.textContent, graduationRateEl[0]), 10);
-
+    const nicheAcademicScore = nicheAcademicScoreEl.length
+        ? await page.evaluate((el) => el.textContent, nicheAcademicScoreEl[0])
+        : null;
+    const graduationRateEl = await page.$x('//div[contains(., \'Average Graduation Rate\')]/following-sibling::div[@class=\'scalar__value\']');
+    const graduationRate = graduationRateEl.length
+        ? parseInt(await page.evaluate((el) => el.textContent, graduationRateEl[0]), 10)
+        : null;
     const averageSATEl = await page.$x('//div[contains(., \'Average SAT\')]/div[@class=\'scalar__value\']/text()[1]');
-    const averageSAT = await page.evaluate((el) => el.textContent, averageSATEl[0]);
+    const averageSAT = averageSATEl.length
+        ? await page.evaluate((el) => el.textContent, averageSATEl[0])
+        : null;
     const SATMathEl = await page.$x('//div[contains(., \'Average SAT\')]/div[contains(., \'Math\')]/div[@class=\'scalar__value\']');
-    const SATMath = await page.evaluate((el) => el.textContent, SATMathEl[0]);
+    const SATMath = SATMathEl.length
+        ? await page.evaluate((el) => el.textContent, SATMathEl[0])
+        : null;
     const SATEBRWEl = await page.$x('//div[contains(., \'Average SAT\')]/div[contains(., \'Verbal\')]/div[@class=\'scalar__value\']');
-    const SATEBRW = await page.evaluate((el) => el.textContent, SATEBRWEl[0]);
-
+    const SATEBRW = SATEBRWEl.length
+        ? await page.evaluate((el) => el.textContent, SATEBRWEl[0])
+        : null;
     const averageACTEl = await page.$x('//div[contains(., \'Average ACT\')]/div[@class=\'scalar__value\']/text()[1]');
-    const averageACT = await page.evaluate((el) => el.textContent, averageACTEl[0]);
+    const averageACT = averageACTEl.length
+        ? await page.evaluate((el) => el.textContent, averageACTEl[0])
+        : null;
     const ACTMathEl = await page.$x('//div[contains(., \'Average ACT\')]/div[contains(., \'Math\')]/div[@class=\'scalar__value\']');
-    const ACTMath = await page.evaluate((el) => el.textContent, ACTMathEl[0]);
+    const ACTMath = ACTMathEl.length
+        ? await page.evaluate((el) => el.textContent, ACTMathEl[0])
+        : null;
     const ACTReadingEl = await page.$x('//div[contains(., \'Average ACT\')]/div[contains(., \'Reading\')]/div[@class=\'scalar__value\']');
-    const ACTReading = await page.evaluate((el) => el.textContent, ACTReadingEl[0]);
+    const ACTReading = ACTReadingEl.length
+        ? await page.evaluate((el) => el.textContent, ACTReadingEl[0])
+        : null;
     const ACTEnglishEl = await page.$x('//div[contains(., \'Average ACT\')]/div[contains(., \'English\')]/div[@class=\'scalar__value\']');
-    const ACTEnglish = await page.evaluate((el) => el.textContent, ACTEnglishEl[0]);
+    const ACTEnglish = ACTEnglishEl.length
+        ? await page.evaluate((el) => el.textContent, ACTEnglishEl[0])
+        : null;
     const ACTScienceEl = await page.$x('//div[contains(., \'Average ACT\')]/div[contains(., \'Science\')]/div[@class=\'scalar__value\']');
-    const ACTScience = await page.evaluate((el) => el.textContent, ACTScienceEl[0]);
+    const ACTScience = ACTScienceEl.length
+        ? await page.evaluate((el) => el.textContent, ACTScienceEl[0])
+        : null;
 
     // creates the high school object
     const highSchoolObject = {
