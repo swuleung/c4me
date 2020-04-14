@@ -220,7 +220,7 @@ router.get('/verifyAdmin', async (req, res) => {
  *  "highSchoolState": "NJ"
  * }
  */
-router.get('/scrapeHighSchool', async (req, res) => {
+router.post('/scrapeHighSchool', async (req, res) => {
     // authentication check
     if (!req.cookies.access_token) {
         res.status(400).send({ status: 'error', error: 'No token provided' });
