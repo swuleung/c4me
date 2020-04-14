@@ -147,6 +147,10 @@ exports.scrapeHighSchoolData = async (highSchoolName, highSchoolCity, highSchool
     const nicheAcademicScore = nicheAcademicScoreEl.length
         ? await page.evaluate((el) => el.textContent, nicheAcademicScoreEl[0])
         : null;
+    const graduationRateEl = await page.$x('//div[contains(., \'Average Graduation Rate\')]/following-sibling::div[@class=\'scalar__value\']');
+    const graduationRate = graduationRateEl.length
+        ? parseInt(await page.evaluate((el) => el.textContent, graduationRateEl[0]), 10)
+        : null;
     const averageSATEl = await page.$x('//div[contains(., \'Average SAT\')]/div[@class=\'scalar__value\']/text()[1]');
     const averageSAT = averageSATEl.length
         ? await page.evaluate((el) => el.textContent, averageSATEl[0])
@@ -186,6 +190,7 @@ exports.scrapeHighSchoolData = async (highSchoolName, highSchoolCity, highSchool
         HighSchoolCity: highSchoolCity,
         HighSchoolState: highSchoolState,
         NicheAcademicScore: nicheAcademicScore,
+        GraduationRate: graduationRate,
         AverageSAT: averageSAT,
         SATMath: SATMath,
         SATEBRW: SATEBRW,
