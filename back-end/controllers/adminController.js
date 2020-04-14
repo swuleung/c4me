@@ -518,10 +518,10 @@ exports.getApplications = async () => {
    try {
         allApps = await models.Application.findAll({
             where: {
-                [sequelize.or]: [
-                  { status: accepted },
+                //[sequelize.or]: [
+                  /*{*/ status: accepted /*},
                   { status: denied }
-                ]
+                ]*/
               }
         }); 
    } catch (error){
@@ -531,7 +531,7 @@ exports.getApplications = async () => {
              status: error.status
         }
    }
-   if (allApps){
+   if (allApps.length > 0){
        return { 
             ok: 'Found Accepted / Denied Applications',
             applications: allApps.toJSON()
