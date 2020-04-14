@@ -1,20 +1,25 @@
+/**
+ * College Profile page with Overview & Applications Tracker
+ */
 import React, { useState, useEffect } from 'react';
 import {
     Alert, Container, Tabs, Tab,
 } from '../../../node_modules/react-bootstrap';
 import Overview from './Overview/Overview';
 import ApplicationsTracker from './ApplicationsTracker/ApplicationsTracker';
-import { getCollegeByID } from '../../services/api/college';
+import collegeAPI from '../../services/api/college';
 
 const CollegeProfile = (props) => {
+    // state variables
     const [errorAlert, setErrorAlert] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [college, setCollege] = useState({});
     const { match } = props;
     const { collegeID } = match.params;
 
+    // Get the college information
     useEffect(() => {
-        getCollegeByID(collegeID).then((results) => {
+        collegeAPI.getCollegeByID(collegeID).then((results) => {
             if (results.error) {
                 setErrorAlert(true);
                 setErrorMessage(results.error);
@@ -26,6 +31,7 @@ const CollegeProfile = (props) => {
         });
     }, [collegeID]);
 
+    // Display the college information
     return (
         <>
             {' '}
@@ -42,7 +48,7 @@ const CollegeProfile = (props) => {
                             ) : college.InstitutionType === '3' ? (
                                 'Private for-profit'
                             ) : 'Unknown type of school'}
-                            {' '}in{' '}
+                            {' in '}
                             {college.Location}
                         </h2>
                         <Tabs defaultActiveKey="overview">

@@ -1,0 +1,11 @@
+userid,password,residence_state,high_school_name,high_school_city,high_school_state,GPA,college_class,major_1,major_2,SAT_math,SAT_EBRW,ACT_English,ACT_math,ACT_reading,ACT_science,ACT_composite,SAT_literature,SAT_US_hist,SAT_world_hist,SAT_math_I,SAT_math_II,SAT_eco_bio,SAT_mol_bio,SAT_chemistry,SAT_physics,num_AP_passed
+gmarkel0,didactic,IA,Brooklyn technical high school,Brooklyn,NY,3.08,2022,English,Creative Writing,316,733,8,14,29,36,33,370,386,284,546,645,527,408,237,586,2
+tlivzey1,projection,MA,academic magnet high school,nOrth charleston,SC,3.65,2025,Mathematics,Creative Writing,466,240,25,10,19,1,35,510,281,768,325,650,487,741,643,755,9
+kmustin2,contextually-based,TX,academy for information technology,scotch plains,NJ,2.49,2025,Biology,Computer Engineering,528,316,7,22,23,29,24,493,689,528,437,600,291,548,683,424,8
+mkubasiewicz3,Reduced,DC,james madison high school,vienna,VA,3.23,2024,Mathematics,Computer Engineering,518,535,15,13,29,3,13,494,666,513,228,766,583,759,452,462,4
+ddelcastel4,zero tolerance,AZ,whitney high school,cerritos,CA,3.0,2023,English,Sociology,331,642,33,3,2,23,20,679,351,301,318,780,628,319,562,553,6
+mrickertsen5,responsive,CA,Brooklyn technical high school,Brooklyn,NY,3.94,2023,Biology,Psychology,504,622,36,15,12,18,27,767,209,516,754,226,275,397,763,316,9
+amccool6,fault-tolerant,CO,academic magnet high school,nOrth charleston,SC,3.96,2026,Spanish,Psychology,646,667,17,23,19,23,15,597,307,515,425,411,706,560,415,645,9
+mmcall7,exuding,LA,academy for information technology,scotch plains,NJ,3.0,2022,Biology,Computer Engineering,475,603,1,13,30,10,13,545,529,215,411,448,283,473,782,676,4
+agehricke8,array,TX,james madison high school,vienna,VA,2.98,2022,Computer Science,Computer Engineering,739,348,19,22,15,1,9,731,350,293,602,718,604,659,580,464,5
+hbarrack9,Open-source,KY,whitney high school,cerritos,CA,3.0,2023,Computer Science,Computer Engineering,234,570,21,17,17,5,11,614,690,735,408,781,266,447,546,345,10
