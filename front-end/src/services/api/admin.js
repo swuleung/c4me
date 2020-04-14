@@ -4,7 +4,7 @@ const admin = {
      */
     scrapeCollegeRanking: async function scrapeCollegeRanking() {
         try {
-            const result = await fetch('http://localhost:9000/admin/scrapeCollegeRanking', {
+            const result = await fetch('/admin/scrapeCollegeRanking', {
                 method: 'GET',
                 credentials: 'include',
                 headers: {
@@ -24,7 +24,7 @@ const admin = {
      */
     deleteAllStudents: async function deleteAllStudents() {
         try {
-            const result = await fetch('http://localhost:9000/admin/deleteStudentProfiles', {
+            const result = await fetch('/admin/deleteStudentProfiles', {
                 method: 'DELETE',
                 credentials: 'include',
                 headers: {
@@ -44,7 +44,7 @@ const admin = {
      */
     scrapeCollegeData: async function scrapeCollegeData() {
         try {
-            const result = await fetch('http://localhost:9000/admin/scrapeCollegeData', {
+            const result = await fetch('/admin/scrapeCollegeData', {
                 method: 'GET',
                 credentials: 'include',
                 headers: {
@@ -64,7 +64,7 @@ const admin = {
      */
     importCollegeScorecard: async function importCollegeScorecard() {
         try {
-            const result = await fetch('http://localhost:9000/admin/importCollegeScorecard', {
+            const result = await fetch('/admin/importCollegeScorecard', {
                 method: 'GET',
                 credentials: 'include',
                 headers: {
@@ -84,7 +84,7 @@ const admin = {
      */
     importStudents: async function importStudents() {
         try {
-            const result = await fetch('http://localhost:9000/admin/importStudents', {
+            const result = await fetch('/admin/importStudents', {
                 method: 'GET',
                 credentials: 'include',
                 headers: {
@@ -104,7 +104,7 @@ const admin = {
      */
     importStudentApplications: async function importStudentApplications() {
         try {
-            const result = await fetch('http://localhost:9000/admin/importApplications', {
+            const result = await fetch('/admin/importApplications', {
                 method: 'GET',
                 credentials: 'include',
                 headers: {
