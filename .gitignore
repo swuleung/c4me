@@ -2,8 +2,5 @@
 .DS_Store
 node_modules
 collegeScorecard.csv
-<<<<<<< HEAD
 config.json
-=======
 public
->>>>>>> 516893729c02f77f99b5144a115e5e23b2dbe22d
