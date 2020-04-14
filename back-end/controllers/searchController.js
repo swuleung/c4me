@@ -6,6 +6,8 @@ const southRegion = ["DE", "MD", "WV", "VA", "NC", "SC", "GA", "FL", "KY", "TN",
 const midwestRegion = ["OH", "MI", "IN", "WI", "IL", "MN", "IA", "MO", "ND", "SD", "NE", "KS"]; //12 statesa=
 const westRegion = ["AK", "HI", "WA", "OR", "CA", "MT", "ID", "WY", "NV", "UT", "CO", "AZ", "NM"]; //13 states
 
+
+
 //  Parameters: filters
 //  Filters is an object. 
 //  The keys in this object will be the filter names
@@ -15,15 +17,15 @@ const westRegion = ["AK", "HI", "WA", "OR", "CA", "MT", "ID", "WY", "NV", "UT", 
 //  An example filter:
 // {
 //     "region" : "west",
-//     "SATEBRWMin": 0,
+//     "SATEBRWMin": 500,
 //     "SATEBRWMax": 800,
-//     "SATMathMin" : 0,
+//     "SATMathMin" : 500,
 //     "SATMathMax" : 800,
 //     "name" : "University",
-//     "ACTCompositeMin" : 0,
+//     "ACTCompositeMin" : 20,
 //     "ACTCompositeMax" : 35,
-//     "costInStateMax" : 100000,
-//     "costOutOfStateMax" : 100000,
+//     "costInStateMax" : 50000,
+//     "costOutOfStateMax" : 50000,
 //     "major" : "math",
 //     "major2" : "computer",
 //     "rankingMin" : 0,
@@ -32,7 +34,7 @@ const westRegion = ["AK", "HI", "WA", "OR", "CA", "MT", "ID", "WY", "NV", "UT", 
 //     "sizeMax" : 50000,
 //     "sortAttribute" : "name",
 //     "sortDirection" : "ASC",
-//     "lax": "true"
+//     "lax" : "True"
 // }
 exports.searchCollege = async ( filters ) => {
     let searchResults = {};
@@ -80,14 +82,8 @@ exports.searchCollege = async ( filters ) => {
                     break;
             }
         }
-        if ( filters.rankingMin && filters.rankingMax ) {
-            if ( filters.lax ) {
-                criteria.Ranking = { [Op.or]: [{ [Op.eq]: null }, { [Op.between] : [ filters.rankingMin, filters.rankingMax] }] };
-            }
-            else {
-                criteria.Ranking = { [Op.between] : [ filters.rankingMin, filters.rankingMax] };
-            }
-        }
+        if ( filters.rankingMin && filters.rankingMax )
+            criteria.Ranking = { [Op.between] : [ filters.rankingMin, filters.rankingMax] };
         if ( filters.sizeMin && filters.sizeMax )
             criteria.Size = { [Op.between] : [ filters.sizeMin, filters.sizeMax] };
         if ( filters.SATMathMin && filters.SATMathMax ) {
