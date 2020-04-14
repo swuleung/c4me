@@ -4,6 +4,7 @@ const router = express.Router();
 const authentication = require('../utils/auth');
 const adminController = require('../controllers/adminController');
 const collegeController = require('../controllers/collegeController');
+const { scrapeHighSchoolData } = require('../controllers/highschoolController');
 
 /**
  * Scrape the college rankings from THE
@@ -207,6 +208,34 @@ router.get('/verifyAdmin', async (req, res) => {
             ok: 'Successfaully checked admin',
             isAdmin: result,
         });
+    }
+});
+
+/**
+ * Scrape High School
+ * POST request with body
+ * {
+ *  "highSchoolName": "academy for information technology",
+ *  "highSchoolCity": "scotch plains",
+ *  "highSchoolState": "NJ"
+ * }
+ */
+router.post('/scrapeHighSchool', async (req, res) => {
+    // authentication check
+    if (!req.cookies.access_token) {
+        res.status(400).send({ status: 'error', error: 'No token provided' });
+    } else {
+        const authorized = await authentication.validateJWT(req.cookies.access_token);
+        if (!authorized.username) {
+            res.clearCookie('access_token');
+            res.status(400).send(authorized);
+            // verify that user is an admin
+        } else if (!adminController.checkAdmin(authorized.username)) {
+            res.status(400).send(authorized);
+        } else {
+            const result = await scrapeHighSchoolData(req.body.highSchoolName, req.body.highSchoolCity, req.body.highSchoolState);
+            res.send(result);
+        }
     }
 });
 module.exports = router;

@@ -367,12 +367,12 @@ exports.getApplicationsByCollegeID = async (collegeID, filters) => {
             userWhereClause.HighSchoolId = {
                 [Op.or]: {
                     [Op.eq]: null,
-                    [Op.in]: filters.highSchools[0],
+                    [Op.in]: filters.highSchools,
                 },
             };
         } else {
             userWhereClause.HighSchoolId = {
-                [Op.in]: filters.highSchools[0],
+                [Op.in]: filters.highSchools,
             };
         }
     }
@@ -390,15 +390,17 @@ exports.getApplicationsByCollegeID = async (collegeID, filters) => {
     }
 
     // handle the collegeClasses
-    if (filters.lowerCollegeClass) {
-        collegeClass[Op.or][Op.and] = { [Op.gte]: filters.lowerCollegeClass };
-    }
-    if (filters.upperCollegeClass) {
-        collegeClass[Op.or][Op.and] = { [Op.lte]: filters.upperCollegeClass };
-    }
-    if (filters.upperCollegeClass || filters.lowerCollegeClass) {
+    if (filters.lowerCollegeClass && filters.upperCollegeClass) {
+        collegeClass[Op.or][Op.between] = [filters.lowerCollegeClass, filters.upperCollegeClass];
+        userWhereClause.collegeClass = collegeClass;
+    } else if (filters.lowerCollegeClass) {
+        collegeClass[Op.or][Op.gte] = filters.lowerCollegeClass;
+        userWhereClause.collegeClass = collegeClass;
+    } else if (filters.upperCollegeClass) {
+        collegeClass[Op.or][Op.lte] = filters.upperCollegeClass;
         userWhereClause.collegeClass = collegeClass;
     }
+
     // complete query
     const query = {
         where: { CollegeId: collegeID },

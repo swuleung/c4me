@@ -120,7 +120,7 @@ const Admin = () => {
     };
 
     /**
-     * Handle the button click for import student profiles  
+     * Handle the button click for import student profiles
      */
     const handleImportStudentProfiles = () => {
         setDisableProfile(true);
@@ -135,10 +135,14 @@ const Admin = () => {
                 setProgressAlert(false);
                 setErrorAlert(true);
                 errorString.push(<h4 key="importStudentError" className="alert-heading">{resultStudent.error}</h4>);
-                for (let i = 0; i < (resultStudent.reason).length; i += 1) {
-                    errorString.push(<p key={`importStudentError-${i}`}>{resultStudent.reason[i].error}</p>);
+                if (resultStudent.reason) {
+                    for (let i = 0; i < (resultStudent.reason).length; i += 1) {
+                        errorString.push(<p key={`importStudentError-${i}`}>{resultStudent.reason[i].error}</p>);
+                    }
+                    setErrorMessage(errorString);
+                } else {
+                    setErrorMessage('Process may have timed out');
                 }
-                setErrorMessage(errorString);
             }
             // import applications even with errors from import students
             admin.importStudentApplications().then((resultApp) => {
@@ -146,10 +150,14 @@ const Admin = () => {
                     setProgressAlert(false);
                     setErrorAlert(true);
                     errorString.push(<h4 key="importAppError" className="alert-heading">{resultApp.error}</h4>);
-                    for (let i = 0; i < (resultApp.reason).length; i += 1) {
-                        errorString.push(<p key={`importAppError-${i}`}>{resultApp.reason[i].error}</p>);
+                    if (resultApp.reason) {
+                        for (let i = 0; i < (resultApp.reason).length; i += 1) {
+                            errorString.push(<p key={`importAppError-${i}`}>{resultApp.reason[i].error}</p>);
+                        }
+                        setErrorMessage([...errorMessage, ...errorString]);
+                    } else {
+                        setErrorMessage('Process may have timed out');
                     }
-                    setErrorMessage([...errorMessage, ...errorString]);
                 }
                 if (resultApp.ok) {
                     setProgressAlert(false);

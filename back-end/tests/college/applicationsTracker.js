@@ -59,7 +59,7 @@ describe('Applications Tracker', () => {
             })
             .end((error, response) => {
                 response.should.have.status(200);
-                expect(response.body.applications).to.deep.equal([
+                expect(response.body.applications).to.shallowDeepEqual([
                     {
                         username: 'mochaImport',
                         isAdmin: false,
@@ -81,7 +81,6 @@ describe('Applications Tracker', () => {
                         SATMol: 600,
                         SATChem: 233,
                         SATPhys: 434,
-                        HighSchoolId: 2,
                         Application: {
                             college: SBUCollegeId,
                             status: 'accepted',
@@ -176,7 +175,8 @@ describe('Applications Tracker', () => {
             })
             .end((error, response) => {
                 response.should.have.status(200);
-                expect(response.body.applications).to.deep.equal([
+                expect(response.body.applications.length).to.equal(1);
+                expect(response.body.applications).to.shallowDeepEqual([
                     {
                         username: 'mochaImport',
                         isAdmin: false,
@@ -198,7 +198,6 @@ describe('Applications Tracker', () => {
                         SATMol: 600,
                         SATChem: 233,
                         SATPhys: 434,
-                        HighSchoolId: 2,
                         Application: {
                             college: SBUCollegeId,
                             status: 'accepted',

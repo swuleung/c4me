@@ -27,3 +27,9 @@ td.delete-icon {
     font-size: 24px;
   }
 }
+
+.react-autosuggest__suggestions-container
+{
+  max-height: 200px;
+  overflow-y: auto;
+}
