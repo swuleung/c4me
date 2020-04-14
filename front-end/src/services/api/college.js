@@ -46,7 +46,7 @@ const college = {
      */
     getMajorsByCollegeID: async function getMajorsByCollegeID(collegeID) {
         try {
-            const majors = await fetch(`http://localhost:9000/colleges/id/${collegeID}/majors`, {
+            const majors = await fetch(`/colleges/id/${collegeID}/majors`, {
                 method: 'GET',
                 credentials: 'include',
                 headers: {

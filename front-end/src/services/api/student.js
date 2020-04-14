@@ -51,7 +51,7 @@ const student = {
      */
     editStudentApplications: async function editStudentApplications(username, applications) {
         try {
-            const newApplications = await fetch(`http://localhost:9000/students/${username}/applications/edit`, {
+            const newApplications = await fetch(`/students/${username}/applications/edit`, {
                 method: 'POST',
                 credentials: 'include',
                 headers: {
@@ -73,7 +73,7 @@ const student = {
      */
     getStudentApplications: async function getStudentApplications(username) {
         try {
-            const applications = await fetch(`http://localhost:9000/students/${username}/applications`, {
+            const applications = await fetch(`/students/${username}/applications`, {
                 method: 'GET',
                 credentials: 'include',
                 headers: {

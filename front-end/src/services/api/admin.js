@@ -124,7 +124,7 @@ const admin = {
      */
     verifyAdmin: async function verifyAdmin() {
         try {
-            const result = await fetch('http://localhost:9000/admin/verifyAdmin', {
+            const result = await fetch('/admin/verifyAdmin', {
                 method: 'GET',
                 credentials: 'include',
                 headers: {

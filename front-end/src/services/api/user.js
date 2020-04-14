@@ -6,7 +6,7 @@ const user = {
      */
     createAccount: async function createAccount(username, password) {
         try {
-            const account = await fetch('http://localhost:9000/users/create', {
+            const account = await fetch('/users/create', {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',
