@@ -11,8 +11,9 @@ const Search = (props) => {
     const [errorMessage, setErrorMessage] = useState('');
     const [filters, setFilters] = useState({});
     const [searchResults, setSearchResults] = useState([]);
-	const [name, setName] = useState('');
 	
+	const [name, setName] = useState('');
+
 	useEffect( () => {
 		getSearchResults( filters ).then( ( results ) => {
 			if (results.error) {
