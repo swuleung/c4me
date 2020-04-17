@@ -211,9 +211,6 @@ router.get('/verifyAdmin', async (req, res) => {
     }
 });
 
-<<<<<<< HEAD
-router.get('/getApplications', async (req,res) => {
-=======
 /**
  * Scrape High School
  * POST request with body
@@ -225,7 +222,6 @@ router.get('/getApplications', async (req,res) => {
  */
 router.post('/scrapeHighSchool', async (req, res) => {
     // authentication check
->>>>>>> origin/master
     if (!req.cookies.access_token) {
         res.status(400).send({ status: 'error', error: 'No token provided' });
     } else {
@@ -233,18 +229,11 @@ router.post('/scrapeHighSchool', async (req, res) => {
         if (!authorized.username) {
             res.clearCookie('access_token');
             res.status(400).send(authorized);
-<<<<<<< HEAD
-        } else if (!adminController.checkAdmin(authorized.username)) {
-            res.status(400).send(authorized);
-        } else {
-            const result = await adminController.getApplications();
-=======
             // verify that user is an admin
         } else if (!adminController.checkAdmin(authorized.username)) {
             res.status(400).send(authorized);
         } else {
             const result = await scrapeHighSchoolData(req.body.highSchoolName, req.body.highSchoolCity, req.body.highSchoolState);
->>>>>>> origin/master
             res.send(result);
         }
     }

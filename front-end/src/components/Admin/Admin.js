@@ -2,13 +2,7 @@ import React, { useState } from 'react';
 import {
     Button, Alert, Container, Row, Col,
 } from 'react-bootstrap';
-<<<<<<< HEAD
-import {
-    scrapeCollegeRanking, scrapeCollegeData, importCollegeScorecard, deleteAllStudents, importStudents, importStudentApplications, getApplications
-} from '../../services/api/admin';
-=======
 import admin from '../../services/api/admin';
->>>>>>> origin/master
 
 const Admin = () => {
     // state variables
@@ -146,12 +140,6 @@ const Admin = () => {
                 setProgressAlert(false);
                 setErrorAlert(true);
                 errorString.push(<h4 key="importStudentError" className="alert-heading">{resultStudent.error}</h4>);
-<<<<<<< HEAD
-                for (let i = 0; i < (resultStudent.reason).length; i += 1) {
-                    errorString.push(<p key={`importStudentError-${i}`}>{resultStudent.reason[i].error}</p>);
-                } 
-                setErrorMessage(errorString);
-=======
                 if (resultStudent.reason) {
                     for (let i = 0; i < (resultStudent.reason).length; i += 1) {
                         errorString.push(<p key={`importStudentError-${i}`}>{resultStudent.reason[i].error}</p>);
@@ -160,7 +148,6 @@ const Admin = () => {
                 } else {
                     setErrorMessage('Process may have timed out');
                 }
->>>>>>> origin/master
             }
             // import applications even with errors from import students
             admin.importStudentApplications().then((resultApp) => {
@@ -188,22 +175,42 @@ const Admin = () => {
         });
     };
 
-<<<<<<< HEAD
     const handleViewApplications = () => {
-        console.log("handleApps");
-        const appsAD = getApplications();
-        const ApplicationButtons = [];
-        console.log(appsAD.type);
-        // // for (el in appsAD){
-        //     ApplicationButtons.push( <Button onClick = {console.log("hello")}></Button>
-        //     );
-        //  }
-         return (<Row sm="12">{ApplicationButtons} </Row>)
+            admin.getApplications().then((resultApp) => {
+                const errorString = [];
+                if (resultApp.error){
+                    //console.log("hello");
+                    //console.log(resultApp.error);
+                    setErrorAlert(true);
+                    setProgressAlert(false);
+                    errorString.push(<h4 key="getApplicatgionsError" className="alert-heading">{resultApp.error}</h4>);
+                    setErrorMessage([...errorMessage, ...errorString]);
+                }
+                if(resultApp.ok){
+                    console.log(resultApp.applications);
+
+
+
+                    /**
+                     * 
+                     * 
+                     * 
+                     * 
+                     * dynamically create html elements
+                     */
+
+
+
+                }
+
+            });
+        
+        
     };
 
-=======
+
+
     // display the Admin page
->>>>>>> origin/master
     return (
         <div>
             {errorAlert
