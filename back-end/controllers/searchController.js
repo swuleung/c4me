@@ -182,3 +182,109 @@ exports.searchCollege = async ( filters ) => {
         colleges : searchResults
     }
 }
+
+
+
+
+// /**
+//  * 
+//  * Returns every questionable application
+//  */
+// exports.getApplications = async () => {
+//     let allApps = [];
+//     //let allColleges = []; 
+//     //let allRelevantStudents = [];
+//     try {
+//          //allApps = await sequelize.query('SELECT * FROM applications WHERE status = :st1 OR status = :st2',
+//          //{replacements:{st1:'accepted',st2:'denied'},type: sequelize.QueryTypes.SELECT}
+//          //)
+//         // allColleges = await models.College.findAll({raw:true});
+ 
+//         allApps = models.Applications.findAll({
+//             raw: true,
+//             where: { //Eventually, the where clause will be replaced by 'isQuestionable'
+//                   [sequelize.or]: [
+//                     {status: 'accepted'},
+//                     {status: 'denied'}
+//                   ]
+//               }
+//         }); 
+ 
+//      //    allStudents = await models.Students.findAll({
+//      //         raw : true,
+//      //         where : {
+//      //             username 
+//      //         }
+//      //    });
+ 
+//         allColleges = await models.College.findAll({});
+ 
+//  /**
+//   * 
+//   * PROBABLY gonna move this to search controller...
+//   * 
+//   * 1. Consider adding an averageSAT, averageACT, averageGPA to Colleges table
+//   * When ApplicationViewer is called, right? Does it save the average anywhere? This is useful later on 
+//   * 2. When admin clicks on ViewApplications,  it calls on applicationTracker to get average data
+//   * 3. Considering recycling applicationTracker code for comparing values
+//   * 
+//   * 
+//   *  int qPoints = 0;
+//   *  for app in allApps: //allApps = GET * FROM applications WHERE status = 'accepted|denied'
+//   *          collAppData= "GET /colleges/'app.college'"
+//   *          if (collAppData.averageSAT < student[app.username].SAT){ qPoints+=10}
+//   *          else{
+//   *              qPoints +=10;
+//   *              int avgSAT = collAppData[averageSAT] 
+//   *              while(avgSAT-=50 > student[app.username][SAT]){
+//   *                    qPoints--;
+//   *                    if (qPoints == 0){break;}
+//   *              }
+//   *          }
+//   *          //repeat for each SAT field, replace -=50 with -=2 for ACT score, -.1 for GPA
+//   * 
+//   *         collegeMajors = GET * FROM majors m WHERE m.college = app.college
+//   *          //compare major string matching, award points per each
+//   * 
+//   *          //check app[student].residenceState v. college[id].state
+//   *         //check region[app[student].residenceState] v region[app[student].residenceState]
+//   *         //Award Points accordingly          
+//   *    
+//   *          
+//   *         if app.status == 'accepted' &&  qPoints < (26 == 40*.65){ app.isQuestionable == True}
+//   *         if app.status == 'denied' && qPoints > 14{app.isQuestionable == true}
+//   * 
+//   * 
+//   * return SELECT * FROM allApps a WHERE a.isQuestionable == 1
+//   * 
+//   * 
+//   * 
+//   * 
+//   * 
+//   * 
+//   * 
+//   */
+ 
+ 
+ 
+ 
+//     } catch (error){
+//          return {
+//               error: 'Failed Applications Get Request',
+//               reason: error,
+//               status: error.status
+//          }
+//     }
+//     if (allApps.length > 0){
+//         return { 
+//              ok: 'Found Accepted / Denied Applications',
+//              applications: allApps.toJSON()//,
+//              //colleges: allColleges.toJSON()
+//          }
+//     }
+//     return {
+//         error: 'Applications not found',
+//         reason: 'No Accepted/Denied Applications exist'
+//     }
+//  };
+ 
