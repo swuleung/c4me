@@ -1,10 +1,9 @@
 {
   "development": {
-<<<<<<< HEAD
-    "username": "root",
-    "password": "LaunchK3y",
-    "database": "c4me",
-    "host": "localhost",
+    "username": "zzysberg",
+    "password": "110801274",
+    "database": "zzysberg",
+    "host": "mysql4.cs.stonybrook.edu",
     "dialect": "mysql",
     "operatorsAliases": 0,
     "JWT_COOKIE": "access_token",
@@ -14,39 +13,18 @@
     "NICHE_URL": "http://allv22.all.cs.stonybrook.edu/~stoller/cse416/niche/"
   },
   "test": {
-    "username": "root",
-    "password": "LaunchK3y",
-    "database": "c4me",
-    "host": "localhost",
-=======
-    "username": "swuleung",
-    "password": "111065204",
-    "database": "swuleung",
-    "host": "mysql4.cs.stonybrook.edu",
->>>>>>> origin/master
-    "dialect": "mysql",
-    "operatorsAliases": 0
-  },
-  "test": {
-    "username": "jaquach",
-    "password": "111019384",
-    "database": "jaquach",
+    "username": "zzysberg",
+    "password": "110801274",
+    "database": "zzysberg",
     "host": "mysql4.cs.stonybrook.edu",
     "dialect": "mysql",
     "operatorsAliases": 0
   },
   "production": {
-<<<<<<< HEAD
-    "username": "root",
-    "password": "LaunchK3y",
-    "database": "c4me",
-    "host": "localhost",
-=======
-    "username": "jaquach",
-    "password": "111019384",
-    "database": "jaquach",
+    "username": "zzysberg",
+    "password": "110801274",
+    "database": "zzysberg",
     "host": "mysql4.cs.stonybrook.edu",
->>>>>>> origin/master
     "dialect": "mysql",
     "operatorsAliases": 0
   }
