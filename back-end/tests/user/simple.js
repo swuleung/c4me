@@ -1,5 +1,8 @@
 const { agent } = require('../shared');
 
+/**
+ * Tests are described with "describe" & "it"
+ */
 describe('Simple Create/Login/Delete', () => {
     describe('Create User', () => {
         it('Creates a new user', (done) => {

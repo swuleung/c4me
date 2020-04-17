@@ -3,11 +3,12 @@ import { Link } from 'react-router-dom';
 import {
     Alert, Button, Container, Row, Col, Table,
 } from 'react-bootstrap';
-import { getStudent, getStudentApplications } from '../../services/api/student';
-import { getCollegeByID } from '../../services/api/college';
+import studentAPI from '../../services/api/student';
+import collegeAPI from '../../services/api/college';
 import './StudentProfile.scss';
 
 const StudentProfile = (props) => {
+    // state variables
     const [student, setStudent] = useState({});
     const [studentApplications, setStudentApplications] = useState(null);
     const [highSchool, setHighSchool] = useState({});
@@ -16,6 +17,9 @@ const StudentProfile = (props) => {
     const { match } = props;
     const { username } = match.params;
 
+    /**
+     * Creates the application components to be rendered
+     */
     const generateStudentApplications = () => {
         const applications = [];
         for (let i = 0; i < studentApplications.length; i += 1) {
@@ -33,8 +37,9 @@ const StudentProfile = (props) => {
         return applications;
     };
 
+    // gets student and application data
     useEffect(() => {
-        getStudent(username).then((result) => {
+        studentAPI.getStudent(username).then((result) => {
             if (result.error) {
                 setErrorAlert(true);
                 setErrorMessage(result.error);
@@ -42,19 +47,20 @@ const StudentProfile = (props) => {
             if (result.ok) {
                 setErrorAlert(false);
                 setStudent(result.student);
-                if(result.student.HighSchool) {
+                if (result.student.HighSchool) {
                     setHighSchool(result.student.HighSchool);
                 } else {
                     setHighSchool({
                         Name: null,
                         HighSchoolCity: null,
                         HighSchoolState: null,
-                    })
+                    });
                 }
             }
         });
+        // if student applications have not been set fetch them
         if (!studentApplications) {
-            getStudentApplications(username).then((result) => {
+            studentAPI.getStudentApplications(username).then((result) => {
                 if (result.error) {
                     setErrorAlert(true);
                     setErrorMessage(result.error);
@@ -65,9 +71,10 @@ const StudentProfile = (props) => {
                 }
             });
         }
+        // fetches the college names of applied colleges
         if (studentApplications && studentApplications.length !== 0 && !studentApplications[0].collegeName) {
             for (let i = 0; i < studentApplications.length; i += 1) {
-                getCollegeByID(studentApplications[i].college).then((coll) => {
+                collegeAPI.getCollegeByID(studentApplications[i].college).then((coll) => {
                     const apps = [...studentApplications];
                     apps[i].collegeName = coll.college.Name;
                     setStudentApplications(apps);
@@ -76,6 +83,7 @@ const StudentProfile = (props) => {
         }
     }, [username, studentApplications]);
 
+    // displays the student profile
     return (
         <div>
             {errorAlert
@@ -89,10 +97,7 @@ const StudentProfile = (props) => {
                             </Row>
                             <p>
                             High School:&nbsp;
-                                {highSchool.Name ? highSchool.Name.toLowerCase().split(' ').map((s) => {
-                                    if (s !== 'and' && s!== 'of') return s.charAt(0).toUpperCase() + s.substring(1);
-                                    return s;
-                                }).join(' ') : 'No high school provided'}
+                                {highSchool.Name ? highSchool.Name : 'No high school provided'}
                             </p>
                             <p>
                             High School City:&nbsp;

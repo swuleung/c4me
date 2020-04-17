@@ -3,12 +3,18 @@ const bcrypt = require('bcrypt');
 const models = require('../models');
 const authentication = require('../utils/auth');
 
-exports.createUser = async (user) => {
+/**
+ * Create a new user
+ * @param {string} username Username  to be created with user
+ * @param {string} password Password (unhashed) to be created with user
+ */
+exports.createUser = async (username, password) => {
     let newUser = {};
     try {
+        // sequelize call to create
         newUser = await models.User.create({
-            username: user.username,
-            password: user.password,
+            username: username,
+            password: password,
         });
     } catch (error) {
         if (error instanceof sequelize.UniqueConstraintError) {
@@ -22,10 +28,15 @@ exports.createUser = async (user) => {
     return { ok: 'Success', student: newUser };
 };
 
-exports.login = async (loginUser) => {
-    const { username, password } = loginUser;
+/**
+ * Check user for login
+ * @param {string} username Username to login
+ * @param {string} password Password (unhashed)
+ */
+exports.login = async (username, password) => {
     let user = {};
     try {
+        // only need to find one since usernames are unique
         user = await models.User.findOne({
             raw: true,
             where: {
@@ -38,6 +49,7 @@ exports.login = async (loginUser) => {
             reason: error,
         };
     }
+    // if user is null from findOne
     if (!user) {
         return {
             error: 'User not found',
@@ -45,6 +57,8 @@ exports.login = async (loginUser) => {
         };
     }
     let passwordCheck = false;
+
+    // user bcrypt ot check password
     try {
         passwordCheck = await bcrypt.compare(password, user.password);
     } catch (error) {
@@ -53,6 +67,8 @@ exports.login = async (loginUser) => {
             reason: error,
         };
     }
+
+    // password returned null for incorrect password
     if (!passwordCheck) {
         return {
             error: 'Incorrect password',
@@ -60,8 +76,10 @@ exports.login = async (loginUser) => {
         };
     }
 
+    // generate new JWT token if password passses with username as info
     const jwtToken = authentication.generateKey(username);
 
+    // failure of token generation
     if (jwtToken === {}) {
         return {
             error: 'Unable to generate token',
@@ -71,6 +89,11 @@ exports.login = async (loginUser) => {
     return { ok: 'Success', access_token: jwtToken };
 };
 
+/**
+ * Delete user
+ * @param {string} username Username to be deleted
+ * Authentication is checke din router
+ */
 exports.deleteUser = async (username) => {
     try {
         await models.User.destroy({

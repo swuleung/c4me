@@ -4,8 +4,14 @@ const router = express.Router();
 const authentication = require('../utils/auth');
 const adminController = require('../controllers/adminController');
 const collegeController = require('../controllers/collegeController');
+const { scrapeHighSchoolData } = require('../controllers/highschoolController');
 
+/**
+ * Scrape the college rankings from THE
+ * GET request
+ */
 router.get('/scrapeCollegeRanking', async (req, res) => {
+    // authentication check
     if (!req.cookies.access_token) {
         res.status(400).send({ status: 'error', error: 'No token provided' });
     } else {
@@ -13,9 +19,11 @@ router.get('/scrapeCollegeRanking', async (req, res) => {
         if (!authorized.username) {
             res.clearCookie('access_token');
             res.status(400).send({ status: 'error', error: 'Not authorized' });
+            // verify that user is an admin
         } else if (!(await adminController.checkAdmin(authorized.username))) {
             res.status(400).send({ status: 'error', error: 'Not an admin' });
         } else {
+            // scrape the rankings
             const result = await adminController.scrapeCollegeRankings();
             if (result.error) {
                 if (result.error === 'Something went wrong') res.status(500);
@@ -26,7 +34,12 @@ router.get('/scrapeCollegeRanking', async (req, res) => {
     }
 });
 
+/**
+ * Scrape data from CollegeData
+ * GET request
+ */
 router.get('/scrapeCollegeData', async (req, res) => {
+    // authentication check
     if (!req.cookies.access_token) {
         res.status(400).send({ status: 'error', error: 'No token provided' });
     } else {
@@ -34,9 +47,11 @@ router.get('/scrapeCollegeData', async (req, res) => {
         if (!authorized.username) {
             res.clearCookie('access_token');
             res.status(400).send({ status: 'error', error: 'Not authorized' });
+            // verify admin user
         } else if (!(await adminController.checkAdmin(authorized.username))) {
             res.status(400).send({ status: 'error', error: 'Not an admin' });
         } else {
+            // scrape the data
             const result = await adminController.scrapeCollegeData();
             if (result.error) {
                 if (result.error === 'Something went wrong') res.status(500);
@@ -47,7 +62,12 @@ router.get('/scrapeCollegeData', async (req, res) => {
     }
 });
 
+/**
+ * Import the collegescorecard data
+ * GET request
+ */
 router.get('/importCollegeScorecard', async (req, res) => {
+    // authentication check
     if (!req.cookies.access_token) {
         res.status(400).send({ status: 'error', error: 'No token provided' });
     } else {
@@ -55,9 +75,11 @@ router.get('/importCollegeScorecard', async (req, res) => {
         if (!authorized.username) {
             res.clearCookie('access_token');
             res.status(400).send({ status: 'error', error: 'Not authorized' });
+            // verify that user is admin
         } else if (!(await adminController.checkAdmin(authorized.username))) {
             res.status(400).send({ status: 'error', error: 'Not an admin' });
         } else {
+            // import college scorecard
             const result = await adminController.importCollegeScorecard();
             if (result.error) {
                 if (result.error === 'Something went wrong') res.status(500);
@@ -68,7 +90,12 @@ router.get('/importCollegeScorecard', async (req, res) => {
     }
 });
 
+/**
+ * Delete all student profiles
+ * GET request
+ */
 router.delete('/deleteStudentProfiles', async (req, res) => {
+    // authentication check
     if (!req.cookies.access_token) {
         res.status(400).send({ status: 'error', error: 'No token provided' });
     } else {
@@ -76,9 +103,11 @@ router.delete('/deleteStudentProfiles', async (req, res) => {
         if (!authorized.username) {
             res.clearCookie('access_token');
             res.status(400).send(authorized);
+            // verify that user is admin
         } else if (!adminController.checkAdmin(authorized.username)) {
             res.status(400).send(authorized);
         } else {
+            // delete all students
             const rmvd = await adminController.deleteAllStudents();
             if (!rmvd.ok) {
                 res.status(400);
@@ -88,7 +117,12 @@ router.delete('/deleteStudentProfiles', async (req, res) => {
     }
 });
 
+/**
+ * Import students from CSV file
+ * GET request
+ */
 router.get('/importStudents', async (req, res) => {
+    // authentication check
     if (!req.cookies.access_token) {
         res.status(400).send({ status: 'error', error: 'No token provided' });
     } else {
@@ -96,16 +130,23 @@ router.get('/importStudents', async (req, res) => {
         if (!authorized.username) {
             res.clearCookie('access_token');
             res.status(400).send(authorized);
+            // verify that user is admin
         } else if (!adminController.checkAdmin(authorized.username)) {
             res.status(400).send(authorized);
         } else {
+            // import students
             const result = await adminController.importStudents();
             res.send(result);
         }
     }
 });
 
+/**
+ * Import applications from CSV file
+ * GET request
+ */
 router.get('/importApplications', async (req, res) => {
+    // authentication check
     if (!req.cookies.access_token) {
         res.status(400).send({ status: 'error', error: 'No token provided' });
     } else {
@@ -113,17 +154,23 @@ router.get('/importApplications', async (req, res) => {
         if (!authorized.username) {
             res.clearCookie('access_token');
             res.status(400).send(authorized);
+            // verify that the user is an admin
         } else if (!adminController.checkAdmin(authorized.username)) {
             res.status(400).send(authorized);
         } else {
+            // import applications
             const result = await adminController.importApplications();
             res.send(result);
         }
     }
 });
 
-
+/**
+ * Delete all colleges
+ * GET request
+ */
 router.delete('/deleteAllColleges', async (req, res) => {
+    // authentication check
     if (!req.cookies.access_token) {
         res.status(400).send({ status: 'error', error: 'No token provided' });
     } else {
@@ -131,9 +178,11 @@ router.delete('/deleteAllColleges', async (req, res) => {
         if (!authorized.username) {
             res.clearCookie('access_token');
             res.status(400).send(authorized);
+            // verify that user is an admin
         } else if (!adminController.checkAdmin(authorized.username)) {
             res.status(400).send(authorized);
         } else {
+            // delete all colleges
             const result = await collegeController.deleteAllColleges();
             if (!result.ok) res.status(400);
             res.send(result);
@@ -141,6 +190,10 @@ router.delete('/deleteAllColleges', async (req, res) => {
     }
 });
 
+/**
+ * Verify that a user is an admin
+ * GET request
+ */
 router.get('/verifyAdmin', async (req, res) => {
     if (!req.cookies.access_token) {
         res.send({
@@ -149,6 +202,7 @@ router.get('/verifyAdmin', async (req, res) => {
         });
     } else {
         const authorized = await authentication.validateJWT(req.cookies.access_token);
+        // pass the username from token
         const result = await adminController.checkAdmin(authorized.username);
         res.send({
             ok: 'Successfaully checked admin',
@@ -157,7 +211,21 @@ router.get('/verifyAdmin', async (req, res) => {
     }
 });
 
+<<<<<<< HEAD
 router.get('/getApplications', async (req,res) => {
+=======
+/**
+ * Scrape High School
+ * POST request with body
+ * {
+ *  "highSchoolName": "academy for information technology",
+ *  "highSchoolCity": "scotch plains",
+ *  "highSchoolState": "NJ"
+ * }
+ */
+router.post('/scrapeHighSchool', async (req, res) => {
+    // authentication check
+>>>>>>> origin/master
     if (!req.cookies.access_token) {
         res.status(400).send({ status: 'error', error: 'No token provided' });
     } else {
@@ -165,10 +233,18 @@ router.get('/getApplications', async (req,res) => {
         if (!authorized.username) {
             res.clearCookie('access_token');
             res.status(400).send(authorized);
+<<<<<<< HEAD
         } else if (!adminController.checkAdmin(authorized.username)) {
             res.status(400).send(authorized);
         } else {
             const result = await adminController.getApplications();
+=======
+            // verify that user is an admin
+        } else if (!adminController.checkAdmin(authorized.username)) {
+            res.status(400).send(authorized);
+        } else {
+            const result = await scrapeHighSchoolData(req.body.highSchoolName, req.body.highSchoolCity, req.body.highSchoolState);
+>>>>>>> origin/master
             res.send(result);
         }
     }

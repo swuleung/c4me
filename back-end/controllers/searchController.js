@@ -1,6 +1,10 @@
 const models = require('../models');
 const { Op } = require("sequelize");
 
+const northeastRegion = ["ME", "VT", "NH", "MA", "RI", "CT", "NY", "PA", "NJ"]; //9 states
+const southRegion = ["DE", "MD", "WV", "VA", "NC", "SC", "GA", "FL", "KY", "TN", "MS", "AL", "AR", "LA", "OK", "TX"]; //16 states
+const midwestRegion = ["OH", "MI", "IN", "WI", "IL", "MN", "IA", "MO", "ND", "SD", "NE", "KS"]; //12 statesa=
+const westRegion = ["AK", "HI", "WA", "OR", "CA", "MT", "ID", "WY", "NV", "UT", "CO", "AZ", "NM"]; //13 states
 
 //  Parameters: filters
 //  Filters is an object. 
@@ -10,50 +14,162 @@ const { Op } = require("sequelize");
 //  e.g. admissionRateMin and admissionRateMax
 //  An example filter:
 // {
-//     "location" : "CA",
-//     "SATEBRWMin": 500,
-//     "SATEBRWMax": 550
+//     "region" : "west",
+//     "SATEBRWMin": 0,
+//     "SATEBRWMax": 800,
+//     "SATMathMin" : 0,
+//     "SATMathMax" : 800,
+//     "name" : "University",
+//     "ACTCompositeMin" : 0,
+//     "ACTCompositeMax" : 35,
+//     "costInStateMax" : 100000,
+//     "costOutOfStateMax" : 100000,
+//     "major" : "math",
+//     "major2" : "computer",
+//     "rankingMin" : 0,
+//     "rankingMax" : 1000,
+//     "sizeMin" : 0,
+//     "sizeMax" : 50000,
+//     "sortAttribute" : "name",
+//     "sortDirection" : "ASC",
+//     "lax" : "True"
 // }
-
 exports.searchCollege = async ( filters ) => {
     let searchResults = {};
     try {
-        criteria = {}
         
-        if ( "name" in filters )
+        let criteria = {};
+        let query = {};
+
+        if ( filters.name )
             criteria.Name = { [Op.substring] : filters.name };
-        if ( "admissionRateMin" in filters && "admissionRateMax" in filters)
-            criteria.AdmissionRate = { [Op.between] : [ filters.admissionRateMin, filters.admissionRateMax] };
-        if ( "costMax" in filters )
-            criteria.CostOfAttendanceInState = { [Op.lte] : filters.costMax };
-        if ( "location" in filters ) 
-            criteria.Location = filters.location;
-        if ( "rankingMin" in filters && "rankingMax" in filters )
-            criteria.Ranking = { [Op.between] : [ filters.rankingMin, filters.rankingMax] };
-        if ( "sizeMin" in filters && "sizeMax" in filters )
+        if ( filters.admissionRateMin && filters.admissionRateMax ) {
+            if ( filters.lax ) {
+                criteria.AdmissionRate = { [Op.or]: [{ [Op.eq]: null }, { [Op.between] : [ filters.admissionRateMin, filters.admissionRateMax] }] };
+            }
+            else {
+                criteria.AdmissionRate = { [Op.between] : [ filters.admissionRateMin, filters.admissionRateMax] };
+            }
+        }
+        if ( filters.costInStateMax && filters.costOutOfStateMax ) {
+            if ( filters.lax ) {
+                criteria.CostOfAttendanceInState = { [Op.or]: [{ [Op.eq]: null }, { [Op.lte] : filters.costInStateMax } ] };
+                criteria.CostOfAttendanceOutOfState = { [Op.or]: [{ [Op.eq]: null }, { [Op.lte] : filters.costOutOfStateMax } ] };
+            }
+            else {
+                criteria.CostOfAttendanceInState = { [Op.lte] : filters.costInStateMax };
+                criteria.CostOfAttendanceOutOfState = { [Op.lte] : filters.costOutOfStateMax };
+            }
+        }
+        if ( filters.region ) {
+            switch ( filters.region ) {
+                case "northeast":
+                    criteria.Location = { [Op.in] : northeastRegion };
+                    break;
+                case "south":
+                    criteria.Location = { [Op.in] : southRegion };
+                    break;
+                case "midwest":
+                    criteria.Location = { [Op.in] : midwestRegion };
+                    break;
+                case "west":
+                    criteria.Location = { [Op.in] : westRegion };
+                    break;
+                default:
+                    console.log("unexpected value for location filter");
+                    break;
+            }
+        }
+        if ( filters.rankingMin && filters.rankingMax ) {
+            if ( filters.lax ) {
+                criteria.Ranking = { [Op.or]: [{ [Op.eq]: null }, { [Op.between] : [ filters.rankingMin, filters.rankingMax] }] };
+            }
+            else {
+                criteria.Ranking = { [Op.between] : [ filters.rankingMin, filters.rankingMax] };
+            }
+        }
+        if ( filters.sizeMin && filters.sizeMax )
             criteria.Size = { [Op.between] : [ filters.sizeMin, filters.sizeMax] };
-        if ( "SATMathMin" in filters && "SATMathMax" in filters )
-            criteria.SATMath = { [Op.between] : [ filters.SATMathMin, filters.SATMathMax] };
-        if ( "SATEBRWMin" in filters && "SATEBRWMax" in filters )
-            criteria.SATEBRW = { [Op.between] : [ filters.SATEBRWMin, filters.SATEBRWMax] };
-        if ( "ACTCompositeMin" in filters && "ACTCompositeMax" in filters )
-            criteria.ACTComposite = { [Op.between] : [ filters.ACTCompositeMin, filters.ACTCompositeMax] };
+        if ( filters.SATMathMin && filters.SATMathMax ) {
+            if ( filters.lax ) {
+                criteria.SATMath = { [Op.or]: [{ [Op.eq]: null }, { [Op.between] : [ filters.SATMathMin, filters.SATMathMax] }] };
+            }
+            else {
+                criteria.SATMath = { [Op.between] : [ filters.SATMathMin, filters.SATMathMax] };
+            }
+        }
+        if ( filters.SATEBRWMin && filters.SATEBRWMax ) {
+            if ( filters.lax ) {
+                criteria.SATEBRW = { [Op.or]: [{ [Op.eq]: null }, { [Op.between] : [ filters.SATEBRWMin, filters.SATEBRWMax] }] };
+            }
+            else {
+                criteria.SATEBRW = { [Op.between] : [ filters.SATEBRWMin, filters.SATEBRWMax] };
+            }
+        }
+        if ( filters.ACTCompositeMin && filters.ACTCompositeMax ) {
+            if ( filters.lax ) {
+                criteria.ACTComposite = { [Op.or]: [{ [Op.eq]: null }, { [Op.between] : [ filters.ACTCompositeMin, filters.ACTCompositeMax] }] };
+            }
+            else {
+                criteria.ACTComposite = { [Op.between] : [ filters.ACTCompositeMin, filters.ACTCompositeMax] };
+            }
+        }
+        
+        // the major filter is a bit weird since their can be 1 or 2 majors.
+        // I stuck with this solution for now.
+        if ( filters.major && filters.major2 ) {
+            query.include = 
+            [{ 
+                model: models.Major,
+                where: {
+                    Major : { 
+                        [Op.or] : [
+                            { [Op.substring] : filters.major },
+                            { [Op.substring] : filters.major2 }
+                        ]                  
+                    }
+                }
+             }];
+        }
+        else if ( filters.major ) {
+            query.include = 
+            [{ 
+                model: models.Major,
+                where: {
+                    Major : { [Op.substring] : filters.major }
+                }
+             }];
+        }
+        else if ( filters.major2 ) {
+            query.include = 
+            [{ 
+                model: models.Major,
+                where: {
+                    Major : { [Op.substring] : filters.major2 }             
+                }
+             }];
+        }
 
-        //college majors
-        // Working filters: name, ranking, admission rate, size, ACT Composite, SAT Math, SAT EBRW
+        // this part of the code is for sorting the search results
+        // sortAttribute is expected to be one of the attribute names of the college database
+        // sortDirection is expected to be either 'DESC' or 'ASC'
+        if ( filters.sortAttribute && filters.sortDirection )
+            query.order = [ [filters.sortAttribute, filters.sortDirection] ];
 
-        console.log( criteria );
-        query = {
-            raw: true,
-            where: criteria
-        };
-
-        // query = {
-        //     raw: true,
-        //     where: filters
-        // };
-
+        query.raw = true;
+        query.where = criteria;
         searchResults = await models.College.findAll( query );
+        
+        // the following code is for the removal of duplicate colleges.
+        // there can be duplicate results because when you search via majors,
+        // there can be more results for the same college, just with different majors
+        let collegeID = -1;
+        for ( let i = searchResults.length - 1; i >= 0; i--) {
+            if ( collegeID != searchResults[i].CollegeId )
+                collegeID = searchResults[i].CollegeId;
+            else
+                searchResults.splice( i , 1 );
+        }
     } 
     catch (error) {
         return {
