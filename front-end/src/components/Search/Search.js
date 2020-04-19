@@ -14,8 +14,6 @@ const Search = (props) => {
     const [filters, setFilters] = useState({});
     const [searchResults, setSearchResults] = useState([]);
 
-    const [name, setName] = useState('');
-
     useEffect(() => {
         getSearchResults(filters).then((results) => {
             if (results.error) {
@@ -38,10 +36,10 @@ const Search = (props) => {
             </Row>
             <Row>
                 <Col xs="4">
-                    <FilterColleges />
+                    <FilterColleges handleFilterChange={setFilters} />
                 </Col>
                 <Col xs="8">
-                    <CollegeList />
+                    <CollegeList colleges={searchResults} />
                 </Col>
             </Row>
         </Container>

@@ -27,6 +27,12 @@ const FilterColleges = (props) => {
     // second major
     const [major2, setMajor2] = useState('');
 
+    // size
+    const [size, setSize] = useState({
+        sizeMin: '',
+        sizeMax:''    
+    });
+
     // admission rate
     const [admissionRate, setAdmissionRate] = useState({
         admissionRateMin: '',
@@ -77,36 +83,95 @@ const FilterColleges = (props) => {
     const buildATQuery = () => {
         const filters = {};
 
-        // if (lax === 'lax') {
-        //     filters.lax = true;
-        // } else {
-        //     filters.lax = false;
-        // }
-        // if ((collegeClass.lowerCollegeClass).trim() !== '' && parseInt(collegeClass.lowerCollegeClass, 10) > -1) {
-        //     filters.lowerCollegeClass = parseInt(collegeClass.lowerCollegeClass, 10);
-        // }
+        if (lax === 'lax') {
+            filters.lax = true;
+        } else {
+            filters.lax = false;
+        }
 
-        // if ((collegeClass.upperCollegeClass).trim() !== '' && parseInt(collegeClass.upperCollegeClass, 10) > -1) {
-        //     filters.upperCollegeClass = parseInt(collegeClass.upperCollegeClass, 10);
-        // }
+        if (name !== '') {
+            filters.name = name;
+        }
 
-        // let selectedregions = [];
-        // // get the selected regions
-        // const entries = Object.entries(regions);
-        // for (let i = 0; i < entries.length; i += 1) {
-        //     if (entries[i][1]) {
-        //         selectedregions.push(entries[i][0]);
-        //     }
-        // }
+        if (major1 !== '') {
+            filters.major = major
+        }
 
-        // if (selectedregions.length === 0) {
-        //     selectedregions = ['accepted', 'deferred', 'denied', 'pending', 'waitlisted', 'withdrawn'];
-        // }
-        // filters.regions = selectedregions;
+        if (major2 !== '') {
+            filters.major2 = major2;
+        }
 
-        // if (stateList.length) {
-        //     filters.highSchools = stateList.map((hs) => hs.HighSchoolId);
-        // }
+        if (size.sizeMin !== '') {
+            filters.sizeMin = parseInt(size.sizeMin, 10);
+        }
+
+        if (size.sizeMax !== '') {
+            filters.sizeMax = parseInt(size.sizeMax, 10);
+        }
+        
+        if (admissionRate.admissionRateMin !== '') {
+            filters.admissionRateMin = parseInt(admissionRate.admissionRateMin, 10);
+        }
+
+        if (admissionRate.admissionRateMax !== '') {
+            filters.admissionRateMax = parseInt(admissionRate.admissionRateMax, 10);
+        }
+
+        if (collegeRanking.rankingMin !== '') {
+            filters.rankingMin = parseInt(collegeRanking.rankingMin, 10);
+        }
+
+        if (collegeRanking.rankingMax !== '') {
+            filters.rankingMax = parseInt(collegeRanking.rankingMax, 10);
+        }
+
+        if (SATEBRW.SATEBRWMin !== '') {
+            filters.SATEBRWMin = parseInt(SATEBRW.SATEBRWMin, 10);
+        }
+
+        if (SATEBRW.SATEBRWMax !== '') {
+            filters.SATEBRWMax = parseInt(SATEBRW.SATEBRWMax, 10);
+        }
+
+        if (SATMath.SATMathMin !== '') {
+            filters.SATMathMin = parseInt(SATMath.SATMathMin, 10);
+        }
+
+        if (SATMath.SATEBRWMax !== '') {
+            filters.SATMathMax = parseInt(SATMath.SATMathMax, 10);
+        }
+        
+        if (ACTComposite.ACTCompositeMin !== '') {
+            filters.ACTCompositeMin = ACTComposite.ACTCompositeMin;
+        }
+
+        if (ACTComposite.ACTCompositeMax !== '') {
+            filters.ACTCompositeMax = ACTComposite.ACTCompositeMax;
+        }
+
+        if (costOfAttendance !== '') {
+            filters.costOfAttendance = costOfAttendance;
+        }
+
+        let selectedregions = [];
+
+        if (selectedregions.length === 0) {
+            selectedregions = ['midwestern', 'northeastern', 'southern', 'western'];
+        } else {
+            // get the selected regions
+            const entries = Object.entries(regions);
+            for (let i = 0; i < entries.length; i += 1) {
+                if (entries[i][1]) {
+                    selectedregions.push(entries[i][0]);
+                }
+            }
+        }
+        filters.regions = selectedregions;
+
+        if (selectedStates.length) {
+            filters.states = selectedStates;
+        }
+        
         // pass this up to ApplicationsTracker
         handleFilterChange(filters);
     };
@@ -155,7 +220,7 @@ const FilterColleges = (props) => {
                 </OverlayTrigger>
                 <Form.Row>
                     <Form.Group as={Col}>
-                        <Form.Control type="text" placeholder="Enter a name" onChange={(e) => setName(e.target.value)} />
+                        <Form.Control type="text" placeholder="Enter a name" onChange={(e) => setName(e.target.value.trim())} />
                     </Form.Group>
                 </Form.Row>
                 <b>First Major&nbsp;</b>
@@ -174,7 +239,7 @@ const FilterColleges = (props) => {
                 </OverlayTrigger>
                 <Form.Row>
                     <Form.Group as={Col}>
-                        <Form.Control type="text" placeholder="Enter a major" onChange={(e) => setMajor1(e.target.value)} />
+                        <Form.Control type="text" placeholder="Enter a major" onChange={(e) => setMajor1(e.target.value.trim())} />
                     </Form.Group>
                 </Form.Row>
                 <b>Second Major&nbsp;</b>
@@ -193,7 +258,30 @@ const FilterColleges = (props) => {
                 </OverlayTrigger>
                 <Form.Row>
                     <Form.Group as={Col}>
-                        <Form.Control type="text" placeholder="Enter a major" onChange={(e) => setMajor2(e.target.value))} />
+                        <Form.Control type="text" placeholder="Enter a major" onChange={(e) => setMajor2(e.target.value.trim()))} />
+                    </Form.Group>
+                </Form.Row>
+                <b>Size&nbsp;</b>
+                <OverlayTrigger
+                    placement="right"
+                    overlay={(
+                        <Popover>
+                            <Popover.Title>Size</Popover.Title>
+                            <Popover.Content>
+                                Choose the range of range for number of undergraduate students to filter by. For example, 10000-20000.
+                            </Popover.Content>
+                        </Popover>
+                    )}
+                >
+                    <FontAwesomeIcon className="text-info" icon={faQuestionCircle} />
+                </OverlayTrigger>
+                <Form.Row>
+                    <Form.Group as={Col}>
+                        <Form.Control type="number" placeholder="Min" onChange={(e) => setSize({ ...size, sizeMin: e.target.value.trim() })} />
+                    </Form.Group>
+                                -
+                    <Form.Group as={Col}>
+                        <Form.Control type="number" placeholder="Max" onChange={(e) => setSize({ ...size, sizeMax: e.target.value.trim() })} />
                     </Form.Group>
                 </Form.Row>
                 <b>Admission Rate&nbsp;</b>
@@ -219,7 +307,7 @@ const FilterColleges = (props) => {
                                 min="0"
                                 max="100"
                                 step="1"
-                                onChange={(e) => setAdmissionRate({ ...admissionRate, admissionRateMin: e.target.value })}
+                                onChange={(e) => setAdmissionRate({ ...admissionRate, admissionRateMin: e.target.value.trim() })}
                             />
                             <InputGroup.Append>
                                 <InputGroup.Text>%</InputGroup.Text>
@@ -235,7 +323,7 @@ const FilterColleges = (props) => {
                                 min="0"
                                 max="100"
                                 step="1"
-                                onChange={(e) => setAdmissionRate({ ...admissionRate, admissionRateMax: e.target.value })}
+                                onChange={(e) => setAdmissionRate({ ...admissionRate, admissionRateMax: e.target.value.trim() })}
                             />
                             <InputGroup.Append>
                                 <InputGroup.Text>%</InputGroup.Text>
@@ -259,11 +347,11 @@ const FilterColleges = (props) => {
                 </OverlayTrigger>
                 <Form.Row>
                     <Form.Group as={Col}>
-                        <Form.Control type="number" placeholder="Min" step="1" onChange={(e) => setCollegeRanking({ ...collegeRanking, rankingMin: e.target.value })} />
+                        <Form.Control type="number" placeholder="Min" step="1" onChange={(e) => setCollegeRanking({ ...collegeRanking, rankingMin: e.target.value.trim() })} />
                     </Form.Group>
                                 -
                     <Form.Group as={Col}>
-                        <Form.Control type="number" placeholder="Max" onChange={(e) => setCollegeRanking({ ...collegeRanking, rankingMax: e.target.value })} />
+                        <Form.Control type="number" placeholder="Max" onChange={(e) => setCollegeRanking({ ...collegeRanking, rankingMax: e.target.value.trim() })} />
                     </Form.Group>
                 </Form.Row>
                 <b>SAT EBRW&nbsp;</b>
@@ -282,11 +370,11 @@ const FilterColleges = (props) => {
                 </OverlayTrigger>
                 <Form.Row>
                     <Form.Group as={Col}>
-                        <Form.Control type="number" placeholder="Min" min="200" max="800" onChange={(e) => setSATEBRW({ ...SATEBRW, SATEBRWMin: e.target.value })} />
+                        <Form.Control type="number" placeholder="Min" min="200" max="800" onChange={(e) => setSATEBRW({ ...SATEBRW, SATEBRWMin: e.target.value.trim() })} />
                     </Form.Group>
                                 -
                     <Form.Group as={Col}>
-                        <Form.Control type="number" placeholder="Max" min="200" max="800" onChange={(e) => setSATEBRW({ ...SATEBRW, SATEBRWMax: e.target.value })} />
+                        <Form.Control type="number" placeholder="Max" min="200" max="800" onChange={(e) => setSATEBRW({ ...SATEBRW, SATEBRWMax: e.target.value.trim() })} />
                     </Form.Group>
                 </Form.Row>
                 <b>SAT Math&nbsp;</b>
@@ -305,11 +393,11 @@ const FilterColleges = (props) => {
                 </OverlayTrigger>
                 <Form.Row>
                     <Form.Group as={Col}>
-                        <Form.Control type="number" placeholder="Min" min="200" max="800" step="1" onChange={(e) => setSATMath({ ...SATMath, SATMathMin: e.target.value })} />
+                        <Form.Control type="number" placeholder="Min" min="200" max="800" step="1" onChange={(e) => setSATMath({ ...SATMath, SATMathMin: e.target.value.trim() })} />
                     </Form.Group>
                                 -
                     <Form.Group as={Col}>
-                        <Form.Control type="number" placeholder="Max" min="200" max="800" step="1" onChange={(e) => setSATMath({ ...SATMath, SATMathMax: e.target.value })} />
+                        <Form.Control type="number" placeholder="Max" min="200" max="800" step="1" onChange={(e) => setSATMath({ ...SATMath, SATMathMax: e.target.value.trim() })} />
                     </Form.Group>
                 </Form.Row>
                 <b>ACT Composite&nbsp;</b>
@@ -328,11 +416,11 @@ const FilterColleges = (props) => {
                 </OverlayTrigger>
                 <Form.Row>
                     <Form.Group as={Col}>
-                        <Form.Control type="number" placeholder="Min" min="1" max="36" step="1" onChange={(e) => setACTComposite({ ...ACTComposite, ACTCompositeMin: e.target.value })} />
+                        <Form.Control type="number" placeholder="Min" min="1" max="36" step="1" onChange={(e) => setACTComposite({ ...ACTComposite, ACTCompositeMin: e.target.value.trim() })} />
                     </Form.Group>
                                 -
                     <Form.Group as={Col}>
-                        <Form.Control type="number" placeholder="Max" min="1" max="36" step="1" onChange={(e) => setACTComposite({ ...ACTComposite, ACTCompositeMax: e.target.value })} />
+                        <Form.Control type="number" placeholder="Max" min="1" max="36" step="1" onChange={(e) => setACTComposite({ ...ACTComposite, ACTCompositeMax: e.target.value.trim() })} />
                     </Form.Group>
                 </Form.Row>
                 <b>Cost of Attendance&nbsp;</b>
@@ -354,7 +442,7 @@ const FilterColleges = (props) => {
                 </Row>
                 <Form.Row>
                     <Form.Group as={Col}>
-                        <Form.Control type="range" onChange={(e) => setCostOfAttendance(e.target.value)} />
+                        <Form.Control type="range" onChange={(e) => setCostOfAttendance(e.target.value.trim())} />
                     </Form.Group>
                 </Form.Row>
 
