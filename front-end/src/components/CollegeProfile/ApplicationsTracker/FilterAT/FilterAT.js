@@ -175,7 +175,7 @@ const FilterAT = (props) => {
                 <OverlayTrigger
                     placement="right"
                     overlay={(
-                        <Popover id="popover-basic">
+                        <Popover>
                             <Popover.Title>Type of Filtering</Popover.Title>
                             <Popover.Content>
                                             Lax will include schools whose values are null for these filters.
@@ -193,7 +193,7 @@ const FilterAT = (props) => {
                 <OverlayTrigger
                     placement="right"
                     overlay={(
-                        <Popover id="popover-basic">
+                        <Popover>
                             <Popover.Title>College Class</Popover.Title>
                             <Popover.Content>
                                             Choose the college graduation year of the to filter by. For example, 2022-2024
@@ -209,7 +209,7 @@ const FilterAT = (props) => {
                     </Form.Group>
                                 -
                     <Form.Group as={Col}>
-                        <Form.Control type="text" placeholder="Max" onChange={(e) => setCollegeCLass({ ...collegeClass, upperCollegeClass: e.target.value })} />
+                        <Form.Control type="number" placeholder="Max" onChange={(e) => setCollegeCLass({ ...collegeClass, upperCollegeClass: e.target.value })} />
                     </Form.Group>
 
                 </Form.Row>
@@ -218,7 +218,7 @@ const FilterAT = (props) => {
                 <OverlayTrigger
                     placement="right"
                     overlay={(
-                        <Popover id="popover-basic">
+                        <Popover>
                             <Popover.Title>Status</Popover.Title>
                             <Popover.Content>
                                             Filter by type of status. If all or none is selected, it will return all statuses.
@@ -241,7 +241,7 @@ const FilterAT = (props) => {
                 <OverlayTrigger
                     placement="right"
                     overlay={(
-                        <Popover id="popover-basic">
+                        <Popover>
                             <Popover.Title>High Schools</Popover.Title>
                             <Popover.Content>
                                             Enter high school names to filter by specific high schools.

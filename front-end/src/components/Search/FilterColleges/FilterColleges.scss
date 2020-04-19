@@ -1,0 +1,24 @@
+@import '../../../utils/styles/theme.scss';
+
+#filter-box {
+    border: 1px solid #dee2e6;
+    padding: 1rem;
+}
+
+.list-group {
+    list-style-type: none;
+}
+
+.delete-pill {
+    color: red;
+}
+
+.pill {
+    cursor: pointer;
+    margin: .1rem;
+    padding: .1rem .4rem .2rem .4rem;
+    border-radius: 1rem;
+    color: $main-color;
+    border: 1px solid $main-color;
+    display: inline-block;
+}
