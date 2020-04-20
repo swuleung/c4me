@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
             defaultValue: null,
         },
         Ranking: {
-            type: DataTypes.STRING,
+            type: DataTypes.INTEGER,
             defaultValue: null,
         },
         Size: {
