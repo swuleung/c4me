@@ -209,10 +209,15 @@ exports.searchCollege = async ( filters, username ) => {
         if ( filters.costMax ) {
         	console.log( " cost max ");
         	const student = await getStudent( username );
-        	const state = student.residenceState;
+        	console.log( student );
+
+        	const state = student.student.residenceState;
+        	console.log( state );
+
             for ( let i = searchResults.length - 1; i >= 0; i--) {
-	        	let stateFirstLetter =  searchResults[i].Location[0];
-	        	let stateSecondLetter = searchResults[i].Location[1];
+	        	
+	        	
+	        	console.log( searchResults[i].Location );
 
 	        	if ( state == searchResults[i].Location )
 	        		continue;
