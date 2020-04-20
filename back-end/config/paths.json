@@ -12,6 +12,19 @@
         "PUBLIC_KEY": "keys/c4meJWT.pub",
         "PRIVATE_KEY": "keys/c4meJWT"
     },
+    "local": {
+        "RANKING_URL": "https://www.timeshighereducation.com/rankings/united-states/2020#!/page/0/length/-1/sort_by/rank/sort_order/asc/cols/stats",
+        "COLLEGEDATA_URL": "https://www.collegedata.com/college/",
+        "ASSETS": "../assets",
+        "NICHE_URL": "http://allv22.all.cs.stonybrook.edu/~stoller/cse416/niche/",
+        "NICHE_URL_UNUSED": "https://www.niche.com/k12/",
+        "COLLEGE_NAMES": "colleges.txt",
+        "COLLEGE_SCORECARD": "collegeScorecard.csv",
+        "IMPORT_STUDENTS": "students/students-1000.csv",
+        "IMPORT_APPLICATIONS": "applications/applications-10000.csv",
+        "PUBLIC_KEY": "keys/c4meJWT.pub",
+        "PRIVATE_KEY": "keys/c4meJWT"
+    },
     "test": {
         "RANKING_URL": "https://www.timeshighereducation.com/rankings/united-states/2020#!/page/0/length/-1/sort_by/rank/sort_order/asc/cols/stats",
         "COLLEGEDATA_URL": "https://www.collegedata.com/college/",

@@ -2,11 +2,11 @@ const models = require('../models');
 const { Op } = require("sequelize");
 const { getStudent } = require('../controllers/studentController');
 
-
 const northeastRegion = ["ME", "VT", "NH", "MA", "RI", "CT", "NY", "PA", "NJ"]; //9 states
 const southRegion = ["DE", "MD", "WV", "VA", "NC", "SC", "GA", "FL", "KY", "TN", "MS", "AL", "AR", "LA", "OK", "TX"]; //16 states
 const midwestRegion = ["OH", "MI", "IN", "WI", "IL", "MN", "IA", "MO", "ND", "SD", "NE", "KS"]; //12 statesa=
 const westRegion = ["AK", "HI", "WA", "OR", "CA", "MT", "ID", "WY", "NV", "UT", "CO", "AZ", "NM"]; //13 states
+
 
 //  Parameters: filters
 //  Filters is an object. 
@@ -35,9 +35,11 @@ const westRegion = ["AK", "HI", "WA", "OR", "CA", "MT", "ID", "WY", "NV", "UT", 
 //     "sortDirection" : "ASC",
 //     "lax" : "True"
 // }
+
 exports.searchCollege = async ( filters, username ) => {
     let searchResults = {};
     try {
+
         let criteria = {};
         let query = {};
 
@@ -51,6 +53,7 @@ exports.searchCollege = async ( filters, username ) => {
                 criteria.AdmissionRate = { [Op.between] : [ filters.admissionRateMin, filters.admissionRateMax] };
             }
         }
+
         if ( filters.costMax ) {
         	// I take care of the out of state costs later in the code.
             if ( filters.lax ) {
@@ -61,8 +64,8 @@ exports.searchCollege = async ( filters, username ) => {
                 criteria.CostOfAttendanceInState = { [Op.lte] : filters.costMax };
                 // criteria.CostOfAttendanceOutOfState = { [Op.lte] : filters.costMax };
             }
-
         }
+
         if ( filters.region ) {
             switch ( filters.region ) {
                 case "northeast":
@@ -91,6 +94,7 @@ exports.searchCollege = async ( filters, username ) => {
                 criteria.Ranking = { [Op.between] : [ filters.rankingMin, filters.rankingMax] };
             }
         }
+
         if ( filters.sizeMin && filters.sizeMax )
             criteria.Size = { [Op.between] : [ filters.sizeMin, filters.sizeMax] };
         if ( filters.SATMathMin && filters.SATMathMax ) {
@@ -162,24 +166,6 @@ exports.searchCollege = async ( filters, username ) => {
         query.where = criteria;
         searchResults = await models.College.findAll( query );
 
-
-        // if ( filters.major && filters.major2 ) {
-        //     let collegeID = -1;
-        //     let firstMajor = null;
-	       //  for ( let i = searchResults.length - 1; i >= 0; i--) {
-	       //      if ( collegeID != searchResults[i].CollegeId ) {
-	       //          collegeID = searchResults[i].CollegeId;
-	       //          if  ( searchResults[i].Major.major.includes( filters.major ) ) 
-	       //          	firstMajor = filters.major;
-	       //          else
-	       //          	firstMajor = filters.major2;
-	       //      }
-	       //      // else
-	       //      //     if 
-	       //  }
-        // }
-
-
         // the following code is for the removal of duplicate colleges.
         // there can be duplicate results because when you search via majors,
         // there can be more results for the same college, just with different majors
@@ -191,7 +177,8 @@ exports.searchCollege = async ( filters, username ) => {
                 searchResults.splice( i , 1 );
         }
 
-
+        // the code above for 2 majors queries as an OR. 
+        //the following code is to keep only the AND cases.
         if ( filters.major && filters.major2 ) {
         	for ( let i = searchResults.length - 1; i >= 0; i--) {
 	        	console.log( searchResults[i].Name );
