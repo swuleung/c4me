@@ -16,6 +16,15 @@ $navbar-brand-font-size: 2rem;
   margin-bottom: 1rem;
 }
 
+/* fix for popper warning issue
+https://github.com/react-bootstrap/react-bootstrap/issues/5081
+*/
+.bs-popover-right {
+    margin-left: 0 !important;
+    top: -5px !important;
+    left: 8px !important;
+}
+
 // Import Bootstrap and its default variables
 @import "~bootstrap/scss/bootstrap.scss";
 @import url("https://fonts.googleapis.com/css?family=Orbitron&display=swap");

@@ -18,7 +18,7 @@ const FilterColleges = (props) => {
     // lax filtering
     const [lax, setLax] = useState('lax');
 
-    // college name 
+    // college name
     const [name, setName] = useState('');
 
     // first major
@@ -30,7 +30,7 @@ const FilterColleges = (props) => {
     // size
     const [size, setSize] = useState({
         sizeMin: '',
-        sizeMax:''    
+        sizeMax: '',
     });
 
     // admission rate
@@ -39,39 +39,39 @@ const FilterColleges = (props) => {
         admissionRateMax: '',
     });
 
-    // college ranking 
+    // college ranking
     const [collegeRanking, setCollegeRanking] = useState({
         rankingMin: '',
-        rankingMax: ''
+        rankingMax: '',
     });
 
     // SAT EBRW
     const [SATEBRW, setSATEBRW] = useState({
         SATEBRWMin: '',
-        SATEBRWMax: ''
+        SATEBRWMax: '',
     });
 
-    // SAT Math 
+    // SAT Math
     const [SATMath, setSATMath] = useState({
         SATMathMin: '',
         SATMathMax: '',
-    })
+    });
 
     // ACT Composite
     const [ACTComposite, setACTComposite] = useState({
         ACTCompositeMin: '',
-        ACTCompositeMax: ''
+        ACTCompositeMax: '',
     });
 
-    // Cost of Attendance 
-    const [costOfAttendance, setCostOfAttendance] = useState(null);
+    // Cost of Attendance
+    const [costOfAttendance, setCostOfAttendance] = useState('');
 
     // region list
     const [regions, setRegions] = useState({
-        midwestern: false,
-        northeastern: false,
-        southern: false,
-        western: false,
+        midwest: false,
+        northeast: false,
+        south: false,
+        west: false,
     });
     // pass filter changes to main  Applications Tracker
     const { handleFilterChange } = props;
@@ -94,7 +94,7 @@ const FilterColleges = (props) => {
         }
 
         if (major1 !== '') {
-            filters.major = major
+            filters.major = major1;
         }
 
         if (major2 !== '') {
@@ -108,7 +108,7 @@ const FilterColleges = (props) => {
         if (size.sizeMax !== '') {
             filters.sizeMax = parseInt(size.sizeMax, 10);
         }
-        
+
         if (admissionRate.admissionRateMin !== '') {
             filters.admissionRateMin = parseInt(admissionRate.admissionRateMin, 10);
         }
@@ -137,10 +137,10 @@ const FilterColleges = (props) => {
             filters.SATMathMin = parseInt(SATMath.SATMathMin, 10);
         }
 
-        if (SATMath.SATEBRWMax !== '') {
+        if (SATMath.SATMathMax !== '') {
             filters.SATMathMax = parseInt(SATMath.SATMathMax, 10);
         }
-        
+
         if (ACTComposite.ACTCompositeMin !== '') {
             filters.ACTCompositeMin = ACTComposite.ACTCompositeMin;
         }
@@ -155,8 +155,8 @@ const FilterColleges = (props) => {
 
         let selectedregions = [];
 
-        if (selectedregions.length === 0) {
-            selectedregions = ['midwestern', 'northeastern', 'southern', 'western'];
+        if (regions.length === 0) {
+            selectedregions = ['midwest', 'northeast', 'south', 'west'];
         } else {
             // get the selected regions
             const entries = Object.entries(regions);
@@ -171,7 +171,7 @@ const FilterColleges = (props) => {
         if (selectedStates.length) {
             filters.states = selectedStates;
         }
-        
+
         // pass this up to ApplicationsTracker
         handleFilterChange(filters);
     };
@@ -258,7 +258,7 @@ const FilterColleges = (props) => {
                 </OverlayTrigger>
                 <Form.Row>
                     <Form.Group as={Col}>
-                        <Form.Control type="text" placeholder="Enter a major" onChange={(e) => setMajor2(e.target.value.trim()))} />
+                        <Form.Control type="text" placeholder="Enter a major" onChange={(e) => setMajor2(e.target.value.trim())} />
                     </Form.Group>
                 </Form.Row>
                 <b>Size&nbsp;</b>
@@ -438,7 +438,10 @@ const FilterColleges = (props) => {
                     <FontAwesomeIcon className="text-info" icon={faQuestionCircle} />
                 </OverlayTrigger>
                 <Row>
-                    <Col>Maximum Cost: {costOfAttendance}</Col>
+                    <Col>
+Maximum Cost:
+                        {costOfAttendance}
+                    </Col>
                 </Row>
                 <Form.Row>
                     <Form.Group as={Col}>
@@ -461,10 +464,10 @@ const FilterColleges = (props) => {
                     <FontAwesomeIcon className="text-info" icon={faQuestionCircle} />
                 </OverlayTrigger>
                 <Form.Group>
-                    <Form.Check name="region" label="Midwestern" type="checkbox" checked={regions.midwestern} onChange={(e) => setRegions({ ...regions, midwestern: e.target.checked })} />
-                    <Form.Check name="status" label="Northeastern" type="checkbox" checked={regions.northeastern} onChange={(e) => setRegions({ ...regions, northeastern: e.target.checked })} />
-                    <Form.Check name="status" label="Southern" type="checkbox" checked={regions.southern} onChange={(e) => setRegions({ ...regions, southern: e.target.checked })} />
-                    <Form.Check name="status" label="Western" type="checkbox" checked={regions.western} onChange={(e) => setRegions({ ...regions, western: e.target.checked })} />
+                    <Form.Check name="region" label="Midwest" type="checkbox" checked={regions.midwest} onChange={(e) => setRegions({ ...regions, midwest: e.target.checked })} />
+                    <Form.Check name="status" label="Northeast" type="checkbox" checked={regions.northeast} onChange={(e) => setRegions({ ...regions, northeast: e.target.checked })} />
+                    <Form.Check name="status" label="South" type="checkbox" checked={regions.south} onChange={(e) => setRegions({ ...regions, south: e.target.checked })} />
+                    <Form.Check name="status" label="West" type="checkbox" checked={regions.west} onChange={(e) => setRegions({ ...regions, west: e.target.checked })} />
                 </Form.Group>
                 <StateAutosuggest
                     selectedStates={selectedStates}

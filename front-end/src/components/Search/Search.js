@@ -8,13 +8,14 @@ import FilterColleges from './FilterColleges/FilterColleges';
 import CollegeList from './CollegeList/CollegeList';
 import './Search.scss';
 
-const Search = (props) => {
+const Search = () => {
     const [errorAlert, setErrorAlert] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [filters, setFilters] = useState({});
     const [searchResults, setSearchResults] = useState([]);
 
     useEffect(() => {
+        console.log(filters);
         getSearchResults(filters).then((results) => {
             if (results.error) {
                 setErrorAlert(true);
@@ -22,27 +23,34 @@ const Search = (props) => {
             }
             if (results.ok) {
                 setErrorAlert(false);
-                setSearchResults(results.searchResults.sort((a, b) => (a.College.status.localeCompare(b.College.status) ? 1 : -1)));
+                console.log(results);
+                setSearchResults(results.colleges);
             }
         });
     }, [filters]);
 
     return (
-        <Container>
-            <Row>
-                <Col>
-                    <h1>Search for Colleges</h1>
-                </Col>
-            </Row>
-            <Row>
-                <Col xs="4">
-                    <FilterColleges handleFilterChange={setFilters} />
-                </Col>
-                <Col xs="8">
-                    <CollegeList colleges={searchResults} />
-                </Col>
-            </Row>
-        </Container>
+        <>
+            {errorAlert
+                ? <Alert variant="danger">{errorMessage}</Alert>
+                : (
+                    <Container>
+                        <Row>
+                            <Col>
+                                <h1>Search for Colleges</h1>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col xs="4">
+                                <FilterColleges handleFilterChange={setFilters} />
+                            </Col>
+                            <Col xs="8">
+                                <CollegeList colleges={searchResults} />
+                            </Col>
+                        </Row>
+                    </Container>
+                )}
+        </>
     );
 };
 

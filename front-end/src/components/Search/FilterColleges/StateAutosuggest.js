@@ -1,7 +1,7 @@
 /**
- * This component is the filter box for the Applications Tracker
+ * This component is the autosuggest for states with UI implementations
  */
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import {
     ListGroup, Row, Col, OverlayTrigger, Popover,
 } from 'react-bootstrap';

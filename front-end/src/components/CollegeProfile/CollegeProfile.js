@@ -34,7 +34,6 @@ const CollegeProfile = (props) => {
     // Display the college information
     return (
         <>
-            {' '}
             {errorAlert
                 ? <Alert variant="danger">{errorMessage}</Alert>
                 : (
