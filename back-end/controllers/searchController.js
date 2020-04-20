@@ -1,5 +1,6 @@
 const models = require('../models');
 const { Op } = require("sequelize");
+const  collegeController = require("./collegeController");
 
 const northeastRegion = ["ME", "VT", "NH", "MA", "RI", "CT", "NY", "PA", "NJ"]; //9 states
 const southRegion = ["DE", "MD", "WV", "VA", "NC", "SC", "GA", "FL", "KY", "TN", "MS", "AL", "AR", "LA", "OK", "TX"]; //16 states
@@ -181,110 +182,149 @@ exports.searchCollege = async ( filters ) => {
         ok: 'Success',
         colleges : searchResults
     }
-}
+};
 
 
 
 
-// /**
-//  * 
-//  * Returns every questionable application
-//  */
-// exports.getApplications = async () => {
-//     let allApps = [];
-//     //let allColleges = []; 
-//     //let allRelevantStudents = [];
-//     try {
-//          //allApps = await sequelize.query('SELECT * FROM applications WHERE status = :st1 OR status = :st2',
-//          //{replacements:{st1:'accepted',st2:'denied'},type: sequelize.QueryTypes.SELECT}
-//          //)
-//         // allColleges = await models.College.findAll({raw:true});
- 
-//         allApps = models.Applications.findAll({
-//             raw: true,
-//             where: { //Eventually, the where clause will be replaced by 'isQuestionable'
-//                   [sequelize.or]: [
-//                     {status: 'accepted'},
-//                     {status: 'denied'}
-//                   ]
-//               }
-//         }); 
- 
-//      //    allStudents = await models.Students.findAll({
-//      //         raw : true,
-//      //         where : {
-//      //             username 
-//      //         }
-//      //    });
- 
-//         allColleges = await models.College.findAll({});
- 
-//  /**
-//   * 
-//   * PROBABLY gonna move this to search controller...
-//   * 
-//   * 1. Consider adding an averageSAT, averageACT, averageGPA to Colleges table
-//   * When ApplicationViewer is called, right? Does it save the average anywhere? This is useful later on 
-//   * 2. When admin clicks on ViewApplications,  it calls on applicationTracker to get average data
-//   * 3. Considering recycling applicationTracker code for comparing values
-//   * 
-//   * 
-//   *  int qPoints = 0;
-//   *  for app in allApps: //allApps = GET * FROM applications WHERE status = 'accepted|denied'
-//   *          collAppData= "GET /colleges/'app.college'"
-//   *          if (collAppData.averageSAT < student[app.username].SAT){ qPoints+=10}
-//   *          else{
-//   *              qPoints +=10;
-//   *              int avgSAT = collAppData[averageSAT] 
-//   *              while(avgSAT-=50 > student[app.username][SAT]){
-//   *                    qPoints--;
-//   *                    if (qPoints == 0){break;}
-//   *              }
-//   *          }
-//   *          //repeat for each SAT field, replace -=50 with -=2 for ACT score, -.1 for GPA
-//   * 
-//   *         collegeMajors = GET * FROM majors m WHERE m.college = app.college
-//   *          //compare major string matching, award points per each
-//   * 
-//   *          //check app[student].residenceState v. college[id].state
-//   *         //check region[app[student].residenceState] v region[app[student].residenceState]
-//   *         //Award Points accordingly          
-//   *    
-//   *          
-//   *         if app.status == 'accepted' &&  qPoints < (26 == 40*.65){ app.isQuestionable == True}
-//   *         if app.status == 'denied' && qPoints > 14{app.isQuestionable == true}
-//   * 
-//   * 
-//   * return SELECT * FROM allApps a WHERE a.isQuestionable == 1
-//   * 
-//   * 
-//   * 
-//   * 
-//   * 
-//   * 
-//   * 
-//   */
- 
- 
- 
- 
-//     } catch (error){
-//          return {
-//               error: 'Failed Applications Get Request',
-//               reason: error,
-//               status: error.status
-//          }
-//     }
-//     if (allApps.length > 0){
-//         return { 
-//              ok: 'Found Accepted / Denied Applications',
-//              applications: allApps.toJSON()//,
-//              //colleges: allColleges.toJSON()
-//          }
-//     }
-//     return {
-//         error: 'Applications not found',
-//         reason: 'No Accepted/Denied Applications exist'
-//     }
-//  };
- 
+exports.calcQuestionableApplications = async () => {
+    let applications = [];
+    // no questionable applications
+    const withAbsoluteDecisions = {
+        where:{
+            status: {
+                [Op.or]: ['accepted','rejected']
+            }
+        }
+    };
+
+    try {
+        applications = (await models.Application.findAll(withAbsoluteDecisions));
+    } catch (error) {
+        return {
+            error: 'Unable to get applications for applications tracker',
+            reason: error.message,
+        };
+    }
+    if (!applications) {
+        return {
+            ok: 'No accepted data for college',
+            applications: [],
+            averages: {},
+        };
+    }
+
+    applications = applications.toJSON();
+    
+
+    //iterate thru each application
+    for (let i = 0; i < applications.length; i++){
+        let thisCollege = {};
+        //Find the College of Application[i]
+        try{
+            thisCollege = (await models.College.findOne({
+                where:{
+                    CollegeId: applications[i].College
+                }
+            }))
+        }catch (error) {
+            return {
+                error: 'Error in finding College for qScore',
+                reason: error.message,
+            };
+        }
+    
+        if (!thisCollege) {
+            return {
+                ok: 'College does not exist'
+            };
+        }
+        thisCollege = thisCollege.toJSON();
+        //find the Student of Application[i]
+        let thisStudent = {};
+        try{
+            thisStudent = (await models.User.findOne({
+                where:{
+                    username: applications[i].username
+                }
+            }))
+        }catch (error) {
+            return {
+                error: 'Error in finding User for qScore',
+                reason: error.message,
+            };
+        }
+        if (!thisStudent) {
+            return {
+                ok: 'User does not exist'
+            };
+        }
+        thisStudent = thisStudent.toJSON();
+
+        var qScore = 0;
+        //SAT - 10 
+        var totalSATcollege = (thisCollege.SATMath + thisCollege.SATEBRW);
+        var totalSATstudent = (thisStudent.SATMath + thisStudent.SATEBRW);
+        qScore+=10;
+        while ( totalSATcollege > totalSATstudent && qScore > 0){
+            totalSATstudent += 50;
+            qScore--;   
+        }
+
+        //ACT - 10 
+        if (thisCollege.ACTComposite < thisStudent.ACTComposite){
+            qScore+=10;
+        } 
+        else{
+            var temp = 10;
+            var tempACT = thisStudent.ACTComposite;
+            while (temp > 0 && tempACT <= thisCollege.ACTComposite){
+                tempACT+=2;
+                temp--;
+            }
+            qScore+=temp;
+        }
+
+        //Relevant Majors - 5 
+        var majors = collegeController.getMajorsByCollegeID(thisCollege.CollegeId);
+        if (thisStudent.major1 in majors){ qScore += 2.5;}
+        if (thisStudent.major2 in majors){ qScore += 2.5;}
+
+        //GPA - 10
+        if (thisStudent.GPA > thisCollege.GPA){ qScore+=10;}
+        else{ 
+            var temp = 10;
+            var tempGPA = thisStudent.GPA;
+            while(temp > 0 && thisCollege.GPA >= tempGPA){
+                tempGPA+=.1;
+                temp--;
+            }
+            qScore+=temp;
+        }
+
+        //ResidenceState - 5
+        if (thisStudent.residenceState == thisCollege.residenceState){ qScore+=5;}
+        else { 
+            var studentRegion = (student.residenceState in northeastRegion) ? northeastRegion :
+                            (student.residenceState in southRegion) ? southRegion :
+                            (student.residenceState in midwestRegion) ? midwestRegion : westRegion;
+            var collegeRegion = (student.residenceState in northeastRegion) ? northeastRegion :
+                            (student.residenceState in southRegion) ? southRegion :
+                            (student.residenceState in midwestRegion) ? midwestRegion : westRegion;
+            if (collegeRegion == studentRegion){ qScore+=2.5;}
+       }
+       
+       var threshold = qScore/40;
+       threshold = (applications[i].status == 'denied') ?  (1-threshold) : threshold;
+       if (threshold < .65){
+        ///
+        ///Update db so that applications[i].isQuestionable = True;
+        ///
+        ///
+        ///
+       }
+    }
+};
+
+
+
