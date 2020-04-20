@@ -191,34 +191,32 @@ exports.searchCollege = async ( filters, username ) => {
                 searchResults.splice( i , 1 );
         }
 
-        if ( filters.major && filters.major2 ) {
 
+        if ( filters.major && filters.major2 ) {
         	for ( let i = searchResults.length - 1; i >= 0; i--) {
 	        	console.log( searchResults[i].Name );
 	        	let majors = await searchResults[i].getMajors();
+
+	        	let flag1 = false;
+	        	let flag2 = false;
 	        	for ( let j = 0; j < majors.length; j++) {
-	        		// console.log( majors[j].Major );
+	        		console.log( majors[j].Major );
+	        		if ( majors[j].Major.toLowerCase().includes( filters.major.toLowerCase() ) ) 
+	        			flag1 = true;
+	        		if ( majors[j].Major.toLowerCase().includes( filters.major2.toLowerCase() ) )
+	        			flag2 = true;
 	        	}
-
+	        	if ( ! (flag1 && flag2) )
+	        		searchResults.splice( i , 1 );
 	        }
-
         }
 
         // the following code is for removing college's whose out of state costs
         // exceeeds the filters costMax.
         if ( filters.costMax ) {
-        	console.log( " cost max ");
         	const student = await getStudent( username );
-        	console.log( student );
-
         	const state = student.student.residenceState;
-        	console.log( state );
-
             for ( let i = searchResults.length - 1; i >= 0; i--) {
-	        	
-	        	
-	        	console.log( searchResults[i].Location );
-
 	        	if ( state == searchResults[i].Location )
 	        		continue;
 	        	else {
@@ -227,9 +225,8 @@ exports.searchCollege = async ( filters, username ) => {
 	        	}
 	        }
         }
+    }
 
-
-    } 
     catch (error) {
         return {
             error: 'searchCollege failed',
