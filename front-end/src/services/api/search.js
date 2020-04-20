@@ -1,6 +1,11 @@
 module.exports = {
-    getSearchResults: async function getSearchResults(filters) {
+    getSearchResults: async function getSearchResults(filters, sortBy) {
         try {
+            const filtersToSend = { ...filters };
+            if (sortBy !== 'none') {
+                filtersToSend.sortAttribute = sortBy;
+                filtersToSend.sortDirection = 'ASC';
+            }
             const results = await fetch('http://localhost:9000/search/', {
                 method: 'POST',
                 credentials: 'include',
@@ -8,7 +13,7 @@ module.exports = {
                     Accept: 'application/json',
                     'Content-Type': 'application/json; charset=utf-8',
                 },
-                body: JSON.stringify({ filters: filters }),
+                body: JSON.stringify({ filters: filtersToSend }),
 
             });
             return await results.json();

@@ -17,63 +17,62 @@ const CollegeList = (props) => {
             {colleges.map((college, i) => (
                 // eslint-disable-next-line react/no-array-index-key
                 <div className="border mb-2 student-container" key={college.Name}>
-                    <Row className="student-title mb-3">
-                        <Col className="font-weight-bold student-name">
-                            {college.Name}
-                        </Col>
-                        <Col className="text-center">
-                            {/* {app.Application.status} */}
+                    <Row>
+                        <Col>
+                            <h3>{college.Name}</h3>
+                            {college.InstitutionType === '1' ? (
+                                'Public school'
+                            ) : college.InstitutionType === '2' ? (
+                                'Private nonprofit school'
+                            ) : college.InstitutionType === '3' ? (
+                                'Private for-profit'
+                            ) : 'Unknown type of school'}
+                            {' in '}
+                            {college.Location}
                         </Col>
                         <Col className="text-right">
-                            <Link to={`/colleges/${college.CollegeId}`} target="_blank">Go to Profile↗</Link>
+                            <Link to={`/colleges/${college.CollegeId}`} target="_blank">Go to College ↗</Link>
                         </Col>
                     </Row>
-                    {/* <Row>
+                    <Row className="mt-3">
                         <Col>
                             <CardDeck>
                                 <Card>
                                     <div className="student-details text-center">
-                                        <div className="detail-title">GPA</div>
+                                        <div className="detail-title">Admission Rate</div>
                                         <div className="detail-score text-center">
-                                            {app.GPA ? app.GPA : 'N/A'}
+                                            {college.AdmissionRate ? college.AdmissionRate : 'N/A'}
                                         </div>
                                     </div>
                                 </Card>
                                 <Card>
                                     <div className="student-details text-center">
-                                        <div className="detail-title">SAT Math</div>
+                                        <div className="detail-title">Ranking</div>
                                         <div className="detail-score text-center">
-                                            {app.SATMath ? app.SATMath : 'N/A'}
+                                            {college.Ranking ? college.Ranking : 'N/A'}
                                         </div>
                                     </div>
                                 </Card>
                                 <Card>
                                     <div className="student-details text-center">
-                                        <div className="detail-title">SAT EBRW</div>
+                                        <div className="detail-title">Size</div>
                                         <div className="detail-score text-center">
-                                            {app.SATEBRW ? app.SATEBRW : 'N/A'}
+                                            {college.Size ? college.Size : 'N/A'}
                                         </div>
                                     </div>
                                 </Card>
                                 <Card>
                                     <div className="student-details text-center">
-                                        <div className="detail-title">ACT</div>
+                                        <div className="detail-title">Cost</div>
                                         <div className="detail-score text-center">
-                                            {app.ACTComposite ? app.ACTComposite : 'N/A'}
+                                            {college.CostOfAttendanceOutOfState}
+                                            {/* TODO: Show cost based on location */}
                                         </div>
                                     </div>
                                 </Card>
                             </CardDeck>
                         </Col>
                     </Row>
-                    <Row className="student-title mt-3">
-                        <Col>
-                            {highSchoolName}
-                        </Col>
-                        <Col className="text-right">
-                            {app.collegeClass ? `Class of ${app.collegeClass}` : 'No college class provided'}
-                        </Col>
-                    </Row> */}
                 </div>
             ))}
         </>
