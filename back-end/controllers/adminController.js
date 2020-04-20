@@ -194,7 +194,10 @@ exports.scrapeCollegeData = async () => {
                 actCompositeNums = actCompositeFull.substring(0, actCompositeFull.indexOf('range')).split('-');
                 actComposite = (parseInt(actCompositeNums[0], 10) + parseInt(actCompositeNums[1], 10)) / 2.0; // eslint-disable-line max-len
             }
-
+            
+            // Go academics tab to retrieve majors
+            await page.goto(`${collegeURL}/?tab=profile-academics-tab`);
+            
             // find elements containing majors
             const majorEls = await page.$x('(//div[contains(., \'Undergraduate Majors\')])[last()]//ul');
             let preMajors = [];
