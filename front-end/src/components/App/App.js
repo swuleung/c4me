@@ -84,7 +84,6 @@ function App() {
                                                 {isAdmin
                                                     ? <NavDropdown.Item as={Link} to="/admin">Admin Controls</NavDropdown.Item>
                                                     : <NavDropdown.Item as={Link} to={`/profile/${username}`}>View Profile</NavDropdown.Item>}
-                                                <NavDropdown.Item href="#tbd">Settings</NavDropdown.Item>
                                                 <NavDropdown.Divider />
                                                 <NavDropdown.Item as={Link} to="/" onClick={handleLogout}>Logout</NavDropdown.Item>
                                             </NavDropdown>
@@ -100,7 +99,6 @@ function App() {
                                 <Route exact path="/colleges/:collegeID" component={CollegeProfile} />
                                 <Route exact path="/search" component={Search} />
                                 <Route exact path="/find-similar-hs" username={username} component={SimilarHighSchool} />
-
                                 <Route
                                     exact
                                     path="/admin"
