@@ -7,6 +7,14 @@
     "dialect": "mysql",
     "operatorsAliases": 0
   },
+  "local": {
+    "username": "root",
+    "password": "password",
+    "database": "c4me",
+    "host": "localhost",
+    "dialect": "mysql",
+    "operatorsAliases": 0
+  },
   "test": {
     "username": "jaquach",
     "password": "111019384",

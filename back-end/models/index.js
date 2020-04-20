@@ -15,6 +15,10 @@ if (process.env.NODE_ENV === 'test') {
         logging: false,
         ...config,
     });
+} else if (process.env.NODE_ENV === 'local') {
+    sequelize = new Sequelize(config.database, config.username, config.password, {
+        ...config,
+    });
 } else {
     sequelize = new Sequelize({
         ...config,

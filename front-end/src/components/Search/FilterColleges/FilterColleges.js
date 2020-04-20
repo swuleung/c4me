@@ -150,7 +150,7 @@ const FilterColleges = (props) => {
         }
 
         if (costOfAttendance !== '') {
-            filters.costOfAttendance = costOfAttendance;
+            filters.costMax = costOfAttendance;
         }
 
         let selectedregions = [];

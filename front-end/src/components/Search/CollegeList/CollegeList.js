@@ -65,6 +65,7 @@ const CollegeList = (props) => {
                                     <div className="student-details text-center">
                                         <div className="detail-title">Cost</div>
                                         <div className="detail-score text-center">
+                                            {college.CostOfAttendanceInState}
                                             {college.CostOfAttendanceOutOfState}
                                             {/* TODO: Show cost based on location */}
                                         </div>
