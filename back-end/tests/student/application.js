@@ -45,12 +45,12 @@ describe('Student Profile', () => {
                                 applications: [{
                                     college: college.CollegeId,
                                     status: 'deferred',
-                                    username: 'mochaStudent',
+                                    Username: 'mochaStudent',
                                 }],
                             })
                             .end((error, response) => {
                                 response.should.have.status(200);
-                                expect(response.body.applications).to.deep.equal([{ college: college.CollegeId, status: 'deferred', username: 'mochaStudent' }]);
+                                expect(response.body.applications).to.deep.equal([{ college: college.CollegeId, status: 'deferred', Username: 'mochaStudent' }]);
                                 done();
                             });
                     });
@@ -63,7 +63,7 @@ describe('Student Profile', () => {
             agent
                 .delete('/users/delete')
                 .send({
-                    username: 'mochaStudent',
+                    Username: 'mochaStudent',
                 })
                 .end((err, res) => {
                     res.should.not.have.cookie('access_token');

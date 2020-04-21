@@ -52,7 +52,7 @@ function App() {
             }
             if (result.ok) {
                 setErrorAlert(false);
-                setIsAdmin(result.isAdmin);
+                setIsAdmin(result.IsAdmin);
             }
         });
     }, [username]);

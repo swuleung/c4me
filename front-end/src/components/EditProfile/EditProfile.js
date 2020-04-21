@@ -54,7 +54,7 @@ const EditProfile = (props) => {
         const { value } = e.target;
         const index = e.target.getAttribute('index');
         const newApplications = [...studentApplications];
-        newApplications[index].status = value;
+        newApplications[index].Status = value;
         setStudentApplications(newApplications);
     };
 
@@ -66,7 +66,7 @@ const EditProfile = (props) => {
         const { value } = e.target;
         const index = e.target.getAttribute('index');
         const newApplications = [...studentApplications];
-        newApplications[index].college = value;
+        newApplications[index].CollegeId = value;
         setStudentApplications(newApplications);
     };
 
@@ -87,9 +87,9 @@ const EditProfile = (props) => {
     const handleAddApplication = () => {
         const newApplications = [...studentApplications];
         newApplications.push({
-            status: 'pending',
-            college: null,
-            username: username,
+            Status: 'pending',
+            CollegeId: null,
+            Username: username,
         });
         setStudentApplications(newApplications);
     };
@@ -140,10 +140,10 @@ const EditProfile = (props) => {
             applications.push(
                 <tr className="application" key={`college-${i}`}>
                     <td>
-                        <CollegeDropdown applications={studentApplications} selectedValue={studentApplications[i].college} index={`${i}`} onChange={(e) => { handleApplicationCollegeChange(e); }} />
+                        <CollegeDropdown applications={studentApplications} selectedValue={studentApplications[i].CollegeId} index={`${i}`} onChange={(e) => { handleApplicationCollegeChange(e); }} />
                     </td>
                     <td>
-                        <Form.Control as="select" index={`${i}`} className={studentApplications[i].status} value={studentApplications[i].status} onChange={(e) => { handleApplicationChange(e); }}>
+                        <Form.Control as="select" index={`${i}`} className={studentApplications[i].Status} value={studentApplications[i].Status} onChange={(e) => { handleApplicationChange(e); }}>
                             <option value="accepted">accepted</option>
                             <option value="deferred">deferred</option>
                             <option value="denied">denied</option>
@@ -179,13 +179,13 @@ const EditProfile = (props) => {
                 } else {
                     setHighSchool({
                         Name: '',
-                        HighSchoolCity: '',
-                        HighSchoolState: '',
+                        City: '',
+                        State: '',
                     });
                     setNewHighSchool({
                         Name: '',
-                        HighSchoolCity: '',
-                        HighSchoolState: '',
+                        City: '',
+                        State: '',
                     });
                 }
             }
@@ -234,16 +234,16 @@ const EditProfile = (props) => {
 
     // display the suggestion
     const renderSuggestion = (suggestion) => {
-        if (suggestion.Name && suggestion.HighSchoolCity && suggestion.HighSchoolState) {
+        if (suggestion.Name && suggestion.City && suggestion.State) {
             return (
                 <ListGroup.Item>
                     {suggestion.Name}
                     {' '}
                     <small>
-                        {suggestion.HighSchoolCity}
+                        {suggestion.City}
 ,
                         {' '}
-                        {suggestion.HighSchoolState}
+                        {suggestion.State}
                     </small>
                 </ListGroup.Item>
             );
@@ -349,15 +349,15 @@ const EditProfile = (props) => {
                                     </Form.Group>
                                 </Col>
                                 <Col>
-                                    <Form.Group controlId="HighSchoolCity">
+                                    <Form.Group controlId="City">
                                         <Form.Label>City</Form.Label>
-                                        <Form.Control type="text" value={newHighSchool.HighSchoolCity || ''} placeholder="City" onChange={(e) => { handleHighSchoolChange(e); }} autoComplete="on" required />
+                                        <Form.Control type="text" value={newHighSchool.City || ''} placeholder="City" onChange={(e) => { handleHighSchoolChange(e); }} autoComplete="on" required />
                                     </Form.Group>
                                 </Col>
                                 <Col>
-                                    <Form.Group controlId="HighSchoolState">
+                                    <Form.Group controlId="State">
                                         <Form.Label>State</Form.Label>
-                                        <Form.Control as="select" value={newHighSchool.HighSchoolState || ''} onChange={(e) => { handleHighSchoolChange(e); }} required>
+                                        <Form.Control as="select" value={newHighSchool.State || ''} onChange={(e) => { handleHighSchoolChange(e); }} required>
                                             <option value="" disabled>Select a State</option>
                                             {generateStateOptions()}
                                         </Form.Control>
@@ -367,9 +367,9 @@ const EditProfile = (props) => {
                         )}
                         <Row>
                             <Col>
-                                <Form.Group controlId="collegeClass">
+                                <Form.Group controlId="CollegeClass">
                                     <Form.Label>College Class Year</Form.Label>
-                                    <Form.Control type="number" value={student.collegeClass || ''} placeholder="Enter college class year" onChange={(e) => { handleProfileChange(e); }} autoComplete="on" />
+                                    <Form.Control type="number" value={student.CollegeClass || ''} placeholder="Enter college class year" onChange={(e) => { handleProfileChange(e); }} autoComplete="on" />
                                 </Form.Group>
                             </Col>
                             <Col>
@@ -380,24 +380,24 @@ const EditProfile = (props) => {
                             </Col>
                         </Row>
 
-                        <Form.Group controlId="residenceState">
+                        <Form.Group controlId="ResidenceState">
                             <Form.Label>Residence State</Form.Label>
-                            <Form.Control as="select" value={student.residenceState || ''} onChange={(e) => { handleProfileChange(e); }}>
+                            <Form.Control as="select" value={student.ResidenceState || ''} onChange={(e) => { handleProfileChange(e); }}>
                                 <option value="" disabled>Select a State</option>
                                 {generateStateOptions()}
                             </Form.Control>
                         </Form.Group>
                         <Row>
                             <Col>
-                                <Form.Group controlId="major1">
+                                <Form.Group controlId="Major1">
                                     <Form.Label>First Major</Form.Label>
-                                    <Form.Control type="text" value={student.major1 || ''} placeholder="Enter a major" onChange={(e) => { handleProfileChange(e); }} autoComplete="on" />
+                                    <Form.Control type="text" value={student.Major1 || ''} placeholder="Enter a major" onChange={(e) => { handleProfileChange(e); }} autoComplete="on" />
                                 </Form.Group>
                             </Col>
                             <Col>
-                                <Form.Group controlId="major2">
+                                <Form.Group controlId="Major2">
                                     <Form.Label>Second Major</Form.Label>
-                                    <Form.Control type="text" value={student.major2 || ''} placeholder="Enter a major" onChange={(e) => { handleProfileChange(e); }} autoComplete="on" />
+                                    <Form.Control type="text" value={student.Major2 || ''} placeholder="Enter a major" onChange={(e) => { handleProfileChange(e); }} autoComplete="on" />
                                 </Form.Group>
                             </Col>
                         </Row>

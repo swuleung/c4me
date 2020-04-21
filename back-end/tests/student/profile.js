@@ -10,8 +10,8 @@ describe('Student Profile', () => {
             agent
                 .post('/users/create')
                 .send({
-                    username: 'mochaStudent',
-                    password: 'password',
+                    Username: 'mochaStudent',
+                    Password: 'password',
                 })
                 .end((err, res) => {
                     res.should.have.status(200);
@@ -23,8 +23,8 @@ describe('Student Profile', () => {
             agent
                 .post('/users/login')
                 .send({
-                    username: 'mochaStudent',
-                    password: 'password',
+                    Username: 'mochaStudent',
+                    Password: 'password',
                 })
                 .end((err, res) => {
                     res.should.have.status(200);
@@ -42,10 +42,10 @@ describe('Student Profile', () => {
                     res.should.have.status(200);
                     const { student } = res.body;
                     const {
-                        username, isAdmin, APPassed, ...details
+                        Username, IsAdmin, APPassed, ...details
                     } = student;
-                    expect(username).to.equal('mochaStudent');
-                    expect(isAdmin).to.be.false;
+                    expect(Username).to.equal('mochaStudent');
+                    expect(IsAdmin).to.be.false;
 
                     Object.keys(details).forEach((key) => {
                         expect(details[key]).to.be.null;
@@ -62,7 +62,7 @@ describe('Student Profile', () => {
                 .end((err, res) => {
                     res.should.have.status(200);
                     const { student } = res.body;
-                    expect(student.username).to.equal('mochaStudent');
+                    expect(student.Username).to.equal('mochaStudent');
                     expect(student.GPA).to.equal(3.0);
                     done();
                 });
@@ -87,33 +87,33 @@ describe('Student Profile', () => {
                 .end((err, res) => {
                     res.should.have.status(200);
                     const { student } = res.body;
-                    expect(student.username).to.equal('mochaStudent');
+                    expect(student.Username).to.equal('mochaStudent');
                     expect(student.ACTComposite).to.equal(2);
                     done();
                 });
         });
-        it('Update mochaStudent with invalid data (Illegal residenceState)', (done) => {
+        it('Update mochaStudent with invalid data (Illegal ResidenceState)', (done) => {
             agent
                 .post('/students/mochaStudent/edit')
                 .send({
-                    student: { residenceState: 'ZZ' },
+                    student: { ResidenceState: 'ZZ' },
                 })
                 .end((err, res) => {
                     res.should.have.status(400);
                     done();
                 });
         });
-        it('Update mochaStudent with valid data (Legal residenceState)', (done) => {
+        it('Update mochaStudent with valid data (Legal ResidenceState)', (done) => {
             agent
                 .post('/students/mochaStudent/edit')
                 .send({
-                    student: { residenceState: 'AL' },
+                    student: { ResidenceState: 'AL' },
                 })
                 .end((err, res) => {
                     res.should.have.status(200);
                     const { student } = res.body;
-                    expect(student.username).to.equal('mochaStudent');
-                    expect(student.residenceState).to.equal('AL');
+                    expect(student.Username).to.equal('mochaStudent');
+                    expect(student.ResidenceState).to.equal('AL');
                     done();
                 });
         });
@@ -137,7 +137,7 @@ describe('Student Profile', () => {
                 .end((err, res) => {
                     res.should.have.status(200);
                     const { student } = res.body;
-                    expect(student.username).to.equal('mochaStudent');
+                    expect(student.Username).to.equal('mochaStudent');
                     expect(student.SATMath).to.equal(200);
                     done();
                 });
@@ -162,7 +162,7 @@ describe('Student Profile', () => {
                 .end((err, res) => {
                     res.should.have.status(200);
                     const { student } = res.body;
-                    expect(student.username).to.equal('mochaStudent');
+                    expect(student.Username).to.equal('mochaStudent');
                     expect(student.APPassed).to.equal(1);
                     done();
                 });
