@@ -10,8 +10,8 @@ describe('Scrape college information', () => {
             agent
                 .post('/users/login')
                 .send({
-                    username: 'admin',
-                    password: 'admin',
+                    Username: 'admin',
+                    Password: 'admin',
                 })
                 .end((err, res) => {
                     res.should.have.status(200);

@@ -63,7 +63,7 @@ describe('Student Profile', () => {
             agent
                 .delete('/users/delete')
                 .send({
-                    username: 'mochaStudent',
+                    Username: 'mochaStudent',
                 })
                 .end((err, res) => {
                     res.should.not.have.cookie('access_token');
