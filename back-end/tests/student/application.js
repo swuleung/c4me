@@ -24,8 +24,8 @@ describe('Student Profile', () => {
                     .post('/students/mochaStudent/applications/edit')
                     .send({
                         applications: [{
-                            college: -1,
-                            status: 'deferred',
+                            CollegeId: -1,
+                            Status: 'deferred',
                         }],
                     })
                     .end((err, res) => {
@@ -43,14 +43,14 @@ describe('Student Profile', () => {
                             .post('/students/mochaStudent/applications/edit')
                             .send({
                                 applications: [{
-                                    college: college.CollegeId,
-                                    status: 'deferred',
-                                    username: 'mochaStudent',
+                                    CollegeId: college.CollegeId,
+                                    Status: 'deferred',
+                                    Username: 'mochaStudent',
                                 }],
                             })
                             .end((error, response) => {
                                 response.should.have.status(200);
-                                expect(response.body.applications).to.deep.equal([{ college: college.CollegeId, status: 'deferred', username: 'mochaStudent' }]);
+                                expect(response.body.applications).to.deep.equal([{ CollegeId: college.CollegeId, Status: 'deferred', Username: 'mochaStudent' }]);
                                 done();
                             });
                     });

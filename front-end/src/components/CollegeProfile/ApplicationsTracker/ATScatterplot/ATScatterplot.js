@@ -111,10 +111,10 @@ const ATScatterplot = (props) => {
             let minGPA = 4;
             for (let applicationIndex = 0; applicationIndex < applications.length; applicationIndex += 1) {
                 const app = applications[applicationIndex];
-                if (localStorage.getItem('username') === app.username) {
-                    if (app.Application.status === 'accepted') {
+                if (localStorage.getItem('username') === app.Username) {
+                    if (app.Application.Status === 'accepted') {
                         backgroundColor = 'green';
-                    } else if (app.Application.status === 'denied') {
+                    } else if (app.Application.Status === 'denied') {
                         backgroundColor = 'red';
                     } else {
                         backgroundColor = 'gold';
@@ -124,7 +124,7 @@ const ATScatterplot = (props) => {
                 }
                 const GPA = parseFloat(app.GPA);
                 if (GPA !== 0 && GPA < minGPA) minGPA = GPA;
-                if (app.Application.status === 'accepted') {
+                if (app.Application.Status === 'accepted') {
                     if (selectedHorizontalAxis === 'SAT') {
                         accepted.push({
                             x: app.SATMath + app.SATEBRW,
@@ -141,7 +141,7 @@ const ATScatterplot = (props) => {
                             y: GPA,
                         });
                     }
-                } else if (app.Application.status === 'denied') {
+                } else if (app.Application.Status === 'denied') {
                     if (selectedHorizontalAxis === 'SAT') {
                         denied.push({
                             x: app.SATMath + app.SATEBRW,

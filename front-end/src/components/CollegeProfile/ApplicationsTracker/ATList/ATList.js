@@ -28,13 +28,13 @@ const ATList = (props) => {
                     <div className="border mb-2 student-container" key={app.Application.status + i}>
                         <Row className="student-title mb-3">
                             <Col className="font-weight-bold student-name">
-                                {app.username}
+                                {app.Username}
                             </Col>
-                            <Col className={`${app.Application.status} text-center`}>
-                                {app.Application.status}
+                            <Col className={`${app.Application.Status} text-center`}>
+                                {app.Application.Status}
                             </Col>
                             <Col className="text-right">
-                                <Link to={`/profile/${app.username}`} target="_blank">Go to Profile↗</Link>
+                                <Link to={`/profile/${app.Username}`} target="_blank">Go to Profile↗</Link>
                             </Col>
                         </Row>
                         <Row>
@@ -80,7 +80,7 @@ const ATList = (props) => {
                                 {highSchoolName}
                             </Col>
                             <Col className="text-right">
-                                {app.collegeClass ? `Class of ${app.collegeClass}` : 'No college class provided'}
+                                {app.CollegeClass ? `Class of ${app.CollegeClass}` : 'No college class provided'}
                             </Col>
                         </Row>
                     </div>

@@ -16,10 +16,10 @@
     "operatorsAliases": 0
   },
   "test": {
-    "username": "jaquach",
-    "password": "111019384",
-    "database": "jaquach",
-    "host": "mysql4.cs.stonybrook.edu",
+    "username": "root",
+    "password": "password",
+    "database": "c4me",
+    "host": "localhost",
     "dialect": "mysql",
     "operatorsAliases": 0
   },

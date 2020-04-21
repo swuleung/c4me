@@ -187,8 +187,8 @@ exports.scrapeHighSchoolData = async (highSchoolName, highSchoolCity, highSchool
     // creates the high school object
     const highSchoolObject = {
         Name: highSchoolName,
-        HighSchoolCity: highSchoolCity,
-        HighSchoolState: highSchoolState,
+        City: highSchoolCity,
+        State: highSchoolState,
         NicheAcademicScore: nicheAcademicScore,
         GraduationRate: graduationRate,
         AverageSAT: averageSAT,

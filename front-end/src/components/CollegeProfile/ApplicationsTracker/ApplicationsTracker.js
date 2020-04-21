@@ -37,7 +37,7 @@ const ApplicationsTracker = (props) => {
             }
             if (results.ok) {
                 setErrorAlert(false);
-                setApplications(results.applications.sort((a, b) => (a.Application.status.localeCompare(b.Application.status))));
+                setApplications(results.applications.sort((a, b) => (a.Application.Status.localeCompare(b.Application.Status))));
                 setAverages(results.averages);
             }
         });

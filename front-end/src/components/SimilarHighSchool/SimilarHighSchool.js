@@ -1,3 +1,6 @@
+/**
+ * This component shows similar high schools to the current user
+ */
 import React, { useState, useEffect } from 'react';
 import {
     Alert, Col, Row, Container,
@@ -59,8 +62,8 @@ const SimilarHighSchool = () => {
                                             </h1>
                                         </Row>
                                         <Row>
-                                            {student.HighSchool.HighSchoolCity ? `${student.HighSchool.HighSchoolCity}, ` : ''}
-                                            {student.HighSchool.HighSchoolState ? student.HighSchool.HighSchoolState : ''}
+                                            {student.HighSchool.City ? `${student.HighSchool.City}, ` : ''}
+                                            {student.HighSchool.State ? student.HighSchool.State : ''}
                                         </Row>
                                     </Container>
                                     <br />
@@ -69,12 +72,12 @@ const SimilarHighSchool = () => {
                                         {highSchools.map((highSchool) => (
                                             highSchool.Name !== student.HighSchool.Name
                                                 ? (
-                                                    <div className="border mb-2 p-3" key={highSchool.HighSchoolId}>
+                                                    <Container className="border mb-2 p-3" key={highSchool.HighSchoolId}>
                                                         <Row className="mb-2">
                                                             <Col>
                                                                 <Row className="h5 font-weight-bold mb-0"><Col>{highSchool.Name}</Col></Row>
                                                                 <Row>
-                                                                    <Col>{`${highSchool.HighSchoolCity}, ${highSchool.HighSchoolState}`}</Col>
+                                                                    <Col>{`${highSchool.City}, ${highSchool.State}`}</Col>
                                                                 </Row>
                                                             </Col>
                                                             <Col className="h5 text-center">
@@ -126,7 +129,7 @@ const SimilarHighSchool = () => {
                                                                 </Row>
                                                             </Col>
                                                         </Row>
-                                                    </div>
+                                                    </Container>
                                                 )
                                                 : <></>
                                         ))}
