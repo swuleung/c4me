@@ -9,8 +9,8 @@ describe('Simple Create/Login/Delete', () => {
             agent
                 .post('/users/create')
                 .send({
-                    Username: 'mocha',
-                    Password: 'Password',
+                    username: 'mocha',
+                    password: 'password',
                 })
                 .end((err, res) => {
                     res.should.have.status(200);
@@ -24,8 +24,8 @@ describe('Simple Create/Login/Delete', () => {
             agent
                 .post('/users/login')
                 .send({
-                    Username: 'mocha',
-                    Password: 'password',
+                    username: 'mocha',
+                    password: 'password',
                 })
                 .end((err, res) => {
                     res.should.have.status(200);
@@ -40,7 +40,7 @@ describe('Simple Create/Login/Delete', () => {
             agent
                 .delete('/users/delete')
                 .send({
-                    Username: 'mocha',
+                    username: 'mocha',
                 })
                 .end((err, res) => {
                     res.should.have.status(200);

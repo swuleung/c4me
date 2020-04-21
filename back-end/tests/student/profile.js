@@ -10,8 +10,8 @@ describe('Student Profile', () => {
             agent
                 .post('/users/create')
                 .send({
-                    Username: 'mochaStudent',
-                    Password: 'password',
+                    username: 'mochaStudent',
+                    password: 'password',
                 })
                 .end((err, res) => {
                     res.should.have.status(200);
@@ -23,8 +23,8 @@ describe('Student Profile', () => {
             agent
                 .post('/users/login')
                 .send({
-                    Username: 'mochaStudent',
-                    Password: 'password',
+                    username: 'mochaStudent',
+                    password: 'password',
                 })
                 .end((err, res) => {
                     res.should.have.status(200);
