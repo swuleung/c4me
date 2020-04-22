@@ -216,9 +216,10 @@ exports.calcQuestionableApplications = async () => {
             averages: {},
         };
     }
-
-    applications = applications.toJSON();
-    
+    //console.log("Here are the applications");
+    console.log(applications[0]);
+    //applications = applications.toJSON();
+    //applications already in JSON
 
     //iterate thru each application
     for (let i = 0; i < applications.length; i++){
