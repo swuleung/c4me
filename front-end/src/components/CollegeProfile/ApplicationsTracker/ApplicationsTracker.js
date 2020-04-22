@@ -42,6 +42,7 @@ const ApplicationsTracker = (props) => {
             }
         });
 
+        // get all high schools for autosuggest
         highSchoolAPI.getAllHighSchools().then((result) => {
             if (result.error) {
                 setErrorAlert(true);

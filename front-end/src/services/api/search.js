@@ -1,4 +1,10 @@
 const search = {
+    /**
+     *
+     * @param {filter} filters All the filters for a college to be applied
+     * @param {string} sortBy The sort attribute to sort by
+     * @param {string} sortDirection The sort direction: either acending or descending
+     */
     getSearchResults: async function getSearchResults(filters, sortBy, sortDirection) {
         try {
             const filtersToSend = { ...filters };

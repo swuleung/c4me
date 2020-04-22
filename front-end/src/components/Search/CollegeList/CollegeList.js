@@ -1,5 +1,5 @@
 /**
- * This is the list view of Applicationst Tracker
+ * This is the list view of search results
  */
 import React from 'react';
 import {
@@ -11,7 +11,7 @@ import './CollegeList.scss';
 
 const CollegeList = (props) => {
     const { colleges, student } = props;
-    // map all the applications to the HTML below
+    // map all the colleges to the HTML below
     return (
         <>
             {colleges.map((college, i) => (

@@ -28,7 +28,7 @@ const StateAutosuggest = (props) => {
     };
 
     /**
-     *  Handle the changes in deleting a high school from list
+     *  Handle the changes in deleting a state from list
      * @param {event} e
      */
     const handleDeleteState = (e) => {
@@ -39,7 +39,7 @@ const StateAutosuggest = (props) => {
     };
 
     /**
-     * Generate html for the high school list to display under the autosuggest
+     * Generate html for the state list to display under the autosuggest
      */
     const generateStateList = () => {
         const statesHTML = [];
@@ -104,7 +104,7 @@ const StateAutosuggest = (props) => {
         setSuggestions([]);
     };
 
-    // display the filter box
+    // display the auto suggest
     return (
         <>
             <b>States&nbsp;</b>

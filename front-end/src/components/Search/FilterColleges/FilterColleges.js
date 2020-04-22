@@ -1,7 +1,7 @@
 /**
  * This component is the filter box for the Applications Tracker
  */
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
     Container, Form, Row, Col, OverlayTrigger, Popover, Button, InputGroup,
 } from 'react-bootstrap';
@@ -77,7 +77,8 @@ const FilterColleges = (props) => {
     const [selectedStates, setSelectedStates] = useState([]);
 
     /**
-     * Build the query for filters before passing it up to Applications Tracker
+     * Build the query for filters before passing it up to Search
+     * All values are trimmed. If there is a missing min/max, then it is appropriately filled.
      */
     const buildATQuery = () => {
         const filters = {};
@@ -178,7 +179,8 @@ const FilterColleges = (props) => {
 
         let selectedregions = [];
 
-        if (regions.length === 0) {
+        // if no regions are selected, add all regions
+        if (regions.length === 0 && selectedStates.length !== 0) {
             selectedregions = ['midwest', 'northeast', 'south', 'west'];
         } else {
             // get the selected regions
@@ -191,17 +193,13 @@ const FilterColleges = (props) => {
         }
         filters.regions = selectedregions;
 
-        if (selectedStates.length) {
+        if (selectedStates.length !== 0) {
             filters.states = selectedStates;
         }
 
         // pass this up to ApplicationsTracker
         handleFilterChange(filters);
     };
-
-    // load high schoools
-    useEffect(() => {
-    }, []);
 
     // display the filter box
     return (

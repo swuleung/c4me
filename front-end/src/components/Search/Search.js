@@ -22,8 +22,11 @@ const Search = () => {
 
     useEffect(() => {
         const sortDirection = sortAsc ? 'ASC' : 'DESC';
+
+        // Cost is soted customly
         const sortByFilter = sortBy === 'Cost' ? 'none' : sortBy;
 
+        // get the current student informationf or comparison
         studentAPI.getStudent(localStorage.getItem('username')).then((result) => {
             if (result.error) {
                 setErrorAlert(true);
@@ -35,6 +38,7 @@ const Search = () => {
             }
         });
 
+        // get search results with filters and sort
         searchAPI.getSearchResults(filters, sortByFilter, sortDirection).then((result) => {
             if (result.error) {
                 setErrorAlert(true);
