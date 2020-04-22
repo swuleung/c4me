@@ -3,7 +3,6 @@ const puppeteer = require('puppeteer');
 const { getPathConfig } = require('../utils/readAppFiles');
 const models = require('../models');
 
-
 /**
  * Get a high school's information using its id
  * @param {integer} highSchoolId
@@ -232,4 +231,254 @@ exports.scrapeHighSchoolData = async (highSchoolName, highSchoolCity, highSchool
     await page.close();
     await browser.close();
     return { ok: `Success. Able to scrape ${highSchoolName} data.` };
+};
+
+/**
+ * Finds the value(min/max) that closest to the given value
+ * @param {float} min
+ * @param {float} max
+ * @param {float} value
+ */
+exports.findCloserValue = (min, max, value) => {
+    const upper = Math.abs(max - value);
+    const lower = Math.abs(min - value);
+    if (upper < lower) {
+        return upper;
+    }
+    return lower;
+};
+
+/**
+ * Calculates the similarity points based on deviation from student's high school values
+ * @param {integer} base initial similarity point value
+ * @param {float} studentHSValue
+ * @param {float} otherHSValue
+ * @param {float} deviation
+ * @param {float} deduction
+ */
+exports.calculateSimilarityPoints = (base, studentHSValue, otherHSValue, deviation, deduction) => {
+    // if the other high school's value is within deviation value of student's high school
+    if (otherHSValue >= studentHSValue - deviation && otherHSValue <= studentHSValue + deviation) {
+        return base;
+    }
+    // finds the closer value to the other high school to increment
+    const value = this.findCloserValue(
+        studentHSValue - deviation,
+        studentHSValue + deviation,
+        otherHSValue,
+    );
+    // every increment of deviation from the closer value, 1 similarity point deducted
+    return Math.max(base - Math.ceil(Math.abs((value - otherHSValue) / deviation) / deduction), 0);
+};
+
+/**
+ * Returns list of high schools sorted by similarity points
+ * @param {string} username
+ */
+exports.findSimilarHS = async (username) => {
+    let highSchools;
+    const student = await models.User.findOne({
+        where: {
+            username: username,
+            isAdmin: false,
+        },
+        include: [{
+            model: models.HighSchool,
+        }],
+    });
+    if (!student.HighSchool) {
+        return {
+            error: 'No high school in student profile',
+            reason: 'No high school in student profile',
+        };
+    }
+    const studentHS = student.HighSchool;
+    const result = await this.getAllHighSchools();
+    if (result.ok) {
+        highSchools = result.highSchools;
+    } else {
+        return result;
+    }
+    // stores numerical value of letter grades
+    const grades = {};
+    grades['A+'] = 0;
+    grades.A = 1;
+    grades['A-'] = 2;
+    grades['B+'] = 3;
+    grades.B = 4;
+    grades['B-'] = 5;
+    grades['C+'] = 6;
+    grades.C = 7;
+    grades['C-'] = 8;
+    grades['D+'] = 9;
+    grades.D = 10;
+    grades['D-'] = 11;
+
+    // conversion for act score to sat score
+    const ACTtoSAT = {};
+    ACTtoSAT[9] = 590;
+    ACTtoSAT[10] = 630;
+    ACTtoSAT[11] = 670;
+    ACTtoSAT[12] = 710;
+    ACTtoSAT[13] = 760;
+    ACTtoSAT[14] = 800;
+    ACTtoSAT[15] = 850;
+    ACTtoSAT[16] = 890;
+    ACTtoSAT[17] = 930;
+    ACTtoSAT[18] = 970;
+    ACTtoSAT[19] = 1010;
+    ACTtoSAT[20] = 1040;
+    ACTtoSAT[21] = 1080;
+    ACTtoSAT[22] = 1110;
+    ACTtoSAT[23] = 1140;
+    ACTtoSAT[24] = 1180;
+    ACTtoSAT[25] = 1210;
+    ACTtoSAT[26] = 1240;
+    ACTtoSAT[27] = 1280;
+    ACTtoSAT[28] = 1310;
+    ACTtoSAT[29] = 1340;
+    ACTtoSAT[30] = 1370;
+    ACTtoSAT[31] = 1400;
+    ACTtoSAT[32] = 1430;
+    ACTtoSAT[33] = 1460;
+    ACTtoSAT[34] = 1500;
+    ACTtoSAT[35] = 1540;
+    ACTtoSAT[36] = 1590;
+
+    // get students of high school of given student
+    // eslint-disable-next-line no-await-in-loop
+    const students = await models.User.findAll({
+        include: [{
+            model: models.HighSchool,
+            where: { HighSchoolId: studentHS.HighSchoolId },
+        }],
+    });
+
+    // loops through all high schools and give similarity points
+    for (let i = 0; i < highSchools.length; i += 1) {
+        const highSchool = highSchools[i];
+        if (studentHS.Name !== highSchool.Name
+            && studentHS.HighSchoolCity !== highSchool.HighSchoolCity
+            && studentHS.HighSchoolState !== highSchool.HighSchoolState) {
+            let similarityPoints = 0;
+            if (studentHS.NicheAcademicScore && highSchool.NicheAcademicScore) {
+                if (studentHS.NicheAcademicScore === highSchool.NicheAcademicScore) {
+                    similarityPoints += 12;
+                } else {
+                    // if the scores are different find the difference in the grade values
+                    const difference = Math.abs(grades[studentHS.NicheAcademicScore]
+                        - grades[highSchool.NicheAcademicScore]);
+                    similarityPoints += (12 - difference);
+                }
+            }
+            if (studentHS.GraduationRate && highSchool.GraduationRate) {
+                let studentGR = studentHS.GraduationRate;
+                // if the graduation rate is within 5% of student's high school
+                if (highSchool.GraduationRate >= studentGR - 5
+                    && highSchool.GraduationRate <= studentGR + 5) {
+                    similarityPoints += 10;
+                } else {
+                    // finds the closer value to the other high school to increment
+                    studentGR = this.findCloserValue(
+                        studentGR - 5,
+                        studentGR + 5,
+                        highSchool.GraduationRate,
+                    );
+                    // every increment of 2% from the closer value, 1 similarity point deducted
+                    similarityPoints += Math.max(
+                        10 - Math.ceil(Math.abs(studentGR - highSchool.GraduationRate) / 2),
+                        0,
+                    );
+                }
+            }
+            if (studentHS.AverageSAT && highSchool.AverageSAT) {
+                similarityPoints += this.calculateSimilarityPoints(
+                    10, studentHS.AverageSAT, highSchool.AverageSAT, 50, 1,
+                );
+            }
+            if (studentHS.SATMath && highSchool.SATMath) {
+                similarityPoints += this.calculateSimilarityPoints(
+                    2, studentHS.SATMath, highSchool.SATMath, 25, 0.5,
+                );
+            }
+            if (studentHS.SATEBRW && highSchool.SATEBRW) {
+                similarityPoints += this.calculateSimilarityPoints(
+                    2, studentHS.SATEBRW, highSchool.SATEBRW, 25, 0.5,
+                );
+            }
+            if (studentHS.AverageACT && highSchool.AverageACT) {
+                similarityPoints += this.calculateSimilarityPoints(
+                    10, studentHS.AverageACT, highSchool.AverageACT, 2, 1,
+                );
+            }
+            if (studentHS.ACTMath && highSchool.ACTMath) {
+                similarityPoints += this.calculateSimilarityPoints(
+                    1, studentHS.ACTMath, highSchool.ACTMath, 2, 0.5,
+                );
+            }
+            if (studentHS.ACTReading && highSchool.ACTReading) {
+                similarityPoints += this.calculateSimilarityPoints(
+                    1, studentHS.ACTReading, highSchool.ACTReading, 2, 0.5,
+                );
+            }
+            if (studentHS.ACTEnglish && highSchool.ACTEnglish) {
+                similarityPoints += this.calculateSimilarityPoints(
+                    1, studentHS.ACTEnglish, highSchool.ACTEnglish, 2, 0.5,
+                );
+            }
+            if (studentHS.ACTScience && highSchool.ACTScience) {
+                similarityPoints += this.calculateSimilarityPoints(
+                    1, studentHS.ACTScience, highSchool.ACTScience, 2, 0.5,
+                );
+            }
+            // if one school has only SAT and the other has only ACT
+            if (studentHS.AverageSAT && !studentHS.AverageACT
+                && highSchool.AverageACT && !highSchool.AverageSAT) {
+                // convert ACT score of other high school to SAT score
+                const otherConvertedSAT = ACTtoSAT[highSchool.AverageACT];
+                similarityPoints += this.calculateSimilarityPoints(
+                    10, studentHS.AverageSAT, otherConvertedSAT, 50, 1,
+                );
+            }
+            if (!studentHS.AverageSAT && studentHS.AverageACT
+                && !highSchool.AverageACT && highSchool.AverageSAT) {
+                // convert ACT score of student's high school to SAT score
+                const studentConvertedSAT = ACTtoSAT[studentHS.AverageACT];
+                similarityPoints += this.calculateSimilarityPoints(
+                    10, studentConvertedSAT, highSchool.AverageSAT, 50, 1,
+                );
+            }
+            // get all students of high school and find avg gpa
+            // eslint-disable-next-line no-await-in-loop
+            const otherStudents = await models.User.findAll({
+                include: [{
+                    model: models.HighSchool,
+                    where: { HighSchoolId: highSchool.HighSchoolId },
+                }],
+            });
+            if (students.length && otherStudents.length) {
+                let sum = 0;
+                let otherSum = 0;
+                for (let j = 0; j < students.length; j += 1) {
+                    sum += parseFloat(students[j].GPA);
+                }
+                for (let j = 0; j < otherStudents.length; j += 1) {
+                    otherSum += parseFloat(otherStudents[j].GPA);
+                }
+                similarityPoints += this.calculateSimilarityPoints(
+                    10, sum / students.length, otherSum / otherStudents.length, 0.05, 1,
+                );
+            }
+            highSchool.similarityPoints = similarityPoints;
+        } else {
+            // removes student's high school from list
+            highSchools.splice(i, 1);
+            i -= 1;
+        }
+    }
+    highSchools.sort((a, b) => b.similarityPoints - a.similarityPoints);
+    return {
+        ok: 'Success',
+        highSchools: highSchools,
+    };
 };
