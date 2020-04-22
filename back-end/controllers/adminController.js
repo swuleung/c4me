@@ -5,6 +5,7 @@ const parse = require('csv-parse');
 const models = require('../models');
 const { getCollegeList, getPathConfig } = require('../utils/readAppFiles');
 const { updateStudentHighSchool } = require('./studentController');
+const { calcQuestionableApplications } = require('./searchController');
 
 /**
  * Check if a user is an admin with a DB call
@@ -578,3 +579,37 @@ exports.importApplications = async () => {
         ok: 'Successfully imported applications',
     };
 };
+
+
+/**
+ * Get Questionable Applications
+ * 
+ */
+exports.getQuestionableApplications = async () => {
+    calcQuestionableApplications();
+    let qApps = {};
+    try{
+        qApps = (await models.Application.findAll({
+            where:{
+                isQuestionable: true
+            }
+        }))
+    }catch (error) {
+        return {
+            error: 'Error in finding User for qScore',
+            reason: error.message,
+        };
+    }
+    if (!qApps) {
+        return {
+            ok: 'User does not exist'
+        };
+    }
+
+    qpApps = qApps.toJSON();
+    return qApps;
+}
+
+
+
+

@@ -181,20 +181,23 @@ exports.searchCollege = async ( filters ) => {
 
 
 
-
+/**
+ * 
+ * Updates questionability for all applications
+ * 
+ */
 exports.calcQuestionableApplications = async () => {
     let applications = [];
-    // no questionable applications
-    const withAbsoluteDecisions = {
-        where:{
-            status: {
-                [Op.or]: ['accepted','rejected']
-            }
-        }
-    };
-
     try {
-        applications = (await models.Application.findAll(withAbsoluteDecisions));
+        applications = (
+            await models.Application.findAll({
+                where:{
+                    status: {
+                        [Op.or]: ['accepted','rejected']
+                    }
+                }
+            })
+        );
     } catch (error) {
         return {
             error: 'Unable to get applications for applications tracker',
@@ -254,6 +257,7 @@ exports.calcQuestionableApplications = async () => {
                 ok: 'User does not exist'
             };
         }
+
         thisStudent = thisStudent.toJSON();
 
         var qScore = 0;
@@ -300,23 +304,21 @@ exports.calcQuestionableApplications = async () => {
         //ResidenceState - 5
         if (thisStudent.residenceState == thisCollege.residenceState){ qScore+=5;}
         else { 
-            var studentRegion = (student.residenceState in northeastRegion) ? northeastRegion :
-                            (student.residenceState in southRegion) ? southRegion :
-                            (student.residenceState in midwestRegion) ? midwestRegion : westRegion;
-            var collegeRegion = (student.residenceState in northeastRegion) ? northeastRegion :
-                            (student.residenceState in southRegion) ? southRegion :
-                            (student.residenceState in midwestRegion) ? midwestRegion : westRegion;
+            var studentRegion = (thisStudent.residenceState in northeastRegion) ? northeastRegion :
+                                    (thisStudent.residenceState in southRegion) ? southRegion :
+                                        (thisStudent.residenceState in midwestRegion) ? midwestRegion : westRegion;
+            var collegeRegion = (thisCollege.residenceState in northeastRegion) ? northeastRegion :
+                                    (thisCollege.residenceState in southRegion) ? southRegion :
+                                        (thisCollege.residenceState in midwestRegion) ? midwestRegion : westRegion;
+            
             if (collegeRegion == studentRegion){ qScore+=2.5;}
        }
        
-       var threshold = qScore/40;
+       var threshold = qScore/40.0;
        threshold = (applications[i].status == 'denied') ?  (1-threshold) : threshold;
        if (threshold < .65){
-        ///
-        ///Update db so that applications[i].isQuestionable = True;
-        ///
-        ///
-        ///
+           let updateValues = { isQuestionable: True };
+           await models.Application.update(updateValues,{where: {username: thisStudent[i].username}});
        }
     }
 };

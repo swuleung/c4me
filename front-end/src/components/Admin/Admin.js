@@ -175,6 +175,23 @@ const Admin = () => {
         });
     };
 
+    /**
+     * Entry point in viewing Questionable Applications
+     */
+
+     const handleViewQuestionableApplications = () => {
+         let qApps = admin.getQuestionableApplications().then();
+
+        for (var i = 0; i < qApps.length; i++){  
+        /**
+         * 
+         * Update front end
+         * 
+         * 
+         */
+        }
+     }
+
     // display the Admin page
     return (
         <div>
@@ -241,6 +258,15 @@ const Admin = () => {
                         <Button onClick={(e) => { handleImportStudentProfiles(e); }} disabled={disableProfile} className="float-right">Import Student Profile Dataset</Button>
                     </Col>
                 </Row>
+                <Row className="align-items-center mb-3">
+                    <Col sm="6">
+                        <h3>Review Questionable Applications</h3>
+                        </Col>
+                    <Col sm="6">
+                        <Button onClick={(e) => { getQuestionableApplications(e); }} disabled={disableProfile} className="float-right">View Questionable Applications</Button>
+                    </Col>
+                </Row>
+
             </Container>
         </div>
     );

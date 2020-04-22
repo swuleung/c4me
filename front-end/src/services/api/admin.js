@@ -139,6 +139,28 @@ const admin = {
             };
         }
     },
+
+    /**
+     * Send a GET request for all Questionable Applications
+     */
+    getQuestionableApplications: async function getQuestionableApplications(){
+        try{
+            const qApps = await fetch('/admin/viewQuestionableApplications', {
+                method: 'GET',
+                credentials: 'include',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json; charset=utf-8',
+                },
+            });
+            return qApps.json();
+
+        } catch (error){
+            return {
+                error: `${error.message}`
+            }
+        }
+    }
 };
 
 export default admin;
