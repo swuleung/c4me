@@ -180,7 +180,13 @@ const Admin = () => {
      */
 
      const handleViewQuestionableApplications = () => {
-         let qApps = admin.getQuestionableApplications().then();
+         let qApps = admin.getQuestionableApplications().then((view)
+
+
+
+
+
+         );
 
         for (var i = 0; i < qApps.length; i++){  
         /**

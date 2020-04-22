@@ -21,7 +21,10 @@ router.post('/', async (req, res) => {
 		        }
 		        res.send(result);
     		});
+<<<<<<< HEAD
 
+=======
+>>>>>>> c42f769113168b95c0b72b4b983bfceb754b7278
         }
     }
 

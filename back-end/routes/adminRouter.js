@@ -263,8 +263,4 @@ router.get('/admin/viewQuestionableApplications', async (req, res) => {
 
 });
 
-
-
-
-
 module.exports = router;
