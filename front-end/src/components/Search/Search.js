@@ -53,7 +53,7 @@ const Search = () => {
                 setSearchResults(result.colleges);
             }
         });
-    }, [filters, sortBy, sortAsc]);
+    }, [filters, sortBy, sortAsc, student]);
 
     return (
         <>
