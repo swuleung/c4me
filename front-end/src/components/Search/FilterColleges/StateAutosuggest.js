@@ -62,13 +62,14 @@ const StateAutosuggest = (props) => {
     const getSuggestions = (value) => {
         const inputValue = value.trim().toUpperCase();
         const inputLength = inputValue.length;
-        const states = ['AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT',
-            'DE', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN',
-            'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA',
-            'MI', 'MN', 'MO', 'MS', 'MT', 'NE', 'NV',
-            'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH',
-            'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN',
-            'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'];
+        const states = ['AK', 'AL', 'AR', 'AZ', 'CA',
+            'CO', 'CT', 'DC', 'DE', 'FL', 'GA', 'GU', 'HI',
+            'IA', 'ID', 'IL', 'IN', 'KS', 'KY', 'LA', 'MA',
+            'MD', 'ME', 'MH', 'MI', 'MN', 'MO', 'MS', 'MT',
+            'NC', 'ND', 'NE', 'NH', 'NJ', 'NM', 'NV', 'NY',
+            'OH', 'OK', 'OR', 'PA', 'PR', 'PW', 'RI', 'SC',
+            'SD', 'TN', 'TX', 'UT', 'VA', 'VI', 'VT', 'WA',
+            'WI', 'WV', 'WY'];
         return inputLength === 0
             ? states.filter((st) => !selectedStates.includes(st))
             : states.filter((st) => st.indexOf(inputValue) > -1 && !selectedStates.includes(st));
