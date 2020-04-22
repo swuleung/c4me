@@ -65,11 +65,19 @@ exports.scrapeCollegeRankings = async () => {
         /* eslint-disable no-await-in-loop */
             const rankingEl = await page.$x(`//tr[contains(., '${colleges[i]}')]/td[1]`);
             const ranking = await page.evaluate((el) => el.textContent, rankingEl[0]);
+
+            let calculatedRanking = ranking.replace('=', '').replace('>', '');
+            // check if there is a hyphen in ranking
+            if (calculatedRanking.indexOf('-') !== -1) {
+                const splittedRanking = calculatedRanking.split('-');
+                calculatedRanking = (parseInt(splittedRanking[0], 10) + parseInt(splittedRanking[1], 10)) / 2;
+            }
+            calculatedRanking = parseInt(calculatedRanking, 10);
             /* eslint-enable no-await-in-loop */
             // updates the rankings for college and add to the updates
             updates.push(models.College.upsert({
                 Name: colleges[i],
-                Ranking: ranking.replace('=', ''),
+                Ranking: calculatedRanking,
             }).catch((error) => {
                 errors.push({
                     error: 'Something went wrong',
@@ -194,6 +202,9 @@ exports.scrapeCollegeData = async () => {
                 actCompositeNums = actCompositeFull.substring(0, actCompositeFull.indexOf('range')).split('-');
                 actComposite = (parseInt(actCompositeNums[0], 10) + parseInt(actCompositeNums[1], 10)) / 2.0; // eslint-disable-line max-len
             }
+
+            // Go academics tab to retrieve majors
+            await page.goto(`${collegeURL}/?tab=profile-academics-tab`);
 
             // find elements containing majors
             const majorEls = await page.$x('(//div[contains(., \'Undergraduate Majors\')])[last()]//ul');
@@ -357,6 +368,7 @@ exports.importCollegeScorecard = async () => {
 
     return { ok: 'Success. Able to scrape all colleges in file.' };
 };
+
 
 /**
  * Deletes all the student profiles and associated applications from the database.
