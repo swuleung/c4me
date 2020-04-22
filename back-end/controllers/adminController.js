@@ -5,11 +5,7 @@ const parse = require('csv-parse');
 const models = require('../models');
 const { getCollegeList, getPathConfig } = require('../utils/readAppFiles');
 const { updateStudentHighSchool } = require('./studentController');
-<<<<<<< HEAD
 const { calcQuestionableApplications } = require('./searchController');
-=======
-const { calcQuestionableDecisions } = require('./searchController');
->>>>>>> c42f769113168b95c0b72b4b983bfceb754b7278
 
 /**
  * Check if a user is an admin with a DB call
