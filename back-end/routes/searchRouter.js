@@ -15,11 +15,8 @@ router.post('/', async (req, res) => {
             res.status(400).send(authorized);
         } else {
             // get search results
-            searchController.searchCollege(req.body, authorized.username).then((result) => {
-                if (result.error) {
-                    if (result.error == 'Something went wrong') res.status(500);
-                    else res.status(400);
-                }
+            searchController.searchCollege(req.body.filters, authorized.username).then((result) => {
+                if (result.error) res.status(400);
                 res.send(result);
             });
         }

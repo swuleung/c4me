@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import {
-    Alert, Col, Row, Container, Form, Button,
+    Alert, Col, Row, Container, Form, Button, OverlayTrigger, Tooltip,
 } from 'react-bootstrap';
 
-import { getSearchResults } from '../../services/api/search';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSortAmountDown, faSortAmountUp } from '@fortawesome/free-solid-svg-icons';
 import FilterColleges from './FilterColleges/FilterColleges';
 import CollegeList from './CollegeList/CollegeList';
+import studentAPI from '../../services/api/student';
+import searchAPI from '../../services/api/search';
 import './Search.scss';
 
 const Search = () => {
@@ -13,23 +16,44 @@ const Search = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const [filters, setFilters] = useState({});
     const [sortBy, setSortBy] = useState('none');
+    const [sortAsc, setSortAsc] = useState(true);
     const [searchResults, setSearchResults] = useState([]);
+    const [student, setStudent] = useState({});
 
     useEffect(() => {
-        console.log(filters);
-        console.log(sortBy);
-        getSearchResults(filters, sortBy).then((results) => {
-            if (results.error) {
+        const sortDirection = sortAsc ? 'ASC' : 'DESC';
+        const sortByFilter = sortBy === 'Cost' ? 'none' : sortBy;
+
+        studentAPI.getStudent(localStorage.getItem('username')).then((result) => {
+            if (result.error) {
                 setErrorAlert(true);
-                setErrorMessage(results.reason);
+                setErrorMessage(result.error);
             }
-            if (results.ok) {
+            if (result.ok) {
                 setErrorAlert(false);
-                console.log(results);
-                setSearchResults(results.colleges);
+                setStudent(result.student);
             }
         });
-    }, [filters, sortBy]);
+
+        searchAPI.getSearchResults(filters, sortByFilter, sortDirection).then((result) => {
+            if (result.error) {
+                setErrorAlert(true);
+                setErrorMessage(result.reason);
+            }
+            if (result.ok) {
+                setErrorAlert(false);
+                if (sortBy === 'Cost') {
+                    result.colleges.sort((a, b) => {
+                        const costA = a.Location === student.residenceState ? a.CostOfAttendanceInState : a.CostOfAttendanceOutOfState;
+                        const costB = b.Location === student.residenceState ? b.CostOfAttendanceInState : b.CostOfAttendanceOutOfState;
+                        if (sortAsc) return costA - costB;
+                        return costB - costA;
+                    });
+                }
+                setSearchResults(result.colleges);
+            }
+        });
+    }, [filters, sortBy, sortAsc]);
 
     return (
         <>
@@ -49,7 +73,7 @@ const Search = () => {
                             <Col xs="8">
                                 {/* TODO: College Recommender toggle */}
                                 <div className="list mb-2">
-                                    <Button>
+                                    <Button className="btn-sm">
                                         College Recommender
                                     </Button>
                                     <p className="mb-0">
@@ -58,15 +82,30 @@ const Search = () => {
                                             {' matching colleges'}
                                         </b>
                                     </p>
-                                    <Form.Control className="w-25" as="select" value={sortBy} onChange={(e) => { setSortBy(e.target.value); }}>
-                                        <option value="none" disabled>Sort by</option>
-                                        <option value="Name">Name</option>
-                                        <option value="AdmissionRate">Admission Rate</option>
-                                        <option value="Cost">Cost of Attendance</option>
-                                        <option value="Ranking">Ranking</option>
-                                    </Form.Control>
+                                    <div className="d-flex">
+                                        <Form.Control as="select" value={sortBy} onChange={(e) => { setSortBy(e.target.value); }}>
+                                            <option value="none" disabled>Sort by</option>
+                                            <option value="Name">Name</option>
+                                            <option value="AdmissionRate">Admission Rate</option>
+                                            <option value="Cost">Cost of Attendance</option>
+                                            <option value="Ranking">Ranking</option>
+                                        </Form.Control>
+                                        <OverlayTrigger
+                                            placement="right"
+                                            overlay={(
+                                                <Tooltip>
+                                                    {`Sort Direction: ${sortAsc ? 'Ascending' : 'Descending'}`}
+                                                </Tooltip>
+                                            )}
+                                        >
+                                            <Button className="btn-sm ml-1" variant="info">
+                                                <FontAwesomeIcon className="sort-icon" icon={sortAsc ? faSortAmountUp : faSortAmountDown} onClick={() => setSortAsc(!sortAsc)} />
+                                            </Button>
+                                        </OverlayTrigger>
+
+                                    </div>
                                 </div>
-                                <CollegeList colleges={searchResults} />
+                                <CollegeList student={student} colleges={searchResults} />
                             </Col>
                         </Row>
                     </Container>

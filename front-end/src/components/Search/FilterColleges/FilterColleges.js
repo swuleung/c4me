@@ -8,7 +8,6 @@ import {
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuestionCircle } from '@fortawesome/free-regular-svg-icons';
-// import Autosuggest from 'react-autosuggest';
 import './FilterColleges.scss';
 import StateAutosuggest from './StateAutosuggest';
 
@@ -64,7 +63,7 @@ const FilterColleges = (props) => {
     });
 
     // Cost of Attendance
-    const [costOfAttendance, setCostOfAttendance] = useState('');
+    const [costOfAttendance, setCostOfAttendance] = useState('100000');
 
     // region list
     const [regions, setRegions] = useState({
@@ -103,50 +102,74 @@ const FilterColleges = (props) => {
 
         if (size.sizeMin !== '') {
             filters.sizeMin = parseInt(size.sizeMin, 10);
+        } else {
+            filters.sizeMin = 0;
         }
 
         if (size.sizeMax !== '') {
             filters.sizeMax = parseInt(size.sizeMax, 10);
+        } else {
+            filters.sizeMax = Number.MAX_SAFE_INTEGER;
         }
 
         if (admissionRate.admissionRateMin !== '') {
             filters.admissionRateMin = parseInt(admissionRate.admissionRateMin, 10);
+        } else {
+            filters.admissionRateMin = 0;
         }
 
         if (admissionRate.admissionRateMax !== '') {
             filters.admissionRateMax = parseInt(admissionRate.admissionRateMax, 10);
+        } else {
+            filters.addmissionRateMax = Number.MAX_SAFE_INTEGER;
         }
 
         if (collegeRanking.rankingMin !== '') {
             filters.rankingMin = parseInt(collegeRanking.rankingMin, 10);
+        } else {
+            filters.rankingMin = 0;
         }
 
         if (collegeRanking.rankingMax !== '') {
             filters.rankingMax = parseInt(collegeRanking.rankingMax, 10);
+        } else {
+            filters.rankingMax = Number.MAX_SAFE_INTEGER;
         }
 
         if (SATEBRW.SATEBRWMin !== '') {
             filters.SATEBRWMin = parseInt(SATEBRW.SATEBRWMin, 10);
+        } else {
+            filters.SATEBRWMin = 200;
         }
 
         if (SATEBRW.SATEBRWMax !== '') {
             filters.SATEBRWMax = parseInt(SATEBRW.SATEBRWMax, 10);
+        } else {
+            filters.SATEBRWMax = 800;
         }
 
         if (SATMath.SATMathMin !== '') {
             filters.SATMathMin = parseInt(SATMath.SATMathMin, 10);
+        } else {
+            filters.SATMathMin = 200;
         }
 
         if (SATMath.SATMathMax !== '') {
             filters.SATMathMax = parseInt(SATMath.SATMathMax, 10);
+        } else {
+            filters.SATMathMax = 800;
         }
 
         if (ACTComposite.ACTCompositeMin !== '') {
             filters.ACTCompositeMin = ACTComposite.ACTCompositeMin;
+        } else {
+            filters.ACTCompositeMin = 1;
         }
 
         if (ACTComposite.ACTCompositeMax !== '') {
             filters.ACTCompositeMax = ACTComposite.ACTCompositeMax;
+        } else {
+            filters.ACTCompositeMax = 36;
         }
 
         if (costOfAttendance !== '') {
@@ -439,13 +462,12 @@ const FilterColleges = (props) => {
                 </OverlayTrigger>
                 <Row>
                     <Col>
-Maximum Cost:
-                        {costOfAttendance}
+                        {`Maximum Cost: ${costOfAttendance.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}
                     </Col>
                 </Row>
                 <Form.Row>
                     <Form.Group as={Col}>
-                        <Form.Control type="range" onChange={(e) => setCostOfAttendance(e.target.value.trim())} />
+                        <Form.Control min="10000" max="100000" step="500" type="range" value={costOfAttendance} onChange={(e) => setCostOfAttendance(e.target.value.trim())} />
                     </Form.Group>
                 </Form.Row>
 

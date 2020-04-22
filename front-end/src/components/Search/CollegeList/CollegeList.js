@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 import './CollegeList.scss';
 
 const CollegeList = (props) => {
-    const { colleges } = props;
+    const { colleges, student } = props;
     // map all the applications to the HTML below
     return (
         <>
@@ -65,9 +65,7 @@ const CollegeList = (props) => {
                                     <div className="student-details text-center">
                                         <div className="detail-title">Cost</div>
                                         <div className="detail-score text-center">
-                                            {college.CostOfAttendanceInState}
-                                            {college.CostOfAttendanceOutOfState}
-                                            {/* TODO: Show cost based on location */}
+                                            {student.residenceState === college.Location ? college.CostOfAttendanceInState : college.CostOfAttendanceOutOfState}
                                         </div>
                                     </div>
                                 </Card>

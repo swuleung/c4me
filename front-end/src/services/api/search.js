@@ -1,10 +1,10 @@
-module.exports = {
-    getSearchResults: async function getSearchResults(filters, sortBy) {
+const search = {
+    getSearchResults: async function getSearchResults(filters, sortBy, sortDirection) {
         try {
             const filtersToSend = { ...filters };
             if (sortBy !== 'none') {
                 filtersToSend.sortAttribute = sortBy;
-                filtersToSend.sortDirection = 'ASC';
+                filtersToSend.sortDirection = sortDirection;
             }
             const results = await fetch('http://localhost:9000/search/', {
                 method: 'POST',
@@ -24,3 +24,5 @@ module.exports = {
         }
     },
 };
+
+export default search;
