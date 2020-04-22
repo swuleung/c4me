@@ -26,17 +26,6 @@ const Search = () => {
         // Cost is soted customly
         const sortByFilter = sortBy === 'Cost' ? 'none' : sortBy;
 
-        // get the current student informationf or comparison
-        studentAPI.getStudent(localStorage.getItem('username')).then((result) => {
-            if (result.error) {
-                setErrorAlert(true);
-                setErrorMessage(result.error);
-            }
-            if (result.ok) {
-                setErrorAlert(false);
-                setStudent(result.student);
-            }
-        });
 
         // get search results with filters and sort
         searchAPI.getSearchResults(filters, sortByFilter, sortDirection).then((result) => {
@@ -47,17 +36,31 @@ const Search = () => {
             if (result.ok) {
                 setErrorAlert(false);
                 if (sortBy === 'Cost') {
-                    result.colleges.sort((a, b) => {
-                        const costA = a.Location === student.residenceState ? a.CostOfAttendanceInState : a.CostOfAttendanceOutOfState;
-                        const costB = b.Location === student.residenceState ? b.CostOfAttendanceInState : b.CostOfAttendanceOutOfState;
-                        if (sortAsc) return costA - costB;
-                        return costB - costA;
+                    // get the current student informationf or comparison
+                    studentAPI.getStudent(localStorage.getItem('username')).then((studentResult) => {
+                        if (studentResult.error) {
+                            setErrorAlert(true);
+                            setErrorMessage(result.error);
+                        }
+                        if (studentResult.ok) {
+                            setErrorAlert(false);
+                            const stud = studentResult.student;
+                            result.colleges.sort((a, b) => {
+                                const costA = a.Location === stud.residenceState ? a.CostOfAttendanceInState : a.CostOfAttendanceOutOfState;
+                                const costB = b.Location === stud.residenceState ? b.CostOfAttendanceInState : b.CostOfAttendanceOutOfState;
+                                if (sortAsc) return costA - costB;
+                                return costB - costA;
+                            });
+                            setStudent(stud);
+                            setSearchResults(result.colleges);
+                        }
                     });
+                } else {
+                    setSearchResults(result.colleges);
                 }
-                setSearchResults(result.colleges);
             }
         });
-    }, [filters, sortBy, sortAsc, student]);
+    }, [filters, sortBy, sortAsc]);
 
     return (
         <>

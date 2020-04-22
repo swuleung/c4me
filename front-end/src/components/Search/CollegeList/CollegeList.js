@@ -66,6 +66,7 @@ const CollegeList = (props) => {
                                         <div className="detail-title">Cost</div>
                                         <div className="detail-score text-center">
                                             {student.residenceState === college.Location ? college.CostOfAttendanceInState : college.CostOfAttendanceOutOfState}
+                                            {!college.CostOfAttendanceInState && !college.CostOfAttendanceOutOfState ? 'N/A' : ''}
                                         </div>
                                     </div>
                                 </Card>
