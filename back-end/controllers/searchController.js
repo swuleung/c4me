@@ -1,11 +1,12 @@
 const models = require('../models');
 const { Op } = require("sequelize");
-const  collegeController = require("./collegeController");
 
 const northeastRegion = ["ME", "VT", "NH", "MA", "RI", "CT", "NY", "PA", "NJ"]; //9 states
 const southRegion = ["DE", "MD", "WV", "VA", "NC", "SC", "GA", "FL", "KY", "TN", "MS", "AL", "AR", "LA", "OK", "TX"]; //16 states
 const midwestRegion = ["OH", "MI", "IN", "WI", "IL", "MN", "IA", "MO", "ND", "SD", "NE", "KS"]; //12 statesa=
 const westRegion = ["AK", "HI", "WA", "OR", "CA", "MT", "ID", "WY", "NV", "UT", "CO", "AZ", "NM"]; //13 states
+
+
 
 //  Parameters: filters
 //  Filters is an object. 
@@ -16,15 +17,15 @@ const westRegion = ["AK", "HI", "WA", "OR", "CA", "MT", "ID", "WY", "NV", "UT", 
 //  An example filter:
 // {
 //     "region" : "west",
-//     "SATEBRWMin": 0,
+//     "SATEBRWMin": 500,
 //     "SATEBRWMax": 800,
-//     "SATMathMin" : 0,
+//     "SATMathMin" : 500,
 //     "SATMathMax" : 800,
 //     "name" : "University",
-//     "ACTCompositeMin" : 0,
+//     "ACTCompositeMin" : 20,
 //     "ACTCompositeMax" : 35,
-//     "costInStateMax" : 100000,
-//     "costOutOfStateMax" : 100000,
+//     "costInStateMax" : 50000,
+//     "costOutOfStateMax" : 50000,
 //     "major" : "math",
 //     "major2" : "computer",
 //     "rankingMin" : 0,
@@ -81,14 +82,8 @@ exports.searchCollege = async ( filters ) => {
                     break;
             }
         }
-        if ( filters.rankingMin && filters.rankingMax ) {
-            if ( filters.lax ) {
-                criteria.Ranking = { [Op.or]: [{ [Op.eq]: null }, { [Op.between] : [ filters.rankingMin, filters.rankingMax] }] };
-            }
-            else {
-                criteria.Ranking = { [Op.between] : [ filters.rankingMin, filters.rankingMax] };
-            }
-        }
+        if ( filters.rankingMin && filters.rankingMax )
+            criteria.Ranking = { [Op.between] : [ filters.rankingMin, filters.rankingMax] };
         if ( filters.sizeMin && filters.sizeMax )
             criteria.Size = { [Op.between] : [ filters.sizeMin, filters.sizeMax] };
         if ( filters.SATMathMin && filters.SATMathMax ) {

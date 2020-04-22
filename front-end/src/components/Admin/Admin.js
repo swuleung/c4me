@@ -175,41 +175,6 @@ const Admin = () => {
         });
     };
 
-    const handleViewApplications = () => {
-            admin.getApplications().then((resultApp) => {
-                const errorString = [];
-                if (resultApp.error){
-                    //console.log("hello");
-                    //console.log(resultApp.error);
-                    setErrorAlert(true);
-                    setProgressAlert(false);
-                    errorString.push(<h4 key="getApplicatgionsError" className="alert-heading">{resultApp.error}</h4>);
-                    setErrorMessage([...errorMessage, ...errorString]);
-                }
-                if(resultApp.ok){
-                    console.log(resultApp.applications);
-
-
-
-                    /**
-                     * 
-                     * 
-                     * 
-                     * 
-                     * dynamically create html elements
-                     */
-
-
-
-                }
-
-            });
-        
-        
-    };
-
-
-
     // display the Admin page
     return (
         <div>
@@ -274,14 +239,6 @@ const Admin = () => {
                     </Col>
                     <Col sm="2">
                         <Button onClick={(e) => { handleImportStudentProfiles(e); }} disabled={disableProfile} className="float-right">Import Student Profile Dataset</Button>
-                    </Col>
-                </Row>
-                <Row className="align-items-center mb-3">
-                    <Col sm="7">
-                        <h4>Questionable Applications</h4>
-                    </Col>
-                    <Col sm="5">
-                       <Button onClick={(e) => { handleViewApplications(e);}}> View Applications </Button>                    
                     </Col>
                 </Row>
             </Container>
