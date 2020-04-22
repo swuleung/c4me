@@ -34,6 +34,7 @@
         "react/jsx-props-no-spreading": "off",
         "react/jsx-indent-props": "off",
         "max-len": "off",
-        "no-nested-ternary": "off"
+        "no-nested-ternary": "off",
+        "linebreak-style": "off"
     }
 }
