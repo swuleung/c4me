@@ -247,29 +247,35 @@ exports.calcQuestionableApplications = async () => {
             };
         }
         console.log("\n\n\n\tThisCollege.username:" + thisCollege.Name);
-        console.log("\n\tapps[" + i + "].username:" + applications[i].username);
-        console.log("\t\t apps[i].status: " + applications[i].status);
+        //
+        //
+        //
+        //
+        //
+        //application hangs here
+        //
+        //
+        //
         let thisStudent = {};
         try{
             thisStudent = (await models.Users.findOne({
                 where:{
-                    username: (applications[i].username)
+                    Username: applications[i].username
                 }
             }))
         }catch (error) {
             return {
-                error: 'Error in finding User for qScore',
+                error: 'Error in finding Student for qScore',
                 reason: error.message,
             };
         }
-        if (!thisStudent) {
+    
+        if (!thisCollege) {
             return {
-                ok: 'User does not exist'
+                ok: 'Student does not exist'
             };
         }
-        console.log("\n\n\n\tThisCollege.username:" + thisCollege.Name);
-        console.log("\n\tapps[" + i + "].username:" + applications[i].username);
-        console.log("\t\t apps[i].status: " + applications[i].status);
+
         console.log("\n\n\tthisStudent.username:"+thisStudent.username);
 
         var qScore = 0;
@@ -325,14 +331,13 @@ exports.calcQuestionableApplications = async () => {
             
             if (collegeRegion == studentRegion){ qScore+=2.5;}
        }
-       
+       //determine questionable status & update accordingly
        var threshold = qScore/40.0;
-       threshold = (applications[i].status == 'denied') ?  (1-threshold) : threshold;
+       threshold = (applications[i].status == 'denied') ? (1-threshold) : threshold;
        if (threshold < .65){
            let updateValues = { isQuestionable: true };
            await models.Application.update(updateValues,{where: {username: thisStudent[i].username}});
        }
-       console.log("\t\tHello");
     }
 };
 
