@@ -14,7 +14,7 @@ const CollegeList = (props) => {
     // map all the colleges to the HTML below
     return (
         <>
-            {colleges.map((college, i) => (
+            {colleges.map((college) => (
                 // eslint-disable-next-line react/no-array-index-key
                 <div className="border mb-2 student-container" key={college.Name}>
                     <Row>

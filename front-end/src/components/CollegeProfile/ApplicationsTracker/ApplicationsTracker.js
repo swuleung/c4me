@@ -67,29 +67,6 @@ const ApplicationsTracker = (props) => {
                             <Col>
                                 <CardDeck>
                                     <Card body className="text-center">
-                                        <h3>Average Student</h3>
-                                        <Row>
-                                            <Col>
-                                                <div className="at-title">GPA</div>
-                                                <div className="at-text">{averages.avgGPA ? averages.avgGPA : 'N/A'}</div>
-                                            </Col>
-                                            <Col>
-                                                <div className="at-title">SAT Math</div>
-                                                <div className="at-text">{averages.avgSATMath ? averages.avgSATMath : 'N/A'}</div>
-                                            </Col>
-                                        </Row>
-                                        <Row>
-                                            <Col>
-                                                <div className="at-title">SAT EBRW</div>
-                                                <div className="at-text">{averages.avgSATEBRW ? averages.avgSATEBRW : 'N/A'}</div>
-                                            </Col>
-                                            <Col>
-                                                <div className="at-title">ACT Composite</div>
-                                                <div className="at-text">{averages.avgACTComposite ? averages.avgACTComposite : 'N/A'}</div>
-                                            </Col>
-                                        </Row>
-                                    </Card>
-                                    <Card body className="text-center">
                                         <h3>Average Accepted Student</h3>
                                         <Row>
                                             <Col>
@@ -109,6 +86,29 @@ const ApplicationsTracker = (props) => {
                                             <Col>
                                                 <div className="at-title">ACT Composite</div>
                                                 <div className="at-text">{averages.avgAcceptedACTComposite ? averages.avgAcceptedACTComposite : 'N/A'}</div>
+                                            </Col>
+                                        </Row>
+                                    </Card>
+                                    <Card body className="text-center">
+                                        <h3>Average Student</h3>
+                                        <Row>
+                                            <Col>
+                                                <div className="at-title">GPA</div>
+                                                <div className="at-text">{averages.avgGPA ? averages.avgGPA : 'N/A'}</div>
+                                            </Col>
+                                            <Col>
+                                                <div className="at-title">SAT Math</div>
+                                                <div className="at-text">{averages.avgSATMath ? averages.avgSATMath : 'N/A'}</div>
+                                            </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col>
+                                                <div className="at-title">SAT EBRW</div>
+                                                <div className="at-text">{averages.avgSATEBRW ? averages.avgSATEBRW : 'N/A'}</div>
+                                            </Col>
+                                            <Col>
+                                                <div className="at-title">ACT Composite</div>
+                                                <div className="at-text">{averages.avgACTComposite ? averages.avgACTComposite : 'N/A'}</div>
                                             </Col>
                                         </Row>
                                     </Card>

@@ -128,7 +128,9 @@ const FilterAT = (props) => {
     const getSuggestions = (value) => {
         const inputValue = value.trim().toLowerCase();
         const inputLength = inputValue.length;
-        return inputLength === 0 ? allHighSchools : allHighSchools.filter((hs) => hs.Name.toLowerCase().indexOf(inputValue.toLowerCase()) > -1);
+        return inputLength === 0
+            ? allHighSchools.filter((hs) => !highSchoolList.includes(hs))
+            : allHighSchools.filter((hs) => hs.Name.toLowerCase().indexOf(inputValue.toLowerCase()) > -1 && !highSchoolList.includes(hs));
     };
 
     // get the value of a suggestion
@@ -178,7 +180,7 @@ const FilterAT = (props) => {
                         <Popover>
                             <Popover.Title>Type of Filtering</Popover.Title>
                             <Popover.Content>
-                                            Lax will include schools whose values are null for these filters.
+                                Lax will include schools whose values are null for these filters.
                             </Popover.Content>
                         </Popover>
                     )}
@@ -196,7 +198,7 @@ const FilterAT = (props) => {
                         <Popover>
                             <Popover.Title>College Class</Popover.Title>
                             <Popover.Content>
-                                            Choose the college graduation year of the to filter by. For example, 2022-2024
+                                Choose the college graduation year of the to filter by. For example, 2022-2024
                             </Popover.Content>
                         </Popover>
                     )}
@@ -221,7 +223,7 @@ const FilterAT = (props) => {
                         <Popover>
                             <Popover.Title>Status</Popover.Title>
                             <Popover.Content>
-                                            Filter by type of status. If all or none is selected, it will return all statuses.
+                                Filter by type of status. If all or none is selected, it will return all statuses.
                             </Popover.Content>
                         </Popover>
                     )}
@@ -244,7 +246,7 @@ const FilterAT = (props) => {
                         <Popover>
                             <Popover.Title>High Schools</Popover.Title>
                             <Popover.Content>
-                                            Enter high school names to filter by specific high schools.
+                                Enter high school names to filter by specific high schools.
                             </Popover.Content>
                         </Popover>
                     )}
@@ -262,6 +264,7 @@ const FilterAT = (props) => {
                     shouldRenderSuggestions={() => true}
                     inputProps={inputProps}
                     onSuggestionSelected={handleAddHighSchool}
+                    focusInputOnSuggestionClick={false}
                     theme={{
                         input: 'form-control',
                         container: 'react-autosuggest__container',
@@ -285,7 +288,7 @@ const FilterAT = (props) => {
                     </tbody>
                 </Table>
                 <Button className="btn-block" variant="primary" type="submit">
-                                Apply Filters
+                    Apply Filters
                 </Button>
             </Form>
         </Container>

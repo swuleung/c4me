@@ -319,6 +319,7 @@ const EditProfile = (props) => {
                                             shouldRenderSuggestions={() => true}
                                             inputProps={inputProps}
                                             onSuggestionSelected={handleSelectHighSchool}
+                                            focusInputOnSuggestionClick={false}
                                             theme={{
                                                 input: 'form-control',
                                                 container: 'react-autosuggest__container',

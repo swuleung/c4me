@@ -109,6 +109,7 @@ const Search = () => {
 
                                     </div>
                                 </div>
+                                {sortBy === 'Cost' && student.residenceState == null ? <Alert variant="info">Sorting by out-of-state cost of attendance. Add your residence state in your profile to show in-state cost.</Alert> : <></>}
                                 <CollegeList student={student} colleges={searchResults} />
                             </Col>
                         </Row>
