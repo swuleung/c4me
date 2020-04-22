@@ -38,22 +38,15 @@ const Search = () => {
                 if (sortBy === 'Cost') {
                     // get the current student informationf or comparison
                     studentAPI.getStudent(localStorage.getItem('username')).then((studentResult) => {
-                        if (studentResult.error) {
-                            setErrorAlert(true);
-                            setErrorMessage(result.error);
-                        }
-                        if (studentResult.ok) {
-                            setErrorAlert(false);
-                            const stud = studentResult.student;
-                            result.colleges.sort((a, b) => {
-                                const costA = a.Location === stud.residenceState ? a.CostOfAttendanceInState : a.CostOfAttendanceOutOfState;
-                                const costB = b.Location === stud.residenceState ? b.CostOfAttendanceInState : b.CostOfAttendanceOutOfState;
-                                if (sortAsc) return costA - costB;
-                                return costB - costA;
-                            });
-                            setStudent(stud);
-                            setSearchResults(result.colleges);
-                        }
+                        const stud = studentResult.student ? studentResult.student : {};
+                        result.colleges.sort((a, b) => {
+                            const costA = a.Location === stud.residenceState ? a.CostOfAttendanceInState : a.CostOfAttendanceOutOfState;
+                            const costB = b.Location === stud.residenceState ? b.CostOfAttendanceInState : b.CostOfAttendanceOutOfState;
+                            if (sortAsc) return costA - costB;
+                            return costB - costA;
+                        });
+                        setStudent(stud);
+                        setSearchResults(result.colleges);
                     });
                 } else {
                     setSearchResults(result.colleges);
