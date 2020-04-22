@@ -149,7 +149,6 @@ const SimilarHighSchool = () => {
                                                             <Col>{highSchool.SATEBRW ? highSchool.SATEBRW : '-'}</Col>
                                                         </Row>
                                                     </Col>
-                                                    <Col />
                                                     <Col className="text-center">
                                                         <div className="overview-title">Average ACT</div>
                                                         <div className="overview-text">{highSchool.AverageACT ? highSchool.AverageACT : 'N/A'}</div>
@@ -171,6 +170,10 @@ const SimilarHighSchool = () => {
                                                             <Col>Science</Col>
                                                             <Col>{highSchool.ACTScience ? highSchool.ACTScience : '-'}</Col>
                                                         </Row>
+                                                    </Col>
+                                                    <Col className="text-center">
+                                                        <div className="overview-title">Similarity Score</div>
+                                                        <div className="overview-text">{highSchool.similarityPoints ? `${Math.round((highSchool.similarityPoints / 60) * 100)}%` : 'N/A'}</div>
                                                     </Col>
                                                 </Row>
                                             </div>
