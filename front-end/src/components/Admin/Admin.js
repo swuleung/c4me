@@ -17,6 +17,7 @@ const Admin = () => {
     const [disableCollegeData, setDisableCollegeData] = useState(false);
     const [disableDelete, setDisableDelete] = useState(false);
     const [disableProfile, setDisableProfile] = useState(false);
+    const [disableViewApps,setDisableViewApps] = useState(false);
 
     const toggleProfiles = (b) =>{
         setDisableDelete(b);
@@ -180,22 +181,26 @@ const Admin = () => {
      */
 
      const handleViewQuestionableApplications = () => {
-         let qApps = admin.getQuestionableApplications().then((view)
-
-
-
-
-
-         );
-
-        for (var i = 0; i < qApps.length; i++){  
-        /**
-         * 
-         * Update front end
-         * 
-         * 
-         */
-        }
+        const errorString = [];
+        setDisableViewApps(true);
+        admin.getQuestionableApplications().then((resultApp) => {
+            if (resultApp.error) {
+                setErrorAlert(true);
+                errorString.push(<h4 key="importAppError" className="alert-heading">{resultApp.error}</h4>);
+                if (resultApp.reason) {
+                    for (let i = 0; i < (resultApp.reason).length; i += 1) {
+                        errorString.push(<p key={`importAppError-${i}`}>{resultApp.reason[i].error}</p>);
+                    }
+                    setErrorMessage([...errorMessage, ...errorString]);
+                } else {
+                    setErrorMessage('Process may have timed out');
+                }
+            }
+            if (resultApp.ok) {
+                console.log(resultApp.Result);
+            }
+        });
+        setDisableViewApps(false);
      }
 
     // display the Admin page
@@ -269,7 +274,7 @@ const Admin = () => {
                         <h3>Review Questionable Applications</h3>
                         </Col>
                     <Col sm="6">
-                        <Button onClick={(e) => { getQuestionableApplications(e); }} disabled={disableProfile} className="float-right">View Questionable Applications</Button>
+                        <Button onClick={(e) => { handleViewQuestionableApplications(e); }} disabled={disableViewApps} className="float-right">View Questionable Applications</Button>
                     </Col>
                 </Row>
 

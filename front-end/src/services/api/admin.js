@@ -145,7 +145,7 @@ const admin = {
      */
     getQuestionableApplications: async function getQuestionableApplications(){
         try{
-            const qApps = await fetch('/admin/viewQuestionableApplications', {
+            const qApps = await fetch('/admin/viewQApps', {
                 method: 'GET',
                 credentials: 'include',
                 headers: {

@@ -244,7 +244,7 @@ router.post('/scrapeHighSchool', async (req, res) => {
  * Get Questionable Applications
  * 
  */
-router.get('/admin/viewQuestionableApplications', async (req, res) => {
+router.get('/viewQApps', async (req, res) => {
     if (!req.cookies.access_token) {
         res.status(400).send({ status: 'error', error: 'No token provided' });
     } else {
@@ -257,7 +257,10 @@ router.get('/admin/viewQuestionableApplications', async (req, res) => {
             res.status(400).send(authorized);
         } else {
             const result = await adminController.getQuestionableApplications();
-            res.send(result);
+            res.send({
+                ok: 'Successfully found Questionable Applications',
+                Result: result
+            });
         }
     }
 
