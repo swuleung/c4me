@@ -606,8 +606,6 @@ exports.getQuestionableApplications = async () => {
             ok: 'User does not exist'
         };
     }
-
-    qpApps = qApps.toJSON();
     return qApps;
 }
 

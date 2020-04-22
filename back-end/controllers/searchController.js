@@ -217,18 +217,21 @@ exports.calcQuestionableApplications = async () => {
         };
     }
     //console.log("Here are the applications");
-    console.log(applications[0]);
+    //console.log("\n\n\n\napps[0].Q:",applications[0].isQuestionable);
     //applications = applications.toJSON();
     //applications already in JSON
 
     //iterate thru each application
     for (let i = 0; i < applications.length; i++){
+        console.log("\n\n\n\tapps[" + i + "].username:" + applications[i].username);
+        console.log("\t\t apps[i].status: " + applications[i].status);
+        console.log("\t\t apps[i].College: " + applications[i].college);
         let thisCollege = {};
         //Find the College of Application[i]
         try{
             thisCollege = (await models.College.findOne({
                 where:{
-                    CollegeId: applications[i].College
+                    CollegeId: applications[i].college
                 }
             }))
         }catch (error) {
@@ -243,13 +246,14 @@ exports.calcQuestionableApplications = async () => {
                 ok: 'College does not exist'
             };
         }
-        thisCollege = thisCollege.toJSON();
-        //find the Student of Application[i]
+        console.log("\n\n\n\tThisCollege.username:" + thisCollege.Name);
+        console.log("\n\tapps[" + i + "].username:" + applications[i].username);
+        console.log("\t\t apps[i].status: " + applications[i].status);
         let thisStudent = {};
         try{
-            thisStudent = (await models.User.findOne({
+            thisStudent = (await models.Users.findOne({
                 where:{
-                    username: applications[i].username
+                    username: (applications[i].username)
                 }
             }))
         }catch (error) {
@@ -263,8 +267,10 @@ exports.calcQuestionableApplications = async () => {
                 ok: 'User does not exist'
             };
         }
-
-        thisStudent = thisStudent.toJSON();
+        console.log("\n\n\n\tThisCollege.username:" + thisCollege.Name);
+        console.log("\n\tapps[" + i + "].username:" + applications[i].username);
+        console.log("\t\t apps[i].status: " + applications[i].status);
+        console.log("\n\n\tthisStudent.username:"+thisStudent.username);
 
         var qScore = 0;
         //SAT - 10 
@@ -323,9 +329,10 @@ exports.calcQuestionableApplications = async () => {
        var threshold = qScore/40.0;
        threshold = (applications[i].status == 'denied') ?  (1-threshold) : threshold;
        if (threshold < .65){
-           let updateValues = { isQuestionable: True };
+           let updateValues = { isQuestionable: true };
            await models.Application.update(updateValues,{where: {username: thisStudent[i].username}});
        }
+       console.log("\t\tHello");
     }
 };
 
