@@ -109,7 +109,7 @@ router.post('/scrapeHighSchoolData', async (req, res) => {
  *      username: <string>
  * }
  */
-router.get('/findSimilarHS', async (req, res) => {
+router.get('/findSimilarHS/:username', async (req, res) => {
     if (!req.cookies.access_token) {
         res.status(400).send({ status: 'error', error: 'No token provided' });
     } else {
@@ -119,7 +119,7 @@ router.get('/findSimilarHS', async (req, res) => {
             res.status(400).send(authorized);
         } else {
             let result = {};
-            result = await highSchoolController.findSimilarHS(req.body.username);
+            result = await highSchoolController.findSimilarHS(req.params.username);
             if (result.error) res.status(400);
             res.send(result);
         }

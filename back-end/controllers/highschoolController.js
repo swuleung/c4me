@@ -386,8 +386,7 @@ exports.findSimilarHS = async (username) => {
                     );
                     // every increment of 2% from the closer value, 1 similarity point deducted
                     similarityPoints += Math.max(
-                        10 - Math.ceil(Math.abs(studentGR - highSchool.GraduationRate) / 2),
-                        0,
+                        10 - Math.ceil(Math.abs(studentGR - highSchool.GraduationRate) / 2), 0,
                     );
                 }
             }
