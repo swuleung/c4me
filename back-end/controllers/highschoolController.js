@@ -465,7 +465,7 @@ exports.findSimilarHS = async (username) => {
                     otherSum += parseFloat(otherStudents[j].GPA);
                 }
                 similarityPoints += this.calculateSimilarityPoints(
-                    10, sum / students.length, otherSum / otherStudents.length, 0.05, 1,
+                    5, sum / students.length, otherSum / otherStudents.length, 0.05, 1,
                 );
             }
             highSchool.similarityPoints = similarityPoints;

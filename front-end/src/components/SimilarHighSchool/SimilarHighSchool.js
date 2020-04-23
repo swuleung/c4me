@@ -116,7 +116,7 @@ const SimilarHighSchool = () => {
                                     <Container>
                                         <h1>Similar High Schools</h1>
                                         {highSchools.map((highSchool) => (
-                                            <div className="border mb-2 p-3" key={highSchool.HighSchoolId}>
+                                            <div className="border rounded-lg mb-2 p-3" key={highSchool.HighSchoolId}>
                                                 <Row className="mb-2">
                                                     <Col>
                                                         <Row className="h5 font-weight-bold mb-0"><Col>{highSchool.Name}</Col></Row>
@@ -173,7 +173,7 @@ const SimilarHighSchool = () => {
                                                     </Col>
                                                     <Col className="text-center">
                                                         <div className="overview-title">Similarity Score</div>
-                                                        <div className="overview-text">{highSchool.similarityPoints ? `${Math.round((highSchool.similarityPoints / 60) * 100)}%` : 'N/A'}</div>
+                                                        <div className="overview-text">{highSchool.similarityPoints ? `${Math.round((highSchool.similarityPoints / 55) * 100)}%` : 'N/A'}</div>
                                                     </Col>
                                                 </Row>
                                             </div>
