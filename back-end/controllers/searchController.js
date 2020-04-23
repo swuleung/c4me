@@ -246,7 +246,8 @@ exports.calcQuestionableApplications = async () => {
                 ok: 'College does not exist'
             };
         }
-        console.log("\n\n\n\tThisCollege.username:" + thisCollege.Name);
+        console.log("\n\n\n\tThisCollege.username:" + thisCollege.Name+"\n\n");
+        console.log("\t "+applications[i].username);
         //
         //
         //
@@ -258,19 +259,20 @@ exports.calcQuestionableApplications = async () => {
         //
         let thisStudent = {};
         try{
-            thisStudent = (await models.Users.findOne({
+            thisStudent = (await models.User.findOne({
                 where:{
-                    Username: applications[i].username
+                    username: applications[i].username
                 }
             }))
         }catch (error) {
+            console.log(error);
             return {
                 error: 'Error in finding Student for qScore',
                 reason: error.message,
             };
         }
     
-        if (!thisCollege) {
+        if (!thisStudent) {
             return {
                 ok: 'Student does not exist'
             };
@@ -336,7 +338,10 @@ exports.calcQuestionableApplications = async () => {
        threshold = (applications[i].status == 'denied') ? (1-threshold) : threshold;
        if (threshold < .65){
            let updateValues = { isQuestionable: true };
-           await models.Application.update(updateValues,{where: {username: thisStudent[i].username}});
+           await models.Application.update(updateValues,{
+               where:
+                {username: thisStudent.username}
+            });
        }
     }
 };
