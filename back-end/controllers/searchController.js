@@ -7,34 +7,37 @@ const southRegion = ['DE', 'MD', 'WV', 'VA', 'NC', 'SC', 'GA', 'FL', 'KY', 'TN',
 const midwestRegion = ['OH', 'MI', 'IN', 'WI', 'IL', 'MN', 'IA', 'MO', 'ND', 'SD', 'NE', 'KS']; // 12 statesa=
 const westRegion = ['AK', 'HI', 'WA', 'OR', 'CA', 'MT', 'ID', 'WY', 'NV', 'UT', 'CO', 'AZ', 'NM']; // 13 states
 
-//  Parameters: filters
-//  Filters is an object.
-//  The keys in this object will be the filter names
-//  The values are the filter values
-//  Filters that involve ranges will require 2 keys: a min and a max
-//  e.g. admissionRateMin and admissionRateMax
-//  An example filter:
-// {
-//     "region" : "west",
-//     "SATEBRWMin": 0,
-//     "SATEBRWMax": 800,
-//     "SATMathMin" : 0,
-//     "SATMathMax" : 800,
-//     "name" : "University",
-//     "ACTCompositeMin" : 0,
-//     "ACTCompositeMax" : 35,
-//     "costMax" : 100000,
-//     "major" : "math",
-//     "major2" : "computer",
-//     "rankingMin" : 0,
-//     "rankingMax" : 1000,
-//     "sizeMin" : 0,
-//     "sizeMax" : 50000,
-//     "sortAttribute" : "name",
-//     "sortDirection" : "ASC",
-//     "lax" : "True"
-// }
-
+/**
+ *
+ * @param {*} filters Filters object
+ * @param {*} username
+ *
+ * The keys in this object will be the filter names
+ * The values are the filter values
+ * Filters that involve ranges will require 2 keys: a min and a max
+ * e.g. admissionRateMin and admissionRateMax
+ * An example filter:
+ * {
+ *     "region" : "west",
+ *     "SATEBRWMin": 0,
+ *     "SATEBRWMax": 800,
+ *     "SATMathMin" : 0,
+ *     "SATMathMax" : 800,
+ *     "name" : "University",
+ *     "ACTCompositeMin" : 0,
+ *     "ACTCompositeMax" : 35,
+ *     "costMax" : 100000,
+ *     "major" : "math",
+ *     "major2" : "computer",
+ *     "rankingMin" : 0,
+ *     "rankingMax" : 1000,
+ *     "sizeMin" : 0,
+ *     "sizeMax" : 50000,
+ *     "sortAttribute" : "name",
+ *     "sortDirection" : "ASC",
+ *     "lax" : "True"
+ * }
+ */
 exports.searchCollege = async (filters, username) => {
     let searchResults = {};
     try {
@@ -223,12 +226,14 @@ exports.searchCollege = async (filters, username) => {
         // exceeeds the filters costMax.
         if (filters.hasOwnProperty('costMax')) {
             const student = await getStudent(username);
-            const state = student.student.residenceState;
-            for (let i = searchResults.length - 1; i >= 0; i -= 1) {
-                // eslint-disable-next-line no-continue
-                if (state === searchResults[i].Location) continue;
-                else if (searchResults[i].CostOfAttendanceOutOfState > filters.costMax) {
-                    searchResults.splice(i, 1);
+            if (student.student) {
+                const state = student.student.residenceState;
+                for (let i = searchResults.length - 1; i >= 0; i -= 1) {
+                    // eslint-disable-next-line no-continue
+                    if (state === searchResults[i].Location) continue;
+                    else if (searchResults[i].CostOfAttendanceOutOfState > filters.costMax) {
+                        searchResults.splice(i, 1);
+                    }
                 }
             }
         }

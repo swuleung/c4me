@@ -57,7 +57,7 @@ const CollegeList = (props) => {
                                     <div className="student-details text-center">
                                         <div className="detail-title">Size</div>
                                         <div className="detail-score text-center">
-                                            {college.Size ? college.Size : 'N/A'}
+                                            {college.Size ? college.Size.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 'N/A'}
                                         </div>
                                     </div>
                                 </Card>
@@ -65,7 +65,13 @@ const CollegeList = (props) => {
                                     <div className="student-details text-center">
                                         <div className="detail-title">Cost</div>
                                         <div className="detail-score text-center">
-                                            {student.residenceState === college.Location ? college.CostOfAttendanceInState : college.CostOfAttendanceOutOfState}
+                                            {student.residenceState === college.Location
+                                                ? college.CostOfAttendanceInState
+                                                    ? college.CostOfAttendanceInState.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                                                    : ''
+                                                : college.CostOfAttendanceOutOfState
+                                                    ? college.CostOfAttendanceOutOfState.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                                                    : ''}
                                             {!college.CostOfAttendanceInState && !college.CostOfAttendanceOutOfState ? 'N/A' : ''}
                                         </div>
                                     </div>

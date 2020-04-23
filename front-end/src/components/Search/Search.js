@@ -31,7 +31,7 @@ const Search = () => {
         searchAPI.getSearchResults(filters, sortByFilter, sortDirection).then((result) => {
             if (result.error) {
                 setErrorAlert(true);
-                setErrorMessage(result.reason);
+                setErrorMessage('Error searching with the criteria');
             }
             if (result.ok) {
                 setErrorAlert(false);
@@ -56,62 +56,57 @@ const Search = () => {
     }, [filters, sortBy, sortAsc]);
 
     return (
-        <>
-            {errorAlert
-                ? <Alert variant="danger">{errorMessage}</Alert>
-                : (
-                    <Container>
-                        <Row>
-                            <Col>
-                                <h1>Search for Colleges</h1>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col xs="4">
-                                <FilterColleges handleFilterChange={setFilters} />
-                            </Col>
-                            <Col xs="8">
-                                {/* TODO: College Recommender toggle */}
-                                <div className="list mb-2">
-                                    <Button className="btn-sm">
+        <Container>
+            <Row>
+                <Col>
+                    <h1>Search for Colleges</h1>
+                </Col>
+            </Row>
+            <Row>
+                <Col xs="4">
+                    <FilterColleges handleFilterChange={setFilters} />
+                </Col>
+                <Col xs="8">
+                    {/* TODO: College Recommender toggle */}
+                    <div className="list mb-2">
+                        <Button className="btn-sm">
                                         College Recommender
-                                    </Button>
-                                    <p className="mb-0">
-                                        <b>
-                                            {searchResults.length}
-                                            {' matching colleges'}
-                                        </b>
-                                    </p>
-                                    <div className="d-flex">
-                                        <Form.Control as="select" value={sortBy} onChange={(e) => { setSortBy(e.target.value); }}>
-                                            <option value="none" disabled>Sort by</option>
-                                            <option value="Name">Name</option>
-                                            <option value="AdmissionRate">Admission Rate</option>
-                                            <option value="Cost">Cost of Attendance</option>
-                                            <option value="Ranking">Ranking</option>
-                                        </Form.Control>
-                                        <OverlayTrigger
-                                            placement="right"
-                                            overlay={(
-                                                <Tooltip>
-                                                    {`Sort Direction: ${sortAsc ? 'Ascending' : 'Descending'}`}
-                                                </Tooltip>
-                                            )}
-                                        >
-                                            <Button className="btn-sm ml-1" variant="info">
-                                                <FontAwesomeIcon className="sort-icon" icon={sortAsc ? faSortAmountUp : faSortAmountDown} onClick={() => setSortAsc(!sortAsc)} />
-                                            </Button>
-                                        </OverlayTrigger>
+                        </Button>
+                        <p className="mb-0">
+                            <b>
+                                {searchResults.length}
+                                {' matching colleges'}
+                            </b>
+                        </p>
+                        <div className="d-flex">
+                            <Form.Control as="select" value={sortBy} onChange={(e) => { setSortBy(e.target.value); }}>
+                                <option value="none" disabled>Sort by</option>
+                                <option value="Name">Name</option>
+                                <option value="AdmissionRate">Admission Rate</option>
+                                <option value="Cost">Cost of Attendance</option>
+                                <option value="Ranking">Ranking</option>
+                            </Form.Control>
+                            <OverlayTrigger
+                                placement="right"
+                                overlay={(
+                                    <Tooltip>
+                                        {`Sort Direction: ${sortAsc ? 'Ascending' : 'Descending'}`}
+                                    </Tooltip>
+                                )}
+                            >
+                                <Button className="btn-sm ml-1" variant="info">
+                                    <FontAwesomeIcon className="sort-icon" icon={sortAsc ? faSortAmountUp : faSortAmountDown} onClick={() => setSortAsc(!sortAsc)} />
+                                </Button>
+                            </OverlayTrigger>
 
-                                    </div>
-                                </div>
-                                {sortBy === 'Cost' && student.residenceState == null ? <Alert variant="info">Sorting by out-of-state cost of attendance. Add your residence state in your profile to show in-state cost.</Alert> : <></>}
-                                <CollegeList student={student} colleges={searchResults} />
-                            </Col>
-                        </Row>
-                    </Container>
-                )}
-        </>
+                        </div>
+                    </div>
+                    {errorAlert && <Alert variant="danger">{errorMessage}</Alert>}
+                    {sortBy === 'Cost' && student.residenceState == null ? <Alert variant="info">Sorting by out-of-state cost of attendance. Add your residence state in your profile to show in-state cost.</Alert> : <></>}
+                    <CollegeList student={student} colleges={searchResults} />
+                </Col>
+            </Row>
+        </Container>
     );
 };
 
