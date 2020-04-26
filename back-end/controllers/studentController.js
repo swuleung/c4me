@@ -2,6 +2,7 @@ const models = require('../models');
 const { scrapeHighSchoolData } = require('./highschoolController');
 const { Op } = require("sequelize");
 
+
 /**
  *  Get the student using sequelize
  * @param {string} username
@@ -254,27 +255,6 @@ exports.updateStudentApplications = async (username, newApplications) => {
             }));
         }
     }
-
-    const allApplications = await models.Application.findAll({
-        where: {
-            username: username,
-            status: {
-                [Op.or]: ['accepted','rejected']
-            }
-
-        },
-    });
-
-
-
-
-
-
-
-
-
-
-
     // resolve all asynchronous calls
     await Promise.all(changes).catch((error) => errors.push(`Error in processing application changes ${error.message}`));
     if (errors.length) {
@@ -287,4 +267,126 @@ exports.updateStudentApplications = async (username, newApplications) => {
         ok: 'Success',
         applications: newApplications,
     };
+};
+/**
+ * Updates questionability for all applications
+ *  @param {json} application
+ */
+exports.calcQuestionableApplication = async (app) => {
+
+        console.log("\n\n\n\tapps[" + i + "].username:" + app.username);
+        console.log("\t\t apps[i].status: " + app.status);
+        console.log("\t\t apps[i].College: " + app.college);
+        let thisCollege = {};
+        
+        //Find the College of Application[i]
+        try{
+            thisCollege = (await models.College.findOne({
+                where:{
+                    CollegeId: app.college
+                }
+            }))
+        }catch (error) {
+            return {
+                error: 'Error in finding College for qScore',
+                reason: error.message,
+            };
+        }
+        if (!thisCollege) {
+            return {
+                ok: 'College does not exist'
+            };
+        }
+
+
+        console.log("\n\n\n\tThisCollege.Name:" + thisCollege.Name+"\n\n");
+
+        let thisStudent = {};
+        try{
+            thisStudent = (await models.User.findOne({
+                where:{
+                    username: app.username
+                }
+            }))
+        }catch (error) {
+            console.log(error);
+            return {
+                error: 'Error in finding Student for qScore',
+                reason: error.message,
+            };
+        }
+    
+        if (!thisStudent) {
+            return {
+                ok: 'Student does not exist'
+            };
+        }
+
+        console.log("\n\n\tthisStudent.username:"+thisStudent.username);
+
+        var qScore = 0;
+        //SAT - 10 
+        var totalSATcollege = (thisCollege.SATMath + thisCollege.SATEBRW);
+        var totalSATstudent = (thisStudent.SATMath + thisStudent.SATEBRW);
+        qScore+=10;
+        while ( totalSATcollege > totalSATstudent && qScore > 0){
+            totalSATstudent += 50;
+            qScore--;   
+        }
+
+        //ACT - 10 
+        if (thisCollege.ACTComposite < thisStudent.ACTComposite){
+            qScore+=10;
+        } 
+        else{
+            var temp = 10;
+            var tempACT = thisStudent.ACTComposite;
+            while (temp > 0 && tempACT <= thisCollege.ACTComposite){
+                tempACT+=2;
+                temp--;
+            }
+            qScore+=temp;
+        }
+
+        //Relevant Majors - 5 
+        var majors = collegeController.getMajorsByCollegeID(thisCollege.CollegeId);
+        if (thisStudent.major1 in majors){ qScore += 2.5;}
+        if (thisStudent.major2 in majors){ qScore += 2.5;}
+
+        //GPA - 10
+        if (thisStudent.GPA > thisCollege.GPA){ qScore+=10;}
+        else{ 
+            var temp = 10;
+            var tempGPA = thisStudent.GPA;
+            while(temp > 0 && thisCollege.GPA >= tempGPA){
+                tempGPA+=.1;
+                temp--;
+            }
+            qScore+=temp;
+        }
+
+        //ResidenceState - 5
+        if (thisStudent.residenceState == thisCollege.residenceState){ qScore+=5;}
+        else { 
+            var studentRegion = (thisStudent.residenceState in northeastRegion) ? northeastRegion :
+                                    (thisStudent.residenceState in southRegion) ? southRegion :
+                                        (thisStudent.residenceState in midwestRegion) ? midwestRegion : westRegion;
+            var collegeRegion = (thisCollege.residenceState in northeastRegion) ? northeastRegion :
+                                    (thisCollege.residenceState in southRegion) ? southRegion :
+                                        (thisCollege.residenceState in midwestRegion) ? midwestRegion : westRegion;
+            
+            if (collegeRegion == studentRegion){ qScore+=2.5;}
+       }
+       //determine questionable status & update accordingly
+       var threshold = qScore/40.0;
+       threshold = (applications[i].status == 'denied') ? (1-threshold) : threshold;
+       if (threshold < .65){
+           return true;
+           //let updateValues = { isQuestionable: true };
+           //await models.Application.update(updateValues,{
+           //    where:
+           //     {username: thisStudent.username}
+           // });
+       }
+       return false;
 };

@@ -5,7 +5,7 @@ const parse = require('csv-parse');
 const models = require('../models');
 const { getCollegeList, getPathConfig } = require('../utils/readAppFiles');
 const { updateStudentHighSchool } = require('./studentController');
-const { calcQuestionableApplications } = require('./searchController');
+//const { calcQuestionableApplications } = require('./searchController');
 
 /**
  * Check if a user is an admin with a DB call
@@ -587,7 +587,7 @@ exports.importApplications = async () => {
  * 
  */
 exports.getQuestionableApplications = async () => {
-    calcQuestionableApplications();
+    //calcQuestionableApplications();
     let qApps = {};
     try{
         qApps = (await models.Application.findAll({
