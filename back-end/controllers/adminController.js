@@ -65,6 +65,7 @@ exports.scrapeCollegeRankings = async () => {
         /* eslint-disable no-await-in-loop */
             const rankingEl = await page.$x(`//tr[contains(., '${colleges[i]}')]/td[1]`);
             const ranking = await page.evaluate((el) => el.textContent, rankingEl[0]);
+
             let calculatedRanking = ranking.replace('=', '').replace('>', '');
             // check if there is a hyphen in ranking
             if (calculatedRanking.indexOf('-') !== -1) {
@@ -367,6 +368,7 @@ exports.importCollegeScorecard = async () => {
 
     return { ok: 'Success. Able to scrape all colleges in file.' };
 };
+
 
 /**
  * Deletes all the student profiles and associated applications from the database.
