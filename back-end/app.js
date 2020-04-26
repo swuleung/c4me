@@ -1,4 +1,3 @@
-const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
@@ -38,9 +37,10 @@ app.use('/colleges', collegeRouter);
 app.use('/search', searchRouter);
 app.use('/highSchools', highSchoolRouter);
 
-// catch 404 and forward to error handler
-app.use((req, res, next) => {
-    next(createError(404));
+// catch 404 a
+app.use((req, res) => {
+    res.status(404);
+    res.send({ error: '404 not found' });
 });
 
 // error handler

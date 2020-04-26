@@ -19,6 +19,27 @@ const highSchool = {
             };
         }
     },
+    /**
+     * Get similar high schools list with a GET
+     * @param {string} username
+     */
+    findSimilarHS: async function findSimilarHS(username) {
+        try {
+            const highSchools = await fetch(`/highSchools/findSimilarHS/${username}`, {
+                method: 'GET',
+                credentials: 'include',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json; charset=utf-8',
+                },
+            });
+            return await highSchools.json();
+        } catch (error) {
+            return {
+                error: `${error.message} find similar high schools`,
+            };
+        }
+    },
 };
 
 export default highSchool;
