@@ -356,8 +356,8 @@ exports.findSimilarHS = async (username) => {
     for (let i = 0; i < highSchools.length; i += 1) {
         const highSchool = highSchools[i];
         if (studentHS.Name !== highSchool.Name
-            && studentHS.HighSchoolCity !== highSchool.HighSchoolCity
-            && studentHS.HighSchoolState !== highSchool.HighSchoolState) {
+            && studentHS.City !== highSchool.City
+            && studentHS.State !== highSchool.State) {
             let similarityPoints = 0;
             if (studentHS.NicheAcademicScore && highSchool.NicheAcademicScore) {
                 if (studentHS.NicheAcademicScore === highSchool.NicheAcademicScore) {
@@ -472,6 +472,7 @@ exports.findSimilarHS = async (username) => {
             i -= 1;
         }
     }
+    // sort by similarity points
     highSchools.sort((a, b) => b.similarityPoints - a.similarityPoints);
     return {
         ok: 'Success',
