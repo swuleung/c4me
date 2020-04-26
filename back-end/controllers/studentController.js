@@ -226,8 +226,6 @@ exports.updateStudentApplications = async (username, newApplications) => {
         // if the application is found, update it
         if (found > -1) {
 
-
-
             if (copyApplications[found].status === 'accepted' || copyApplications[found].status === 'denied'){
                 copyApplications[found].isQuestionable = await calcQuestionableApplication(copyApplications[found]);
             }
@@ -255,6 +253,10 @@ exports.updateStudentApplications = async (username, newApplications) => {
     // for all remaining new applications, create them
     if (copyApplications.length) {
         for (let i = 0; i < copyApplications.length; i += 1) {
+            
+            if (copyApplications[i].status === 'accepted' || copyApplications[i].status === 'denied'){
+                copyApplications[i].isQuestionable = await calcQuestionableApplication(copyApplications[i]);
+            }
             changes.push(models.Application.create(copyApplications[i]).catch((error) => {
                 errors.push({
                     error: `Error creating application:  ${allApplications[i]}`,
