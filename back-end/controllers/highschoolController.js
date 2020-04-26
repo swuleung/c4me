@@ -234,21 +234,6 @@ exports.scrapeHighSchoolData = async (highSchoolName, highSchoolCity, highSchool
 };
 
 /**
- * Finds the value(min/max) that closest to the given value
- * @param {float} min
- * @param {float} max
- * @param {float} value
- */
-exports.findCloserValue = (min, max, value) => {
-    const upper = Math.abs(max - value);
-    const lower = Math.abs(min - value);
-    if (upper < lower) {
-        return upper;
-    }
-    return lower;
-};
-
-/**
  * Calculates the similarity points based on deviation from student's high school values
  * @param {integer} base initial similarity point value
  * @param {float} studentHSValue
@@ -258,17 +243,11 @@ exports.findCloserValue = (min, max, value) => {
  */
 exports.calculateSimilarityPoints = (base, studentHSValue, otherHSValue, deviation, deduction) => {
     // if the other high school's value is within deviation value of student's high school
-    if (otherHSValue >= studentHSValue - deviation && otherHSValue <= studentHSValue + deviation) {
+    if (otherHSValue === studentHSValue) {
         return base;
     }
-    // finds the closer value to the other high school to increment
-    const value = this.findCloserValue(
-        studentHSValue - deviation,
-        studentHSValue + deviation,
-        otherHSValue,
-    );
     // every increment of deviation from the closer value, 1 similarity point deducted
-    return Math.max(base - Math.ceil(Math.abs((value - otherHSValue) / deviation) / deduction), 0);
+    return Math.max(base - Math.ceil(Math.abs((studentHSValue - otherHSValue) / deviation) / deduction), 0);
 };
 
 /**
@@ -374,16 +353,9 @@ exports.findSimilarHS = async (username) => {
             if (studentHS.GraduationRate && highSchool.GraduationRate) {
                 let studentGR = studentHS.GraduationRate;
                 // if the graduation rate is within 5% of student's high school
-                if (highSchool.GraduationRate >= studentGR - 5
-                    && highSchool.GraduationRate <= studentGR + 5) {
+                if (highSchool.GraduationRate === studentGR) {
                     similarityPoints += 10;
                 } else {
-                    // finds the closer value to the other high school to increment
-                    studentGR = this.findCloserValue(
-                        studentGR - 5,
-                        studentGR + 5,
-                        highSchool.GraduationRate,
-                    );
                     // every increment of 2% from the closer value, 1 similarity point deducted
                     similarityPoints += Math.max(
                         10 - Math.ceil(Math.abs(studentGR - highSchool.GraduationRate) / 2), 0,

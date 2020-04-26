@@ -65,14 +65,14 @@ const SimilarHighSchool = () => {
                                                 </Row>
                                             </Col>
                                         </Row>
-                                        <Row>
+                                        <Row classname="highschool-location">
                                             {student.HighSchool.HighSchoolCity ? `${student.HighSchool.HighSchoolCity}, ` : ''}
                                             {student.HighSchool.HighSchoolState ? student.HighSchool.HighSchoolState : ''}
                                         </Row>
                                         <Row className="mt-2 border p-3">
                                             <Col className="text-center">
                                                 <div className="overview-title">Average SAT</div>
-                                                <div className="overview-text">{student.HighSchool.AverageSAT ? student.HighSchool.AverageSAT : 'N/A'}</div>
+                                                <div className="similar-text">{student.HighSchool.AverageSAT ? student.HighSchool.AverageSAT : 'N/A'}</div>
                                             </Col>
                                             <Col>
                                                 <Row>
@@ -86,7 +86,7 @@ const SimilarHighSchool = () => {
                                             </Col>
                                             <Col className="text-center">
                                                 <div className="overview-title">Average ACT</div>
-                                                <div className="overview-text">{student.HighSchool.AverageACT ? student.HighSchool.AverageACT : 'N/A'}</div>
+                                                <div className="similar-text">{student.HighSchool.AverageACT ? student.HighSchool.AverageACT : 'N/A'}</div>
                                             </Col>
                                             <Col>
                                                 <Row>
@@ -108,7 +108,7 @@ const SimilarHighSchool = () => {
                                             </Col>
                                             <Col className="text-center">
                                                 <div className="overview-title">Graduation Rate</div>
-                                                <div className="overview-text">{student.HighSchool.GraduationRate ? `${student.HighSchool.GraduationRate}%` : 'N/A'}</div>
+                                                <div className="similar-text">{student.HighSchool.GraduationRate ? `${student.HighSchool.GraduationRate}%` : 'N/A'}</div>
                                             </Col>
                                         </Row>
                                     </Container>
@@ -124,9 +124,8 @@ const SimilarHighSchool = () => {
                                                             <Col>{`${highSchool.HighSchoolCity}, ${highSchool.HighSchoolState}`}</Col>
                                                         </Row>
                                                     </Col>
-                                                    <Col className="h5 text-center">
-                                                        {highSchool.GraduationRate}
-                                                        % Graduation
+                                                    <Col className="h4 text-center">
+                                                        {highSchool.similarityPoints ? `${Math.round((highSchool.similarityPoints / 55) * 100)}%` : 'N/A'} Similarity
                                                     </Col>
                                                     <Col className="text-right">
                                                         <Row>
@@ -137,7 +136,7 @@ const SimilarHighSchool = () => {
                                                 <Row>
                                                     <Col className="text-center">
                                                         <div className="overview-title">Average SAT</div>
-                                                        <div className="overview-text">{highSchool.AverageSAT ? highSchool.AverageSAT : 'N/A'}</div>
+                                                        <div className="similar-text">{highSchool.AverageSAT ? highSchool.AverageSAT : 'N/A'}</div>
                                                     </Col>
                                                     <Col>
                                                         <Row>
@@ -151,7 +150,7 @@ const SimilarHighSchool = () => {
                                                     </Col>
                                                     <Col className="text-center">
                                                         <div className="overview-title">Average ACT</div>
-                                                        <div className="overview-text">{highSchool.AverageACT ? highSchool.AverageACT : 'N/A'}</div>
+                                                        <div className="similar-text">{highSchool.AverageACT ? highSchool.AverageACT : 'N/A'}</div>
                                                     </Col>
                                                     <Col>
                                                         <Row>
@@ -172,8 +171,8 @@ const SimilarHighSchool = () => {
                                                         </Row>
                                                     </Col>
                                                     <Col className="text-center">
-                                                        <div className="overview-title">Similarity Score</div>
-                                                        <div className="overview-text">{highSchool.similarityPoints ? `${Math.round((highSchool.similarityPoints / 55) * 100)}%` : 'N/A'}</div>
+                                                        <div className="overview-title">Graduation Rate</div>
+                                                        <div className="similar-text">{highSchool.GraduationRate}%</div>
                                                     </Col>
                                                 </Row>
                                             </div>
