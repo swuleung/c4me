@@ -229,8 +229,6 @@ exports.searchCollege = async ( filters, username ) => {
 exports.calcScores = async ( colleges, username ) => {
 	try {
 
-		let scoreResults = {};
-		let score = 0;
 		const student = await getStudent( username );
 		const state = student.student.residenceState;
 		const major1 = student.student.major1.toLowerCase();
@@ -240,6 +238,8 @@ exports.calcScores = async ( colleges, username ) => {
 		const ACTComposite = student.student.ACTComposite;
 		const GPA = student.student.GPA;
 
+		let scoreResults = {};
+		let score = 0;
 
 		for (let i = colleges.length - 1; i >= 0; i--) {
 			score = 0;
@@ -285,6 +285,7 @@ exports.calcScores = async ( colleges, username ) => {
 			if (points > 0)
 				score += points;
 
+			scoreResults[ colleges[i].Name ] = score;
 		}
 
 // Similar Students
