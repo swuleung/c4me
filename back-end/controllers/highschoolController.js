@@ -3,7 +3,6 @@ const puppeteer = require('puppeteer');
 const { getPathConfig } = require('../utils/readAppFiles');
 const models = require('../models');
 
-
 /**
  * Get a high school's information using its id
  * @param {integer} highSchoolId
@@ -232,4 +231,251 @@ exports.scrapeHighSchoolData = async (highSchoolName, highSchoolCity, highSchool
     await page.close();
     await browser.close();
     return { ok: `Success. Able to scrape ${highSchoolName} data.` };
+};
+
+/**
+ * Calculates the similarity points based on deviation from student's high school values
+ * @param {integer} base initial similarity point value
+ * @param {int/float} studentHSValue the currenet high school value
+ * @param {int/float} otherHSValue the other high school value to compare with
+ * @param {int/float} deviation the amount difference
+ * @param {int/float} deduction similarity points to deduct
+ */
+exports.calculateSimilarityPoints = (base, studentHSValue, otherHSValue, deviation, deduction) => {
+    // if the other high school's value is within deviation value of student's high school
+    if (otherHSValue === studentHSValue) {
+        return base;
+    }
+    // every increment of deviation from the closer value, 1 similarity point deducted
+    if (deduction === 0.5) {
+        return Math.max(base
+            - Math.ceil(Math.abs((studentHSValue - otherHSValue) / deviation)) * deduction,
+        0);
+    }
+    return Math.max(base
+        - Math.ceil(Math.abs((studentHSValue - otherHSValue) / deviation) / deduction),
+    0);
+};
+
+/**
+ * Returns list of high schools sorted by similarity points.
+ * @param {string} username
+ */
+exports.findSimilarHS = async (username) => {
+    let highSchools;
+    const student = await models.User.findOne({
+        where: {
+            username: username,
+            isAdmin: false,
+        },
+        include: [{
+            model: models.HighSchool,
+        }],
+    });
+    if (!student.HighSchool) {
+        return {
+            error: 'No high school in student profile',
+            reason: 'No high school in student profile',
+        };
+    }
+    const studentHS = student.HighSchool;
+    const result = await this.getAllHighSchools();
+    if (result.ok) {
+        highSchools = result.highSchools;
+    } else {
+        return result;
+    }
+    // stores numerical value of letter grades
+    const grades = {
+        'A+': 0,
+        A: 1,
+        'A-': 2,
+        'B+': 3,
+        B: 4,
+        'B-': 5,
+        'C+': 6,
+        C: 7,
+        'C-': 8,
+        'D+': 9,
+        D: 10,
+        'D-': 11,
+    };
+
+    // conversion for act score to sat score
+    const ACTtoSAT = {
+        9: 590,
+        10: 630,
+        11: 670,
+        12: 710,
+        13: 760,
+        14: 800,
+        15: 850,
+        16: 890,
+        17: 930,
+        18: 970,
+        19: 1010,
+        20: 1040,
+        21: 1080,
+        22: 1110,
+        23: 1140,
+        24: 1180,
+        25: 1210,
+        26: 1240,
+        27: 1280,
+        28: 1310,
+        29: 1340,
+        30: 1370,
+        31: 1400,
+        32: 1430,
+        33: 1460,
+        34: 1500,
+        35: 1540,
+        36: 1590,
+    };
+
+    // get students of high school of given student
+    // eslint-disable-next-line no-await-in-loop
+    const students = await models.User.findAll({
+        include: [{
+            model: models.HighSchool,
+            where: { HighSchoolId: studentHS.HighSchoolId },
+        }],
+    });
+
+    let averageCurrentHSGPA = 0;
+    let countGPA = 0;
+    for (let studentIndex = 0; studentIndex < students.length; studentIndex += 1) {
+        if (students[studentIndex].GPA != null) {
+            averageCurrentHSGPA += parseFloat(students[studentIndex].GPA);
+            countGPA += 1;
+        }
+    }
+    averageCurrentHSGPA /= countGPA;
+
+    // loops through all high schools and give similarity points
+    for (let i = 0; i < highSchools.length; i += 1) {
+        const highSchool = highSchools[i];
+        if (studentHS.Name !== highSchool.Name
+            && studentHS.HighSchoolCity !== highSchool.HighSchoolCity
+            && studentHS.HighSchoolState !== highSchool.HighSchoolState) {
+            let similarityPoints = 0;
+            if (studentHS.NicheAcademicScore && highSchool.NicheAcademicScore) {
+                if (studentHS.NicheAcademicScore === highSchool.NicheAcademicScore) {
+                    similarityPoints += 12;
+                } else {
+                    // if the scores are different find the difference in the grade values
+                    const difference = Math.abs(grades[studentHS.NicheAcademicScore]
+                        - grades[highSchool.NicheAcademicScore]);
+                    similarityPoints += (12 - difference);
+                }
+            }
+            if (studentHS.GraduationRate && highSchool.GraduationRate) {
+                const studentGR = studentHS.GraduationRate;
+                // if the graduation rate is within 5% of student's high school
+                if (highSchool.GraduationRate === studentGR) {
+                    similarityPoints += 10;
+                } else {
+                    // every increment of 2% from the closer value, 1 similarity point deducted
+                    similarityPoints += Math.max(
+                        10 - Math.ceil(Math.abs(studentGR - highSchool.GraduationRate) / 2), 0,
+                    );
+                }
+            }
+            if (studentHS.AverageSAT && highSchool.AverageSAT) {
+                similarityPoints += this.calculateSimilarityPoints(
+                    10, studentHS.AverageSAT, highSchool.AverageSAT, 50, 1,
+                );
+            }
+            if (studentHS.SATMath && highSchool.SATMath) {
+                similarityPoints += this.calculateSimilarityPoints(
+                    2, studentHS.SATMath, highSchool.SATMath, 25, 0.5,
+                );
+            }
+            if (studentHS.SATEBRW && highSchool.SATEBRW) {
+                similarityPoints += this.calculateSimilarityPoints(
+                    2, studentHS.SATEBRW, highSchool.SATEBRW, 25, 0.5,
+                );
+            }
+            if (studentHS.AverageACT && highSchool.AverageACT) {
+                similarityPoints += this.calculateSimilarityPoints(
+                    10, studentHS.AverageACT, highSchool.AverageACT, 2, 1,
+                );
+            }
+            if (studentHS.ACTMath && highSchool.ACTMath) {
+                similarityPoints += this.calculateSimilarityPoints(
+                    1, studentHS.ACTMath, highSchool.ACTMath, 2, 0.5,
+                );
+            }
+            if (studentHS.ACTReading && highSchool.ACTReading) {
+                similarityPoints += this.calculateSimilarityPoints(
+                    1, studentHS.ACTReading, highSchool.ACTReading, 2, 0.5,
+                );
+            }
+            if (studentHS.ACTEnglish && highSchool.ACTEnglish) {
+                similarityPoints += this.calculateSimilarityPoints(
+                    1, studentHS.ACTEnglish, highSchool.ACTEnglish, 2, 0.5,
+                );
+            }
+            if (studentHS.ACTScience && highSchool.ACTScience) {
+                similarityPoints += this.calculateSimilarityPoints(
+                    1, studentHS.ACTScience, highSchool.ACTScience, 2, 0.5,
+                );
+            }
+            // if one school has only SAT and the other has only ACT
+            if (studentHS.AverageSAT && !studentHS.AverageACT
+                && highSchool.AverageACT && !highSchool.AverageSAT) {
+                // convert ACT score of other high school to SAT score
+                const otherConvertedSAT = ACTtoSAT[highSchool.AverageACT];
+                similarityPoints += this.calculateSimilarityPoints(
+                    10, studentHS.AverageSAT, otherConvertedSAT, 50, 1,
+                );
+            }
+            if (!studentHS.AverageSAT && studentHS.AverageACT
+                && !highSchool.AverageACT && highSchool.AverageSAT) {
+                // convert ACT score of student's high school to SAT score
+                const studentConvertedSAT = ACTtoSAT[studentHS.AverageACT];
+                similarityPoints += this.calculateSimilarityPoints(
+                    10, studentConvertedSAT, highSchool.AverageSAT, 50, 1,
+                );
+            }
+            // get all students of high school and find avg gpa
+            // eslint-disable-next-line no-await-in-loop
+            const otherStudents = await models.User.findAll({
+                include: [{
+                    model: models.HighSchool,
+                    where: { HighSchoolId: highSchool.HighSchoolId },
+                }],
+            });
+            let otherAverageHSGPA = 0;
+            let countOtherGPA = 0;
+            if (students.length && otherStudents.length) {
+                for (let j = 0; j < otherStudents.length; j += 1) {
+                    if (otherStudents[j].GPA != null) {
+                        otherAverageHSGPA += parseFloat(otherStudents[j].GPA);
+                        countOtherGPA += 1;
+                    }
+                }
+                otherAverageHSGPA /= countOtherGPA;
+                similarityPoints += this.calculateSimilarityPoints(
+                    5,
+                    averageCurrentHSGPA,
+                    otherAverageHSGPA,
+                    0.05,
+                    1,
+                );
+            }
+            highSchool.averageGPA = otherAverageHSGPA;
+            highSchool.similarityPoints = similarityPoints;
+        } else {
+            // removes student's high school from list
+            highSchools.splice(i, 1);
+            i -= 1;
+        }
+    }
+    highSchools.sort((a, b) => b.similarityPoints - a.similarityPoints);
+    return {
+        ok: 'Success',
+        highSchools: highSchools,
+        averageGPA: averageCurrentHSGPA,
+    };
 };
