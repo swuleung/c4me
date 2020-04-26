@@ -3,7 +3,7 @@ const { Op } = require("sequelize");
 const { getStudent } = require('../controllers/studentController');
 
 const northeastRegion = ["ME", "VT", "NH", "MA", "RI", "CT", "NY", "PA", "NJ"]; //9 states
-const southRegion = ["DE", "MD", "WV", "VA", "NC", "SC", "GA", "FL", "KY", "TN", "MS", "AL", "AR", "LA", "OK", "TX"]; //16 states
+const southRegion = ["DE", "MD", "WV", "VA", "NC", "SC", "GA", "FL", "KY", "TN", "MS", "AL", "AR", "LA", "OK", "TX", "DC"]; //16 states + DC
 const midwestRegion = ["OH", "MI", "IN", "WI", "IL", "MN", "IA", "MO", "ND", "SD", "NE", "KS"]; //12 statesa=
 const westRegion = ["AK", "HI", "WA", "OR", "CA", "MT", "ID", "WY", "NV", "UT", "CO", "AZ", "NM"]; //13 states
 
@@ -225,3 +225,83 @@ exports.searchCollege = async ( filters, username ) => {
         colleges : searchResults
     }
 }
+
+exports.calcScores = async ( colleges, username ) => {
+	try {
+
+		let scoreResults = {};
+		let score = 0;
+		const student = await getStudent( username );
+		const state = student.student.residenceState;
+		const major1 = student.student.major1.toLowerCase();
+		const major2 = student.student.major2.toLowerCase();
+		const SATMath = student.student.SATMath;
+		const SATEBRW = student.student.SATEBRW;
+		const ACTComposite = student.student.ACTComposite;
+		const GPA = student.student.GPA;
+
+
+		for (let i = colleges.length - 1; i >= 0; i--) {
+			score = 0;
+
+			if ( colleges[i].Location == state ) 
+				score += 10;
+			else if ( northeastRegion.includes( colleges[i].Location ) 
+					&& northeastRegion.includes( state ) )
+				score += 5;
+			else if ( southRegion.includes( colleges[i].Location ) 
+					&& southRegion.includes( state ) )
+				score += 5;
+			else if ( westRegion.includes( colleges[i].Location ) 
+					&& westRegion.includes( state ) )
+				score += 5;
+			else if ( midwestRegion.includes( colleges[i].Location ) 
+					&& midwestRegion.includes( state ) )
+				score += 5;
+
+			let majors = colleges[i].getMajors();
+			for (let j = majors.length - 1; j >= 0; j--) {
+				if ( majors[j].Major.toLowerCase().includes( major1 ) )
+					score += 5;
+			}
+			for (let j = majors.length - 1; j >= 0; j--) {
+				if ( majors[j].Major.toLowerCase().includes( major2 ) )
+					score += 5;
+			}
+
+			let points = 10 - Math.floor( Math.abs( colleges[i].ACTComposite - ACTComposite ) / 2 );
+			if (points > 0)
+				score += points;
+
+			points = 5 - Math.floor( Math.abs( colleges[i].SATMath - SATMath ) / 25 );
+			if (points > 0)
+				score += points;
+
+			points = 5 - Math.floor( Math.abs( colleges[i].SATEBRW - SATEBRW ) / 25 );
+			if (points > 0)
+				score += points;
+
+			points = 10 - Math.floor( Math.abs( colleges[i].ACTComposite - ACTComposite ) / 0.1 );
+			if (points > 0)
+				score += points;
+
+		}
+
+// Similar Students
+// 10
+// See section 1.2.1 for calculating similar students and how many recommendation points would be given.
+
+
+	}
+	catch (error) {
+		return {
+            error: 'calcScores failed',
+            reason: error
+        };
+	}
+	return {
+		ok: 'Success',
+        scores : scoreResults
+	}
+
+};
