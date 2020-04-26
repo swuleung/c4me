@@ -216,12 +216,8 @@ exports.calcQuestionableApplications = async () => {
             averages: {},
         };
     }
-    //console.log("Here are the applications");
-    //console.log("\n\n\n\napps[0].Q:",applications[0].isQuestionable);
-    //applications = applications.toJSON();
-    //applications already in JSON
 
-    //iterate thru each application
+    //app passed to calcQuestionableApp
     for (let i = 0; i < applications.length; i++){
         console.log("\n\n\n\tapps[" + i + "].username:" + applications[i].username);
         console.log("\t\t apps[i].status: " + applications[i].status);

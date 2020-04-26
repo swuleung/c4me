@@ -1,5 +1,6 @@
 const models = require('../models');
 const { scrapeHighSchoolData } = require('./highschoolController');
+const { Op } = require("sequelize");
 
 /**
  *  Get the student using sequelize
@@ -253,6 +254,27 @@ exports.updateStudentApplications = async (username, newApplications) => {
             }));
         }
     }
+
+    const allApplications = await models.Application.findAll({
+        where: {
+            username: username,
+            status: {
+                [Op.or]: ['accepted','rejected']
+            }
+
+        },
+    });
+
+
+
+
+
+
+
+
+
+
+
     // resolve all asynchronous calls
     await Promise.all(changes).catch((error) => errors.push(`Error in processing application changes ${error.message}`));
     if (errors.length) {
