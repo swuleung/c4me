@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-    Button, Alert, Container, Row, Col,
+    Button, Alert, Container, Row, Col,Table
 } from 'react-bootstrap';
 import admin from '../../services/api/admin';
 
@@ -197,7 +197,18 @@ const Admin = () => {
                 }
             }
             if (resultApp.ok) {
-                console.log(resultApp.Result);
+                const apps = [];
+                for (var i = 0; i < resultApp.Result.length; i++){
+                    
+                    apps.push(
+                    // <tr className = "qApp" key={i}>
+                            {/* <td> {resultApp.Result[i].username}</td> */},
+                            {/* <td> {resultApp.Result[i].status}</td> */},
+                            {/* <td>{resultApp.Result[i].college}</td> */}
+                    // </tr>,
+                    );
+                }
+                return apps;
             }
         });
         setDisableViewApps(false);
@@ -277,6 +288,18 @@ const Admin = () => {
                         <Button onClick={(e) => { handleViewQuestionableApplications(e); }} disabled={disableViewApps} className="float-right">View Questionable Applications</Button>
                     </Col>
                 </Row>
+                <Table>
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Status</th>
+                            <th>CollegeID</th>
+                        </tr>
+                    </thead>
+                     <tbody>
+                        {/* {handleViewQuestionableApplications} */}
+                    </tbody>
+                </Table>
 
             </Container>
         </div>
