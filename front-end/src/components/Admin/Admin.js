@@ -311,9 +311,9 @@ const Admin = () => {
                                         <th>c4me.live/colleges/_?_</th>
                                     </tr>
                                 </thead>
-                                <body>
-                                    {/* {handleViewQuestionableApplications()} */}
-                                </body>
+                                <tbody>
+                                    {handleViewQuestionableApplications()}
+                                </tbody>
                         </Table>
                     </Col>
                 </Row>
