@@ -65,7 +65,6 @@ describe('Find Similar High Schools', () => {
         agent
             .get('/highSchools/findSimilarHS/mocha4')
             .end((err, res) => {
-                console.log(res.body);
                 res.should.have.status(200);
                 expect(res.body.highSchools).to.shallowDeepEqual([{
                     Name: 'Ridgewood High School',

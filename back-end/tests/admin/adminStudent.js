@@ -19,7 +19,7 @@ describe('Login as admin & delete high schools', () => {
             });
     });
 
-    it('Delete all colleges', (done) => {
+    it('Delete all high schools', (done) => {
         agent
             .delete('/admin/deleteAllHighSchools')
             .end((err, res) => {
