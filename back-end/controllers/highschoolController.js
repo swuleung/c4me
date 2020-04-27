@@ -247,7 +247,10 @@ exports.calculateSimilarityPoints = (base, studentHSValue, otherHSValue, deviati
         return base;
     }
     // every increment of deviation from the closer value, 1 similarity point deducted
-    return Math.max(base - Math.ceil(Math.abs((studentHSValue - otherHSValue) / deviation) / deduction), 0);
+    return Math.max(
+        base - Math.ceil(Math.abs((studentHSValue - otherHSValue) / deviation) / deduction),
+        0,
+    );
 };
 
 /**
@@ -351,7 +354,7 @@ exports.findSimilarHS = async (username) => {
                 }
             }
             if (studentHS.GraduationRate && highSchool.GraduationRate) {
-                let studentGR = studentHS.GraduationRate;
+                const studentGR = studentHS.GraduationRate;
                 // if the graduation rate is within 5% of student's high school
                 if (highSchool.GraduationRate === studentGR) {
                     similarityPoints += 10;
@@ -451,5 +454,25 @@ exports.findSimilarHS = async (username) => {
     return {
         ok: 'Success',
         highSchools: highSchools,
+    };
+};
+
+/**
+ * Delete all the high schools within the database
+ */
+exports.deleteAllHighSchools = async () => {
+    try {
+        models.HighSchool.destroy({
+            where: {},
+        });
+    } catch (error) {
+        return {
+            error: 'Unable to delete all high schools',
+            reason: error,
+        };
+    }
+
+    return {
+        ok: 'Deleted high schools successfully',
     };
 };

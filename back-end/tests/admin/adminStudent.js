@@ -4,6 +4,31 @@ const { expect } = require('../shared');
 /**
  * Tests are described with "describe" & "it"
  */
+describe('Login as admin & delete high schools', () => {
+    it('Login as admin test', (done) => {
+        agent
+            .post('/users/login')
+            .send({
+                username: 'admin',
+                password: 'admin',
+            })
+            .end((err, res) => {
+                res.should.have.status(200);
+                res.should.have.cookie('access_token');
+                done();
+            });
+    });
+
+    it('Delete all colleges', (done) => {
+        agent
+            .delete('/admin/deleteAllHighSchools')
+            .end((err, res) => {
+                res.should.have.status(200);
+                done();
+            });
+    });
+});
+
 describe('Scrape college information', () => {
     describe('Delete all users', () => {
         it('Deletes all users', (done) => {

@@ -4,7 +4,7 @@ const router = express.Router();
 const authentication = require('../utils/auth');
 const adminController = require('../controllers/adminController');
 const collegeController = require('../controllers/collegeController');
-const { scrapeHighSchoolData } = require('../controllers/highschoolController');
+const highSchoolController = require('../controllers/highschoolController');
 
 /**
  * Scrape the college rankings from THE
@@ -191,6 +191,31 @@ router.delete('/deleteAllColleges', async (req, res) => {
 });
 
 /**
+ * Delete all high schools
+ * GET request
+ */
+router.delete('/deleteAllHighSchools', async (req, res) => {
+    // authentication check
+    if (!req.cookies.access_token) {
+        res.status(400).send({ status: 'error', error: 'No token provided' });
+    } else {
+        const authorized = await authentication.validateJWT(req.cookies.access_token);
+        if (!authorized.username) {
+            res.clearCookie('access_token');
+            res.status(400).send(authorized);
+            // verify that user is an admin
+        } else if (!adminController.checkAdmin(authorized.username)) {
+            res.status(400).send(authorized);
+        } else {
+            // delete all colleges
+            const result = await highSchoolController.deleteAllHighSchools();
+            if (!result.ok) res.status(400);
+            res.send(result);
+        }
+    }
+});
+
+/**
  * Verify that a user is an admin
  * GET request
  */
@@ -233,7 +258,11 @@ router.post('/scrapeHighSchool', async (req, res) => {
         } else if (!adminController.checkAdmin(authorized.username)) {
             res.status(400).send(authorized);
         } else {
-            const result = await scrapeHighSchoolData(req.body.highSchoolName, req.body.highSchoolCity, req.body.highSchoolState);
+            const result = await highSchoolController.scrapeHighSchoolData(
+                req.body.highSchoolName,
+                req.body.highSchoolCity,
+                req.body.highSchoolState,
+            );
             res.send(result);
         }
     }
