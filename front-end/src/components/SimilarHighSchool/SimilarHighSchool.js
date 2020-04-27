@@ -9,6 +9,7 @@ import studentAPI from '../../services/api/student';
 const SimilarHighSchool = () => {
     // set state variables
     const [student, setStudent] = useState({});
+    const [averageGPA, setAverageGPA] = useState('N/A');
     const [highSchools, setHighSchools] = useState([]);
     const [errorAlert, setErrorAlert] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
@@ -34,6 +35,7 @@ const SimilarHighSchool = () => {
             }
             if (result.ok) {
                 setErrorAlert(false);
+                setAverageGPA(result.averageGPA.toFixed(2));
                 setHighSchools(result.highSchools);
             }
         });
@@ -65,7 +67,7 @@ const SimilarHighSchool = () => {
                                                 </Row>
                                             </Col>
                                         </Row>
-                                        <Row classname="highschool-location">
+                                        <Row className="highschool-location">
                                             {student.HighSchool.HighSchoolCity ? `${student.HighSchool.HighSchoolCity}, ` : ''}
                                             {student.HighSchool.HighSchoolState ? student.HighSchool.HighSchoolState : ''}
                                         </Row>
@@ -110,6 +112,10 @@ const SimilarHighSchool = () => {
                                                 <div className="overview-title">Graduation Rate</div>
                                                 <div className="similar-text">{student.HighSchool.GraduationRate ? `${student.HighSchool.GraduationRate}%` : 'N/A'}</div>
                                             </Col>
+                                            <Col className="text-center">
+                                                <div className="overview-title">Average GPA</div>
+                                                <div className="similar-text">{averageGPA || 'N/A'}</div>
+                                            </Col>
                                         </Row>
                                     </Container>
                                     <br />
@@ -125,7 +131,8 @@ const SimilarHighSchool = () => {
                                                         </Row>
                                                     </Col>
                                                     <Col className="h4 text-center">
-                                                        {highSchool.similarityPoints ? `${Math.round((highSchool.similarityPoints / 55) * 100)}%` : 'N/A'} Similarity
+                                                        {highSchool.similarityPoints ? `${Math.round((highSchool.similarityPoints / 55) * 100)}%` : 'N/A'}
+                                                        {' Similarity'}
                                                     </Col>
                                                     <Col className="text-right">
                                                         <Row>
@@ -172,7 +179,15 @@ const SimilarHighSchool = () => {
                                                     </Col>
                                                     <Col className="text-center">
                                                         <div className="overview-title">Graduation Rate</div>
-                                                        <div className="similar-text">{highSchool.GraduationRate}%</div>
+                                                        <div className="similar-text">
+                                                            {highSchool.GraduationRate ? `${highSchool.GraduationRate}%` : 'N/A'}
+                                                        </div>
+                                                    </Col>
+                                                    <Col className="text-center">
+                                                        <div className="overview-title">Average GPA</div>
+                                                        <div className="similar-text">
+                                                            {highSchool.averageGPA ? highSchool.averageGPA.toFixed(2) : 'N/A' }
+                                                        </div>
                                                     </Col>
                                                 </Row>
                                             </div>

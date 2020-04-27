@@ -236,10 +236,10 @@ exports.scrapeHighSchoolData = async (highSchoolName, highSchoolCity, highSchool
 /**
  * Calculates the similarity points based on deviation from student's high school values
  * @param {integer} base initial similarity point value
- * @param {float} studentHSValue
- * @param {float} otherHSValue
- * @param {float} deviation
- * @param {float} deduction
+ * @param {int/float} studentHSValue the currenet high school value
+ * @param {int/float} otherHSValue the other high school value to compare with
+ * @param {int/float} deviation the amount difference
+ * @param {int/float} deduction similarity points to deduct
  */
 exports.calculateSimilarityPoints = (base, studentHSValue, otherHSValue, deviation, deduction) => {
     // if the other high school's value is within deviation value of student's high school
@@ -247,14 +247,18 @@ exports.calculateSimilarityPoints = (base, studentHSValue, otherHSValue, deviati
         return base;
     }
     // every increment of deviation from the closer value, 1 similarity point deducted
-    return Math.max(
-        base - Math.ceil(Math.abs((studentHSValue - otherHSValue) / deviation) / deduction),
-        0,
-    );
+    if (deduction === 0.5) {
+        return Math.max(base
+            - Math.ceil(Math.abs((studentHSValue - otherHSValue) / deviation)) * deduction,
+        0);
+    }
+    return Math.max(base
+        - Math.ceil(Math.abs((studentHSValue - otherHSValue) / deviation) / deduction),
+    0);
 };
 
 /**
- * Returns list of high schools sorted by similarity points
+ * Returns list of high schools sorted by similarity points.
  * @param {string} username
  */
 exports.findSimilarHS = async (username) => {
@@ -282,50 +286,52 @@ exports.findSimilarHS = async (username) => {
         return result;
     }
     // stores numerical value of letter grades
-    const grades = {};
-    grades['A+'] = 0;
-    grades.A = 1;
-    grades['A-'] = 2;
-    grades['B+'] = 3;
-    grades.B = 4;
-    grades['B-'] = 5;
-    grades['C+'] = 6;
-    grades.C = 7;
-    grades['C-'] = 8;
-    grades['D+'] = 9;
-    grades.D = 10;
-    grades['D-'] = 11;
+    const grades = {
+        'A+': 0,
+        A: 1,
+        'A-': 2,
+        'B+': 3,
+        B: 4,
+        'B-': 5,
+        'C+': 6,
+        C: 7,
+        'C-': 8,
+        'D+': 9,
+        D: 10,
+        'D-': 11,
+    };
 
     // conversion for act score to sat score
-    const ACTtoSAT = {};
-    ACTtoSAT[9] = 590;
-    ACTtoSAT[10] = 630;
-    ACTtoSAT[11] = 670;
-    ACTtoSAT[12] = 710;
-    ACTtoSAT[13] = 760;
-    ACTtoSAT[14] = 800;
-    ACTtoSAT[15] = 850;
-    ACTtoSAT[16] = 890;
-    ACTtoSAT[17] = 930;
-    ACTtoSAT[18] = 970;
-    ACTtoSAT[19] = 1010;
-    ACTtoSAT[20] = 1040;
-    ACTtoSAT[21] = 1080;
-    ACTtoSAT[22] = 1110;
-    ACTtoSAT[23] = 1140;
-    ACTtoSAT[24] = 1180;
-    ACTtoSAT[25] = 1210;
-    ACTtoSAT[26] = 1240;
-    ACTtoSAT[27] = 1280;
-    ACTtoSAT[28] = 1310;
-    ACTtoSAT[29] = 1340;
-    ACTtoSAT[30] = 1370;
-    ACTtoSAT[31] = 1400;
-    ACTtoSAT[32] = 1430;
-    ACTtoSAT[33] = 1460;
-    ACTtoSAT[34] = 1500;
-    ACTtoSAT[35] = 1540;
-    ACTtoSAT[36] = 1590;
+    const ACTtoSAT = {
+        9: 590,
+        10: 630,
+        11: 670,
+        12: 710,
+        13: 760,
+        14: 800,
+        15: 850,
+        16: 890,
+        17: 930,
+        18: 970,
+        19: 1010,
+        20: 1040,
+        21: 1080,
+        22: 1110,
+        23: 1140,
+        24: 1180,
+        25: 1210,
+        26: 1240,
+        27: 1280,
+        28: 1310,
+        29: 1340,
+        30: 1370,
+        31: 1400,
+        32: 1430,
+        33: 1460,
+        34: 1500,
+        35: 1540,
+        36: 1590,
+    };
 
     // get students of high school of given student
     // eslint-disable-next-line no-await-in-loop
@@ -335,6 +341,16 @@ exports.findSimilarHS = async (username) => {
             where: { HighSchoolId: studentHS.HighSchoolId },
         }],
     });
+
+    let averageCurrentHSGPA = 0;
+    let countGPA = 0;
+    for (let studentIndex = 0; studentIndex < students.length; studentIndex += 1) {
+        if (students[studentIndex].GPA != null) {
+            averageCurrentHSGPA += parseFloat(students[studentIndex].GPA);
+            countGPA += 1;
+        }
+    }
+    averageCurrentHSGPA /= countGPA;
 
     // loops through all high schools and give similarity points
     for (let i = 0; i < highSchools.length; i += 1) {
@@ -354,16 +370,9 @@ exports.findSimilarHS = async (username) => {
                 }
             }
             if (studentHS.GraduationRate && highSchool.GraduationRate) {
-                const studentGR = studentHS.GraduationRate;
-                // if the graduation rate is within 5% of student's high school
-                if (highSchool.GraduationRate === studentGR) {
-                    similarityPoints += 10;
-                } else {
-                    // every increment of 2% from the closer value, 1 similarity point deducted
-                    similarityPoints += Math.max(
-                        10 - Math.ceil(Math.abs(studentGR - highSchool.GraduationRate) / 2), 0,
-                    );
-                }
+                similarityPoints += this.calculateSimilarityPoints(
+                    10, studentHS.GraduationRate, highSchool.GraduationRate, 2, 1,
+                );
             }
             if (studentHS.AverageSAT && highSchool.AverageSAT) {
                 similarityPoints += this.calculateSimilarityPoints(
@@ -430,19 +439,25 @@ exports.findSimilarHS = async (username) => {
                     where: { HighSchoolId: highSchool.HighSchoolId },
                 }],
             });
+            let otherAverageHSGPA = 0;
+            let countOtherGPA = 0;
             if (students.length && otherStudents.length) {
-                let sum = 0;
-                let otherSum = 0;
-                for (let j = 0; j < students.length; j += 1) {
-                    sum += parseFloat(students[j].GPA);
-                }
                 for (let j = 0; j < otherStudents.length; j += 1) {
-                    otherSum += parseFloat(otherStudents[j].GPA);
+                    if (otherStudents[j].GPA != null) {
+                        otherAverageHSGPA += parseFloat(otherStudents[j].GPA);
+                        countOtherGPA += 1;
+                    }
                 }
+                otherAverageHSGPA /= countOtherGPA;
                 similarityPoints += this.calculateSimilarityPoints(
-                    5, sum / students.length, otherSum / otherStudents.length, 0.05, 1,
+                    5,
+                    averageCurrentHSGPA,
+                    otherAverageHSGPA,
+                    0.05,
+                    1,
                 );
             }
+            highSchool.averageGPA = otherAverageHSGPA;
             highSchool.similarityPoints = similarityPoints;
         } else {
             // removes student's high school from list
@@ -454,6 +469,7 @@ exports.findSimilarHS = async (username) => {
     return {
         ok: 'Success',
         highSchools: highSchools,
+        averageGPA: averageCurrentHSGPA,
     };
 };
 
