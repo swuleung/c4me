@@ -370,16 +370,9 @@ exports.findSimilarHS = async (username) => {
                 }
             }
             if (studentHS.GraduationRate && highSchool.GraduationRate) {
-                const studentGR = studentHS.GraduationRate;
-                // if the graduation rate is within 5% of student's high school
-                if (highSchool.GraduationRate === studentGR) {
-                    similarityPoints += 10;
-                } else {
-                    // every increment of 2% from the closer value, 1 similarity point deducted
-                    similarityPoints += Math.max(
-                        10 - Math.ceil(Math.abs(studentGR - highSchool.GraduationRate) / 2), 0,
-                    );
-                }
+                similarityPoints += this.calculateSimilarityPoints(
+                    10, studentHS.GraduationRate, highSchool.GraduationRate, 2, 1,
+                );
             }
             if (studentHS.AverageSAT && highSchool.AverageSAT) {
                 similarityPoints += this.calculateSimilarityPoints(
@@ -477,5 +470,25 @@ exports.findSimilarHS = async (username) => {
         ok: 'Success',
         highSchools: highSchools,
         averageGPA: averageCurrentHSGPA,
+    };
+};
+
+/**
+ * Delete all the high schools within the database
+ */
+exports.deleteAllHighSchools = async () => {
+    try {
+        models.HighSchool.destroy({
+            where: {},
+        });
+    } catch (error) {
+        return {
+            error: 'Unable to delete all high schools',
+            reason: error,
+        };
+    }
+
+    return {
+        ok: 'Deleted high schools successfully',
     };
 };
