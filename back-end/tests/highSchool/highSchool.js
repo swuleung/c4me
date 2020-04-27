@@ -36,17 +36,15 @@ describe('Find Similar High Schools', () => {
                 student: { GPA: 3.0 },
                 highSchool: {
                     Name: 'Santa Monica High School',
-                    HighSchoolCity: 'Santa Monica',
-                    HighSchoolState: 'CA',
+                    City: 'Santa Monica',
+                    State: 'CA',
                 },
             })
             .end((err, res) => {
                 res.should.have.status(200);
-                setTimeout(() => {
-                    const { student } = res.body;
-                    expect(student.username).to.equal('mocha4');
-                    done();
-                }, 5000);
+                const { student } = res.body;
+                expect(student.Username).to.equal('mocha4');
+                done();
             });
     });
 
@@ -68,8 +66,8 @@ describe('Find Similar High Schools', () => {
                 res.should.have.status(200);
                 expect(res.body.highSchools).to.shallowDeepEqual([{
                     Name: 'Ridgewood High School',
-                    HighSchoolCity: 'Ridgewood',
-                    HighSchoolState: 'NJ',
+                    City: 'Ridgewood',
+                    State: 'NJ',
                     NicheAcademicScore: 'A+',
                     GraduationRate: 97,
                     AverageSAT: 1320,
@@ -80,7 +78,7 @@ describe('Find Similar High Schools', () => {
                     ACTEnglish: 30,
                     ACTReading: 30,
                     ACTScience: 29,
-                    similarityPoints: 37,
+                    similarityPoints: 41.5,
                 }]);
                 done();
             });
