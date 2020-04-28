@@ -122,7 +122,7 @@ const FilterColleges = (props) => {
         if (admissionRate.admissionRateMax !== '') {
             filters.admissionRateMax = parseInt(admissionRate.admissionRateMax, 10);
         } else {
-            filters.addmissionRateMax = Number.MAX_SAFE_INTEGER;
+            filters.admissionRateMax = Number.MAX_SAFE_INTEGER;
         }
 
         if (collegeRanking.rankingMin !== '') {
@@ -179,18 +179,19 @@ const FilterColleges = (props) => {
 
         let selectedregions = [];
 
-        // if no regions are selected, add all regions
-        if (regions.length === 0 && selectedStates.length !== 0) {
-            selectedregions = ['midwest', 'northeast', 'south', 'west'];
-        } else {
-            // get the selected regions
-            const entries = Object.entries(regions);
-            for (let i = 0; i < entries.length; i += 1) {
-                if (entries[i][1]) {
-                    selectedregions.push(entries[i][0]);
-                }
+        // get the selected regions
+        const entries = Object.entries(regions);
+        for (let i = 0; i < entries.length; i += 1) {
+            if (entries[i][1]) {
+                selectedregions.push(entries[i][0]);
             }
         }
+
+        // if no regions or states are selected, add all regions
+        if (selectedregions.length === 0 && selectedStates.length === 0) {
+            selectedregions = ['midwest', 'northeast', 'south', 'west'];
+        }
+
         filters.regions = selectedregions;
 
         if (selectedStates.length !== 0) {

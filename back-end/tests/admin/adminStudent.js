@@ -59,12 +59,12 @@ describe('Scrape college information', () => {
                     res.should.have.status(200);
                     const { student } = res.body;
                     expect(student).to.shallowDeepEqual({
-                        username: 'mochaImport',
+                        Username: 'mochaImport',
                         GPA: '3.50',
-                        residenceState: 'NJ',
-                        collegeClass: 2024,
-                        major1: 'English',
-                        major2: 'Spanish',
+                        ResidenceState: 'NJ',
+                        CollegeClass: 2024,
+                        Major1: 'English',
+                        Major2: 'Spanish',
                         SATEBRW: 800,
                         SATMath: 800,
                         ACTEnglish: 35,
@@ -82,7 +82,7 @@ describe('Scrape college information', () => {
                         SATChem: 233,
                         SATPhys: 434,
                         APPassed: 3,
-                        isAdmin: false,
+                        IsAdmin: false,
                     });
                     done();
                 });
@@ -95,12 +95,12 @@ describe('Scrape college information', () => {
                     res.should.have.status(200);
                     const { student } = res.body;
                     expect(student).to.shallowDeepEqual({
-                        username: 'mochaImportWrong',
+                        Username: 'mochaImportWrong',
                         GPA: '3.50',
-                        residenceState: 'NJ',
-                        collegeClass: 2028,
-                        major1: 'English',
-                        major2: 'Spanish',
+                        ResidenceState: 'NJ',
+                        CollegeClass: 2028,
+                        Major1: 'English',
+                        Major2: 'Spanish',
                         SATEBRW: 400,
                         SATMath: null,
                         ACTEnglish: 35,
@@ -118,7 +118,7 @@ describe('Scrape college information', () => {
                         SATChem: 233,
                         SATPhys: 434,
                         APPassed: 3,
-                        isAdmin: false,
+                        IsAdmin: false,
                     });
                     done();
                 });
@@ -139,9 +139,9 @@ describe('Scrape college information', () => {
                 .end((err, res) => {
                     res.should.have.status(200);
                     const { applications } = res.body;
-                    expect(applications[0].status).to.equal('accepted');
+                    expect(applications[0].Status).to.equal('accepted');
                     agent
-                        .get(`/colleges/id/${applications[0].college}`)
+                        .get(`/colleges/id/${applications[0].CollegeId}`)
                         .end((error, response) => {
                             response.should.have.status(200);
                             const { college } = response.body;

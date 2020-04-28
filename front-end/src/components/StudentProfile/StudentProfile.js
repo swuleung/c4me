@@ -28,8 +28,8 @@ const StudentProfile = (props) => {
                     <td>
                         {studentApplications[i].collegeName}
                     </td>
-                    <td className={studentApplications[i].status}>
-                        {studentApplications[i].status}
+                    <td className={studentApplications[i].Status}>
+                        {studentApplications[i].Status}
                     </td>
                 </tr>,
             );
@@ -52,8 +52,8 @@ const StudentProfile = (props) => {
                 } else {
                     setHighSchool({
                         Name: null,
-                        HighSchoolCity: null,
-                        HighSchoolState: null,
+                        City: null,
+                        State: null,
                     });
                 }
             }
@@ -74,7 +74,7 @@ const StudentProfile = (props) => {
         // fetches the college names of applied colleges
         if (studentApplications && studentApplications.length !== 0 && !studentApplications[0].collegeName) {
             for (let i = 0; i < studentApplications.length; i += 1) {
-                collegeAPI.getCollegeByID(studentApplications[i].college).then((coll) => {
+                collegeAPI.getCollegeByID(studentApplications[i].CollegeId).then((coll) => {
                     const apps = [...studentApplications];
                     apps[i].collegeName = coll.college.Name;
                     setStudentApplications(apps);
@@ -101,19 +101,19 @@ const StudentProfile = (props) => {
                             </p>
                             <p>
                             High School City:&nbsp;
-                                {highSchool.HighSchoolCity ? highSchool.HighSchoolCity : 'No high school provided'}
+                                {highSchool.City ? highSchool.City : 'No high school provided'}
                             </p>
                             <p>
                             High School State:&nbsp;
-                                {highSchool.HighSchoolState ? highSchool.HighSchoolState : 'No high school provided'}
+                                {highSchool.State ? highSchool.State : 'No high school provided'}
                             </p>
                             <p>
                             Residence State:&nbsp;
-                                {student.residenceState ? student.residenceState : 'No state provided'}
+                                {student.ResidenceState ? student.ResidenceState : 'No state provided'}
                             </p>
                             <p>
                             College Class of&nbsp;
-                                {student.collegeClass ? student.collegeClass : 'No graduation year provided'}
+                                {student.CollegeClass ? student.CollegeClass : 'No graduation year provided'}
                             </p>
                             <p>
                             GPA:&nbsp;
@@ -121,9 +121,9 @@ const StudentProfile = (props) => {
                             </p>
                             <p>
                             Major(s):&nbsp;
-                                {!student.major1 && !student.major2 ? 'No majors provided' : student.major1}
+                                {!student.Major1 && !student.Major2 ? 'No majors provided' : student.Major1}
                                 {' '}
-                                {student.major2 && `& ${student.major2}`}
+                                {student.Major2 && `& ${student.Major2}`}
                                 {' '}
                             </p>
                         </Container>

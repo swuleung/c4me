@@ -11,8 +11,8 @@ exports.getStudent = async (username) => {
         // find the student including the high school information
         student = await models.User.findOne({
             where: {
-                username: username,
-                isAdmin: false,
+                Username: username,
+                IsAdmin: false,
             },
             include: [{
                 model: models.HighSchool,
@@ -49,8 +49,8 @@ exports.updateStudent = async (username, newStudent, newHighSchool) => {
         // find the student in database
         student = await models.User.findAll({
             where: {
-                username: username,
-                isAdmin: false,
+                Username: username,
+                IsAdmin: false,
             },
         });
     } catch (error) {
@@ -104,7 +104,7 @@ exports.updateStudent = async (username, newStudent, newHighSchool) => {
  */
 exports.updateStudentHighSchool = async (student, highSchool) => {
     let newHighSchool = {};
-    if (!(highSchool.Name && highSchool.HighSchoolCity && highSchool.HighSchoolState)) {
+    if (!(highSchool.Name && highSchool.City && highSchool.State)) {
         return {
             ok: 'No high school provided',
             highSchool: null,
@@ -130,7 +130,7 @@ exports.updateStudentHighSchool = async (student, highSchool) => {
             if (s !== 'and' && s !== 'of') return s.charAt(0).toUpperCase() + s.substring(1);
             return s;
         }).join(' ');
-        casedHS.HighSchoolCity = casedHS.HighSchoolCity.toLowerCase().split(' ').map((s) => {
+        casedHS.City = casedHS.City.toLowerCase().split(' ').map((s) => {
             if (s !== 'and' && s !== 'of') return s.charAt(0).toUpperCase() + s.substring(1);
             return s;
         }).join(' ');
@@ -148,12 +148,12 @@ exports.updateStudentHighSchool = async (student, highSchool) => {
             // scrape new high school
             await scrapeHighSchoolData(
                 casedHS.Name,
-                casedHS.HighSchoolCity,
-                casedHS.HighSchoolState,
+                casedHS.City,
+                casedHS.State,
             );
         } catch (error) {
             return {
-                error: `Unable to scrape data for ${highSchool.Name}-${highSchool.HighSchoolCity}, ${highSchool.HighSchoolState}`,
+                error: `Unable to scrape data for ${highSchool.Name}-${highSchool.City}, ${highSchool.State}`,
                 reason: error,
             };
         }
@@ -184,7 +184,7 @@ exports.getStudentApplications = async (username) => {
         applications = await models.Application.findAll({
             raw: true,
             where: {
-                username: username,
+                Username: username,
             },
         });
     } catch (error) {
@@ -210,7 +210,7 @@ exports.updateStudentApplications = async (username, newApplications) => {
     // find the current applications in the db
     const allApplications = await models.Application.findAll({
         where: {
-            username: username,
+            Username: username,
         },
     });
     const errors = [];
@@ -247,7 +247,7 @@ exports.updateStudentApplications = async (username, newApplications) => {
         for (let i = 0; i < copyApplications.length; i += 1) {
             changes.push(models.Application.create(copyApplications[i]).catch((error) => {
                 errors.push({
-                    error: `Error creating application:  ${allApplications[i]}`,
+                    error: `Error creating application:  ${copyApplications[i]}`,
                     reason: error,
                 });
             }));

@@ -17,7 +17,6 @@ if (process.env.NODE_ENV === 'test') {
     });
 } else if (process.env.NODE_ENV === 'local') {
     sequelize = new Sequelize(config.database, config.username, config.password, {
-        logging: false,
         ...config,
     });
 } else {

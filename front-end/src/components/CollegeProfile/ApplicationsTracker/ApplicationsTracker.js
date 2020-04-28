@@ -3,7 +3,7 @@
  */
 import React, { useState, useEffect } from 'react';
 import {
-    Alert, Col, Row, Card, CardDeck, Button,
+    Alert, Col, Row, Card, CardDeck, Button, Spinner,
 } from 'react-bootstrap';
 import FilterAT from './FilterAT/FilterAT';
 import ATScatterplot from './ATScatterplot/ATScatterplot';
@@ -21,6 +21,7 @@ const ApplicationsTracker = (props) => {
     const [averages, setAverages] = useState({});
     const [listATView, setListATView] = useState(true);
     const [highSchools, setHighSchools] = useState([]);
+    const [showSpinner, setShowSpinner] = useState(false);
 
     // deconstruct props
     const { college } = props;
@@ -29,15 +30,17 @@ const ApplicationsTracker = (props) => {
     } = college;
 
     useEffect(() => {
+        setShowSpinner(true);
         // fetch application data based on the filters passed from FilterAT
         applicationsTrackerAPI.getApplicationsTrackerData(CollegeId, filters).then((results) => {
+            setShowSpinner(false);
             if (results.error) {
                 setErrorAlert(true);
                 setErrorMessage(results.reason);
             }
             if (results.ok) {
                 setErrorAlert(false);
-                setApplications(results.applications.sort((a, b) => (a.Application.status.localeCompare(b.Application.status))));
+                setApplications(results.applications.sort((a, b) => (a.Application.Status.localeCompare(b.Application.Status))));
                 setAverages(results.averages);
             }
         });
@@ -135,9 +138,21 @@ const ApplicationsTracker = (props) => {
                                         }
                                     </Button>
                                 </div>
-                                {listATView
-                                    ? <ATList allHighSchools={highSchools} applications={applications} />
-                                    : <ATScatterplot applications={applications} averages={averages} />}
+                                {showSpinner
+                                    ? (
+                                        <div className="text-center">
+                                            <Spinner className="large-spinner" style={{ width: '10rem', height: '10rem' }} animation="grow" variant="primary" />
+                                        </div>
+                                    )
+                                    : (
+                                        <>
+                                            {
+                                                listATView
+                                                    ? <ATList allHighSchools={highSchools} applications={applications} />
+                                                    : <ATScatterplot applications={applications} averages={averages} />
+                                            }
+                                        </>
+                                    )}
                             </Col>
                         </Row>
                     </>

@@ -135,7 +135,6 @@ exports.scrapeHighSchoolData = async (highSchoolName, highSchoolCity, highSchool
     const nicheURL = getPathConfig().NICHE_URL;
     // takes inputted high school data and creates url
     const nicheHSURL = `${nicheURL}${highSchoolName.replace('&', '-and-').replace(/[^A-Za-z0-9_\- ]/g, '')}-${highSchoolCity}-${highSchoolState}/academics/`.replace(/\s+/g, '-').toLowerCase();
-    console.log(nicheHSURL);
 
     // sets the user agent for puppeteer
     await page.setUserAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36');
@@ -186,8 +185,8 @@ exports.scrapeHighSchoolData = async (highSchoolName, highSchoolCity, highSchool
     // creates the high school object
     const highSchoolObject = {
         Name: highSchoolName,
-        HighSchoolCity: highSchoolCity,
-        HighSchoolState: highSchoolState,
+        City: highSchoolCity,
+        State: highSchoolState,
         NicheAcademicScore: nicheAcademicScore,
         GraduationRate: graduationRate,
         AverageSAT: averageSAT,
@@ -211,7 +210,6 @@ exports.scrapeHighSchoolData = async (highSchoolName, highSchoolCity, highSchool
             if (error instanceof sequelize.ValidationError) {
                 delete highSchoolObject[error.errors[0].path];
             } else {
-                console.log(error);
                 errors.push({
                     error: `Unable to add ${highSchoolName}`,
                     reason: error,
@@ -356,8 +354,8 @@ exports.findSimilarHS = async (username) => {
     for (let i = 0; i < highSchools.length; i += 1) {
         const highSchool = highSchools[i];
         if (studentHS.Name !== highSchool.Name
-            && studentHS.HighSchoolCity !== highSchool.HighSchoolCity
-            && studentHS.HighSchoolState !== highSchool.HighSchoolState) {
+            && studentHS.City !== highSchool.City
+            && studentHS.State !== highSchool.State) {
             let similarityPoints = 0;
             if (studentHS.NicheAcademicScore && highSchool.NicheAcademicScore) {
                 if (studentHS.NicheAcademicScore === highSchool.NicheAcademicScore) {
@@ -465,6 +463,7 @@ exports.findSimilarHS = async (username) => {
             i -= 1;
         }
     }
+    // sort by similarity points
     highSchools.sort((a, b) => b.similarityPoints - a.similarityPoints);
     return {
         ok: 'Success',

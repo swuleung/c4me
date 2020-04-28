@@ -12,11 +12,11 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             defaultValue: null,
         },
-        HighSchoolCity: {
+        City: {
             type: DataTypes.STRING,
             defaultValue: null,
         },
-        HighSchoolState: {
+        State: {
             type: DataTypes.CHAR(2),
             validate: { isIn: [UsStates] },
             defaultValue: null,
@@ -102,7 +102,7 @@ module.exports = (sequelize, DataTypes) => {
         indexes: [
             {
                 unique: true,
-                fields: ['Name', 'HighSchoolCity', 'HighSchoolState'],
+                fields: ['Name', 'City', 'State'],
             },
         ],
     });

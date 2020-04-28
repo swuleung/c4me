@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
-    Alert, Col, Row, Container, Form, Button, OverlayTrigger, Tooltip,
+    Alert, Col, Row, Container, Form, Button, OverlayTrigger, Tooltip, Spinner,
 } from 'react-bootstrap';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -19,6 +19,8 @@ const Search = () => {
     const [sortAsc, setSortAsc] = useState(true);
     const [searchResults, setSearchResults] = useState([]);
     const [student, setStudent] = useState({});
+    const [showSpinner, setShowSpinner] = useState(false);
+    const [collegeRecommenderToggle, setCollegeRecommenderToggle] = useState(false);
 
     useEffect(() => {
         const sortDirection = sortAsc ? 'ASC' : 'DESC';
@@ -26,7 +28,7 @@ const Search = () => {
         // Cost is soted customly
         const sortByFilter = sortBy === 'Cost' ? 'none' : sortBy;
 
-
+        setShowSpinner(true);
         // get search results with filters and sort
         searchAPI.getSearchResults(filters, sortByFilter, sortDirection).then((result) => {
             if (result.error) {
@@ -51,9 +53,10 @@ const Search = () => {
                 } else {
                     setSearchResults(result.colleges);
                 }
+                setShowSpinner(false);
             }
         });
-    }, [filters, sortBy, sortAsc]);
+    }, [filters, sortBy, sortAsc, collegeRecommenderToggle]);
 
     return (
         <Container>
@@ -68,42 +71,57 @@ const Search = () => {
                 </Col>
                 <Col xs="8">
                     {/* TODO: College Recommender toggle */}
-                    <div className="list mb-2">
-                        <Button className="btn-sm">
-                                        College Recommender
-                        </Button>
-                        <p className="mb-0">
+                    <Row className="mb-2">
+                        <Col>
+                            <Form>
+                                <Form.Check
+                                    id="switchEnabled"
+                                    type="switch"
+                                    label="College Recommender"
+                                    onChange={() => setCollegeRecommenderToggle(!collegeRecommenderToggle)}
+                                    checked={collegeRecommenderToggle}
+                                />
+                            </Form>
+                        </Col>
+                        <Col>
                             <b>
                                 {searchResults.length}
                                 {' matching colleges'}
                             </b>
-                        </p>
-                        <div className="d-flex">
-                            <Form.Control as="select" value={sortBy} onChange={(e) => { setSortBy(e.target.value); }}>
-                                <option value="none" disabled>Sort by</option>
-                                <option value="Name">Name</option>
-                                <option value="AdmissionRate">Admission Rate</option>
-                                <option value="Cost">Cost of Attendance</option>
-                                <option value="Ranking">Ranking</option>
-                            </Form.Control>
-                            <OverlayTrigger
-                                placement="right"
-                                overlay={(
-                                    <Tooltip>
-                                        {`Sort Direction: ${sortAsc ? 'Ascending' : 'Descending'}`}
-                                    </Tooltip>
-                                )}
-                            >
-                                <Button className="btn-sm ml-1" variant="info">
-                                    <FontAwesomeIcon className="sort-icon" icon={sortAsc ? faSortAmountUp : faSortAmountDown} onClick={() => setSortAsc(!sortAsc)} />
-                                </Button>
-                            </OverlayTrigger>
-
-                        </div>
-                    </div>
+                        </Col>
+                        <Col>
+                            <Form>
+                                <Form.Control className="w-75 d-inline" as="select" value={sortBy} onChange={(e) => { setSortBy(e.target.value); }}>
+                                    <option value="none" disabled>Sort by</option>
+                                    <option value="Name">Name</option>
+                                    <option value="AdmissionRate">Admission Rate</option>
+                                    <option value="Cost">Cost of Attendance</option>
+                                    <option value="Ranking">Ranking</option>
+                                </Form.Control>
+                                <OverlayTrigger
+                                    placement="right"
+                                    overlay={(
+                                        <Tooltip>
+                                            {`Sort Direction: ${sortAsc ? 'Ascending' : 'Descending'}`}
+                                        </Tooltip>
+                                    )}
+                                >
+                                    <Button className="btn-sm ml-1" variant="info">
+                                        <FontAwesomeIcon className="sort-icon" icon={sortAsc ? faSortAmountUp : faSortAmountDown} onClick={() => setSortAsc(!sortAsc)} />
+                                    </Button>
+                                </OverlayTrigger>
+                            </Form>
+                        </Col>
+                    </Row>
                     {errorAlert && <Alert variant="danger">{errorMessage}</Alert>}
                     {sortBy === 'Cost' && student.residenceState == null ? <Alert variant="info">Sorting by out-of-state cost of attendance. Add your residence state in your profile to show in-state cost.</Alert> : <></>}
-                    <CollegeList student={student} colleges={searchResults} />
+                    {showSpinner
+                        ? (
+                            <div className="text-center">
+                                <Spinner className="large-spinner" style={{ width: '10rem', height: '10rem' }} animation="grow" variant="primary" />
+                            </div>
+                        )
+                        : <CollegeList student={student} colleges={searchResults} />}
                 </Col>
             </Row>
         </Container>

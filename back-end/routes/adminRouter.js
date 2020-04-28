@@ -223,7 +223,7 @@ router.get('/verifyAdmin', async (req, res) => {
     if (!req.cookies.access_token) {
         res.send({
             ok: 'Successfaully checked admin',
-            isAdmin: false,
+            IsAdmin: false,
         });
     } else {
         const authorized = await authentication.validateJWT(req.cookies.access_token);
@@ -231,7 +231,7 @@ router.get('/verifyAdmin', async (req, res) => {
         const result = await adminController.checkAdmin(authorized.username);
         res.send({
             ok: 'Successfaully checked admin',
-            isAdmin: result,
+            IsAdmin: result,
         });
     }
 });

@@ -1,35 +1,32 @@
-select {
-  .accepted {
-    color: green;
-  }
+.accepted {
+    color: green !important;
+}
 
-  .waitlisted,
-  .pending,
-  .deferred {
-    color: goldenrod;
-  }
+.waitlisted,
+.pending,
+.deferred {
+    color: goldenrod  !important;
+}
 
-  .denied {
-    color: red;
-  }
+.denied {
+    color: red  !important;
+}
 
-  .application {
+.application {
     text-transform: capitalize;
-  }
 }
 
 td.delete-icon {
-  text-align: center;
-  cursor: pointer;
-  span {
-    display: block;
-    color: red;
-    font-size: 24px;
-  }
+    text-align: center;
+    cursor: pointer;
+    span {
+        display: block;
+        color: red;
+        font-size: 24px;
+    }
 }
 
-.react-autosuggest__suggestions-container
-{
-  max-height: 200px;
-  overflow-y: auto;
+.react-autosuggest__suggestions-container {
+    max-height: 200px;
+    overflow-y: auto;
 }
