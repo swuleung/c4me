@@ -250,20 +250,30 @@ exports.searchCollege = async (filters, username) => {
     }
 };
 
-exports.calcScores = async ( colleges, username ) => {
+exports.calcScores = async ( collegeList, username ) => {
 	try {
-
+		console.log( "calc scores ");
+		console.log( collegeList );
 		const student = await getStudent( username );
+		console.log( student );
+
 		const state = student.student.residenceState;
-		const major1 = student.student.major1.toLowerCase();
-		const major2 = student.student.major2.toLowerCase();
+		console.log( state );
+		const major1 = student.student.major1;
+		console.log( major1 );
+		const major2 = student.student.major2;
 		const SATMath = student.student.SATMath;
 		const SATEBRW = student.student.SATEBRW;
 		const ACTComposite = student.student.ACTComposite;
 		const GPA = student.student.GPA;
 
+		console.log( collegeList );
+
 		let scoreResults = {};
 		let score = 0;
+		let colleges = collegeList.colleges;
+		console.log( colleges );
+		console.log( colleges[0].Location );
 
 		for (let i = colleges.length - 1; i >= 0; i--) {
 			score = 0;
@@ -283,13 +293,17 @@ exports.calcScores = async ( colleges, username ) => {
 					&& midwestRegion.includes( state ) )
 				score += 5;
 
+			console.log( score );
+
 			let majors = colleges[i].getMajors();
+
+			console.log( majors );
 			for (let j = majors.length - 1; j >= 0; j--) {
-				if ( majors[j].Major.toLowerCase().includes( major1 ) )
+				if ( majors[j].Major.toLowerCase().includes( major1.toLowerCase() ) )
 					score += 5;
 			}
 			for (let j = majors.length - 1; j >= 0; j--) {
-				if ( majors[j].Major.toLowerCase().includes( major2 ) )
+				if ( majors[j].Major.toLowerCase().includes( major2.toLowerCase() ) )
 					score += 5;
 			}
 
