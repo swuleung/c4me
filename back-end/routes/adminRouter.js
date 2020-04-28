@@ -271,7 +271,32 @@ router.get('/viewQApps', async (req, res) => {
             }
         }
     }
-
 });
+
+/**
+ * Mark application as not questionable
+ * 
+ * 
+ */
+router.post('/acceptableApp', async (req, res) => {
+    if (!req.cookies.access_token) {
+        res.status(400).send({ status: 'error', error: 'No token provided' });
+    } else {
+        const authorized = await authentication.validateJWT(req.cookies.access_token);
+        if (!authorized.username) {
+            res.clearCookie('access_token');
+            res.status(400).send(authorized);
+            // verify that user is an admin
+        } else if (!adminController.checkAdmin(authorized.username)) {
+            res.status(400).send(authorized);
+        } else {
+            const updateApp = adminController.markAppNotQuestionable(req.body.username,req.body.college);
+            res.send(updateApp);
+        }
+    }  
+});
+
+
+
 
 module.exports = router;

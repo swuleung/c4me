@@ -160,26 +160,30 @@ const admin = {
                 error: `${error.message}`
             }
         }
+    },
+
+    notQuestionable: async function notQuestionable(uName,college){
+        try{
+            const qApps = await fetch('/admin/acceptableApp', {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json; charset=utf-8',
+                },
+                body:{
+                    username:uName,
+                    college:college
+                }
+            });
+            return qApps.json();
+
+        } catch (error){
+            return {
+                error: `${error.message}`
+            }
+        }
     }
-
-    // notQuestionable: async function notQuestionable(app){
-    //     try{
-    //         const qApps = await fetch('/admin/viewQApps', {
-    //             method: 'UPDATE',
-    //             credentials: 'include',
-    //             headers: {
-    //                 Accept: 'application/json',
-    //                 'Content-Type': 'application/json; charset=utf-8',
-    //             },
-    //         });
-    //         return qApps.json();
-
-    //     } catch (error){
-    //         return {
-    //             error: `${error.message}`
-    //         }
-    //     }
-    // }
 
 
 

@@ -585,7 +585,6 @@ exports.importApplications = async () => {
 
 /**
  * Get Questionable Applications
- * 
  */
 exports.getQuestionableApplications = async () => {
     //calcQuestionableApplications();
@@ -601,6 +600,9 @@ exports.getQuestionableApplications = async () => {
             //     where: { CollegeId: models.Application.college },
             //     attributes: ['Name'],
             // }],
+
+            //The include statement doesnt work and I don't know why
+            //As a bad workaround, I made another query on College to get names
         }))
 
         let uniIDs = [];
@@ -628,8 +630,33 @@ exports.getQuestionableApplications = async () => {
         };
     }
     return {qApps,qUnis};
-}
+};
 
 
+/**
+ * 
+ * Update the application to be marked not Questionable
+ * 
+ * @param app
+ * The application object that references
+ */
+exports.markAppNotQuestionable = async (uName,College) => {
+    try{
+        await models.Application.update(
+            {isQuestionable: false},
+            {where:{username:uName, college:College}}
+        );
+    }
+    catch (error){
+        return {
+            error: error.message
+        }
+    }
+    return {
+        ok: 'Successfully updated'
+    }
+
+
+};
 
 
