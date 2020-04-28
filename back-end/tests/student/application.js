@@ -57,28 +57,4 @@ describe('Student Profile', () => {
             });
         });
     });
-
-    describe('Delete mochaStudent', () => {
-        it('Delete student', (done) => {
-            agent
-                .delete('/users/delete')
-                .send({
-                    username: 'mochaStudent',
-                })
-                .end((err, res) => {
-                    res.should.not.have.cookie('access_token');
-                    res.should.have.status(200);
-                    done();
-                });
-        });
-        it('Check application cascade', (done) => {
-            agent
-                .get('/students/mochaStudent/applications')
-                .end((err, res) => {
-                    res.should.have.status(200);
-                    res.body.applications.should.deep.equal([]);
-                    done();
-                });
-        });
-    });
 });

@@ -12,7 +12,7 @@ const search = {
                 filtersToSend.sortAttribute = sortBy;
                 filtersToSend.sortDirection = sortDirection;
             }
-            const results = await fetch('http://localhost:9000/search/', {
+            const results = await fetch('/search', {
                 method: 'POST',
                 credentials: 'include',
                 headers: {

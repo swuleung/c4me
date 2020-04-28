@@ -1,0 +1,1 @@
+find back-end front-end/src -maxdepth 5 -not -path "back-end/node_modules/*" -type f \( -name '*.js' -o -name '*.json' -o -name 'www' -o -name '.scss' \) -print0 | sort -z | xargs -0 md5sum --tag | md5sum;
