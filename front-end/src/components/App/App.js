@@ -18,6 +18,7 @@ import Search from '../Search/Search';
 import SimilarHighSchool from '../SimilarHighSchool/SimilarHighSchool';
 import userAPI from '../../services/api/user';
 import adminAPI from '../../services/api/admin';
+import AdminQApp from '../AdminQApp/AdminQApp';
 
 function App() {
     // state variables
@@ -70,6 +71,8 @@ function App() {
                                     <Nav.Link as={Link} to="/">Home</Nav.Link>
                                     <Nav.Link as={Link} to="/search">Search Colleges</Nav.Link>
                                     <Nav.Link as={Link} to="/find-similar-hs">Similar High Schools</Nav.Link>
+                                    <Nav.Link as={Link} to="/questionable-decisions">View Questionable Decisions</Nav.Link>
+                                
                                 </Nav>
                                 <Nav className="ml-auto">
                                     {username == null || username.trim() === ''
@@ -100,6 +103,9 @@ function App() {
                                 <Route exact path="/colleges/:collegeID" component={CollegeProfile} />
 
                                 <Route exact path="/find-similar-hs" username={username} component={SimilarHighSchool} />
+
+                                <Route exact path="/questionable-decisions" component={AdminQApp} />
+
 
                                 <Route
                                     exact

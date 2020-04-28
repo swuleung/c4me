@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Button, Alert, Container, Row, Col, Table
 } from 'react-bootstrap';
@@ -176,57 +176,6 @@ const Admin = () => {
         });
     };
 
-    /**
-     * Entry point in viewing Questionable Applications
-     */
-
-     const handleViewQuestionableApplications = () => {
-        const errorString = [];
-        var apps = [];
-        setDisableViewApps(true);
-        admin.getQuestionableApplications().then((resultApp) => {
-            if (resultApp.error) {
-                setErrorAlert(true);
-                errorString.push(<h4 key="importAppError" className="alert-heading">{resultApp.error}</h4>);
-                if (resultApp.reason) {
-                    for (let i = 0; i < (resultApp.reason).length; i += 1) {
-                        errorString.push(<p key={`importAppError-${i}`}>{resultApp.reason[i].error}</p>);
-                    }
-                    setErrorMessage([...errorMessage, ...errorString]);
-                } else {
-                    setErrorMessage('Process may have timed out');
-                }
-            }
-            if (resultApp.ok) {
-                apps = resultApp.Result;
-            }
-        });
-
-        if (apps.length){
-            var appsHTML = [];
-                for (var i = 0 ; i < apps.length; i++){
-                    appsHTML.push(
-                        <tr className="application" key={i}>
-                        <td>
-                            {apps[i].username}
-                        </td>
-                        <td className={apps[i].status}>
-                            {apps[i].status}
-                        </td>
-                        <td className={"college"+apps[i].college}>
-                            {apps[i].college}
-                        </td>
-                    </tr>,
-                    );
-                }
-            setDisableViewApps(false);
-            return appsHTML;
-        }
-        setDisableViewApps(false);
-        return null;
-
-     }
-
     // display the Admin page
     return (
         <div>
@@ -293,31 +242,6 @@ const Admin = () => {
                         <Button onClick={(e) => { handleImportStudentProfiles(e); }} disabled={disableProfile} className="float-right">Import Student Profile Dataset</Button>
                     </Col>
                 </Row>
-                <Row className="align-items-center mb-3">
-                    <Col sm="6">
-                        <h3>Review Questionable Applications</h3>
-                        </Col>
-                    <Col sm="6">
-                        <Button onClick={(e) => { handleViewQuestionableApplications(e); }} disabled={disableViewApps} className="float-right">View Questionable Applications</Button>
-                    </Col>
-                </Row>
-                <Row className="align-items-center mb-3">
-                    <Col sm="12">
-                        <Table className="table-striped">
-                            <thead>
-                                    <tr>
-                                        <th>Username</th>
-                                        <th>Status</th>
-                                        <th>c4me.live/colleges/_?_</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {handleViewQuestionableApplications()}
-                                </tbody>
-                        </Table>
-                    </Col>
-                </Row>
-
             </Container>
         </div>
     );
