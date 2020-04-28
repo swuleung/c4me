@@ -246,7 +246,6 @@ exports.updateStudentApplications = async (username, newApplications) => {
     if (copyApplications.length) {
         for (let i = 0; i < copyApplications.length; i += 1) {
             changes.push(models.Application.create(copyApplications[i]).catch((error) => {
-                console.log(copyApplications[i]);
                 errors.push({
                     error: `Error creating application:  ${copyApplications[i]}`,
                     reason: error,

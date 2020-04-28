@@ -135,7 +135,6 @@ exports.scrapeHighSchoolData = async (highSchoolName, highSchoolCity, highSchool
     const nicheURL = getPathConfig().NICHE_URL;
     // takes inputted high school data and creates url
     const nicheHSURL = `${nicheURL}${highSchoolName.replace('&', '-and-').replace(/[^A-Za-z0-9_\- ]/g, '')}-${highSchoolCity}-${highSchoolState}/academics/`.replace(/\s+/g, '-').toLowerCase();
-    console.log(nicheHSURL);
 
     // sets the user agent for puppeteer
     await page.setUserAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36');
@@ -211,7 +210,6 @@ exports.scrapeHighSchoolData = async (highSchoolName, highSchoolCity, highSchool
             if (error instanceof sequelize.ValidationError) {
                 delete highSchoolObject[error.errors[0].path];
             } else {
-                console.log(error);
                 errors.push({
                     error: `Unable to add ${highSchoolName}`,
                     reason: error,
