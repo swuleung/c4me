@@ -13,13 +13,13 @@ const { updateStudentHighSchool } = require('./studentController');
 exports.checkAdmin = async (username) => {
     let admin = {};
     try {
-        // isAdmin is true
+        // IsAdmin is true
         admin = await models.User.findAll({
             limit: 1,
             raw: true,
             where: {
-                username: username,
-                isAdmin: true,
+                Username: username,
+                IsAdmin: true,
             },
         });
     } catch (error) {
@@ -376,7 +376,7 @@ exports.importCollegeScorecard = async () => {
 exports.deleteAllStudents = async () => {
     try {
         await models.User.destroy({
-            where: { isAdmin: false },
+            where: { IsAdmin: false },
             cascade: true,
         });
         return { ok: 'All Students Deleted' };
@@ -408,13 +408,13 @@ exports.importStudents = async () => {
             .on('data', async (row) => {
                 // create the user object
                 const user = {
-                    username: row.userid,
-                    password: row.password,
+                    Username: row.userid,
+                    Password: row.password,
                     GPA: row.GPA,
-                    residenceState: row.residence_state,
-                    collegeClass: row.college_class,
-                    major1: row.major_1,
-                    major2: row.major_2,
+                    ResidenceState: row.residence_state,
+                    CollegeClass: row.college_class,
+                    Major1: row.major_1,
+                    Major2: row.major_2,
                     SATMath: row.SAT_math,
                     SATEBRW: row.SAT_EBRW,
                     ACTEnglish: row.ACT_English,
@@ -437,8 +437,8 @@ exports.importStudents = async () => {
                 // create the high school object
                 const highSchool = {
                     Name: row.high_school_name,
-                    HighSchoolCity: row.high_school_city,
-                    HighSchoolState: row.high_school_state,
+                    City: row.high_school_city,
+                    State: row.high_school_state,
                 };
 
                 // change empty string to null values
@@ -481,14 +481,14 @@ exports.importStudents = async () => {
                 } else if (error instanceof sequelize.UniqueConstraintError) {
                     // not unique username error
                     errors.push({
-                        error: `Error in creating ${user.username}: Username is not unique`,
+                        error: `Error in creating ${user.Username}: Username is not unique`,
                         reason: error.message,
                     });
                     break;
                 } else {
                     // other error of adding in user
                     errors.push({
-                        error: `Error in creating ${user.username}: ${error.message} ${user.name}`,
+                        error: `Error in creating ${user.Username}: ${error.message}`,
                         reason: error,
                     });
                     break;
@@ -534,9 +534,9 @@ exports.importApplications = async () => {
             .on('data', async (row) => {
                 // set up the application object
                 const application = {
-                    collegeName: row.college,
-                    username: row.userid,
-                    status: row.status.replace('-', ''),
+                    Name: row.college,
+                    Username: row.userid,
+                    Status: row.status.replace('-', ''),
                 };
                 applications.push(application);
             })
@@ -550,22 +550,22 @@ exports.importApplications = async () => {
         try {
             // find the college
             const college = await models.College.findOne({
-                where: { Name: applications[appIndex].collegeName },
+                where: { Name: applications[appIndex].Name },
                 raw: true,
             });
             if (college !== null) {
                 // add the application
-                applications[appIndex].college = college.CollegeId;
+                applications[appIndex].CollegeId = college.CollegeId;
                 await models.Application.create(applications[appIndex]);
             } else {
                 errors.push({
-                    error: `Error in creating app for ${applications[appIndex].collegeName}: no matching college in database`,
+                    error: `Error in creating app for ${applications[appIndex].CollegeId}: no matching college in database`,
                 });
             }
         } catch (error) {
             errors.push({
-                error: `Error in creating app for ${applications[appIndex].collegeName}: ${error.message} ${error.name}`,
-                reason: error,
+                error: `Error in creating app for ${applications[appIndex].Name} for ${applications[appIndex].Username} with status ${applications[appIndex].Status}: ${error.name}`,
+                reason: error.message,
             });
         }
     }

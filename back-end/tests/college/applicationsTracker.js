@@ -21,16 +21,16 @@ describe('Applications Tracker', () => {
 
                         expect(response.body.applications).to.shallowDeepEqual([
                             {
-                                username: 'mocha3',
-                                Application: { status: 'withdrawn', college: SBUCollegeId, username: 'mocha3' },
+                                Username: 'mocha3',
+                                Application: { Status: 'withdrawn', CollegeId: SBUCollegeId, Username: 'mocha3' },
                             },
                             {
-                                username: 'mochaImport',
-                                Application: { status: 'accepted', college: SBUCollegeId, username: 'mochaImport' },
+                                Username: 'mochaImport',
+                                Application: { Status: 'accepted', CollegeId: SBUCollegeId, Username: 'mochaImport' },
                             },
                             {
-                                username: 'mochaImportWrong',
-                                Application: { status: 'pending', college: SBUCollegeId, username: 'mochaImportWrong' },
+                                Username: 'mochaImportWrong',
+                                Application: { Status: 'pending', CollegeId: SBUCollegeId, Username: 'mochaImportWrong' },
                             },
                         ]);
                         expect(response.body.averages).to.shallowDeepEqual({
@@ -61,10 +61,10 @@ describe('Applications Tracker', () => {
                 response.should.have.status(200);
                 expect(response.body.applications).to.shallowDeepEqual([
                     {
-                        username: 'mochaImport',
-                        isAdmin: false,
+                        Username: 'mochaImport',
+                        IsAdmin: false,
                         GPA: '3.50',
-                        collegeClass: 2024,
+                        CollegeClass: 2024,
                         SATMath: 800,
                         SATEBRW: 800,
                         ACTEnglish: 35,
@@ -82,9 +82,9 @@ describe('Applications Tracker', () => {
                         SATChem: 233,
                         SATPhys: 434,
                         Application: {
-                            college: SBUCollegeId,
-                            status: 'accepted',
-                            username: 'mochaImport',
+                            CollegeId: SBUCollegeId,
+                            Status: 'accepted',
+                            Username: 'mochaImport',
                         },
                         weight: 83.38171296296295,
                     }]);
@@ -136,16 +136,16 @@ describe('Applications Tracker', () => {
                 response.should.have.status(200);
                 expect(response.body.applications).to.shallowDeepEqual([
                     {
-                        username: 'mocha3',
-                        Application: { status: 'withdrawn', college: SBUCollegeId, username: 'mocha3' },
+                        Username: 'mocha3',
+                        Application: { Status: 'withdrawn', CollegeId: SBUCollegeId, Username: 'mocha3' },
                     },
                     {
-                        username: 'mochaImport',
-                        Application: { status: 'accepted', college: SBUCollegeId, username: 'mochaImport' },
+                        Username: 'mochaImport',
+                        Application: { Status: 'accepted', CollegeId: SBUCollegeId, Username: 'mochaImport' },
                     },
                     {
-                        username: 'mochaImportWrong',
-                        Application: { status: 'pending', college: SBUCollegeId, username: 'mochaImportWrong' },
+                        Username: 'mochaImportWrong',
+                        Application: { Status: 'pending', CollegeId: SBUCollegeId, Username: 'mochaImportWrong' },
                     },
                 ]);
                 expect(response.body.averages).to.shallowDeepEqual({
@@ -178,10 +178,10 @@ describe('Applications Tracker', () => {
                 expect(response.body.applications.length).to.equal(1);
                 expect(response.body.applications).to.shallowDeepEqual([
                     {
-                        username: 'mochaImport',
-                        isAdmin: false,
+                        Username: 'mochaImport',
+                        IsAdmin: false,
                         GPA: '3.50',
-                        collegeClass: 2024,
+                        CollegeClass: 2024,
                         SATMath: 800,
                         SATEBRW: 800,
                         ACTEnglish: 35,
@@ -199,9 +199,9 @@ describe('Applications Tracker', () => {
                         SATChem: 233,
                         SATPhys: 434,
                         Application: {
-                            college: SBUCollegeId,
-                            status: 'accepted',
-                            username: 'mochaImport',
+                            CollegeId: SBUCollegeId,
+                            Status: 'accepted',
+                            Username: 'mochaImport',
                         },
                         weight: 83.38171296296295,
                     }]);
@@ -236,12 +236,12 @@ describe('Applications Tracker', () => {
                     response.should.have.status(200);
                     expect(response.body.applications).to.shallowDeepEqual([
                         {
-                            username: 'mochaImport',
-                            Application: { status: 'accepted', college: SBUCollegeId, username: 'mochaImport' },
+                            Username: 'mochaImport',
+                            Application: { Status: 'accepted', CollegeId: SBUCollegeId, Username: 'mochaImport' },
                         },
                         {
-                            username: 'mochaImportWrong',
-                            Application: { status: 'pending', college: SBUCollegeId, username: 'mochaImportWrong' },
+                            Username: 'mochaImportWrong',
+                            Application: { Status: 'pending', CollegeId: SBUCollegeId, Username: 'mochaImportWrong' },
                         },
                     ]);
                     expect(response.body.averages).to.shallowDeepEqual({
@@ -279,16 +279,16 @@ describe('Applications Tracker', () => {
                     response.should.have.status(200);
                     expect(response.body.applications).to.shallowDeepEqual([
                         {
-                            username: 'mocha3',
-                            Application: { status: 'withdrawn', college: SBUCollegeId, username: 'mocha3' },
+                            Username: 'mocha3',
+                            Application: { Status: 'withdrawn', CollegeId: SBUCollegeId, Username: 'mocha3' },
                         },
                         {
-                            username: 'mochaImport',
-                            Application: { status: 'accepted', college: SBUCollegeId, username: 'mochaImport' },
+                            Username: 'mochaImport',
+                            Application: { Status: 'accepted', CollegeId: SBUCollegeId, Username: 'mochaImport' },
                         },
                         {
-                            username: 'mochaImportWrong',
-                            Application: { status: 'pending', college: SBUCollegeId, username: 'mochaImportWrong' },
+                            Username: 'mochaImportWrong',
+                            Application: { Status: 'pending', CollegeId: SBUCollegeId, Username: 'mochaImportWrong' },
                         },
                     ]);
                     expect(response.body.averages).to.shallowDeepEqual({

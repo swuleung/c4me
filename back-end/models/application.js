@@ -5,12 +5,12 @@
  */
 module.exports = (sequelize, DataTypes) => {
     const Application = sequelize.define('Application', {
-        status: {
+        Status: {
             type: DataTypes.STRING,
             validate: { isIn: [['accepted', 'pending', 'waitlisted', 'deferred', 'denied', 'withdrawn']] },
             defaultValue: 'pending',
         },
-        isQuestionable: {
+        IsQuestionable: {
             type: DataTypes.BOOLEAN,
             defaultValue: false,
         },

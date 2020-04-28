@@ -10,7 +10,7 @@ const westRegion = ['AK', 'HI', 'WA', 'OR', 'CA', 'MT', 'ID', 'WY', 'NV', 'UT', 
 /**
  *
  * @param {*} filters Filters object
- * @param {*} username
+ * @param {*} username Current student's username
  *
  * The keys in this object will be the filter names
  * The values are the filter values
@@ -97,7 +97,16 @@ exports.searchCollege = async (filters, username) => {
         }
 
         if (locations.length !== 0) {
-            criteria.Location = { [Op.in]: locations };
+            if (filters.lax) {
+                criteria.Location = {
+                    [Op.or]: [
+                        { [Op.eq]: null },
+                        { [Op.in]: locations },
+                    ],
+                };
+            } else {
+                criteria.Location = { [Op.in]: locations };
+            }
         }
 
         if (filters.hasOwnProperty('rankingMin') && filters.hasOwnProperty('rankingMax')) {
@@ -112,9 +121,20 @@ exports.searchCollege = async (filters, username) => {
                 criteria.Ranking = { [Op.between]: [filters.rankingMin, filters.rankingMax] };
             }
         }
+
         if (filters.hasOwnProperty('sizeMin') && filters.hasOwnProperty('sizeMax')) {
-            criteria.Size = { [Op.between]: [filters.sizeMin, filters.sizeMax] };
+            if (filters.lax) {
+                criteria.Size = {
+                    [Op.or]: [
+                        { [Op.eq]: null },
+                        { [Op.between]: [filters.sizeMin, filters.sizeMax] },
+                    ],
+                };
+            } else {
+                criteria.Size = { [Op.between]: [filters.sizeMin, filters.sizeMax] };
+            }
         }
+
         if (filters.hasOwnProperty('SATMathMin') && filters.hasOwnProperty('SATMathMax')) {
             if (filters.lax) {
                 criteria.SATMath = {

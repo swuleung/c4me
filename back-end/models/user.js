@@ -5,15 +5,15 @@ const UsStates = ['AK', 'AL', 'AR', 'AZ', 'CA', 'CO', 'CT', 'DC', 'DE', 'FL', 'G
 
 module.exports = (sequelize, DataTypes) => {
     const User = sequelize.define('User', {
-        username: {
+        Username: {
             type: DataTypes.STRING,
             primaryKey: true,
         },
-        password: {
+        Password: {
             type: DataTypes.CHAR(60), // bcrypt hash only requires 60 bits only
             allowNull: false,
         },
-        isAdmin: {
+        IsAdmin: {
             type: DataTypes.BOOLEAN,
             defaultValue: false,
         },
@@ -25,23 +25,23 @@ module.exports = (sequelize, DataTypes) => {
                 max: 4.0,
             },
         },
-        residenceState: {
+        ResidenceState: {
             type: DataTypes.CHAR(2),
             validate: { isIn: [UsStates] },
             defaultValue: null,
         },
-        collegeClass: {
+        CollegeClass: {
             type: DataTypes.INTEGER,
             validate: {
                 min: 0,
             },
             defaultValue: null,
         },
-        major1: {
+        Major1: {
             type: DataTypes.STRING,
             defaultValue: null,
         },
-        major2: {
+        Major2: {
             type: DataTypes.STRING,
             defaultValue: null,
         },
@@ -183,9 +183,9 @@ module.exports = (sequelize, DataTypes) => {
         },
     }, {
         hooks: {
-            beforeCreate: ((user) => bcrypt.hash(user.password, 10)
+            beforeCreate: ((user) => bcrypt.hash(user.Password, 10)
                 .then((hash) => {
-                    user.password = hash; // eslint-disable-line no-param-reassign
+                    user.Password = hash; // eslint-disable-line no-param-reassign
                 })
                 .catch((err) => {
                     console.log(err);
@@ -195,7 +195,7 @@ module.exports = (sequelize, DataTypes) => {
 
     User.prototype.toJSON = function toJSON() {
         const values = { ...this.get() };
-        delete values.password;
+        delete values.Password;
         delete values.createdAt;
         delete values.updatedAt;
 
@@ -203,7 +203,7 @@ module.exports = (sequelize, DataTypes) => {
     };
 
     User.associate = (models) => {
-        User.belongsToMany(models.College, { through: 'Application', foreignKey: 'username' });
+        User.belongsToMany(models.College, { through: 'Application', foreignKey: 'Username' });
         User.belongsTo(models.HighSchool, { foreignKey: 'HighSchoolId' });
     };
     return User;
