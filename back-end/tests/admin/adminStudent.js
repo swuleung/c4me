@@ -29,7 +29,7 @@ describe('Login as admin & delete high schools', () => {
     });
 });
 
-describe('Scrape college information', () => {
+describe('Import students and applications from csv files', () => {
     describe('Delete all users', () => {
         it('Deletes all users', (done) => {
             agent
