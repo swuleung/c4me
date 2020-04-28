@@ -161,6 +161,32 @@ const admin = {
             }
         }
     }
+
+    // notQuestionable: async function notQuestionable(app){
+    //     try{
+    //         const qApps = await fetch('/admin/viewQApps', {
+    //             method: 'UPDATE',
+    //             credentials: 'include',
+    //             headers: {
+    //                 Accept: 'application/json',
+    //                 'Content-Type': 'application/json; charset=utf-8',
+    //             },
+    //         });
+    //         return qApps.json();
+
+    //     } catch (error){
+    //         return {
+    //             error: `${error.message}`
+    //         }
+    //     }
+    // }
+
+
+
+
+
+
+
 };
 
 export default admin;

@@ -1,4 +1,5 @@
 const sequelize = require('sequelize');
+const {Op} = require('sequelize');
 const fs = require('fs');
 const puppeteer = require('puppeteer');
 const parse = require('csv-parse');
@@ -589,15 +590,35 @@ exports.importApplications = async () => {
 exports.getQuestionableApplications = async () => {
     //calcQuestionableApplications();
     let qApps = {};
+    let qUnis = {};
     try{
         qApps = (await models.Application.findAll({
             where:{
                 isQuestionable: true
-            }
+            },
+            // include: [{
+            //     model: models.College,
+            //     where: { CollegeId: models.Application.college },
+            //     attributes: ['Name'],
+            // }],
         }))
+
+        let uniIDs = [];
+        for (var i = 0; i < qApps.length; i++){
+            uniIDs.push(qApps[i].college);
+        }
+        console.log(uniIDs);
+        qUnis = (await models.College.findAll({
+            attributes: ['CollegeId','Name'],
+            where : {
+                CollegeId:{
+                    [Op.in]: uniIDs
+                }
+            }
+        }));
     }catch (error) {
         return {
-            error: 'Error in finding User for qScore',
+            error: error,
             reason: error.message,
         };
     }
@@ -606,7 +627,7 @@ exports.getQuestionableApplications = async () => {
             ok: 'User does not exist'
         };
     }
-    return qApps;
+    return {qApps,qUnis};
 }
 
 

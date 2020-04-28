@@ -257,10 +257,18 @@ router.get('/viewQApps', async (req, res) => {
             res.status(400).send(authorized);
         } else {
             const result = await adminController.getQuestionableApplications();
-            res.send({
-                ok: 'Successfully found Questionable Applications',
-                Result: result
-            });
+            if (result){
+                res.send({
+                    ok: 'Successfully found Questionable Applications',
+                    Result: result
+                });
+            }
+            else{
+                res.send({
+                    errorMsg:"There are no pending Questionable Applcations",
+                    status: 404
+                });
+            }
         }
     }
 
