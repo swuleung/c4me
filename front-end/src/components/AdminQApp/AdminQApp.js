@@ -1,163 +1,156 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import {
-    Button, Container, Row, Col, Table
+    Button, Container, Row, Col, Table, Form, Alert,
 } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import admin from '../../services/api/admin';
+import './AdminQApp.scss';
 
 const AdminQApp = () => {
-
-    const [qApps, setQApps]  =   useState([]);
-    const [qUnis, setQUnis]  =   useState([]);
+    const [applications, setApplications] = useState([]);
+    const [errorAlert, setErrorAlert] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
 
     useEffect(() => {
-        admin.getQuestionableApplications().then((resultApp) => {
-            if (resultApp.errorMsg) {
-                console.log("Error in querying questionable applications")
+        // get all the questionable acceptance decisions
+        admin.getQuestionableApplications().then((result) => {
+            if (result.error) {
+                setErrorAlert(true);
+                setErrorMessage(result.reason);
             }
-            else if (resultApp.ok) {
-                if (resultApp.Result.error){
-                    console.log(resultApp.Result.reason);
+            if (result.ok) {
+                const apps = result.applications;
+                for (let i = 0; i < apps.length; i += 1) {
+                    for (let j = 0; j < apps[i].Colleges.length; j += 1) {
+                        apps[i].Colleges[j].approval = false;
+                    }
                 }
-                else{
-                    setQApps( resultApp.Result.qApps);
-                    setQUnis(resultApp.Result.qUnis);
-                }
+                setApplications(result.applications);
             }
         });
-    },[]
-    );
+    }, []);
 
 
+    /**
+     * Changes the verification setting
+     * @param {event} e
+     */
+    const handleVerificationChange = (e, verificationSetting) => {
+        const indexUser = e.target.getAttribute('indexuser');
+        const indexCollege = e.target.getAttribute('indexcollege');
+        const newApplications = [...applications];
+        newApplications[indexUser].Colleges[indexCollege].approval = verificationSetting;
+        setApplications(newApplications);
+    };
 
-
-/**
- * 
- * This just returns the name of the unversity wrt collegeID
- * @param {int} id
- * College ID that pairs with the name to return
- *
- */
-const getName = (id) => {
-        for (var i = 0 ; i < qUnis.length; i ++){
-            if (id == qUnis.CollegeId){ return (qUnis.Name);}
+    /**
+     *
+     */
+    const handleSubmitChanges = () => {
+        const approvedApplications = [];
+        for (let i = 0; i < applications.length; i += 1) {
+            const colleges = applications[i].Colleges;
+            for (let j = 0; j < colleges.length; j += 1) {
+                if (colleges[j].approval) {
+                    approvedApplications.push(colleges[j].Application);
+                }
+            }
         }
-        return ("");
-}
-
-
-
-/**
- * 
- * Updates the application to be marked unQuestionable
- * 
- * @param {string} uName 
- * The username of the Application
- * @param {int} college 
- * The College ID of the application
- */
-const isNotQuestionable = (uName, college) => {
-       admin.notQuestionable(uName,college).then((result) => {
-        if (result.ok){
-            console.log(result.ok);
-        }
-        else{
-            console.log(result);
-        }
-       });
-
-       //remove element from front end
-    }
-
-
-/**
- * 
- * Have this app dissapear from the UI
- * (ideally isNotQuestionable can still call this, as this is 
- *  just updating what the admin sees and nothing in the back-end
- *  changes)
- * 
- */
-const isStillQuestionable = (idx) => {}
+        console.log(approvedApplications);
+        // send approved applications to back-eend
+    };
 
     const renderQApps = () => {
         const appsHTML = [];
-                for (var i = 0 ; i < qApps.length; i++){
-                    var s = "";
-
+        for (let i = 0; i < applications.length; i += 1) {
+            const currentUser = applications[i];
+            for (let j = 0; j < currentUser.Colleges.length; j += 1) {
+                const college = currentUser.Colleges[j];
                 appsHTML.push(
-                        <tr className="application" key={i}>
+                    <tr key={`app-${i}-${j}`}>
                         <td>
-                            {qApps[i].username}
+                            <Link to={`/profile/${currentUser.Username}`} target="_blank">
+                                {currentUser.Username}
+                            </Link>
                         </td>
-                        <td className={qApps[i].status}>
-                            {qApps[i].status}
-                        </td>
-                         <td className={"college"+qApps[i].college}>
-                            {
-
-                                //For some reason, this would not update
-                                //with the proper cross-listed university.
-                                //     getName(qApps[i].college)
-                                     
-                                                                
-                            }
+                        <td className={college.Application.Status}>
+                            {college.Application.Status}
                         </td>
                         <td>
-                            {
-                                //
-                                //The value i is the index within
-                                // the qApps array of the application
-                                // to be marked unquestionable
-                                //onClick={ /*isNotQuestionable(qApps[i].username,qApps[i].college)*/}
-                            }
-                            <Button>Not Questionable</Button>
+                            <Link to={`/colleges/${college.CollegeId}`} target="_blank">
+                                {college.Name}
+                            </Link>
                         </td>
                         <td>
-                            {
+                            {college.approval
+                                ? (
+                                    <span
+                                        role="button"
+                                        tabIndex={i}
+                                        className="deny"
+                                        indexuser={i}
+                                        indexcollege={j}
+                                        onClick={(e) => { handleVerificationChange(e, false); }}
+                                        onKeyDown={(e) => { handleVerificationChange(e, false); }}
+                                    >
+                                    Deny
+                                    </span>
+                                )
+                                : (
+                                    <span
+                                        role="button"
+                                        tabIndex={i}
+                                        className="approve"
+                                        indexuser={i}
+                                        indexcollege={j}
+                                        onClick={(e) => { handleVerificationChange(e, true); }}
+                                        onKeyDown={(e) => { handleVerificationChange(e, true); }}
+                                    >
+                                    Approve
+                                    </span>
+                                )}
 
-
-                                //
-                                //
-                                //onClick={isStillQuestionable(i)}
-                                //
-
-                            }
-                            <Button>Questionable</Button>
                         </td>
-                        
                     </tr>,
-                    );
-                }
+                );
+            }
+        }
         return appsHTML;
-    }
+    };
 
-    return ( 
-    <Container>
-        <Table>
-            <thead>
-                <tr>
-                    <th>Username</th>
-                    <th>Status</th>
-                    <th>University</th>
-                </tr>
-            </thead>
-            <tbody>
-             { renderQApps() }
-            </tbody>
-        </Table>
-    </Container>
-    ) ;
-
-
-
-
-
-
-
-}
-
-
-
+    return (
+        <Container>
+            <h1>
+                Questionable Acceptance Decisions
+            </h1>
+            <p>
+                Validate questionable acceptance decisions. Click on the username or college to go to their respective profiles. Verify an application by clicking approve. You must click on "Save Changes" at the bottom for changes to be saved in the database.
+            </p>
+            {errorAlert
+                ? <Alert variant="danger">{errorMessage}</Alert>
+                : (
+                    <Form onSubmit={(e) => { e.preventDefault(); handleSubmitChanges(); }}>
+                        <Table>
+                            <thead>
+                                <tr>
+                                    <th>Username</th>
+                                    <th>Status</th>
+                                    <th>College</th>
+                                    <th>Verification</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {renderQApps()}
+                            </tbody>
+                        </Table>
+                        <Button className="btn-block" variant="primary" type="submit">
+                    Save Changes
+                        </Button>
+                    </Form>
+                )}
+        </Container>
+    );
+};
 
 
 export default AdminQApp;

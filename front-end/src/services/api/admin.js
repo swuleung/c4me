@@ -143,9 +143,9 @@ const admin = {
     /**
      * Send a GET request for all Questionable Applications
      */
-    getQuestionableApplications: async function getQuestionableApplications(){
-        try{
-            const qApps = await fetch('/admin/viewQApps', {
+    getQuestionableApplications: async function getQuestionableApplications() {
+        try {
+            const qApps = await fetch('/admin/questionable-decisions', {
                 method: 'GET',
                 credentials: 'include',
                 headers: {
@@ -154,16 +154,15 @@ const admin = {
                 },
             });
             return qApps.json();
-
-        } catch (error){
+        } catch (error) {
             return {
-                error: `${error.message}`
-            }
+                error: `${error.message}`,
+            };
         }
     },
 
-    notQuestionable: async function notQuestionable(uName,college){
-        try{
+    notQuestionable: async function notQuestionable(uName, college) {
+        try {
             const qApps = await fetch('/admin/acceptableApp', {
                 method: 'POST',
                 credentials: 'include',
@@ -171,24 +170,18 @@ const admin = {
                     Accept: 'application/json',
                     'Content-Type': 'application/json; charset=utf-8',
                 },
-                body:{
-                    username:uName,
-                    college:college
-                }
+                body: {
+                    username: uName,
+                    college: college,
+                },
             });
             return qApps.json();
-
-        } catch (error){
+        } catch (error) {
             return {
-                error: `${error.message}`
-            }
+                error: `${error.message}`,
+            };
         }
-    }
-
-
-
-
-
+    },
 
 
 };

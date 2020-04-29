@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from '../../../node_modules/react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import '../../utils/styles/theme.scss';
 import {
     Navbar, Nav, NavDropdown, Alert,
-} from '../../../node_modules/react-bootstrap';
+} from 'react-bootstrap';
 import {
     BrowserRouter as Router, Switch, Route, Link, Redirect,
-} from '../../../node_modules/react-router-dom';
+} from 'react-router-dom';
 import Home from '../Home/Home';
 import CreateAccount from '../CreateAccount/CreateAccount';
 import Login from '../Login/Login';

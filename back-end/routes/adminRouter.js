@@ -271,9 +271,9 @@ router.post('/scrapeHighSchool', async (req, res) => {
 
 /**
  * Get Questionable Applications
- * 
+ *
  */
-router.get('/viewQApps', async (req, res) => {
+router.get('/questionable-decisions', async (req, res) => {
     if (!req.cookies.access_token) {
         res.status(400).send({ status: 'error', error: 'No token provided' });
     } else {
@@ -286,26 +286,19 @@ router.get('/viewQApps', async (req, res) => {
             res.status(400).send(authorized);
         } else {
             const result = await adminController.getQuestionableApplications();
-            if (result){
-                res.send({
-                    ok: 'Successfully found Questionable Applications',
-                    Result: result
-                });
+            if (result.error) {
+                res.status(400);
             }
-            else{
-                res.send({
-                    errorMsg:"There are no pending Questionable Applcations",
-                    status: 404
-                });
-            }
+            console.log(result);
+            res.send(result);
         }
     }
 });
 
 /**
  * Mark application as not questionable
- * 
- * 
+ *
+ *
  */
 router.post('/acceptableApp', async (req, res) => {
     if (!req.cookies.access_token) {
@@ -319,13 +312,11 @@ router.post('/acceptableApp', async (req, res) => {
         } else if (!adminController.checkAdmin(authorized.username)) {
             res.status(400).send(authorized);
         } else {
-            const updateApp = adminController.markAppNotQuestionable(req.body.username,req.body.college);
+            const updateApp = adminController.markAppNotQuestionable(req.body.username, req.body.college);
             res.send(updateApp);
         }
-    }  
+    }
 });
-
-
 
 
 module.exports = router;

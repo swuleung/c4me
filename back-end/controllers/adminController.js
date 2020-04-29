@@ -1,12 +1,12 @@
 const sequelize = require('sequelize');
-const {Op} = require('sequelize');
+const { Op } = require('sequelize');
 const fs = require('fs');
 const puppeteer = require('puppeteer');
 const parse = require('csv-parse');
 const models = require('../models');
 const { getCollegeList, getPathConfig } = require('../utils/readAppFiles');
 const { updateStudentHighSchool } = require('./studentController');
-//const { calcQuestionableApplications } = require('./searchController');
+// const { calcQuestionableApplications } = require('./searchController');
 
 /**
  * Check if a user is an admin with a DB call
@@ -586,79 +586,55 @@ exports.importApplications = async () => {
 
 
 /**
- * Get Questionable Applications
+ * Gets all the questionable applications with their college information
  */
 exports.getQuestionableApplications = async () => {
-    //calcQuestionableApplications();
     let qApps = {};
-    let qUnis = {};
-    try{
-        qApps = (await models.Application.findAll({
-            where:{
-                isQuestionable: true
-            },
-            // include: [{
-            //     model: models.College,
-            //     where: { CollegeId: models.Application.college },
-            //     attributes: ['Name'],
-            // }],
-
-            //The include statement doesnt work and I don't know why
-            //As a bad workaround, I made another query on College to get names
-        }))
-
-        let uniIDs = [];
-        for (var i = 0; i < qApps.length; i++){
-            uniIDs.push(qApps[i].college);
-        }
-        console.log(uniIDs);
-        qUnis = (await models.College.findAll({
-            attributes: ['CollegeId','Name'],
-            where : {
-                CollegeId:{
-                    [Op.in]: uniIDs
-                }
-            }
-        }));
-    }catch (error) {
+    try {
+        qApps = await models.User.findAll({
+            include: [{
+                model: models.College,
+                required: true,
+                through: {
+                    where: {
+                        IsQuestionable: true,
+                    },
+                },
+            }],
+        });
+    } catch (error) {
         return {
             error: error,
             reason: error.message,
         };
     }
-    if (!qApps) {
-        return {
-            ok: 'User does not exist'
-        };
-    }
-    return {qApps,qUnis};
+
+    return {
+        ok: 'Successfully got questionable apps',
+        applications: qApps,
+    };
 };
 
 
 /**
- * 
+ *
  * Update the application to be marked not Questionable
- * 
+ *
  * @param app
  * The application object that references
  */
-exports.markAppNotQuestionable = async (uName,College) => {
-    try{
+exports.markAppNotQuestionable = async (uName, College) => {
+    try {
         await models.Application.update(
-            {isQuestionable: false},
-            {where:{username:uName, college:College}}
+            { isQuestionable: false },
+            { where: { username: uName, college: College } },
         );
-    }
-    catch (error){
+    } catch (error) {
         return {
-            error: error.message
-        }
+            error: error.message,
+        };
     }
     return {
-        ok: 'Successfully updated'
-    }
-
-
+        ok: 'Successfully updated',
+    };
 };
-
-
