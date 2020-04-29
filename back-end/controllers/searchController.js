@@ -3,6 +3,7 @@ const models = require('../models');
 const { getStudent } = require('./studentController');
 const { getCollegeByID } = require('./collegeController');
 const { getMajorsByCollegeID } = require('./collegeController');
+const { findSimilarHS } = require('./highschoolController');
 
 const northeastRegion = ['ME', 'VT', 'NH', 'MA', 'RI', 'CT', 'NY', 'PA', 'NJ', 'DC']; // 9 'states'
 const southRegion = ['DE', 'MD', 'WV', 'VA', 'NC', 'SC', 'GA', 'FL', 'KY', 'TN', 'MS', 'AL', 'AR', 'LA', 'OK', 'TX']; // 16 states
@@ -292,10 +293,14 @@ exports.calcScores = async ( collegeIDList, username ) => {
 			const c = await getCollegeByID( IDList[i] );
 			colleges.push( c.college );
 		}
-		console.log( colleges );
 		
 		let score = 0;
 		let maxScore = 0;
+
+		let similarHS = await findSimilarHS( username );
+		similarHS = similarHS.highschools.slice( 0, 3 );
+		console.log( similarHS );
+
 		for (let i = colleges.length - 1; i >= 0; i--) {
 
 			score = 0;
@@ -327,7 +332,6 @@ exports.calcScores = async ( collegeIDList, username ) => {
 						score += 5;
 				}
 			}
-			
 			if ( major2 != null) {
 				maxScore += 5;
 				for (let j = majors.length - 1; j >= 0; j--) {
@@ -363,7 +367,9 @@ exports.calcScores = async ( collegeIDList, username ) => {
 				if (points > 0)
 					score += points;
 			}
-				
+			
+
+
 			scoreResults[ colleges[i].Name ] = score / maxScore;
 		}
 
