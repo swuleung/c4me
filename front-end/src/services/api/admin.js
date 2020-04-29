@@ -180,29 +180,6 @@ const admin = {
             };
         }
     },
-    notQuestionable: async function notQuestionable(uName, college) {
-        try {
-            const qApps = await fetch('/admin/acceptableApp', {
-                method: 'POST',
-                credentials: 'include',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json; charset=utf-8',
-                },
-                body: {
-                    username: uName,
-                    college: college,
-                },
-            });
-            return qApps.json();
-        } catch (error) {
-            return {
-                error: `${error.message}`,
-            };
-        }
-    },
-
-
 };
 
 export default admin;

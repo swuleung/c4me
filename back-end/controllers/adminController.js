@@ -662,26 +662,3 @@ exports.updateApplications = async (applications) => {
         ok: 'Successfully update all applications',
     };
 };
-
-/**
- *
- * Update the application to be marked not Questionable
- *
- * @param app
- * The application object that references
- */
-exports.markAppNotQuestionable = async (uName, College) => {
-    try {
-        await models.Application.update(
-            { isQuestionable: false },
-            { where: { username: uName, college: College } },
-        );
-    } catch (error) {
-        return {
-            error: error.message,
-        };
-    }
-    return {
-        ok: 'Successfully updated',
-    };
-};
