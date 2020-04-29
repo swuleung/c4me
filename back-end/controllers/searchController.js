@@ -304,7 +304,7 @@ exports.calcScores = async ( collegeIDList, username ) => {
 				maxScore += 10;
 				if ( colleges[i].Location == state )
 					score += 10;
-				else if ( northeastRegion.i ncludes( colleges[i].Location ) 
+				else if ( northeastRegion.includes( colleges[i].Location ) 
 						&& northeastRegion.includes( state ) )
 					score += 5;
 				else if ( southRegion.includes( colleges[i].Location ) 
