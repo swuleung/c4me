@@ -71,8 +71,9 @@ function App() {
                                     <Nav.Link as={Link} to="/">Home</Nav.Link>
                                     <Nav.Link as={Link} to="/search">Search Colleges</Nav.Link>
                                     <Nav.Link as={Link} to="/find-similar-hs">Similar High Schools</Nav.Link>
-                                    <Nav.Link as={Link} to="/questionable-decisions">View Questionable Decisions</Nav.Link>
-
+                                    {isAdmin ? 
+                                        <Nav.Link as={Link} to="/questionable-decisions">View Questionable Decisions</Nav.Link> : null
+                                    }
                                 </Nav>
                                 <Nav className="ml-auto">
                                     {username == null || username.trim() === ''
