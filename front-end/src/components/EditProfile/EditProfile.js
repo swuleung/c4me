@@ -115,7 +115,7 @@ const EditProfile = (props) => {
                 }
                 if (result.ok) {
                     setErrorAlert(false);
-                    // props.history.push(`../${username}`);
+                    props.history.push(`../${username}`);
                 }
             });
         });
