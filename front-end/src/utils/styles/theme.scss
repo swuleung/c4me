@@ -25,6 +25,13 @@ https://github.com/react-bootstrap/react-bootstrap/issues/5081
     left: 8px !important;
 }
 
+.bs-popover-left {
+    margin-right: 0 !important;
+    top: -5px !important;
+    right: 8px !important;
+}
+
+
 // Import Bootstrap and its default variables
 @import "~bootstrap/scss/bootstrap.scss";
 @import url("https://fonts.googleapis.com/css?family=Orbitron&display=swap");

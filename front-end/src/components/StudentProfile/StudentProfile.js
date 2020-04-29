@@ -231,7 +231,7 @@ const StudentProfile = (props) => {
                                         <th className="text-right">
                                             {'Questionable '}
                                             <OverlayTrigger
-                                                placement="right"
+                                                placement="left"
                                                 overlay={(
                                                     <Popover>
                                                         <Popover.Title>Questionable Decision</Popover.Title>
