@@ -255,6 +255,37 @@ exports.calculateSimilarityPoints = (base, studentHSValue, otherHSValue, deviati
     0);
 };
 
+exports.ACTtoSAT = {
+    9: 590,
+    10: 630,
+    11: 670,
+    12: 710,
+    13: 760,
+    14: 800,
+    15: 850,
+    16: 890,
+    17: 930,
+    18: 970,
+    19: 1010,
+    20: 1040,
+    21: 1080,
+    22: 1110,
+    23: 1140,
+    24: 1180,
+    25: 1210,
+    26: 1240,
+    27: 1280,
+    28: 1310,
+    29: 1340,
+    30: 1370,
+    31: 1400,
+    32: 1430,
+    33: 1460,
+    34: 1500,
+    35: 1540,
+    36: 1590,
+};
+
 /**
  * Returns list of high schools sorted by similarity points.
  * @param {string} username
@@ -299,37 +330,6 @@ exports.findSimilarHS = async (username) => {
         'D-': 11,
     };
 
-    // conversion for act score to sat score
-    const ACTtoSAT = {
-        9: 590,
-        10: 630,
-        11: 670,
-        12: 710,
-        13: 760,
-        14: 800,
-        15: 850,
-        16: 890,
-        17: 930,
-        18: 970,
-        19: 1010,
-        20: 1040,
-        21: 1080,
-        22: 1110,
-        23: 1140,
-        24: 1180,
-        25: 1210,
-        26: 1240,
-        27: 1280,
-        28: 1310,
-        29: 1340,
-        30: 1370,
-        31: 1400,
-        32: 1430,
-        33: 1460,
-        34: 1500,
-        35: 1540,
-        36: 1590,
-    };
 
     // get students of high school of given student
     // eslint-disable-next-line no-await-in-loop
@@ -416,7 +416,7 @@ exports.findSimilarHS = async (username) => {
             if (studentHS.AverageSAT && !studentHS.AverageACT
                 && highSchool.AverageACT && !highSchool.AverageSAT) {
                 // convert ACT score of other high school to SAT score
-                const otherConvertedSAT = ACTtoSAT[highSchool.AverageACT];
+                const otherConvertedSAT = this.ACTtoSAT[highSchool.AverageACT];
                 similarityPoints += this.calculateSimilarityPoints(
                     10, studentHS.AverageSAT, otherConvertedSAT, 50, 1,
                 );
@@ -424,7 +424,7 @@ exports.findSimilarHS = async (username) => {
             if (!studentHS.AverageSAT && studentHS.AverageACT
                 && !highSchool.AverageACT && highSchool.AverageSAT) {
                 // convert ACT score of student's high school to SAT score
-                const studentConvertedSAT = ACTtoSAT[studentHS.AverageACT];
+                const studentConvertedSAT = this.ACTtoSAT[studentHS.AverageACT];
                 similarityPoints += this.calculateSimilarityPoints(
                     10, studentConvertedSAT, highSchool.AverageSAT, 50, 1,
                 );

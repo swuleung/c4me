@@ -1,12 +1,11 @@
 const { Op } = require('sequelize');
 const models = require('../models');
-const collegeController = require('./collegeController');
 const { getStudent } = require('./studentController');
 
-const northeastRegion = ['ME', 'VT', 'NH', 'MA', 'RI', 'CT', 'NY', 'PA', 'NJ', 'DC']; // 9 'states'
-const southRegion = ['DE', 'MD', 'WV', 'VA', 'NC', 'SC', 'GA', 'FL', 'KY', 'TN', 'MS', 'AL', 'AR', 'LA', 'OK', 'TX']; // 16 states
-const midwestRegion = ['OH', 'MI', 'IN', 'WI', 'IL', 'MN', 'IA', 'MO', 'ND', 'SD', 'NE', 'KS']; // 12 statesa=
-const westRegion = ['AK', 'HI', 'WA', 'OR', 'CA', 'MT', 'ID', 'WY', 'NV', 'UT', 'CO', 'AZ', 'NM']; // 13 states
+exports.northeastRegion = ['ME', 'VT', 'NH', 'MA', 'RI', 'CT', 'NY', 'PA', 'NJ', 'DC']; // 9 'states'
+exports.southRegion = ['DE', 'MD', 'WV', 'VA', 'NC', 'SC', 'GA', 'FL', 'KY', 'TN', 'MS', 'AL', 'AR', 'LA', 'OK', 'TX']; // 16 states
+exports.midwestRegion = ['OH', 'MI', 'IN', 'WI', 'IL', 'MN', 'IA', 'MO', 'ND', 'SD', 'NE', 'KS']; // 12 statesa=
+exports.westRegion = ['AK', 'HI', 'WA', 'OR', 'CA', 'MT', 'ID', 'WY', 'NV', 'UT', 'CO', 'AZ', 'NM']; // 13 states
 
 /**
  *
@@ -80,16 +79,16 @@ exports.searchCollege = async (filters, username) => {
 
         if (filters.hasOwnProperty('regions')) {
             if (filters.regions.includes('northeast')) {
-                locations = locations.concat(northeastRegion);
+                locations = locations.concat(this.northeastRegion);
             }
             if (filters.regions.includes('south')) {
-                locations = locations.concat(southRegion);
+                locations = locations.concat(this.southRegion);
             }
             if (filters.regions.includes('midwest')) {
-                locations = locations.concat(midwestRegion);
+                locations = locations.concat(this.midwestRegion);
             }
             if (filters.regions.includes('west')) {
-                locations = locations.concat(westRegion);
+                locations = locations.concat(this.westRegion);
             }
         }
 
@@ -268,113 +267,4 @@ exports.searchCollege = async (filters, username) => {
         ok: 'Success',
         colleges: searchResults,
     };
-};
-
-
-/**
- * Updates questionability for all applications
- *  @param {json} application
- */
-exports.calcQuestionableApplication = async (app) => {
-    let thisCollege = {};
-
-    // Find the College of Application[i]
-    try {
-        thisCollege = (await models.College.findOne({
-            where: {
-                CollegeId: app.college,
-            },
-        }));
-    } catch (error) {
-        return {
-            error: 'Error in finding College for qScore',
-            reason: error.message,
-        };
-    }
-    if (!thisCollege) {
-        return {
-            ok: 'College does not exist',
-        };
-    }
-
-    let thisStudent = {};
-    try {
-        thisStudent = (await models.User.findOne({
-            where: {
-                username: app.username,
-            },
-        }));
-    } catch (error) {
-        console.log(error);
-        return {
-            error: 'Error in finding Student for qScore',
-            reason: error.message,
-        };
-    }
-
-    if (!thisStudent) {
-        return {
-            ok: 'Student does not exist',
-        };
-    }
-
-    console.log(`\n\n\tthisStudent.username:${thisStudent.username}`);
-
-    let qScore = 0;
-    // SAT - 10
-    const totalSATcollege = (thisCollege.SATMath + thisCollege.SATEBRW);
-    let totalSATstudent = (thisStudent.SATMath + thisStudent.SATEBRW);
-    qScore += 10;
-    while (totalSATcollege > totalSATstudent && qScore > 0) {
-        totalSATstudent += 50;
-        qScore--;
-    }
-
-    // ACT - 10
-    if (thisCollege.ACTComposite < thisStudent.ACTComposite) {
-        qScore += 10;
-    } else {
-        var temp = 10;
-        let tempACT = thisStudent.ACTComposite;
-        while (temp > 0 && tempACT <= thisCollege.ACTComposite) {
-            tempACT += 2;
-            temp--;
-        }
-        qScore += temp;
-    }
-
-    // Relevant Majors - 5
-    const majors = collegeController.getMajorsByCollegeID(thisCollege.CollegeId);
-    if (thisStudent.major1 in majors) { qScore += 2.5; }
-    if (thisStudent.major2 in majors) { qScore += 2.5; }
-
-    // GPA - 10
-    if (thisStudent.GPA > thisCollege.GPA) { qScore += 10; } else {
-        var temp = 10;
-        let tempGPA = thisStudent.GPA;
-        while (temp > 0 && thisCollege.GPA >= tempGPA) {
-            tempGPA += 0.1;
-            temp--;
-        }
-        qScore += temp;
-    }
-
-    // ResidenceState - 5
-    if (thisStudent.residenceState == thisCollege.residenceState) { qScore += 5; } else {
-        const studentRegion = (thisStudent.residenceState in northeastRegion) ? northeastRegion
-            : (thisStudent.residenceState in southRegion) ? southRegion
-                : (thisStudent.residenceState in midwestRegion) ? midwestRegion : westRegion;
-        const collegeRegion = (thisCollege.residenceState in northeastRegion) ? northeastRegion
-            : (thisCollege.residenceState in southRegion) ? southRegion
-                : (thisCollege.residenceState in midwestRegion) ? midwestRegion : westRegion;
-
-        if (collegeRegion == studentRegion) { qScore += 2.5; }
-    }
-    // determine questionable status & update accordingly
-    let threshold = qScore / 40.0;
-    threshold = (app.status == 'denied') ? (1 - threshold) : threshold;
-    if (threshold < 0.65) {
-        return true;
-    }
-    return false;
 };

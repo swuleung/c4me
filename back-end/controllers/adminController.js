@@ -1,12 +1,10 @@
 const sequelize = require('sequelize');
-const { Op } = require('sequelize');
 const fs = require('fs');
 const puppeteer = require('puppeteer');
 const parse = require('csv-parse');
 const models = require('../models');
 const { getCollegeList, getPathConfig } = require('../utils/readAppFiles');
 const { updateStudentHighSchool } = require('./studentController');
-// const { calcQuestionableApplications } = require('./searchController');
 
 /**
  * Check if a user is an admin with a DB call
@@ -72,7 +70,8 @@ exports.scrapeCollegeRankings = async () => {
             // check if there is a hyphen in ranking
             if (calculatedRanking.indexOf('-') !== -1) {
                 const splittedRanking = calculatedRanking.split('-');
-                calculatedRanking = (parseInt(splittedRanking[0], 10) + parseInt(splittedRanking[1], 10)) / 2;
+                calculatedRanking = (parseInt(splittedRanking[0], 10)
+                + parseInt(splittedRanking[1], 10)) / 2;
             }
             calculatedRanking = parseInt(calculatedRanking, 10);
             /* eslint-enable no-await-in-loop */
@@ -146,12 +145,14 @@ exports.scrapeCollegeData = async () => {
             const actCompositeEl = await page.$x('//dt[contains(., \'ACT Composite\')]//following-sibling::dd[1]');
 
             // takes the text value of element and determines the completion rate
+            // eslint-disable-next-line max-len
             const completionRateFull = await page.evaluate((el) => el.textContent, completionRateEl[0]);
             let completionRate = null;
             if (completionRateFull === 'Not reported') completionRate = null;
             else completionRate = parseFloat(completionRateFull.substring(0, completionRateFull.indexOf('%')));
 
             // takes the text value of element and determines the cost of attendance
+            // eslint-disable-next-line max-len
             let costOfAttendance = await page.evaluate((el) => el.textContent, costOfAttendanceEl[0]);
             let costOfAttendanceInState = null;
             let costOfAttendanceOutOfState = null;
@@ -654,7 +655,7 @@ exports.updateApplications = async (applications) => {
     }
 
     return {
-        ok: 'Success',
+        ok: 'Successfully update all applications',
     };
 };
 

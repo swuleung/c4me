@@ -3,7 +3,7 @@
  */
 import React, { useState, useEffect } from 'react';
 import {
-    Button, Container, Row, Col, Table, Form, Alert,
+    Button, Container, Table, Form, Alert,
 } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import admin from '../../services/api/admin';

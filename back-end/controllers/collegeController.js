@@ -129,6 +129,7 @@ exports.getMajorsByCollegeID = async (collegeID) => {
     try {
         // use major table to find all majors with collegeId
         majors = await models.Major.findAll({
+            raw: true,
             attributes: ['MajorId', 'Major'],
             include: [{
                 model: models.College,
