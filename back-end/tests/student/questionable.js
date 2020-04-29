@@ -34,6 +34,7 @@ describe('Questionable Acceptance Decisions', () => {
                 .end((err, res) => {
                     res.should.have.status(200);
                     const { applications } = res.body;
+                    applications[0].Status = 'denied';
                     agent
                         .post('/students/mochaStudent/applications/edit')
                         .send({
@@ -43,11 +44,27 @@ describe('Questionable Acceptance Decisions', () => {
                             response.should.have.status(200);
                             expect(response.body.applications.length).to.equal(1);
                             expect(response.body.applications[0]).to.shallowDeepEqual({
-                                Status: 'accepted',
-                                IsQuestionable: false,
+                                Status: 'denied',
+                                IsQuestionable: true,
                                 Username: 'mochaStudent',
                             });
-                            done();
+                            const secondApp = response.body.applications;
+                            secondApp[0].Status = 'accepted';
+                            agent
+                                .post('/students/mochaStudent/applications/edit')
+                                .send({
+                                    applications: secondApp,
+                                })
+                                .end((er, resp) => {
+                                    resp.should.have.status(200);
+                                    expect(resp.body.applications.length).to.equal(1);
+                                    expect(resp.body.applications[0]).to.shallowDeepEqual({
+                                        Status: 'accepted',
+                                        IsQuestionable: false,
+                                        Username: 'mochaStudent',
+                                    });
+                                    done();
+                                });
                         });
                 });
         });
@@ -75,6 +92,7 @@ describe('Questionable Acceptance Decisions', () => {
                 .end((err, res) => {
                     res.should.have.status(200);
                     const { applications } = res.body;
+                    applications[0].Status = 'denied';
                     agent
                         .post('/students/mochaStudent/applications/edit')
                         .send({
@@ -84,11 +102,27 @@ describe('Questionable Acceptance Decisions', () => {
                             response.should.have.status(200);
                             expect(response.body.applications.length).to.equal(1);
                             expect(response.body.applications[0]).to.shallowDeepEqual({
-                                Status: 'accepted',
-                                IsQuestionable: false,
+                                Status: 'denied',
+                                IsQuestionable: true,
                                 Username: 'mochaStudent',
                             });
-                            done();
+                            const secondApp = response.body.applications;
+                            secondApp[0].Status = 'accepted';
+                            agent
+                                .post('/students/mochaStudent/applications/edit')
+                                .send({
+                                    applications: secondApp,
+                                })
+                                .end((er, resp) => {
+                                    resp.should.have.status(200);
+                                    expect(resp.body.applications.length).to.equal(1);
+                                    expect(resp.body.applications[0]).to.shallowDeepEqual({
+                                        Status: 'accepted',
+                                        IsQuestionable: false,
+                                        Username: 'mochaStudent',
+                                    });
+                                    done();
+                                });
                         });
                 });
         });
@@ -118,20 +152,37 @@ describe('Questionable Acceptance Decisions', () => {
                 .end((err, res) => {
                     res.should.have.status(200);
                     const { applications } = res.body;
+                    applications[0].Status = 'denied';
                     agent
                         .post('/students/mochaStudent/applications/edit')
                         .send({
                             applications: applications,
                         })
-                        .end((err, response) => {
+                        .end((error, response) => {
                             response.should.have.status(200);
                             expect(response.body.applications.length).to.equal(1);
                             expect(response.body.applications[0]).to.shallowDeepEqual({
-                                Status: 'accepted',
-                                IsQuestionable: false,
+                                Status: 'denied',
+                                IsQuestionable: true,
                                 Username: 'mochaStudent',
                             });
-                            done();
+                            const secondApp = response.body.applications;
+                            secondApp[0].Status = 'accepted';
+                            agent
+                                .post('/students/mochaStudent/applications/edit')
+                                .send({
+                                    applications: secondApp,
+                                })
+                                .end((er, resp) => {
+                                    resp.should.have.status(200);
+                                    expect(resp.body.applications.length).to.equal(1);
+                                    expect(resp.body.applications[0]).to.shallowDeepEqual({
+                                        Status: 'accepted',
+                                        IsQuestionable: false,
+                                        Username: 'mochaStudent',
+                                    });
+                                    done();
+                                });
                         });
                 });
         });
