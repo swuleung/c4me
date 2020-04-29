@@ -316,35 +316,43 @@ exports.calcScores = async ( collegeIDList, username ) => {
 
 			console.log( score );
 			console.log( colleges[i] );
+
 			const majors = await getMajorsByCollegeID( colleges[i].CollegeId );
 
-			console.log( majors );
-
 			for (let j = majors.length - 1; j >= 0; j--) {
-				if ( majors[j].Major.toLowerCase().includes( major1.toLowerCase() ) )
+				if ( major1 != null && majors[j].Major.toLowerCase().includes( major1.toLowerCase() ) )
 					score += 5;
 			}
 			for (let j = majors.length - 1; j >= 0; j--) {
-				if ( majors[j].Major.toLowerCase().includes( major2.toLowerCase() ) )
+				if ( major2 != null && majors[j].Major.toLowerCase().includes( major2.toLowerCase() ) )
 					score += 5;
 			}
+			console.log( score );
 
-			let points = 10 - Math.floor( Math.abs( colleges[i].ACTComposite - ACTComposite ) / 2 );
-			if (points > 0)
-				score += points;
-
-			points = 5 - Math.floor( Math.abs( colleges[i].SATMath - SATMath ) / 25 );
-			if (points > 0)
-				score += points;
-
-			points = 5 - Math.floor( Math.abs( colleges[i].SATEBRW - SATEBRW ) / 25 );
-			if (points > 0)
-				score += points;
-
-			points = 10 - Math.floor( Math.abs( colleges[i].ACTComposite - ACTComposite ) / 0.1 );
-			if (points > 0)
-				score += points;
-
+			if ( ACTComposite != null ) {
+				let points = 10 - Math.floor( Math.abs( colleges[i].ACTComposite - ACTComposite ) / 2 );
+				if (points > 0)
+					score += points;
+			}
+			
+			if ( SATMath != null ) {
+				points = 5 - Math.floor( Math.abs( colleges[i].SATMath - SATMath ) / 25 );
+				if (points > 0)
+					score += points;
+			}
+				
+			if ( SATEBRW != null ) {
+				points = 5 - Math.floor( Math.abs( colleges[i].SATEBRW - SATEBRW ) / 25 );
+				if (points > 0)
+					score += points;
+			}
+			
+			if ( GPA != null ) {
+				points = 10 - Math.floor( Math.abs( colleges[i].GPA - GPA ) / 0.1 );
+				if (points > 0)
+					score += points;
+			}
+				
 			scoreResults[ colleges[i].Name ] = score;
 		}
 
