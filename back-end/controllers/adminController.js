@@ -4,7 +4,7 @@ const puppeteer = require('puppeteer');
 const parse = require('csv-parse');
 const models = require('../models');
 const { getCollegeList, getPathConfig } = require('../utils/readAppFiles');
-const { updateStudentHighSchool } = require('./studentController');
+const { updateStudentHighSchool, calcQuestionableApplication } = require('./studentController');
 
 /**
  * Check if a user is an admin with a DB call
@@ -542,6 +542,10 @@ exports.importApplications = async () => {
                     Username: row.userid,
                     Status: row.status.replace('-', ''),
                 };
+                if (application.Status === 'accepted' || application.Status === 'denied') {
+                    const isQuestionable = await calcQuestionableApplication(application);
+                    application.IsQuestionable = isQuestionable;
+                }
                 applications.push(application);
             })
             .on('end', () => {
