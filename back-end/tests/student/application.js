@@ -24,8 +24,8 @@ describe('Student Profile', () => {
                     .post('/students/mochaStudent/applications/edit')
                     .send({
                         applications: [{
-                            college: -1,
-                            status: 'deferred',
+                            CollegeId: -1,
+                            Status: 'deferred',
                         }],
                     })
                     .end((err, res) => {
@@ -43,42 +43,18 @@ describe('Student Profile', () => {
                             .post('/students/mochaStudent/applications/edit')
                             .send({
                                 applications: [{
-                                    college: college.CollegeId,
-                                    status: 'deferred',
-                                    username: 'mochaStudent',
+                                    CollegeId: college.CollegeId,
+                                    Status: 'deferred',
+                                    Username: 'mochaStudent',
                                 }],
                             })
                             .end((error, response) => {
                                 response.should.have.status(200);
-                                expect(response.body.applications).to.deep.equal([{ college: college.CollegeId, status: 'deferred', username: 'mochaStudent' }]);
+                                expect(response.body.applications).to.deep.equal([{ CollegeId: college.CollegeId, Status: 'deferred', Username: 'mochaStudent' }]);
                                 done();
                             });
                     });
             });
-        });
-    });
-
-    describe('Delete mochaStudent', () => {
-        it('Delete student', (done) => {
-            agent
-                .delete('/users/delete')
-                .send({
-                    username: 'mochaStudent',
-                })
-                .end((err, res) => {
-                    res.should.not.have.cookie('access_token');
-                    res.should.have.status(200);
-                    done();
-                });
-        });
-        it('Check application cascade', (done) => {
-            agent
-                .get('/students/mochaStudent/applications')
-                .end((err, res) => {
-                    res.should.have.status(200);
-                    res.body.applications.should.deep.equal([]);
-                    done();
-                });
         });
     });
 });

@@ -103,4 +103,27 @@ router.post('/scrapeHighSchoolData', async (req, res) => {
     }
 });
 
+/**
+ * Get list of similar high schools
+ * GET request with body: {
+ *      username: <string>
+ * }
+ */
+router.get('/findSimilarHS/:username', async (req, res) => {
+    if (!req.cookies.access_token) {
+        res.status(400).send({ status: 'error', error: 'No token provided' });
+    } else {
+        const authorized = await authentication.validateJWT(req.cookies.access_token);
+        if (!authorized.username) {
+            res.clearCookie('access_token');
+            res.status(400).send(authorized);
+        } else {
+            let result = {};
+            result = await highSchoolController.findSimilarHS(req.params.username);
+            if (result.error) res.status(400);
+            res.send(result);
+        }
+    }
+});
+
 module.exports = router;

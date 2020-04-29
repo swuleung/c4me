@@ -13,8 +13,8 @@ exports.createUser = async (username, password) => {
     try {
         // sequelize call to create
         newUser = await models.User.create({
-            username: username,
-            password: password,
+            Username: username,
+            Password: password,
         });
     } catch (error) {
         if (error instanceof sequelize.UniqueConstraintError) {
@@ -40,7 +40,7 @@ exports.login = async (username, password) => {
         user = await models.User.findOne({
             raw: true,
             where: {
-                username: username,
+                Username: username,
             },
         });
     } catch (error) {
@@ -60,7 +60,7 @@ exports.login = async (username, password) => {
 
     // user bcrypt ot check password
     try {
-        passwordCheck = await bcrypt.compare(password, user.password);
+        passwordCheck = await bcrypt.compare(password, user.Password);
     } catch (error) {
         return {
             error: 'Error checking password',
@@ -98,7 +98,7 @@ exports.deleteUser = async (username) => {
     try {
         await models.User.destroy({
             where: {
-                username: username,
+                Username: username,
             },
         });
     } catch (error) {

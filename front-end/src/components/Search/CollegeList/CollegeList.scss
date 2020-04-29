@@ -1,0 +1,47 @@
+@import "../../../utils/styles/theme.scss";
+
+.student-container {
+    @extend .container;
+
+    padding: 1.25rem;
+
+    .student-title {
+        font-size: 1.1rem;
+        .student-name {
+            color: $main-color;
+        }
+    }
+
+    .student-details {
+        @extend .card-body;
+        background-color: $light-color;
+        padding: 0.15rem;
+
+        .detail-title {
+            font-weight: 600;
+            font-size: 0.75rem;
+        }
+
+        .detail-score {
+            font-size: 1.1rem;
+        }
+    }
+
+    .accepted {
+        color: green;
+    }
+
+    .waitlisted,
+    .pending,
+    .deferred {
+        color: goldenrod;
+    }
+
+    .denied {
+        color: red;
+    }
+
+    .application {
+        text-transform: capitalize;
+    }
+}

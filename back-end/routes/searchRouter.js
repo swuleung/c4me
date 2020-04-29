@@ -1,10 +1,11 @@
 const express = require('express');
+
 const router = express.Router();
 const authentication = require('../utils/auth');
 const searchController = require('../controllers/searchController');
 
 router.post('/', async (req, res) => {
-	// authentication check
+    // authentication check
     if (!req.cookies.access_token) {
         res.status(400).send({ status: 'error', error: 'No token provided' });
     } else {
@@ -14,16 +15,12 @@ router.post('/', async (req, res) => {
             res.status(400).send(authorized);
         } else {
             // get search results
-            searchController.searchCollege(req.body).then(result => {
-		        if (result.error) {
-		            if (result.error == 'Something went wrong') res.status(500);
-		            else res.status(400);
-		        }
-		        res.send(result);
-    		});
+            searchController.searchCollege(req.body.filters, authorized.username).then((result) => {
+                if (result.error) res.status(400);
+                res.send(result);
+            });
         }
     }
-
 });
 
 module.exports = router;

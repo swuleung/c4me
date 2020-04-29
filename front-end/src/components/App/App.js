@@ -53,7 +53,7 @@ function App() {
             }
             if (result.ok) {
                 setErrorAlert(false);
-                setIsAdmin(result.isAdmin);
+                setIsAdmin(result.IsAdmin);
             }
         });
     }, [username]);
@@ -72,7 +72,7 @@ function App() {
                                     <Nav.Link as={Link} to="/search">Search Colleges</Nav.Link>
                                     <Nav.Link as={Link} to="/find-similar-hs">Similar High Schools</Nav.Link>
                                     <Nav.Link as={Link} to="/questionable-decisions">View Questionable Decisions</Nav.Link>
-                                
+
                                 </Nav>
                                 <Nav className="ml-auto">
                                     {username == null || username.trim() === ''
@@ -87,7 +87,6 @@ function App() {
                                                 {isAdmin
                                                     ? <NavDropdown.Item as={Link} to="/admin">Admin Controls</NavDropdown.Item>
                                                     : <NavDropdown.Item as={Link} to={`/profile/${username}`}>View Profile</NavDropdown.Item>}
-                                                <NavDropdown.Item href="#tbd">Settings</NavDropdown.Item>
                                                 <NavDropdown.Divider />
                                                 <NavDropdown.Item as={Link} to="/" onClick={handleLogout}>Logout</NavDropdown.Item>
                                             </NavDropdown>
@@ -101,12 +100,9 @@ function App() {
                                 <Route exact path="/profile/:username" component={StudentProfile} />
                                 <Route exact path="/profile/:username/edit" username={username} render={(props) => (props.match.params.username === username ? <EditProfile {...props} /> : <Redirect to="/" />)} />
                                 <Route exact path="/colleges/:collegeID" component={CollegeProfile} />
-
+                                <Route exact path="/search" component={Search} />
                                 <Route exact path="/find-similar-hs" username={username} component={SimilarHighSchool} />
-
                                 <Route exact path="/questionable-decisions" component={AdminQApp} />
-
-
                                 <Route
                                     exact
                                     path="/admin"

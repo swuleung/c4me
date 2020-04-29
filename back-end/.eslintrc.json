@@ -20,6 +20,7 @@
         "indent": ["error", 4],
         "object-shorthand": ["error", "never"],
         "global-require": 0,
-        "linebreak-style": "off"
+        "linebreak-style": "off",
+        "no-prototype-builtins": "off"
     }
 }

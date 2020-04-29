@@ -1,31 +1,34 @@
 {
-  "development": {
-    "username": "zzysberg",
-    "password": "110801274",
-    "database": "zzysberg",
-    "host": "mysql4.cs.stonybrook.edu",
-    "dialect": "mysql",
-    "operatorsAliases": 0,
-    "JWT_COOKIE": "access_token",
-    "RANKING_URL": "https://www.timeshighereducation.com/rankings/united-states/2020#!/page/0/length/-1/sort_by/rank/sort_order/asc/cols/stats",
-    "COLLEGEDATA_URL": "https://www.collegedata.com/college/",
-    "COLLEGE_NAMES": "colleges.txt",
-    "NICHE_URL": "http://allv22.all.cs.stonybrook.edu/~stoller/cse416/niche/"
-  },
-  "test": {
-    "username": "zzysberg",
-    "password": "110801274",
-    "database": "zzysberg",
-    "host": "mysql4.cs.stonybrook.edu",
-    "dialect": "mysql",
-    "operatorsAliases": 0
-  },
-  "production": {
-    "username": "zzysberg",
-    "password": "110801274",
-    "database": "zzysberg",
-    "host": "mysql4.cs.stonybrook.edu",
-    "dialect": "mysql",
-    "operatorsAliases": 0
-  }
+    "development": {
+        "username": "swuleung",
+        "password": "111065204",
+        "database": "swuleung",
+        "host": "mysql4.cs.stonybrook.edu",
+        "dialect": "mysql",
+        "operatorsAliases": 0
+    },
+    "local": {
+        "username": "root",
+        "password": "password",
+        "database": "c4me",
+        "host": "localhost",
+        "dialect": "mysql",
+        "operatorsAliases": 0
+    },
+    "test": {
+        "username": "root",
+        "password": "password",
+        "database": "c4me",
+        "host": "localhost",
+        "dialect": "mysql",
+        "operatorsAliases": 0
+    },
+    "production": {
+        "username": "jaquach",
+        "password": "111019384",
+        "database": "jaquach",
+        "host": "mysql4.cs.stonybrook.edu",
+        "dialect": "mysql",
+        "operatorsAliases": 0
+    }
 }

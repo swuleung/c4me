@@ -3,7 +3,7 @@
  */
 import React, { useState, useEffect } from 'react';
 import {
-    Alert, Col, Row, Card, CardDeck, Button,
+    Alert, Col, Row, Card, CardDeck, Button, Spinner,
 } from 'react-bootstrap';
 import FilterAT from './FilterAT/FilterAT';
 import ATScatterplot from './ATScatterplot/ATScatterplot';
@@ -21,6 +21,7 @@ const ApplicationsTracker = (props) => {
     const [averages, setAverages] = useState({});
     const [listATView, setListATView] = useState(true);
     const [highSchools, setHighSchools] = useState([]);
+    const [showSpinner, setShowSpinner] = useState(false);
 
     // deconstruct props
     const { college } = props;
@@ -29,19 +30,22 @@ const ApplicationsTracker = (props) => {
     } = college;
 
     useEffect(() => {
+        setShowSpinner(true);
         // fetch application data based on the filters passed from FilterAT
         applicationsTrackerAPI.getApplicationsTrackerData(CollegeId, filters).then((results) => {
+            setShowSpinner(false);
             if (results.error) {
                 setErrorAlert(true);
                 setErrorMessage(results.reason);
             }
             if (results.ok) {
                 setErrorAlert(false);
-                setApplications(results.applications.sort((a, b) => (a.Application.status.localeCompare(b.Application.status))));
+                setApplications(results.applications.sort((a, b) => (a.Application.Status.localeCompare(b.Application.Status))));
                 setAverages(results.averages);
             }
         });
 
+        // get all high schools for autosuggest
         highSchoolAPI.getAllHighSchools().then((result) => {
             if (result.error) {
                 setErrorAlert(true);
@@ -66,29 +70,6 @@ const ApplicationsTracker = (props) => {
                             <Col>
                                 <CardDeck>
                                     <Card body className="text-center">
-                                        <h3>Average Student</h3>
-                                        <Row>
-                                            <Col>
-                                                <div className="at-title">GPA</div>
-                                                <div className="at-text">{averages.avgGPA ? averages.avgGPA : 'N/A'}</div>
-                                            </Col>
-                                            <Col>
-                                                <div className="at-title">SAT Math</div>
-                                                <div className="at-text">{averages.avgSATMath ? averages.avgSATMath : 'N/A'}</div>
-                                            </Col>
-                                        </Row>
-                                        <Row>
-                                            <Col>
-                                                <div className="at-title">SAT EBRW</div>
-                                                <div className="at-text">{averages.avgSATEBRW ? averages.avgSATEBRW : 'N/A'}</div>
-                                            </Col>
-                                            <Col>
-                                                <div className="at-title">ACT Composite</div>
-                                                <div className="at-text">{averages.avgACTComposite ? averages.avgACTComposite : 'N/A'}</div>
-                                            </Col>
-                                        </Row>
-                                    </Card>
-                                    <Card body className="text-center">
                                         <h3>Average Accepted Student</h3>
                                         <Row>
                                             <Col>
@@ -108,6 +89,29 @@ const ApplicationsTracker = (props) => {
                                             <Col>
                                                 <div className="at-title">ACT Composite</div>
                                                 <div className="at-text">{averages.avgAcceptedACTComposite ? averages.avgAcceptedACTComposite : 'N/A'}</div>
+                                            </Col>
+                                        </Row>
+                                    </Card>
+                                    <Card body className="text-center">
+                                        <h3>Average Student</h3>
+                                        <Row>
+                                            <Col>
+                                                <div className="at-title">GPA</div>
+                                                <div className="at-text">{averages.avgGPA ? averages.avgGPA : 'N/A'}</div>
+                                            </Col>
+                                            <Col>
+                                                <div className="at-title">SAT Math</div>
+                                                <div className="at-text">{averages.avgSATMath ? averages.avgSATMath : 'N/A'}</div>
+                                            </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col>
+                                                <div className="at-title">SAT EBRW</div>
+                                                <div className="at-text">{averages.avgSATEBRW ? averages.avgSATEBRW : 'N/A'}</div>
+                                            </Col>
+                                            <Col>
+                                                <div className="at-title">ACT Composite</div>
+                                                <div className="at-text">{averages.avgACTComposite ? averages.avgACTComposite : 'N/A'}</div>
                                             </Col>
                                         </Row>
                                     </Card>
@@ -134,9 +138,21 @@ const ApplicationsTracker = (props) => {
                                         }
                                     </Button>
                                 </div>
-                                {listATView
-                                    ? <ATList allHighSchools={highSchools} applications={applications} />
-                                    : <ATScatterplot applications={applications} averages={averages} />}
+                                {showSpinner
+                                    ? (
+                                        <div className="text-center">
+                                            <Spinner className="large-spinner" style={{ width: '10rem', height: '10rem' }} animation="grow" variant="primary" />
+                                        </div>
+                                    )
+                                    : (
+                                        <>
+                                            {
+                                                listATView
+                                                    ? <ATList allHighSchools={highSchools} applications={applications} />
+                                                    : <ATScatterplot applications={applications} averages={averages} />
+                                            }
+                                        </>
+                                    )}
                             </Col>
                         </Row>
                     </>

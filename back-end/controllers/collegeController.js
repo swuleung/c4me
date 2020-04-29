@@ -286,7 +286,7 @@ exports.getAcceptedApplicationsByCollegeID = async (collegeID) => {
     let applications = [];
     // no questionable applications
     const applicationWhereClause = {
-        isQuestionable: false,
+        IsQuestionable: false,
         status: {
             [Op.eq]: 'accepted',
         },
@@ -298,11 +298,11 @@ exports.getAcceptedApplicationsByCollegeID = async (collegeID) => {
             model: models.User,
             through: {
                 where: applicationWhereClause,
-                attributes: { exclude: ['isQuestionable', 'createdAt', 'updatedAt'] },
+                attributes: { exclude: ['IsQuestionable', 'createdAt', 'updatedAt'] },
             },
             attributes: {
-                exclude: ['password', 'createdAt', 'updatedAt', 'APPassed', 'residenceState',
-                    'highschoolCity', 'highschoolState', 'major1', 'major2'],
+                exclude: ['Password', 'createdAt', 'updatedAt', 'APPassed', 'ResidenceState',
+                    'City', 'State', 'Major1', 'Major2'],
             },
         }],
     };
@@ -342,7 +342,7 @@ exports.getApplicationsByCollegeID = async (collegeID, filters) => {
     let applications = [];
     // query parts
     const applicationWhereClause = {
-        isQuestionable: false,
+        IsQuestionable: false,
     };
     const userWhereClause = {
     };
@@ -386,19 +386,19 @@ exports.getApplicationsByCollegeID = async (collegeID, filters) => {
             };
         }
         status[Op.or][Op.in] = filters.statuses;
-        applicationWhereClause.status = status;
+        applicationWhereClause.Status = status;
     }
 
     // handle the collegeClasses
     if (filters.lowerCollegeClass && filters.upperCollegeClass) {
         collegeClass[Op.or][Op.between] = [filters.lowerCollegeClass, filters.upperCollegeClass];
-        userWhereClause.collegeClass = collegeClass;
+        userWhereClause.CollegeClass = collegeClass;
     } else if (filters.lowerCollegeClass) {
         collegeClass[Op.or][Op.gte] = filters.lowerCollegeClass;
-        userWhereClause.collegeClass = collegeClass;
+        userWhereClause.CollegeClass = collegeClass;
     } else if (filters.upperCollegeClass) {
         collegeClass[Op.or][Op.lte] = filters.upperCollegeClass;
-        userWhereClause.collegeClass = collegeClass;
+        userWhereClause.CollegeClass = collegeClass;
     }
 
     // complete query
@@ -408,12 +408,12 @@ exports.getApplicationsByCollegeID = async (collegeID, filters) => {
             model: models.User,
             through: {
                 where: applicationWhereClause,
-                attributes: { exclude: ['isQuestionable', 'createdAt', 'updatedAt'] },
+                attributes: { exclude: ['IsQuestionable', 'createdAt', 'updatedAt'] },
             },
             where: userWhereClause,
             attributes: {
-                exclude: ['password', 'createdAt', 'updatedAt', 'APPassed', 'residenceState',
-                    'highschoolCity', 'highschoolState', 'major1', 'major2'],
+                exclude: ['Password', 'createdAt', 'updatedAt', 'APPassed', 'ResidenceState',
+                    'City', 'State', 'Major1', 'Major2'],
             },
             include: [
                 includeHS,
