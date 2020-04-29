@@ -280,66 +280,11 @@ const processApplications = (applications) => {
 };
 
 /**
- *  Get only accepted applications with no other filters by collegeID
- * @param {integer} collegeID
- */
-exports.getAcceptedApplicationsByCollegeID = async (collegeID) => {
-    let applications = [];
-    // no questionable applications
-    const applicationWhereClause = {
-        IsQuestionable: false,
-        status: {
-            [Op.eq]: 'accepted',
-        },
-    };
-
-    const query = {
-        where: { CollegeId: collegeID },
-        include: [{
-            model: models.User,
-            through: {
-                where: applicationWhereClause,
-                attributes: { exclude: ['IsQuestionable', 'createdAt', 'updatedAt'] },
-            },
-            attributes: {
-                exclude: ['Password', 'createdAt', 'updatedAt', 'APPassed', 'ResidenceState',
-                    'City', 'State', 'Major1', 'Major2'],
-            },
-        }],
-    };
-    try {
-        applications = (await models.College.findOne(query));
-    } catch (error) {
-        return {
-            error: 'Unable to get applications for applications tracker',
-            reason: error.message,
-        };
-    }
-
-    if (!applications) {
-        return {
-            ok: 'No accepted data for college',
-            applications: [],
-            averages: {},
-        };
-    }
-    return processApplications(applications.toJSON().Users);
-};
-
-/**
  *
- * @param {integer} collegeID
- * @param {object} filters
- *    filters: {
- *       lowerCollegeClass: <integer>
- *       upperCollegeClass: <integer>
- *       statuses: ['accepted', ...]
- *       highSchools: [highSchoolId, ...]
- *       lax: <boolean>
- *    }
- * Each filter is optional
+ * @param {integer} collegeID ID of College to find applications by
+ * @param {Filters} filters Filters object
  */
-exports.getApplicationsByCollegeID = async (collegeID, filters) => {
+const getApplicationsWithFilter = async (collegeID, filters) => {
     let applications = [];
     // query parts
     const applicationWhereClause = {
@@ -431,17 +376,27 @@ exports.getApplicationsByCollegeID = async (collegeID, filters) => {
             reason: error.message,
         };
     }
+    return applications;
+};
 
+/**
+ *
+ * @param {integer} collegeID
+ * @param {object} filters
+ *    filters: {
+ *       lowerCollegeClass: <integer>
+ *       upperCollegeClass: <integer>
+ *       statuses: ['accepted', ...]
+ *       highSchools: [highSchoolId, ...]
+ *       lax: <boolean>
+ *    }
+ * Each filter is optional
+ */
+exports.getApplicationsByCollegeID = async (collegeID, filters) => {
     // get the accepted applications with no filters for averages
-    let acceptedApplications = null;
-    try {
-        acceptedApplications = await this.getAcceptedApplicationsByCollegeID(collegeID);
-    } catch (error) {
-        return {
-            error: 'Unable to get applications for applications tracker',
-            reason: error.message,
-        };
-    }
+    const acceptedApplications = processApplications(
+        (await getApplicationsWithFilter(collegeID, { statuses: ['accepted'] })).toJSON().Users,
+    );
 
     // change the names of the averages
     const acceptedAverages = {
@@ -451,6 +406,7 @@ exports.getApplicationsByCollegeID = async (collegeID, filters) => {
         avgAcceptedACTComposite: acceptedApplications.averages.avgACTComposite,
     };
 
+    const applications = await getApplicationsWithFilter(collegeID, filters);
     if (!applications) {
         return {
             ok: 'No data for college',
