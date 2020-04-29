@@ -1,11 +1,9 @@
 const { Op } = require('sequelize');
 const models = require('../models');
 const { getStudent } = require('./studentController');
-
-exports.northeastRegion = ['ME', 'VT', 'NH', 'MA', 'RI', 'CT', 'NY', 'PA', 'NJ', 'DC']; // 9 'states'
-exports.southRegion = ['DE', 'MD', 'WV', 'VA', 'NC', 'SC', 'GA', 'FL', 'KY', 'TN', 'MS', 'AL', 'AR', 'LA', 'OK', 'TX']; // 16 states
-exports.midwestRegion = ['OH', 'MI', 'IN', 'WI', 'IL', 'MN', 'IA', 'MO', 'ND', 'SD', 'NE', 'KS']; // 12 statesa=
-exports.westRegion = ['AK', 'HI', 'WA', 'OR', 'CA', 'MT', 'ID', 'WY', 'NV', 'UT', 'CO', 'AZ', 'NM']; // 13 states
+const {
+    northeastRegion, southRegion, midwestRegion, westRegion,
+} = require('./sharedControllerVars');
 
 /**
  *
@@ -79,16 +77,16 @@ exports.searchCollege = async (filters, username) => {
 
         if (filters.hasOwnProperty('regions')) {
             if (filters.regions.includes('northeast')) {
-                locations = locations.concat(this.northeastRegion);
+                locations = locations.concat(northeastRegion);
             }
             if (filters.regions.includes('south')) {
-                locations = locations.concat(this.southRegion);
+                locations = locations.concat(southRegion);
             }
             if (filters.regions.includes('midwest')) {
-                locations = locations.concat(this.midwestRegion);
+                locations = locations.concat(midwestRegion);
             }
             if (filters.regions.includes('west')) {
-                locations = locations.concat(this.westRegion);
+                locations = locations.concat(westRegion);
             }
         }
 

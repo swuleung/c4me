@@ -1,9 +1,10 @@
 const models = require('../models');
-const { scrapeHighSchoolData, ACTtoSAT } = require('./highschoolController');
-const { getCollegeByID, getMajorsByCollegeID } = require('./collegeController');
+const { scrapeHighSchoolData } = require('./highschoolController');
+const { getCollegeByID, getCollegeByName, getMajorsByCollegeID } = require('./collegeController');
 const {
-    northeastRegion, southRegion, midwestRegion, westRegion,
-} = require('./searchController');
+    northeastRegion, southRegion, midwestRegion, westRegion, ACTtoSAT,
+} = require('./sharedControllerVars');
+
 /**
  *  Get the student using sequelize
  * @param {string} username
@@ -302,7 +303,10 @@ exports.calculateCredibilityPoints = (base, studentValue, collegeValue, deviatio
  *  @param {json} application
  */
 exports.calcQuestionableApplication = async (app) => {
-    const thisCollege = (await getCollegeByID(app.CollegeId)).college;
+    let thisCollege = null;
+    // get the college either by ID or by Name
+    if (app.CollegeId) thisCollege = (await getCollegeByID(app.CollegeId)).college;
+    if (app.Name) thisCollege = (await getCollegeByName(app.Name)).college;
     if (!thisCollege) return true;
 
     const thisStudent = (await this.getStudent(app.Username)).student;
@@ -333,11 +337,12 @@ exports.calcQuestionableApplication = async (app) => {
                 totalSATstudent,
                 ACTtoSAT[thisCollege.ACTComposite],
                 50, 1);
+        } else {
+            qScore += this.calculateCredibilityPoints(10,
+                thisStudent.ACTComposite,
+                thisCollege.ACTComposite,
+                2, 1);
         }
-        qScore += this.calculateCredibilityPoints(10,
-            thisStudent.ACTComposite,
-            thisCollege.ACTComposite,
-            2, 1);
     } else if (totalSATcollege !== 0) {
         // no college ACT but SAT
         if (!thisStudent.ACTComposite) {

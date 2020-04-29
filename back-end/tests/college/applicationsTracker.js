@@ -13,12 +13,10 @@ describe('Applications Tracker', () => {
                 res.should.have.status(200);
                 const { college } = res.body;
                 SBUCollegeId = college.CollegeId;
-
                 agent
                     .post(`/colleges/id/${SBUCollegeId}/applications`)
                     .end((error, response) => {
                         response.should.have.status(200);
-
                         expect(response.body.applications).to.shallowDeepEqual([
                             {
                                 Username: 'mocha3',
