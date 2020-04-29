@@ -1,3 +1,6 @@
+/**
+ * This component is where the admin can set an application to not questionable.
+ */
 import React, { useState, useEffect } from 'react';
 import {
     Button, Container, Row, Col, Table, Form, Alert,
@@ -25,7 +28,6 @@ const AdminQApp = () => {
                         apps[i].Colleges[j].approval = false;
                     }
                 }
-                console.log(result.applications);
                 setApplications(result.applications);
             }
         });
@@ -45,7 +47,7 @@ const AdminQApp = () => {
     };
 
     /**
-     *
+     * Update the applications that have been changed and re-fetch applications
      */
     const handleSubmitChanges = () => {
         const approvedApplications = [];
@@ -54,19 +56,36 @@ const AdminQApp = () => {
             for (let j = 0; j < colleges.length; j += 1) {
                 if (colleges[j].approval) {
                     const app = colleges[j].Application;
-                    app.IsQuestionable = false;
                     approvedApplications.push(app);
                 }
             }
         }
-        console.log(approvedApplications);
         // send approved applications to back-eend
+        admin.updateApplications(approvedApplications).then((result) => {
+            if (result.error) {
+                setErrorAlert(true);
+                setErrorMessage(result.reason);
+            }
+            if (result.ok) {
+                const apps = result.applications;
+                for (let i = 0; i < apps.length; i += 1) {
+                    for (let j = 0; j < apps[i].Colleges.length; j += 1) {
+                        apps[i].Colleges[j].approval = false;
+                    }
+                }
+                setApplications(result.applications);
+            }
+        });
     };
 
+    /**
+     * Render each row for each user's questionable acceptance decisions
+     */
     const renderQApps = () => {
         const appsHTML = [];
         for (let i = 0; i < applications.length; i += 1) {
             const currentUser = applications[i];
+            // for each user, get all the applications that are questionable
             for (let j = 0; j < currentUser.Colleges.length; j += 1) {
                 const college = currentUser.Colleges[j];
                 appsHTML.push(
@@ -96,7 +115,7 @@ const AdminQApp = () => {
                                         onClick={(e) => { handleVerificationChange(e, false); }}
                                         onKeyDown={(e) => { handleVerificationChange(e, false); }}
                                     >
-                                    Deny
+                                        Deny
                                     </span>
                                 )
                                 : (
@@ -109,7 +128,7 @@ const AdminQApp = () => {
                                         onClick={(e) => { handleVerificationChange(e, true); }}
                                         onKeyDown={(e) => { handleVerificationChange(e, true); }}
                                     >
-                                    Approve
+                                        Approve
                                     </span>
                                 )}
 
@@ -147,7 +166,7 @@ const AdminQApp = () => {
                             </tbody>
                         </Table>
                         <Button className="btn-block" variant="primary" type="submit">
-                    Save Changes
+                            Save Changes
                         </Button>
                     </Form>
                 )}

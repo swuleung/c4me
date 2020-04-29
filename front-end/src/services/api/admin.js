@@ -160,7 +160,26 @@ const admin = {
             };
         }
     },
+    updateApplications: async function updateApplications(applications) {
+        try {
+            const result = await fetch('/admin/update-applications ', {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json; charset=utf-8',
+                },
+                body: JSON.stringify({
+                    applications: applications,
+                }),
+            });
 
+            return await result.json();
+        } catch (error) {
+            return {
+                error: `Create account failure ${error.message}`,
+            };
+        }
+    },
     notQuestionable: async function notQuestionable(uName, college) {
         try {
             const qApps = await fetch('/admin/acceptableApp', {

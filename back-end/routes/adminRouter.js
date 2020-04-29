@@ -289,18 +289,12 @@ router.get('/questionable-decisions', async (req, res) => {
             if (result.error) {
                 res.status(400);
             }
-            console.log(result);
             res.send(result);
         }
     }
 });
 
-/**
- * Mark application as not questionable
- *
- *
- */
-router.post('/acceptableApp', async (req, res) => {
+router.post('/update-applications', async (req, res) => {
     if (!req.cookies.access_token) {
         res.status(400).send({ status: 'error', error: 'No token provided' });
     } else {
@@ -312,11 +306,18 @@ router.post('/acceptableApp', async (req, res) => {
         } else if (!adminController.checkAdmin(authorized.username)) {
             res.status(400).send(authorized);
         } else {
-            const updateApp = adminController.markAppNotQuestionable(req.body.username, req.body.college);
-            res.send(updateApp);
+            let result = await adminController.updateApplications(req.body.applications);
+            if (result.error) {
+                res.status(400);
+            } else {
+                result = await adminController.getQuestionableApplications();
+                if (result.error) {
+                    res.status(400);
+                }
+            }
+            res.send(result);
         }
     }
 });
-
 
 module.exports = router;

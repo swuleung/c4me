@@ -620,6 +620,43 @@ exports.getQuestionableApplications = async () => {
     };
 };
 
+/**
+ * Update a list of applications
+ * @param {[Application]} applications List of applications to be updated
+ */
+exports.updateApplications = async (applications) => {
+    const errors = [];
+    const updates = [];
+    for (let i = 0; i < applications.length; i += 1) {
+        updates.push(models.Application.update(
+            {
+                IsQuestionable: false,
+            },
+            {
+                where: applications[i],
+            },
+        ).catch(
+            // eslint-disable-next-line no-loop-func
+            (error) => {
+                errors.push({
+                    error: `Error updating application: ${applications[i]}`,
+                    reason: error,
+                });
+            },
+        ));
+    }
+    await Promise.all(updates).catch((error) => errors.push(`Error in processing application changes ${error.message}`));
+    if (errors.length) {
+        return {
+            error: 'Error updating some applications',
+            reason: errors,
+        };
+    }
+
+    return {
+        ok: 'Success',
+    };
+};
 
 /**
  *
