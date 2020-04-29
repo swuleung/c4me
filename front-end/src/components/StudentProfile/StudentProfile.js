@@ -237,8 +237,7 @@ const StudentProfile = (props) => {
                                                         <Popover.Title>Questionable Decision</Popover.Title>
                                                         <Popover.Content>
                                                             This column shows whether our system believes your application aligns with our data.
-                                                            Verify the data in your profile is correct. Our admin will review questionable decisions
-                                                            before they are included in the applications tracker.
+                                                            Our admin will review questionable decisions before they are included in the applications tracker.
                                                         </Popover.Content>
                                                     </Popover>
                                                 )}
