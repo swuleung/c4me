@@ -295,65 +295,76 @@ exports.calcScores = async ( collegeIDList, username ) => {
 		console.log( colleges );
 		
 		let score = 0;
-		
+		let maxScore = 0;
 		for (let i = colleges.length - 1; i >= 0; i--) {
 
 			score = 0;
-			if ( colleges[i].Location == state ) 
-				score += 10;
-			else if ( northeastRegion.i ncludes( colleges[i].Location ) 
-					&& northeastRegion.includes( state ) )
-				score += 5;
-			else if ( southRegion.includes( colleges[i].Location ) 
-					&& southRegion.includes( state ) )
-				score += 5;
-			else if ( westRegion.includes( colleges[i].Location ) 
-					&& westRegion.includes( state ) )
-				score += 5;
-			else if ( midwestRegion.includes( colleges[i].Location ) 
-					&& midwestRegion.includes( state ) )
-				score += 5;
-
-			console.log( score );
-			console.log( colleges[i] );
+			maxScore = 0;
+			if ( state != null ) {
+				maxScore += 10;
+				if ( colleges[i].Location == state )
+					score += 10;
+				else if ( northeastRegion.i ncludes( colleges[i].Location ) 
+						&& northeastRegion.includes( state ) )
+					score += 5;
+				else if ( southRegion.includes( colleges[i].Location ) 
+						&& southRegion.includes( state ) )
+					score += 5;
+				else if ( westRegion.includes( colleges[i].Location ) 
+						&& westRegion.includes( state ) )
+					score += 5;
+				else if ( midwestRegion.includes( colleges[i].Location ) 
+						&& midwestRegion.includes( state ) )
+					score += 5;
+			}
 
 			const majors = await getMajorsByCollegeID( colleges[i].CollegeId );
 
-			for (let j = majors.length - 1; j >= 0; j--) {
-				if ( major1 != null && majors[j].Major.toLowerCase().includes( major1.toLowerCase() ) )
-					score += 5;
+			if ( major1 != null ) {
+				maxScore += 5;
+				for (let j = majors.length - 1; j >= 0; j--) {
+					if ( majors[j].Major.toLowerCase().includes( major1.toLowerCase() ) )
+						score += 5;
+				}
 			}
-			for (let j = majors.length - 1; j >= 0; j--) {
-				if ( major2 != null && majors[j].Major.toLowerCase().includes( major2.toLowerCase() ) )
-					score += 5;
+			
+			if ( major2 != null) {
+				maxScore += 5;
+				for (let j = majors.length - 1; j >= 0; j--) {
+					if ( major2 != null && majors[j].Major.toLowerCase().includes( major2.toLowerCase() ) )
+						score += 5;
+				}
 			}
-			console.log( score );
-
+				
 			if ( ACTComposite != null ) {
+				maxScore += 10;
 				let points = 10 - Math.floor( Math.abs( colleges[i].ACTComposite - ACTComposite ) / 2 );
 				if (points > 0)
 					score += points;
 			}
 			
 			if ( SATMath != null ) {
+				maxScore += 5;
 				points = 5 - Math.floor( Math.abs( colleges[i].SATMath - SATMath ) / 25 );
 				if (points > 0)
 					score += points;
 			}
 				
 			if ( SATEBRW != null ) {
+				maxScore += 5;
 				points = 5 - Math.floor( Math.abs( colleges[i].SATEBRW - SATEBRW ) / 25 );
 				if (points > 0)
 					score += points;
 			}
 			
 			if ( GPA != null ) {
+				maxScore += 10;
 				points = 10 - Math.floor( Math.abs( colleges[i].GPA - GPA ) / 0.1 );
 				if (points > 0)
 					score += points;
 			}
 				
-			scoreResults[ colleges[i].Name ] = score;
+			scoreResults[ colleges[i].Name ] = score / maxScore;
 		}
 
 // Similar Students
