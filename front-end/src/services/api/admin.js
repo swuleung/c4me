@@ -176,7 +176,7 @@ const admin = {
             return await result.json();
         } catch (error) {
             return {
-                error: `Create account failure ${error.message}`,
+                error: `Update applications error: ${error.message}`,
             };
         }
     },
