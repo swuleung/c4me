@@ -1,6 +1,8 @@
 const { Op } = require('sequelize');
 const models = require('../models');
 const { getStudent } = require('./studentController');
+const { getCollegeByID } = require('./collegeController');
+const { getMajorsByCollegeID } = require('./collegeController');
 
 const northeastRegion = ['ME', 'VT', 'NH', 'MA', 'RI', 'CT', 'NY', 'PA', 'NJ', 'DC']; // 9 'states'
 const southRegion = ['DE', 'MD', 'WV', 'VA', 'NC', 'SC', 'GA', 'FL', 'KY', 'TN', 'MS', 'AL', 'AR', 'LA', 'OK', 'TX']; // 16 states
@@ -270,37 +272,36 @@ exports.searchCollege = async (filters, username) => {
     }
 };
 
-exports.calcScores = async ( collegeList, username ) => {
+exports.calcScores = async ( collegeIDList, username ) => {
+	let scoreResults = {};
 	try {
-		console.log( "calc scores ");
-		console.log( collegeList );
+		
 		const student = await getStudent( username );
-		console.log( student );
-
-		const state = student.student.residenceState;
-		console.log( state );
-		const major1 = student.student.major1;
-		console.log( major1 );
-		const major2 = student.student.major2;
+		
+		const state = student.student.ResidenceState;
+		const major1 = student.student.Major1;
+		const major2 = student.student.Major2;
 		const SATMath = student.student.SATMath;
 		const SATEBRW = student.student.SATEBRW;
 		const ACTComposite = student.student.ACTComposite;
 		const GPA = student.student.GPA;
 
-		console.log( collegeList );
-
-		let scoreResults = {};
-		let score = 0;
-		let colleges = collegeList.colleges;
+		const IDList = collegeIDList.collegeIDs;
+		let colleges = [];
+		for (let i = IDList.length - 1; i >= 0; i--) {
+			const c = await getCollegeByID( IDList[i] );
+			colleges.push( c.college );
+		}
 		console.log( colleges );
-		console.log( colleges[0].Location );
-
+		
+		let score = 0;
+		
 		for (let i = colleges.length - 1; i >= 0; i--) {
-			score = 0;
 
+			score = 0;
 			if ( colleges[i].Location == state ) 
 				score += 10;
-			else if ( northeastRegion.includes( colleges[i].Location ) 
+			else if ( northeastRegion.i ncludes( colleges[i].Location ) 
 					&& northeastRegion.includes( state ) )
 				score += 5;
 			else if ( southRegion.includes( colleges[i].Location ) 
@@ -314,10 +315,11 @@ exports.calcScores = async ( collegeList, username ) => {
 				score += 5;
 
 			console.log( score );
-
-			let majors = colleges[i].getMajors();
+			console.log( colleges[i] );
+			const majors = await getMajorsByCollegeID( colleges[i].CollegeId );
 
 			console.log( majors );
+
 			for (let j = majors.length - 1; j >= 0; j--) {
 				if ( majors[j].Major.toLowerCase().includes( major1.toLowerCase() ) )
 					score += 5;
