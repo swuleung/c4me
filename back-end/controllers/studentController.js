@@ -227,7 +227,7 @@ exports.updateStudentApplications = async (username, newApplications) => {
         // if the application is found, update it
         if (found > -1) {
             const newApp = copyApplications[found];
-            if (newApp.Status === 'accepted' || newApp.Status === 'denied') {
+            if (newApp.Status !== allApplications[i].dataValues.Status && (newApp.Status === 'accepted' || newApp.Status === 'denied')) {
                 // eslint-disable-next-line no-await-in-loop, max-len
                 copyApplications[found].IsQuestionable = await this.calcQuestionableApplication(copyApplications[found]);
             }
