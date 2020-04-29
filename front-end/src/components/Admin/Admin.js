@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
-    Button, Alert, Container, Row, Col, Table
+    Button, Alert, Container, Row, Col,
 } from 'react-bootstrap';
 import admin from '../../services/api/admin';
 
@@ -17,13 +17,12 @@ const Admin = () => {
     const [disableCollegeData, setDisableCollegeData] = useState(false);
     const [disableDelete, setDisableDelete] = useState(false);
     const [disableProfile, setDisableProfile] = useState(false);
-    const [disableViewApps,setDisableViewApps] = useState(false);
 
-    const toggleProfiles = (b) =>{
+    const toggleProfiles = (b) => {
         setDisableDelete(b);
         setDisableProfile(b);
-    }
-    
+    };
+
     /**
      * Handle the button click for scrape college rankings
      */

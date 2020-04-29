@@ -3,7 +3,7 @@
  */
 import React, { useState, useEffect } from 'react';
 import {
-    Button, Container, Table, Form, Alert,
+    Button, Container, Table, Form, Alert, Spinner,
 } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import admin from '../../services/api/admin';
@@ -13,10 +13,13 @@ const AdminQApp = () => {
     const [applications, setApplications] = useState([]);
     const [errorAlert, setErrorAlert] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
+    const [showSpinner, setShowSpinner] = useState(false);
 
     useEffect(() => {
         // get all the questionable acceptance decisions
+        setShowSpinner(true);
         admin.getQuestionableApplications().then((result) => {
+            setShowSpinner(false);
             if (result.error) {
                 setErrorAlert(true);
                 setErrorMessage(result.reason);
@@ -150,26 +153,33 @@ const AdminQApp = () => {
             </p>
             {errorAlert
                 ? <Alert variant="danger">{errorMessage}</Alert>
-                : (
-                    <Form onSubmit={(e) => { e.preventDefault(); handleSubmitChanges(); }}>
-                        <Table>
-                            <thead>
-                                <tr>
-                                    <th>Username</th>
-                                    <th>Status</th>
-                                    <th>College</th>
-                                    <th>Verification</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {renderQApps()}
-                            </tbody>
-                        </Table>
-                        <Button className="btn-block" variant="primary" type="submit">
+                : showSpinner
+                    ? (
+                        <div className="text-center">
+                            <Spinner className="large-spinner" style={{ width: '10rem', height: '10rem' }} animation="grow" variant="primary" />
+                        </div>
+                    )
+
+                    : (
+                        <Form onSubmit={(e) => { e.preventDefault(); handleSubmitChanges(); }}>
+                            <Table>
+                                <thead>
+                                    <tr>
+                                        <th>Username</th>
+                                        <th>Status</th>
+                                        <th>College</th>
+                                        <th>Verification</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {renderQApps()}
+                                </tbody>
+                            </Table>
+                            <Button className="btn-block" variant="primary" type="submit">
                             Save Changes
-                        </Button>
-                    </Form>
-                )}
+                            </Button>
+                        </Form>
+                    )}
         </Container>
     );
 };
