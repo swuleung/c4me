@@ -25,6 +25,7 @@ const AdminQApp = () => {
                         apps[i].Colleges[j].approval = false;
                     }
                 }
+                console.log(result.applications);
                 setApplications(result.applications);
             }
         });
@@ -52,7 +53,9 @@ const AdminQApp = () => {
             const colleges = applications[i].Colleges;
             for (let j = 0; j < colleges.length; j += 1) {
                 if (colleges[j].approval) {
-                    approvedApplications.push(colleges[j].Application);
+                    const app = colleges[j].Application;
+                    app.IsQuestionable = false;
+                    approvedApplications.push(app);
                 }
             }
         }

@@ -599,8 +599,13 @@ exports.getQuestionableApplications = async () => {
                     where: {
                         IsQuestionable: true,
                     },
+                    attributes: {
+                        exclude: ['createdAt', 'updatedAt'],
+                    },
                 },
+                attributes: ['CollegeId', 'Name'],
             }],
+            attributes: ['Username'],
         });
     } catch (error) {
         return {
