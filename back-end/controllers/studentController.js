@@ -299,8 +299,9 @@ exports.calculateCredibilityPoints = (base, studentValue, collegeValue, deviatio
 };
 
 /**
- * Updates questionability for all applications
- *  @param {json} application
+ * Calculates the questionable factor of a decision
+ * based on the student and college data
+ * @param {json} application
  */
 exports.calcQuestionableApplication = async (app) => {
     let thisCollege = null;
