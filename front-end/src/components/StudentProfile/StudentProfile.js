@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {
-    Alert, Button, Container, Row, Col, Table,
+    Alert, Button, Container, Row, Col, Table, Popover, OverlayTrigger,
 } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faQuestionCircle } from '@fortawesome/free-regular-svg-icons';
 import studentAPI from '../../services/api/student';
 import collegeAPI from '../../services/api/college';
 import './StudentProfile.scss';
@@ -28,8 +30,13 @@ const StudentProfile = (props) => {
                     <td>
                         {studentApplications[i].collegeName}
                     </td>
-                    <td className={studentApplications[i].Status}>
+                    <td className={`text-center ${studentApplications[i].Status}`}>
                         {studentApplications[i].Status}
+                    </td>
+                    <td className="text-right">
+                        {studentApplications[i].IsQuestionable
+                            ? 'Questionable'
+                            : 'Not Questionable'}
                     </td>
                 </tr>,
             );
@@ -96,31 +103,31 @@ const StudentProfile = (props) => {
                                 {localStorage.getItem('username') === username && <Col><Button as={Link} to={`/profile/${username}/edit`} className="float-right">Edit Profile</Button></Col>}
                             </Row>
                             <p>
-                            High School:&nbsp;
+                                High School:&nbsp;
                                 {highSchool.Name ? highSchool.Name : 'No high school provided'}
                             </p>
                             <p>
-                            High School City:&nbsp;
+                                High School City:&nbsp;
                                 {highSchool.City ? highSchool.City : 'No high school provided'}
                             </p>
                             <p>
-                            High School State:&nbsp;
+                                High School State:&nbsp;
                                 {highSchool.State ? highSchool.State : 'No high school provided'}
                             </p>
                             <p>
-                            Residence State:&nbsp;
+                                Residence State:&nbsp;
                                 {student.ResidenceState ? student.ResidenceState : 'No state provided'}
                             </p>
                             <p>
-                            College Class of&nbsp;
+                                College Class of&nbsp;
                                 {student.CollegeClass ? student.CollegeClass : 'No graduation year provided'}
                             </p>
                             <p>
-                            GPA:&nbsp;
+                                GPA:&nbsp;
                                 {student.GPA ? student.GPA : 'No GPA provided'}
                             </p>
                             <p>
-                            Major(s):&nbsp;
+                                Major(s):&nbsp;
                                 {!student.Major1 && !student.Major2 ? 'No majors provided' : student.Major1}
                                 {' '}
                                 {student.Major2 && `& ${student.Major2}`}
@@ -220,7 +227,25 @@ const StudentProfile = (props) => {
                                 <thead>
                                     <tr>
                                         <th>School</th>
-                                        <th>Status</th>
+                                        <th className="text-center">Status</th>
+                                        <th className="text-right">
+                                            {'Questionable '}
+                                            <OverlayTrigger
+                                                placement="right"
+                                                overlay={(
+                                                    <Popover>
+                                                        <Popover.Title>Questionable Decision</Popover.Title>
+                                                        <Popover.Content>
+                                                            This column shows whether our system believes your application aligns with our data.
+                                                            Verify the data in your profile is correct. Our admin will review questionable decisions
+                                                            before they are included in the applications tracker.
+                                                        </Popover.Content>
+                                                    </Popover>
+                                                )}
+                                            >
+                                                <FontAwesomeIcon className="text-info" icon={faQuestionCircle} />
+                                            </OverlayTrigger>
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
