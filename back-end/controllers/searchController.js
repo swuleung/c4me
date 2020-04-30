@@ -5,10 +5,9 @@ const { getCollegeByID } = require('./collegeController');
 const { getMajorsByCollegeID } = require('./collegeController');
 const { findSimilarHS } = require('./highschoolController');
 
-const northeastRegion = ['ME', 'VT', 'NH', 'MA', 'RI', 'CT', 'NY', 'PA', 'NJ', 'DC']; // 9 'states'
-const southRegion = ['DE', 'MD', 'WV', 'VA', 'NC', 'SC', 'GA', 'FL', 'KY', 'TN', 'MS', 'AL', 'AR', 'LA', 'OK', 'TX']; // 16 states
-const midwestRegion = ['OH', 'MI', 'IN', 'WI', 'IL', 'MN', 'IA', 'MO', 'ND', 'SD', 'NE', 'KS']; // 12 statesa=
-const westRegion = ['AK', 'HI', 'WA', 'OR', 'CA', 'MT', 'ID', 'WY', 'NV', 'UT', 'CO', 'AZ', 'NM']; // 13 states
+const {
+    northeastRegion, southRegion, midwestRegion, westRegion,
+} = require('./sharedControllerVars');
 
 /**
  *

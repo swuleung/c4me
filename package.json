@@ -8,7 +8,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "front-end": "npm start --prefix front-end",
+    "front-end": "npm run start:production --prefix front-end",
     "back-end": "npm start --prefix back-end",
     "start": "concurrently \"npm run back-end\" \"npm run front-end\" --kill-others"
   },

@@ -66,10 +66,11 @@ router.post('/login', (req, res) => {
         if (result.error) {
             if (result.error === 'Something went wrong') res.status(500);
             else res.status(400);
+            res.send(result);
+        } else {
+            res.cookie('access_token', result.access_token, { maxAge: new Date(Date.now() + (1000 * 60 * 60 * 24 * 7)) });
+            res.send({ ok: result.ok });
         }
-        // set cookie for 7 days
-        res.cookie('access_token', result.access_token, { maxAge: new Date(Date.now() + (1000 * 60 * 60 * 24 * 7)) });
-        res.send(result);
     });
 });
 

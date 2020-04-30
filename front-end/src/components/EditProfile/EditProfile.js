@@ -107,16 +107,17 @@ const EditProfile = (props) => {
             if (result.ok) {
                 setErrorAlert(false);
             }
-        });
-        studentAPI.editStudentApplications(username, studentApplications).then((result) => {
-            if (result.error) {
-                setErrorAlert(true);
-                setErrorMessage(result.error);
-            }
-            if (result.ok) {
-                setErrorAlert(false);
-                props.history.push(`../${username}`);
-            }
+
+            studentAPI.editStudentApplications(username, studentApplications).then((result) => {
+                if (result.error) {
+                    setErrorAlert(true);
+                    setErrorMessage(result.error);
+                }
+                if (result.ok) {
+                    setErrorAlert(false);
+                    props.history.push(`../${username}`);
+                }
+            });
         });
     };
 

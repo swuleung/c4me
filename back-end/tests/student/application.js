@@ -33,7 +33,7 @@ describe('Student Profile', () => {
                         done();
                     });
             });
-            it('Add Stony Brook University', (done) => {
+            it('Add Stony Brook University and validate questionable', (done) => {
                 agent
                     .get('/colleges/name/Stony Brook University')
                     .end((err, res) => {
@@ -44,41 +44,19 @@ describe('Student Profile', () => {
                             .send({
                                 applications: [{
                                     CollegeId: college.CollegeId,
-                                    Status: 'deferred',
+                                    Status: 'accepted',
                                     Username: 'mochaStudent',
                                 }],
                             })
                             .end((error, response) => {
                                 response.should.have.status(200);
-                                expect(response.body.applications).to.deep.equal([{ CollegeId: college.CollegeId, Status: 'deferred', Username: 'mochaStudent' }]);
+                                expect(response.body.applications).to.deep.equal([{
+                                    CollegeId: college.CollegeId, Status: 'accepted', Username: 'mochaStudent', IsQuestionable: true,
+                                }]);
                                 done();
                             });
                     });
             });
-        });
-    });
-
-    describe('Delete mochaStudent', () => {
-        it('Delete student', (done) => {
-            agent
-                .delete('/users/delete')
-                .send({
-                    username: 'mochaStudent',
-                })
-                .end((err, res) => {
-                    res.should.not.have.cookie('access_token');
-                    res.should.have.status(200);
-                    done();
-                });
-        });
-        it('Check application cascade', (done) => {
-            agent
-                .get('/students/mochaStudent/applications')
-                .end((err, res) => {
-                    res.should.have.status(200);
-                    res.body.applications.should.deep.equal([]);
-                    done();
-                });
         });
     });
 });
