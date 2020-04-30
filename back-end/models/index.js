@@ -21,6 +21,7 @@ if (process.env.NODE_ENV === 'test') {
     });
 } else {
     sequelize = new Sequelize({
+        logging: false,
         ...config,
         dialectOptions: {
             ssl: {

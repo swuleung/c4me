@@ -37,9 +37,6 @@ const Search = () => {
             }
             if (result.ok) {
                 setErrorAlert(false);
-                if (sortBy !== 'Score' && sortBy !== 'Cost') {
-                    setShowSpinner(false);
-                }
                 // sort by cost in front-end
                 if (sortBy === 'Cost') {
                     // get the current student informationf or comparison
@@ -97,6 +94,7 @@ const Search = () => {
                         });
                 } else {
                     setSearchResults(result.colleges);
+                    setShowSpinner(false);
                 }
             }
         });

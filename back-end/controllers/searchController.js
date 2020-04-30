@@ -314,7 +314,6 @@ exports.calcScores = async (collegeIDList, username) => {
                     && midwestRegion.includes(state)) score += 5;
             }
 
-
             const { majors } = await getMajorsByCollegeID(colleges[i].CollegeId);
             if (major1 != null) {
                 maxScore += 5;
@@ -333,22 +332,19 @@ exports.calcScores = async (collegeIDList, username) => {
                 score += Math.max(0, 10 - Math.ceil(Math.abs(colleges[i].ACTComposite - ACTComposite) / 2));
             }
 
-
             if (SATMath != null) {
                 maxScore += 5;
-                score += Math.max(0, 5 - Math.ceil(Math.abs(colleges[i].SATMath - SATMath) / 25));
+                score += Math.max(0, 5 - Math.ceil(Math.abs(colleges[i].SATMath - SATMath) / 50));
             }
-
 
             if (SATEBRW != null) {
                 maxScore += 5;
-                score += Math.max(0, 5 - Math.ceil(Math.abs(colleges[i].SATEBRW - SATEBRW) / 25));
+                score += Math.max(0, 5 - Math.ceil(Math.abs(colleges[i].SATEBRW - SATEBRW) / 50));
             }
-
 
             if (GPA != null) {
                 maxScore += 10;
-                score += Math.max(10 - Math.ceil(Math.abs(colleges[i].GPA - GPA) / 0.1));
+                score += Math.max(0,10 - Math.ceil(Math.abs(colleges[i].GPA - GPA) / 0.1));
             }
 
             const appFilters = {
@@ -356,11 +352,11 @@ exports.calcScores = async (collegeIDList, username) => {
                 highSchools: similarHS,
             };
             let applications = (await getApplicationsWithFilter(colleges[i].CollegeId, appFilters));
+            // only if applications exist
             if (applications) {
                 applications = (await getApplicationsWithFilter(colleges[i].CollegeId, appFilters))
                     .toJSON().Users;
                 let simStudentsScore = 0;
-                maxScore += 5;
                 for (let appIndex = applications.length - 1; appIndex >= 0; appIndex -= 1) {
                     const otherStudent = applications[appIndex];
                     let simMaxScore = 0;
@@ -443,15 +439,19 @@ exports.calcScores = async (collegeIDList, username) => {
                         }
                     }
                     simScore /= simMaxScore;
-                    if (simScore > 0.85) simStudentsScore += 1;
+                    if (simScore > 0.85) {
+                        maxScore += 1;
+                        simStudentsScore += 1;
+                    }
                     if (simStudentsScore >= 5) break;
                 }
 
                 if (simStudentsScore >= 5) score += 5;
                 else score += simStudentsScore;
             }
+            
             scoreResults.push({
-                Name: [colleges[i].Name],
+                Name: colleges[i].Name,
                 score: maxScore ? score / maxScore : 0,
             });
         }
