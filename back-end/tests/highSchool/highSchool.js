@@ -61,7 +61,7 @@ describe('Find Similar High Schools', () => {
 
     it('Get similar high schools list', (done) => {
         agent
-            .get('/highSchools/findSimilarHS/mocha4')
+            .get('/highSchools/find-similar-hs')
             .end((err, res) => {
                 res.should.have.status(200);
                 expect(res.body.highSchools).to.shallowDeepEqual([{

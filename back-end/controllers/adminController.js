@@ -5,6 +5,7 @@ const parse = require('csv-parse');
 const models = require('../models');
 const { getCollegeList, getPathConfig } = require('../utils/readAppFiles');
 const { updateStudentHighSchool, calcQuestionableApplication } = require('./studentController');
+const { getAllColleges } = require('./collegeController');
 
 /**
  * Check if a user is an admin with a DB call
@@ -541,10 +542,6 @@ exports.importApplications = async () => {
                     Username: row.userid,
                     Status: row.status.replace('-', ''),
                 };
-                if (application.Status === 'accepted' || application.Status === 'denied') {
-                    const isQuestionable = await calcQuestionableApplication(application);
-                    application.IsQuestionable = isQuestionable;
-                }
                 applications.push(application);
             })
             .on('end', () => {
@@ -552,17 +549,26 @@ exports.importApplications = async () => {
             });
     }));
     /* eslint-disable no-await-in-loop */
+    const colleges = {};
+    const collegeList = (await getAllColleges()).colleges;
+    for (let i = 0; i < collegeList.length; i += 1) {
+        colleges[collegeList[i].Name] = collegeList[i].CollegeId;
+    }
+
     // for each application, try to add it
     for (let appIndex = 0; appIndex < applications.length; appIndex += 1) {
         try {
             // find the college
-            const college = await models.College.findOne({
-                where: { Name: applications[appIndex].Name },
-                raw: true,
-            });
-            if (college !== null) {
+            const collegeId = colleges[applications[appIndex].Name];
+            if (collegeId !== null) {
+                if (applications[appIndex].Status === 'accepted'
+                || applications[appIndex].Status === 'denied') {
+                    // eslint-disable-next-line max-len
+                    const isQuestionable = await calcQuestionableApplication(applications[appIndex]);
+                    applications[appIndex].IsQuestionable = isQuestionable;
+                }
                 // add the application
-                applications[appIndex].CollegeId = college.CollegeId;
+                applications[appIndex].CollegeId = collegeId;
                 await models.Application.create(applications[appIndex]);
             } else {
                 errors.push({

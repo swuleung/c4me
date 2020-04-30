@@ -284,7 +284,7 @@ const processApplications = (applications) => {
  * @param {integer} collegeID ID of College to find applications by
  * @param {Filters} filters Filters object
  */
-const getApplicationsWithFilter = async (collegeID, filters) => {
+exports.getApplicationsWithFilter = async (collegeID, filters) => {
     let applications = [];
     // query parts
     const applicationWhereClause = {
@@ -359,7 +359,7 @@ const getApplicationsWithFilter = async (collegeID, filters) => {
             where: userWhereClause,
             attributes: {
                 exclude: ['Password', 'createdAt', 'updatedAt', 'APPassed', 'ResidenceState',
-                    'City', 'State', 'Major1', 'Major2'],
+                    'City', 'State'],
             },
             include: [
                 includeHS,
@@ -394,7 +394,7 @@ const getApplicationsWithFilter = async (collegeID, filters) => {
  */
 exports.getApplicationsByCollegeID = async (collegeID, filters) => {
     // get the accepted applications with no filters for averages
-    let acceptedApps = await getApplicationsWithFilter(collegeID, { statuses: ['accepted'] });
+    let acceptedApps = await this.getApplicationsWithFilter(collegeID, { statuses: ['accepted'] });
     let acceptedAverages = {};
     if (acceptedApps) {
         acceptedApps = processApplications(acceptedApps.toJSON().Users);
@@ -406,7 +406,7 @@ exports.getApplicationsByCollegeID = async (collegeID, filters) => {
         };
     }
 
-    const applications = await getApplicationsWithFilter(collegeID, filters);
+    const applications = await this.getApplicationsWithFilter(collegeID, filters);
     if (!applications) {
         return {
             ok: 'No data for college',

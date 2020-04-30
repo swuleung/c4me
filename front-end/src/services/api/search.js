@@ -29,6 +29,25 @@ const search = {
             };
         }
     },
+    getCollegeRecommenderScore: async function getCollegeRecommenderScore(collegeIds) {
+        try {
+            const results = await fetch('/search/recommender', {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json; charset=utf-8',
+                },
+                body: JSON.stringify({ collegeIds: collegeIds }),
+
+            });
+            return await results.json();
+        } catch (error) {
+            return {
+                error: `Search failure ${error.message}`,
+            };
+        }
+    },
 };
 
 export default search;

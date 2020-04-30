@@ -9,7 +9,7 @@ describe('Search Colleges', () => {
         agent
             .post('/users/login')
             .send({
-                username: 'mocha4',
+                username: 'mocha5',
                 password: 'bob!pass1',
             })
             .end((err, res) => {
@@ -420,6 +420,63 @@ describe('Search Colleges', () => {
                     ],
                 );
                 done();
+            });
+    });
+
+    it('Get recommender scores for Stony Brook University', (done) => {
+        agent
+            .get('/colleges/name/Stony Brook University')
+            .end((err, res) => {
+                res.should.have.status(200);
+                const { college } = res.body;
+                const SBUCollegeId = college.CollegeId;
+                agent
+                    .post('/search/recommender')
+                    .send({
+                        collegeIds: [SBUCollegeId],
+                    })
+                    .end((error, response) => {
+                        response.should.have.status(200);
+                        expect(response.body.scores).to.deep.equal([{ Name: 'Stony Brook University', score: 0.82 }]);
+                        done();
+                    });
+            });
+    });
+
+    it('Get a closer recommendation score', (done) => {
+        agent
+            .post('/students/mocha5/edit')
+            .send({
+                student: {
+                    ACTComposite: 28,
+                    SATMath: 675,
+                    SATEBRW: 671,
+                    GPA: 3.83,
+                    ResidenceState: 'NY',
+                },
+            })
+            .end((err, res) => {
+                res.should.have.status(200);
+                const { student } = res.body;
+                expect(student.Username).to.equal('mocha5');
+
+                agent
+                    .get('/colleges/name/Stony Brook University')
+                    .end((err2, collegeRes) => {
+                        collegeRes.should.have.status(200);
+                        const { college } = collegeRes.body;
+                        const SBUCollegeId = college.CollegeId;
+                        agent
+                            .post('/search/recommender')
+                            .send({
+                                collegeIds: [SBUCollegeId],
+                            })
+                            .end((error, response) => {
+                                response.should.have.status(200);
+                                expect(response.body.scores).to.deep.equal([{ Name: 'Stony Brook University', score: 1 }]);
+                                done();
+                            });
+                    });
             });
     });
 });

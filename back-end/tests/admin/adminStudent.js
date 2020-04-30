@@ -21,7 +21,7 @@ describe('Login as admin & delete high schools', () => {
 
     it('Delete all high schools', (done) => {
         agent
-            .delete('/admin/deleteAllHighSchools')
+            .delete('/admin/delete-all-high-schools')
             .end((err, res) => {
                 res.should.have.status(200);
                 done();
@@ -33,7 +33,7 @@ describe('Import students and applications from csv files', () => {
     describe('Delete all users', () => {
         it('Deletes all users', (done) => {
             agent
-                .delete('/admin/deleteStudentProfiles')
+                .delete('/admin/delete-student-profiles')
                 .end((err, res) => {
                     res.should.have.status(200);
                     done();
@@ -45,7 +45,7 @@ describe('Import students and applications from csv files', () => {
         it('Import students: mochaImport & mochaImportWrong', function importStudents(done) {
             this.timeout(30000);
             agent
-                .get('/admin/importStudents')
+                .get('/admin/import-students')
                 .end((err, res) => {
                     res.should.have.status(200);
                     done();
@@ -126,7 +126,7 @@ describe('Import students and applications from csv files', () => {
 
         it('Import applications', (done) => {
             agent
-                .get('/admin/importApplications')
+                .get('/admin/import-applications')
                 .end((err, res) => {
                     res.should.have.status(200);
                     done();
