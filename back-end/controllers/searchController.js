@@ -330,40 +330,25 @@ exports.calcScores = async (collegeIDList, username) => {
             // if student's test score is higher than average, give max scores
             if (ACTComposite != null) {
                 maxScore += 10;
-                if (ACTComposite >= colleges[i].ACTComposite) score += 10;
-                else {
-                    // eslint-disable-next-line max-len
-                    score += Math.max(0, 10 - Math.ceil(Math.abs(colleges[i].ACTComposite - ACTComposite) / 2));
-                }
+                score += Math.max(0, 10 - Math.ceil(Math.abs(colleges[i].ACTComposite - ACTComposite) / 2));
             }
 
 
             if (SATMath != null) {
                 maxScore += 5;
-                if (SATMath >= colleges[i].SATMath) score += 5;
-                else {
-                    // eslint-disable-next-line max-len
-                    score += Math.max(0, 5 - Math.ceil(Math.abs(colleges[i].SATMath - SATMath) / 25));
-                }
+                score += Math.max(0, 5 - Math.ceil(Math.abs(colleges[i].SATMath - SATMath) / 25));
             }
 
 
             if (SATEBRW != null) {
                 maxScore += 5;
-                if (SATEBRW >= colleges[i].SATEBRW) score += 5;
-                else {
-                    // eslint-disable-next-line max-len
-                    score += Math.max(0, 5 - Math.ceil(Math.abs(colleges[i].SATEBRW - SATEBRW) / 25));
-                }
+                score += Math.max(0, 5 - Math.ceil(Math.abs(colleges[i].SATEBRW - SATEBRW) / 25));
             }
 
 
             if (GPA != null) {
                 maxScore += 10;
-                if (GPA >= colleges[i].GPA) score += 10;
-                else {
-                    score += Math.max(10 - Math.ceil(Math.abs(colleges[i].GPA - GPA) / 0.1));
-                }
+                score += Math.max(10 - Math.ceil(Math.abs(colleges[i].GPA - GPA) / 0.1));
             }
 
             const appFilters = {
