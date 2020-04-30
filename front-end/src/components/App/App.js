@@ -106,7 +106,6 @@ function App() {
                                 <Route exact path="/colleges/:collegeID" component={CollegeProfile} />
                                 <Route exact path="/search" component={Search} />
                                 <Route exact path="/find-similar-hs" username={username} component={SimilarHighSchool} />
-
                                 <Route exact path="/questionable-decisions" component={AdminQApp} />
                                 <Route
                                     exact

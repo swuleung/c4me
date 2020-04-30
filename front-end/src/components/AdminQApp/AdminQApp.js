@@ -149,7 +149,7 @@ const AdminQApp = () => {
                 Questionable Acceptance Decisions
             </h1>
             <p>
-                Validate questionable acceptance decisions. Click on the username or college to go to their respective profiles. Verify an application by clicking approve. You must click on "Save Changes" at the bottom for changes to be saved in the database.
+                Validate questionable acceptance decisions. Click on the username or college to go to their respective profiles. Verify an application by clicking approve. You must click on &quot;Save Changes&quot; at the bottom for changes to be saved in the database.
             </p>
             {errorAlert
                 ? <Alert variant="danger">{errorMessage}</Alert>

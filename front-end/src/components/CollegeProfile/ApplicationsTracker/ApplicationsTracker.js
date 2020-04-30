@@ -74,7 +74,7 @@ const ApplicationsTracker = (props) => {
                                         <Row>
                                             <Col>
                                                 <div className="at-title">GPA</div>
-                                                <div className="at-text">{averages.avgAcceptedGPA !== '0.00' ? averages.avgAcceptedGPA : 'N/A'}</div>
+                                                <div className="at-text">{averages.avgAcceptedGPA && averages.avgAcceptedGPA !== '0.00' ? averages.avgAcceptedGPA : 'N/A'}</div>
                                             </Col>
                                             <Col>
                                                 <div className="at-title">SAT Math</div>
