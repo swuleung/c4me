@@ -542,10 +542,6 @@ exports.importApplications = async () => {
                     Username: row.userid,
                     Status: row.status.replace('-', ''),
                 };
-                if (application.Status === 'accepted' || application.Status === 'denied') {
-                    const isQuestionable = await calcQuestionableApplication(application);
-                    application.IsQuestionable = isQuestionable;
-                }
                 applications.push(application);
             })
             .on('end', () => {
@@ -565,6 +561,10 @@ exports.importApplications = async () => {
             // find the college
             const collegeId = colleges[applications[appIndex].Name];
             if (collegeId !== null) {
+                if (applications[appIndex].Status === 'accepted' || applications[appIndex].Status === 'denied') {
+                    const isQuestionable = await calcQuestionableApplication(applications[appIndex]);
+                    applications[appIndex].IsQuestionable = isQuestionable;
+                }
                 // add the application
                 applications[appIndex].CollegeId = collegeId;
                 await models.Application.create(applications[appIndex]);
