@@ -4,6 +4,7 @@ const { getStudent } = require('./studentController');
 const { getCollegeByID } = require('./collegeController');
 const { getMajorsByCollegeID } = require('./collegeController');
 const { getApplicationsWithFilter } = require('./collegeController');
+
 const { findSimilarHS } = require('./highschoolController');
 
 const {
@@ -297,7 +298,6 @@ exports.calcScores = async ( collegeIDList, username ) => {
 		let maxScore = 0;
 
 		let similarHS = await findSimilarHS( username );
-		console.log( similarHS );
 		similarHS = similarHS.highSchools.slice( 0, 3 );
 		console.log( "getting high schools complete" );
 		console.log( similarHS );
@@ -337,6 +337,7 @@ exports.calcScores = async ( collegeIDList, username ) => {
 					score += 5;
 			}
 				
+			// if student's test score is higher than average, give max scores	
 			if ( ACTComposite != null ) {
 				maxScore += 10;
 				let points = 10 - Math.ceil( Math.abs( colleges[i].ACTComposite - ACTComposite ) / 2 );
@@ -364,13 +365,87 @@ exports.calcScores = async ( collegeIDList, username ) => {
 				if (points > 0)
 					score += points;
 			}
-			
+
 			let appFilters = { 
 				statuses : ['accepted'], 
-				highSchools: [ similarHS[0].Name, similarHS[1].Name, similarHS[2].Name ] 
+				highSchools: [ similarHS[0].HighSchoolId, similarHS[1].HighSchoolId, similarHS[2].HighSchoolId ] 
 			};
-			let applications = await getApplicationsWithFilter( colleges[i].CollegeId, appFilters );
+			let applications = ( await getApplicationsWithFilter( colleges[i].CollegeId, appFilters ) ).toJSON().Users;
 			console.log( applications );
+
+			for (let i = applications.length - 1; i >= 0; i--) {
+				let student = applications[i];
+				let simMaxScore = 0;
+				let simScore = 0;
+
+
+				let countMatch = 0;
+				let failMatch = 0;
+				if ( major1 != null ) {
+					if ( student.Major1 != null ) {
+						if ( student.Major1.includes( major1 ) || major1.includes( student.Major1 ) ) {
+							countMatch += 1;
+						}
+						else
+							failMatch += 1;
+					}
+					if (student.Major2 != null) {
+						if ( student.Major2.includes( major1 ) || major1.includes( student.Major2 ) ) {
+							countMatch += 1;
+						}
+						else
+							failMatch += 1;
+					}
+				}
+
+				if ( major2 != null ) {
+					if ( student.Major1 != null ) {
+						if ( student.Major1.includes( major2 ) || major2.includes( student.Major2 ) ) 
+							countMatch += 1;
+						else
+							failMatch += 1;
+					}
+					if (student.Major2 != null) {
+						if ( student.Major2.includes( major2 ) || major2.includes( student.Major2 ) )
+							countMatch += 1;
+						else
+							failMatch += 1;
+					}
+				}
+				if ( countMatch >= 2 ) {
+					simMaxScore += 10;
+					simScore += 10;
+				}
+				else if ( countMatch == 0 && failMatch >= 2 ) {
+					simMaxScore += 10;
+				}
+				else if ( countMatch == 0 && failMatch == 1 ) {
+					simMaxScore += 5;
+				}
+				else if ( countMatch == 1 && failMatch == 0 ) {
+					simMaxScore += 5;
+					simScore += 5;
+				}
+				else if ( countMatch == 1 && failMatch == 1 ) {
+					simMaxScore += 10;
+					simScore += 5;
+				}
+
+
+
+
+
+
+				if ( student.ACTComposite != null ) {
+					simMaxScore += 10;
+					let points = 10 - Math.ceil( Math.abs( colleges[i].ACTComposite - ACTComposite ) / 2 );
+					if (points > 0)
+						simScore += points;
+				}
+				//major, sat, act, gpa
+				applications[i]
+			}
+
 
 			scoreResults[ colleges[i].Name ] = score / maxScore;
 		}

@@ -284,7 +284,7 @@ const processApplications = (applications) => {
  * @param {integer} collegeID ID of College to find applications by
  * @param {Filters} filters Filters object
  */
-const getApplicationsWithFilter = async (collegeID, filters) => {
+exports.getApplicationsWithFilter = async (collegeID, filters) => {
     let applications = [];
     // query parts
     const applicationWhereClause = {
@@ -359,7 +359,7 @@ const getApplicationsWithFilter = async (collegeID, filters) => {
             where: userWhereClause,
             attributes: {
                 exclude: ['Password', 'createdAt', 'updatedAt', 'APPassed', 'ResidenceState',
-                    'City', 'State', 'Major1', 'Major2'],
+                    'City', 'State'],
             },
             include: [
                 includeHS,
