@@ -15,16 +15,11 @@ router.post('/', async (req, res) => {
             res.status(400).send(authorized);
         } else {
             // get search results
-            searchController.searchCollege( req.body,  authorized.username ).then(result => {
-		        if (result.error) {
-		            if (result.error == 'Something went wrong') res.status(500);
-		            else res.status(400);
-		        }
-		        res.send(result);
-    		});
+            const result = await searchController.searchCollege(req.body.filters, authorized.username);
+            if (result.error) res.status(400);
+            res.send(result);
         }
     }
-
 });
 
 router.post('/recommender', async (req, res) => {
@@ -38,14 +33,11 @@ router.post('/recommender', async (req, res) => {
             res.status(400).send(authorized);
         } else {
             // get search results
-
-            searchController.calcScores( req.body,  authorized.username ).then(result => {
-                if (result.error) {
-                    if (result.error == 'Something went wrong') res.status(500);
-                    else res.status(400);
-                }
-                res.send(result);
-            });
+            const result = await searchController.calcScores(
+                req.body.collegeIds, authorized.username,
+            );
+            if (result.error) res.status(400);
+            res.send(result);
         }
     }
 });

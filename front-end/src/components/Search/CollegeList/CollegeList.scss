@@ -1,18 +1,23 @@
 @import "../../../utils/styles/theme.scss";
 
-.student-container {
+.college-container {
     @extend .container;
 
     padding: 1.25rem;
 
-    .student-title {
+    .college-title {
         font-size: 1.1rem;
-        .student-name {
+        .college-name {
             color: $main-color;
         }
     }
+    
+    .CircularProgressbar{
+        height: 3.5rem;
+    }
 
-    .student-details {
+
+    .college-details {
         @extend .card-body;
         background-color: $light-color;
         padding: 0.15rem;

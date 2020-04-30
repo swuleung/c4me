@@ -5,6 +5,8 @@ import React from 'react';
 import {
     Col, Row, Card, CardDeck,
 } from 'react-bootstrap';
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
 import { Link } from 'react-router-dom';
 
 import './CollegeList.scss';
@@ -16,9 +18,9 @@ const CollegeList = (props) => {
         <>
             {colleges.map((college) => (
                 // eslint-disable-next-line react/no-array-index-key
-                <div className="border mb-2 student-container" key={college.Name}>
+                <div className="border mb-2 college-container" key={college.Name}>
                     <Row>
-                        <Col>
+                        <Col xs="5">
                             <h3>{college.Name}</h3>
                             {college.InstitutionType === '1' ? (
                                 'Public school'
@@ -30,6 +32,20 @@ const CollegeList = (props) => {
                             {' in '}
                             {college.Location}
                         </Col>
+                        {college.recommender && (
+                            <Col xs="2">
+                                <CircularProgressbar
+                                    value={Math.round(college.recommender.score * 100)}
+                                    maxValue="100"
+                                    text={Math.round(college.recommender.score * 100)}
+                                    styles={buildStyles({
+                                        strokeLinecap: 'round',
+                                        textSize: '2.5rem',
+                                        textColor: '#1091b3',
+                                    })}
+                                />
+                            </Col>
+                        )}
                         <Col className="text-right">
                             <Link to={`/colleges/${college.CollegeId}`} target="_blank">Go to College ↗</Link>
                         </Col>
@@ -38,7 +54,7 @@ const CollegeList = (props) => {
                         <Col>
                             <CardDeck>
                                 <Card>
-                                    <div className="student-details text-center">
+                                    <div className="college-details text-center">
                                         <div className="detail-title">Admission Rate</div>
                                         <div className="detail-score text-center">
                                             {college.AdmissionRate ? college.AdmissionRate : 'N/A'}
@@ -46,7 +62,7 @@ const CollegeList = (props) => {
                                     </div>
                                 </Card>
                                 <Card>
-                                    <div className="student-details text-center">
+                                    <div className="college-details text-center">
                                         <div className="detail-title">Ranking</div>
                                         <div className="detail-score text-center">
                                             {college.Ranking ? college.Ranking : 'N/A'}
@@ -54,7 +70,7 @@ const CollegeList = (props) => {
                                     </div>
                                 </Card>
                                 <Card>
-                                    <div className="student-details text-center">
+                                    <div className="college-details text-center">
                                         <div className="detail-title">Size</div>
                                         <div className="detail-score text-center">
                                             {college.Size ? college.Size.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 'N/A'}
@@ -62,7 +78,7 @@ const CollegeList = (props) => {
                                     </div>
                                 </Card>
                                 <Card>
-                                    <div className="student-details text-center">
+                                    <div className="college-details text-center">
                                         <div className="detail-title">Cost</div>
                                         <div className="detail-score text-center">
                                             {student.residenceState === college.Location
