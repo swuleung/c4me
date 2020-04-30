@@ -106,14 +106,14 @@ exports.scrapeCollegeRankings = async () => {
 };
 
 const scrapeCollegeFields = async (cheer, name) => {
-    let errors = [];
-    let $ = cheer;
-    let completionRateFull = $('#profile-overview > div:nth-child(4) > div > dl:nth-child(4) > dd:nth-child(2)').text();
+    const errors = [];
+    const $ = cheer;
+    const completionRateFull = $('#profile-overview > div:nth-child(4) > div > dl:nth-child(4) > dd:nth-child(2)').text();
     let costOfAttendance = $('#profile-overview > div:nth-child(5) > div > dl > dd:nth-child(2)').text();
     let gpa = $('#profile-overview > div:nth-child(4) > div > dl:nth-child(4) > dd:nth-child(2)').text();
-    let satMathFull = $('#profile-overview > div:nth-child(4) > div > dl:nth-child(4) > dd:nth-child(4)').text();
-    let satEbrwFull = $('#profile-overview > div:nth-child(4) > div > dl:nth-child(4) > dd:nth-child(6)').text();
-    let actCompositeFull = $('#profile-overview > div:nth-child(4) > div > dl:nth-child(4) > dd:nth-child(8)').text();
+    const satMathFull = $('#profile-overview > div:nth-child(4) > div > dl:nth-child(4) > dd:nth-child(4)').text();
+    const satEbrwFull = $('#profile-overview > div:nth-child(4) > div > dl:nth-child(4) > dd:nth-child(6)').text();
+    const actCompositeFull = $('#profile-overview > div:nth-child(4) > div > dl:nth-child(4) > dd:nth-child(8)').text();
 
     let completionRate = null;
     if (completionRateFull === 'Not reported') completionRate = null;
@@ -168,7 +168,7 @@ const scrapeCollegeFields = async (cheer, name) => {
         actCompositeNums = actCompositeFull.substring(0, actCompositeFull.indexOf('range')).split('-');
         actComposite = (parseInt(actCompositeNums[0], 10) + parseInt(actCompositeNums[1], 10)) / 2.0; // eslint-disable-line max-len
     }
-    
+
     // create the college object
     const collegeObject = {
         Name: name,
@@ -184,6 +184,7 @@ const scrapeCollegeFields = async (cheer, name) => {
     // updates the college model data without errors
     while (Object.keys(collegeObject).length > 1) {
         try {
+            // eslint-disable-next-line no-await-in-loop
             await models.College.upsert(collegeObject);
             break;
         } catch (error) {
@@ -191,27 +192,28 @@ const scrapeCollegeFields = async (cheer, name) => {
                 delete collegeObject[error.errors[0].path];
             } else {
                 errors.push({
-                    error: `Unable to add ${colleges[i]}`,
+                    error: `Unable to add ${name}`,
                     reason: error,
                 });
                 break;
             }
         }
     }
-    if(errors.length) {
+    if (errors.length) {
         return errors;
     }
-}
+    return null;
+};
 
 const scrapeCollegeMajors = async (cheer, name) => {
-    let errors = [];
-    let $ = cheer;
+    const errors = [];
+    const $ = cheer;
     // find elements containing majors
-    let preMajors = [];
+    const preMajors = [];
     $('.card-body:contains(\'Undergraduate Education\') .list--nice li').each((idx, el) => {
         const major = $(el).text();
         preMajors.push(major);
-    })
+    });
 
     const majors = preMajors.map((m) => m.trim());
 
@@ -239,10 +241,11 @@ const scrapeCollegeMajors = async (cheer, name) => {
             reason: error,
         });
     }
-    if(errors.length) {
+    if (errors.length) {
         return errors;
     }
-}
+    return null;
+};
 
 /**
  * Scrapes CollegeData.com for Cost of Attendance, Completion Rate, GPA, SAT and ACT scores
@@ -270,16 +273,16 @@ exports.scrapeCollegeData = async () => {
         const collegeDataURL = getPathConfig().COLLEGEDATA_URL;
         /* eslint-disable no-await-in-loop */
         // for each college in colleges.txt scrape college data and update the database
-        let updates = [];
+        const updates = [];
         for (let i = 0; i < colleges.length; i += 1) {
             // removes all special chars and replaces spaces with -
             const collegeStr = colleges[i].replace(/The\s/g, '').replace(/[^A-Z0-9]+/ig, ' ').replace(/\s/g, '-').replace('SUNY', 'State-University-of-New-York');
             const collegeURL = collegeDataURL + collegeStr;
-            await models.College.upsert({Name: colleges[i]});
+            await models.College.upsert({ Name: colleges[i] });
 
             await page.goto(collegeURL);
             let content = await page.content();
-            var $ = cheerio.load(content);
+            let $ = cheerio.load(content);
             updates.push(scrapeCollegeFields($, colleges[i]));
 
             // Go academics tab to retrieve majors
@@ -288,8 +291,8 @@ exports.scrapeCollegeData = async () => {
             $ = cheerio.load(content);
             updates.push(scrapeCollegeMajors($, colleges[i]));
         }
-        await Promise.all(updates).then(function(results) {
-            errors = results.filter(r => r);
+        await Promise.all(updates).then((results) => {
+            errors = results.filter((r) => r);
         });
         console.log(errors);
         // close browser and pages since there is no more need
