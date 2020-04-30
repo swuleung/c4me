@@ -344,7 +344,7 @@ exports.calcScores = async (collegeIDList, username) => {
 
             if (GPA != null) {
                 maxScore += 10;
-                score += Math.max(0,10 - Math.ceil(Math.abs(colleges[i].GPA - GPA) / 0.1));
+                score += Math.max(0, 10 - Math.ceil(Math.abs(colleges[i].GPA - GPA) / 0.1));
             }
 
             const appFilters = {
@@ -449,7 +449,7 @@ exports.calcScores = async (collegeIDList, username) => {
                 if (simStudentsScore >= 5) score += 5;
                 else score += simStudentsScore;
             }
-            
+
             scoreResults.push({
                 Name: colleges[i].Name,
                 score: maxScore ? score / maxScore : 0,

@@ -273,8 +273,8 @@ exports.findSimilarHS = async (username) => {
     });
     if (!student.HighSchool) {
         return {
-            error: 'No high school in student profile',
-            reason: 'No high school in student profile',
+            ok: 'No high school in student profile',
+            highSchools: [],
         };
     }
     const studentHS = student.HighSchool;
