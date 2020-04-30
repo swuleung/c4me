@@ -124,7 +124,7 @@ describe('Import students and applications from csv files', () => {
                 });
         });
 
-        it('Import student', (done) => {
+        it('Import applications', (done) => {
             agent
                 .get('/admin/importApplications')
                 .end((err, res) => {

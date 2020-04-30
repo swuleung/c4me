@@ -33,7 +33,7 @@ describe('Student Profile', () => {
                         done();
                     });
             });
-            it('Add Stony Brook University', (done) => {
+            it('Add Stony Brook University and validate questionable', (done) => {
                 agent
                     .get('/colleges/name/Stony Brook University')
                     .end((err, res) => {
@@ -44,13 +44,15 @@ describe('Student Profile', () => {
                             .send({
                                 applications: [{
                                     CollegeId: college.CollegeId,
-                                    Status: 'deferred',
+                                    Status: 'accepted',
                                     Username: 'mochaStudent',
                                 }],
                             })
                             .end((error, response) => {
                                 response.should.have.status(200);
-                                expect(response.body.applications).to.deep.equal([{ CollegeId: college.CollegeId, Status: 'deferred', Username: 'mochaStudent' }]);
+                                expect(response.body.applications).to.deep.equal([{
+                                    CollegeId: college.CollegeId, Status: 'accepted', Username: 'mochaStudent', IsQuestionable: true,
+                                }]);
                                 done();
                             });
                     });

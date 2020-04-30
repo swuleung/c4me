@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from '../../../node_modules/react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import '../../utils/styles/theme.scss';
 import {
     Navbar, Nav, NavDropdown, Alert,
-} from '../../../node_modules/react-bootstrap';
+} from 'react-bootstrap';
 import {
     BrowserRouter as Router, Switch, Route, Link, Redirect,
-} from '../../../node_modules/react-router-dom';
+} from 'react-router-dom';
 import Home from '../Home/Home';
 import CreateAccount from '../CreateAccount/CreateAccount';
 import Login from '../Login/Login';
@@ -18,6 +18,7 @@ import Search from '../Search/Search';
 import SimilarHighSchool from '../SimilarHighSchool/SimilarHighSchool';
 import userAPI from '../../services/api/user';
 import adminAPI from '../../services/api/admin';
+import AdminQApp from '../AdminQApp/AdminQApp';
 
 function App() {
     // state variables
@@ -68,8 +69,14 @@ function App() {
                                 <Navbar.Brand id="logo" as={Link} to="/">C4Me</Navbar.Brand>
                                 <Nav className="mr-auto">
                                     <Nav.Link as={Link} to="/">Home</Nav.Link>
-                                    <Nav.Link as={Link} to="/search">Search Colleges</Nav.Link>
-                                    <Nav.Link as={Link} to="/find-similar-hs">Similar High Schools</Nav.Link>
+                                    {username && (
+                                        <>
+                                            <Nav.Link as={Link} to="/search">Search Colleges</Nav.Link>
+                                            <Nav.Link as={Link} to="/find-similar-hs">Similar High Schools</Nav.Link>
+                                        </>
+                                    )}
+                                    {isAdmin
+                                        ? <Nav.Link as={Link} to="/questionable-decisions">View Questionable Decisions</Nav.Link> : null}
                                 </Nav>
                                 <Nav className="ml-auto">
                                     {username == null || username.trim() === ''
@@ -99,6 +106,7 @@ function App() {
                                 <Route exact path="/colleges/:collegeID" component={CollegeProfile} />
                                 <Route exact path="/search" component={Search} />
                                 <Route exact path="/find-similar-hs" username={username} component={SimilarHighSchool} />
+                                <Route exact path="/questionable-decisions" component={AdminQApp} />
                                 <Route
                                     exact
                                     path="/admin"

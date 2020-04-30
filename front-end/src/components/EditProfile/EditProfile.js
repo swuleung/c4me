@@ -107,16 +107,17 @@ const EditProfile = (props) => {
             if (result.ok) {
                 setErrorAlert(false);
             }
-        });
-        studentAPI.editStudentApplications(username, studentApplications).then((result) => {
-            if (result.error) {
-                setErrorAlert(true);
-                setErrorMessage(result.error);
-            }
-            if (result.ok) {
-                setErrorAlert(false);
-                props.history.push(`../${username}`);
-            }
+
+            studentAPI.editStudentApplications(username, studentApplications).then((result2) => {
+                if (result2.error) {
+                    setErrorAlert(true);
+                    setErrorMessage(result.error);
+                }
+                if (result2.ok) {
+                    setErrorAlert(false);
+                    props.history.push(`../${username}`);
+                }
+            });
         });
     };
 
@@ -520,7 +521,7 @@ const EditProfile = (props) => {
                                     <Popover>
                                         <Popover.Title>Applications</Popover.Title>
                                         <Popover.Content>
-                                            Set your application statuses for colleges you have applied to. Use "Add Application" button to add a college.
+                                            Set your application statuses for colleges you have applied to. Use &quot;Add Application&quot; button to add a college.
                                         </Popover.Content>
                                     </Popover>
                                 )}

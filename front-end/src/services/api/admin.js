@@ -139,6 +139,47 @@ const admin = {
             };
         }
     },
+
+    /**
+     * Send a GET request for all Questionable Applications
+     */
+    getQuestionableApplications: async function getQuestionableApplications() {
+        try {
+            const qApps = await fetch('/admin/questionable-decisions', {
+                method: 'GET',
+                credentials: 'include',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json; charset=utf-8',
+                },
+            });
+            return qApps.json();
+        } catch (error) {
+            return {
+                error: `${error.message}`,
+            };
+        }
+    },
+    updateApplications: async function updateApplications(applications) {
+        try {
+            const result = await fetch('/admin/update-applications ', {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json; charset=utf-8',
+                },
+                body: JSON.stringify({
+                    applications: applications,
+                }),
+            });
+
+            return await result.json();
+        } catch (error) {
+            return {
+                error: `Update applications error: ${error.message}`,
+            };
+        }
+    },
 };
 
 export default admin;
