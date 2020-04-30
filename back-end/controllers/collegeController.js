@@ -394,17 +394,17 @@ const getApplicationsWithFilter = async (collegeID, filters) => {
  */
 exports.getApplicationsByCollegeID = async (collegeID, filters) => {
     // get the accepted applications with no filters for averages
-    const acceptedApplications = processApplications(
-        (await getApplicationsWithFilter(collegeID, { statuses: ['accepted'] })).toJSON().Users,
-    );
-
-    // change the names of the averages
-    const acceptedAverages = {
-        avgAcceptedGPA: acceptedApplications.averages.avgGPA,
-        avgAcceptedSATMath: acceptedApplications.averages.avgSATMath,
-        avgAcceptedSATEBRW: acceptedApplications.averages.avgSATEBRW,
-        avgAcceptedACTComposite: acceptedApplications.averages.avgACTComposite,
-    };
+    let acceptedApps = await getApplicationsWithFilter(collegeID, { statuses: ['accepted'] });
+    let acceptedAverages = {};
+    if (acceptedApps) {
+        acceptedApps = processApplications(acceptedApps.toJSON().Users);
+        acceptedAverages = {
+            avgAcceptedGPA: acceptedApps.averages.avgGPA,
+            avgAcceptedSATMath: acceptedApps.averages.avgSATMath,
+            avgAcceptedSATEBRW: acceptedApps.averages.avgSATEBRW,
+            avgAcceptedACTComposite: acceptedApps.averages.avgACTComposite,
+        };
+    }
 
     const applications = await getApplicationsWithFilter(collegeID, filters);
     if (!applications) {
