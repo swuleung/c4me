@@ -105,12 +105,151 @@ exports.scrapeCollegeRankings = async () => {
     return { ok: 'Successfully scraped college rankings' };
 };
 
+const scrapeCollegeFields = async (cheer, name) => {
+    let errors = [];
+    let $ = cheer;
+    let completionRateFull = $('#profile-overview > div:nth-child(4) > div > dl:nth-child(4) > dd:nth-child(2)').text();
+    let costOfAttendance = $('#profile-overview > div:nth-child(5) > div > dl > dd:nth-child(2)').text();
+    let gpa = $('#profile-overview > div:nth-child(4) > div > dl:nth-child(4) > dd:nth-child(2)').text();
+    let satMathFull = $('#profile-overview > div:nth-child(4) > div > dl:nth-child(4) > dd:nth-child(4)').text();
+    let satEbrwFull = $('#profile-overview > div:nth-child(4) > div > dl:nth-child(4) > dd:nth-child(6)').text();
+    let actCompositeFull = $('#profile-overview > div:nth-child(4) > div > dl:nth-child(4) > dd:nth-child(8)').text();
+
+    let completionRate = null;
+    if (completionRateFull === 'Not reported') completionRate = null;
+    else completionRate = parseFloat(completionRateFull.substring(0, completionRateFull.indexOf('%')));
+
+    // takes the text value of element and determines the cost of attendance
+    // eslint-disable-next-line max-len
+    let costOfAttendanceInState = null;
+    let costOfAttendanceOutOfState = null;
+    if (costOfAttendance === 'Not available') costOfAttendance = null;
+    else if (costOfAttendance.includes('In-state') || costOfAttendance.includes('Out-of-state')) {
+        costOfAttendanceInState = costOfAttendance.substring(0, costOfAttendance.indexOf('Out')).replace(/[^0-9]/g, '');
+        costOfAttendanceOutOfState = costOfAttendance.substring(costOfAttendance.indexOf('Out')).replace(/[^0-9]/g, '');
+    } else {
+        const attendanceCost = costOfAttendance.replace(/[^0-9]/g, '');
+        costOfAttendanceInState = attendanceCost;
+        costOfAttendanceOutOfState = attendanceCost;
+    }
+
+    // takes the text value of element and determines the gpa
+    if (gpa.includes('Not reported')) gpa = null;
+
+    // takes the text value of element and determines the sat math
+    let satMathNums = null;
+    let satMath = null;
+    if (satMathFull.includes('Not reported')) satMath = null;
+    else if (satMathFull.includes('average')) {
+        satMath = satMathFull.substring(0, satMathFull.indexOf('average')).trim();
+    } else {
+        satMathNums = satMathFull.substring(0, satMathFull.indexOf('range')).split('-');
+        satMath = (parseInt(satMathNums[0], 10) + parseInt(satMathNums[1], 10)) / 2.0;
+    }
+
+    // takes the text value of element and determines the sat ebrw
+    let satEbrwhNums = null;
+    let satEbrw = null;
+    if (satEbrwFull.includes('Not reported')) satEbrw = null;
+    else if (satEbrwFull.includes('average')) {
+        satEbrw = satEbrwFull.substring(0, satEbrwFull.indexOf('average')).trim();
+    } else {
+        satEbrwhNums = satEbrwFull.substring(0, satEbrwFull.indexOf('range')).split('-');
+        satEbrw = (parseInt(satEbrwhNums[0], 10) + parseInt(satEbrwhNums[1], 10)) / 2.0;
+    }
+
+    // takes the text value of element and determines the act composite
+    let actCompositeNums = null;
+    let actComposite = null;
+    if (actCompositeFull.includes('Not reported')) actComposite = null;
+    else if (actCompositeFull.includes('average')) {
+        actComposite = actCompositeFull.substring(0, actCompositeFull.indexOf('average')).trim();
+    } else {
+        actCompositeNums = actCompositeFull.substring(0, actCompositeFull.indexOf('range')).split('-');
+        actComposite = (parseInt(actCompositeNums[0], 10) + parseInt(actCompositeNums[1], 10)) / 2.0; // eslint-disable-line max-len
+    }
+    
+    // create the college object
+    const collegeObject = {
+        Name: name,
+        CompletionRate: completionRate,
+        CostOfAttendanceInState: costOfAttendanceInState,
+        CostOfAttendanceOutOfState: costOfAttendanceOutOfState,
+        GPA: gpa,
+        SATMath: satMath,
+        SATEBRW: satEbrw,
+        ACTComposite: actComposite,
+    };
+
+    // updates the college model data without errors
+    while (Object.keys(collegeObject).length > 1) {
+        try {
+            await models.College.upsert(collegeObject);
+            break;
+        } catch (error) {
+            if (error instanceof sequelize.ValidationError) {
+                delete collegeObject[error.errors[0].path];
+            } else {
+                errors.push({
+                    error: `Unable to add ${colleges[i]}`,
+                    reason: error,
+                });
+                break;
+            }
+        }
+    }
+    if(errors.length) {
+        return errors;
+    }
+}
+
+const scrapeCollegeMajors = async (cheer, name) => {
+    let errors = [];
+    let $ = cheer;
+    // find elements containing majors
+    let preMajors = [];
+    $('.card-body:contains(\'Undergraduate Education\') .list--nice li').each((idx, el) => {
+        const major = $(el).text();
+        preMajors.push(major);
+    })
+
+    const majors = preMajors.map((m) => m.trim());
+
+    try {
+        // finds the added college to add majors
+        const addedCollege = await models.College.findOne({ where: { Name: name } });
+        majors.forEach(async (major) => {
+            try {
+                await models.Major.upsert({
+                    Major: major,
+                }, {
+                    logging: false,
+                });
+                const addedMajor = await models.Major.findOne({
+                    where: { Major: major }, logging: false,
+                });
+                await addedCollege.addMajor(addedMajor, { logging: false });
+            } catch (error) {
+                errors.push({ error: `Something went wrong in ${name} adding ${major}`, reason: error });
+            }
+        });
+    } catch (error) {
+        errors.push({
+            error: `Unable to add ${name}`,
+            reason: error,
+        });
+    }
+    if(errors.length) {
+        return errors;
+    }
+}
+
 /**
  * Scrapes CollegeData.com for Cost of Attendance, Completion Rate, GPA, SAT and ACT scores
  * Every error is compiled into a `errors` list but will return 200.
  */
 exports.scrapeCollegeData = async () => {
-    const errors = [];
+    let errors = [];
     try {
         const browser = await puppeteer.launch({ headless: true });
         const page = await browser.newPage();
@@ -131,142 +270,28 @@ exports.scrapeCollegeData = async () => {
         const collegeDataURL = getPathConfig().COLLEGEDATA_URL;
         /* eslint-disable no-await-in-loop */
         // for each college in colleges.txt scrape college data and update the database
+        let updates = [];
         for (let i = 0; i < colleges.length; i += 1) {
             // removes all special chars and replaces spaces with -
             const collegeStr = colleges[i].replace(/The\s/g, '').replace(/[^A-Z0-9]+/ig, ' ').replace(/\s/g, '-').replace('SUNY', 'State-University-of-New-York');
             const collegeURL = collegeDataURL + collegeStr;
+            await models.College.upsert({Name: colleges[i]});
+
             await page.goto(collegeURL);
             let content = await page.content();
             var $ = cheerio.load(content);
-            let completionRateFull = $('#profile-overview > div:nth-child(4) > div > dl:nth-child(4) > dd:nth-child(2)').text();
-            let costOfAttendance = $('#profile-overview > div:nth-child(5) > div > dl > dd:nth-child(2)').text();
-            let gpa = $('#profile-overview > div:nth-child(4) > div > dl:nth-child(4) > dd:nth-child(2)').text();
-            let satMathFull = $('#profile-overview > div:nth-child(4) > div > dl:nth-child(4) > dd:nth-child(4)').text();
-            let satEbrwFull = $('#profile-overview > div:nth-child(4) > div > dl:nth-child(4) > dd:nth-child(6)').text();
-            let actCompositeFull = $('#profile-overview > div:nth-child(4) > div > dl:nth-child(4) > dd:nth-child(8)').text();
-
-            let completionRate = null;
-            if (completionRateFull === 'Not reported') completionRate = null;
-            else completionRate = parseFloat(completionRateFull.substring(0, completionRateFull.indexOf('%')));
-
-            // takes the text value of element and determines the cost of attendance
-            // eslint-disable-next-line max-len
-            let costOfAttendanceInState = null;
-            let costOfAttendanceOutOfState = null;
-            if (costOfAttendance === 'Not available') costOfAttendance = null;
-            else if (costOfAttendance.includes('In-state') || costOfAttendance.includes('Out-of-state')) {
-                costOfAttendanceInState = costOfAttendance.substring(0, costOfAttendance.indexOf('Out')).replace(/[^0-9]/g, '');
-                costOfAttendanceOutOfState = costOfAttendance.substring(costOfAttendance.indexOf('Out')).replace(/[^0-9]/g, '');
-            } else {
-                const attendanceCost = costOfAttendance.replace(/[^0-9]/g, '');
-                costOfAttendanceInState = attendanceCost;
-                costOfAttendanceOutOfState = attendanceCost;
-            }
-
-            // takes the text value of element and determines the gpa
-            if (gpa.includes('Not reported')) gpa = null;
-
-            // takes the text value of element and determines the sat math
-            let satMathNums = null;
-            let satMath = null;
-            if (satMathFull.includes('Not reported')) satMath = null;
-            else if (satMathFull.includes('average')) {
-                satMath = satMathFull.substring(0, satMathFull.indexOf('average')).trim();
-            } else {
-                satMathNums = satMathFull.substring(0, satMathFull.indexOf('range')).split('-');
-                satMath = (parseInt(satMathNums[0], 10) + parseInt(satMathNums[1], 10)) / 2.0;
-            }
-
-            // takes the text value of element and determines the sat ebrw
-            let satEbrwhNums = null;
-            let satEbrw = null;
-            if (satEbrwFull.includes('Not reported')) satEbrw = null;
-            else if (satEbrwFull.includes('average')) {
-                satEbrw = satEbrwFull.substring(0, satEbrwFull.indexOf('average')).trim();
-            } else {
-                satEbrwhNums = satEbrwFull.substring(0, satEbrwFull.indexOf('range')).split('-');
-                satEbrw = (parseInt(satEbrwhNums[0], 10) + parseInt(satEbrwhNums[1], 10)) / 2.0;
-            }
-
-            // takes the text value of element and determines the act composite
-            let actCompositeNums = null;
-            let actComposite = null;
-            if (actCompositeFull.includes('Not reported')) actComposite = null;
-            else if (actCompositeFull.includes('average')) {
-                actComposite = actCompositeFull.substring(0, actCompositeFull.indexOf('average')).trim();
-            } else {
-                actCompositeNums = actCompositeFull.substring(0, actCompositeFull.indexOf('range')).split('-');
-                actComposite = (parseInt(actCompositeNums[0], 10) + parseInt(actCompositeNums[1], 10)) / 2.0; // eslint-disable-line max-len
-            }
+            updates.push(scrapeCollegeFields($, colleges[i]));
 
             // Go academics tab to retrieve majors
             await page.goto(`${collegeURL}/?tab=profile-academics-tab`);
             content = await page.content();
             $ = cheerio.load(content);
-
-            // find elements containing majors
-            let preMajors = [];
-            $('.card-body:contains(\'Undergraduate Education\') .list--nice li').each((idx, el) => {
-                const major = $(el).text();
-                preMajors.push(major);
-            })
-
-            const majors = preMajors.map((m) => m.trim());
-            // create the college object
-            const collegeObject = {
-                Name: colleges[i],
-                CompletionRate: completionRate,
-                CostOfAttendanceInState: costOfAttendanceInState,
-                CostOfAttendanceOutOfState: costOfAttendanceOutOfState,
-                GPA: gpa,
-                SATMath: satMath,
-                SATEBRW: satEbrw,
-                ACTComposite: actComposite,
-            };
-
-            // updates the college model data without errors
-            while (Object.keys(collegeObject).length > 1) {
-                try {
-                    await models.College.upsert(collegeObject);
-                    break;
-                } catch (error) {
-                    if (error instanceof sequelize.ValidationError) {
-                        delete collegeObject[error.errors[0].path];
-                    } else {
-                        errors.push({
-                            error: `Unable to add ${colleges[i]}`,
-                            reason: error,
-                        });
-                        break;
-                    }
-                }
-            }
-
-            try {
-                // finds the added college to add majors
-                const addedCollege = await models.College.findOne({ where: { Name: colleges[i] } });
-                majors.forEach(async (major) => {
-                    try {
-                        await models.Major.upsert({
-                            Major: major,
-                        }, {
-                            logging: false,
-                        });
-                        const addedMajor = await models.Major.findOne({
-                            where: { Major: major }, logging: false,
-                        });
-                        await addedCollege.addMajor(addedMajor, { logging: false });
-                    } catch (error) {
-                        errors.push({ error: `Something went wrong in ${colleges[i]} adding ${major}`, reason: error });
-                    }
-                });
-            } catch (error) {
-                errors.push({
-                    error: `Unable to add ${colleges[i]}`,
-                    reason: error,
-                });
-            }
+            updates.push(scrapeCollegeMajors($, colleges[i]));
         }
+        await Promise.all(updates).then(function(results) {
+            errors = results.filter(r => r);
+        });
+        console.log(errors);
         // close browser and pages since there is no more need
         await page.close();
         await browser.close();
