@@ -1,6 +1,7 @@
 const { Op } = require('sequelize');
 const models = require('../models');
 const { getStudent } = require('./studentController');
+
 const { getCollegeByID } = require('./collegeController');
 const { getMajorsByCollegeID } = require('./collegeController');
 const { getApplicationsWithFilter } = require('./collegeController');
