@@ -14,10 +14,7 @@ const authentication = require('../utils/auth');
  */
 router.post('/create', (req, res) => {
     userController.createUser(req.body.username, req.body.password).then((result) => {
-        if (result.error) {
-            if (result.error === 'Something went wrong') res.status(500);
-            else res.status(400);
-        }
+        if (result.error) res.status(400);
         res.send(result);
     });
 });
@@ -64,8 +61,7 @@ router.delete('/delete', async (req, res) => {
 router.post('/login', (req, res) => {
     userController.login(req.body.username, req.body.password).then((result) => {
         if (result.error) {
-            if (result.error === 'Something went wrong') res.status(500);
-            else res.status(400);
+            if (result.error) res.status(400);
             res.send(result);
         } else {
             res.cookie('access_token', result.access_token, { maxAge: new Date(Date.now() + (1000 * 60 * 60 * 24 * 7)) });

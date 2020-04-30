@@ -561,7 +561,9 @@ exports.importApplications = async () => {
             // find the college
             const collegeId = colleges[applications[appIndex].Name];
             if (collegeId !== null) {
-                if (applications[appIndex].Status === 'accepted' || applications[appIndex].Status === 'denied') {
+                if (applications[appIndex].Status === 'accepted'
+                || applications[appIndex].Status === 'denied') {
+                    // eslint-disable-next-line max-len
                     const isQuestionable = await calcQuestionableApplication(applications[appIndex]);
                     applications[appIndex].IsQuestionable = isQuestionable;
                 }
