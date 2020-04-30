@@ -298,12 +298,10 @@ exports.calcScores = async ( collegeIDList, username ) => {
 		let maxScore = 0;
 
 		let similarHS = await findSimilarHS( username );
-		similarHS = similarHS.highSchools.slice( 0, 3 );
-		console.log( "getting high schools complete" );
-		console.log( similarHS );
+		similarHS = similarHS.highSchools.slice( 0, 10 );
+		similarHS = similarHS.map(hs => hs.HighSchoolId);
 
 		for (let i = colleges.length - 1; i >= 0; i--) {
-
 			score = 0;
 			maxScore = 0;
 			if ( state != null ) {
@@ -324,8 +322,8 @@ exports.calcScores = async ( collegeIDList, username ) => {
 					score += 5;
 			}
 
-			const majors = ( await getMajorsByCollegeID( colleges[i].CollegeId ) ).majors;
 
+			const majors = ( await getMajorsByCollegeID( colleges[i].CollegeId ) ).majors;
 			if ( major1 != null ) {
 				maxScore += 5;
 				if ( majors.find((m) => m.Major.toLowerCase().includes( major1.toLowerCase() ) ) ) 
@@ -336,45 +334,64 @@ exports.calcScores = async ( collegeIDList, username ) => {
 				if ( majors.find((m) => m.Major.toLowerCase().includes( major2.toLowerCase() ) ) ) 
 					score += 5;
 			}
-				
+
 			// if student's test score is higher than average, give max scores	
 			if ( ACTComposite != null ) {
 				maxScore += 10;
-				let points = 10 - Math.ceil( Math.abs( colleges[i].ACTComposite - ACTComposite ) / 2 );
-				if (points > 0)
-					score += points;
+				if ( ACTComposite >= colleges[i].ACTComposite )
+					score += 10;
+				else {
+					let points = 10 - Math.ceil( Math.abs( colleges[i].ACTComposite - ACTComposite ) / 2 );
+					if (points > 0)
+						score += points;
+				}
 			}
-			
+
+
 			if ( SATMath != null ) {
 				maxScore += 5;
-				points = 5 - Math.ceil( Math.abs( colleges[i].SATMath - SATMath ) / 25 );
-				if (points > 0)
-					score += points;
+				if ( SATMath > colleges[i].SATMath )
+					score += 5;
+				else {
+					points = 5 - Math.ceil( Math.abs( colleges[i].SATMath - SATMath ) / 25 );
+					if (points > 0)
+						score += points;
+				}
 			}
-				
+
+
 			if ( SATEBRW != null ) {
 				maxScore += 5;
-				points = 5 - Math.ceil( Math.abs( colleges[i].SATEBRW - SATEBRW ) / 25 );
-				if (points > 0)
-					score += points;
+				if ( SATEBRW > colleges[i].SATEBRW )
+					score += 5;
+				else {
+					points = 5 - Math.ceil( Math.abs( colleges[i].SATEBRW - SATEBRW ) / 25 );
+					if (points > 0)
+						score += points;
+				}
 			}
-			
+
+
 			if ( GPA != null ) {
 				maxScore += 10;
-				points = 10 - Math.ceil( Math.abs( colleges[i].GPA - GPA ) / 0.1 );
-				if (points > 0)
-					score += points;
+				if ( GPA > colleges[i].GPA )
+					score += 10;
+				else {
+					points = 10 - Math.ceil( Math.abs( colleges[i].GPA - GPA ) / 0.1 );
+					if (points > 0)
+						score += points;
+				}
 			}
 
 			let appFilters = { 
 				statuses : ['accepted'], 
-				highSchools: [ similarHS[0].HighSchoolId, similarHS[1].HighSchoolId, similarHS[2].HighSchoolId ] 
+				highSchools: similarHS 
 			};
 			let applications = ( await getApplicationsWithFilter( colleges[i].CollegeId, appFilters ) ).toJSON().Users;
 			console.log( applications );
 
 			let simStudentsScore = 0;
-			maxScore += 10;
+			maxScore += 5;
 			for (let i = applications.length - 1; i >= 0; i--) {
 				let student = applications[i];
 				let simMaxScore = 0;
@@ -484,15 +501,15 @@ exports.calcScores = async ( collegeIDList, username ) => {
 				simScore = simScore / simMaxScore;
 				if ( simScore > 0.85 )
 					simStudentsScore += 1;
-				if (simStudentsScore >=10 )
+				if (simStudentsScore >=5 )
 					break;
 			}
 
-			if ( simStudentsScore >= 10 )
-				score += 10;
+			if ( simStudentsScore >= 5 )
+				score += 5;
 			else
 				score += simStudentsScore;
-			
+
 			scoreResults[ colleges[i].Name ] = score / maxScore;
 		}
 
