@@ -394,7 +394,7 @@ exports.getApplicationsWithFilter = async (collegeID, filters) => {
  */
 exports.getApplicationsByCollegeID = async (collegeID, filters) => {
     // get the accepted applications with no filters for averages
-    let acceptedApps = await getApplicationsWithFilter(collegeID, { statuses: ['accepted'] });
+    let acceptedApps = await this.getApplicationsWithFilter(collegeID, { statuses: ['accepted'] });
     let acceptedAverages = {};
     if (acceptedApps) {
         acceptedApps = processApplications(acceptedApps.toJSON().Users);
@@ -406,7 +406,7 @@ exports.getApplicationsByCollegeID = async (collegeID, filters) => {
         };
     }
 
-    const applications = await getApplicationsWithFilter(collegeID, filters);
+    const applications = await this.getApplicationsWithFilter(collegeID, filters);
     if (!applications) {
         return {
             ok: 'No data for college',

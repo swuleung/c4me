@@ -26,7 +26,7 @@ const Search = () => {
         const sortDirection = sortAsc ? 'ASC' : 'DESC';
 
         // Cost is soted customly
-        const sortByFilter = sortBy === 'Cost' ? 'none' : sortBy;
+        const sortByFilter = sortBy === 'Cost' || sortBy === 'Score' ? 'none' : sortBy;
 
         setShowSpinner(true);
         // get search results with filters and sort
@@ -37,6 +37,10 @@ const Search = () => {
             }
             if (result.ok) {
                 setErrorAlert(false);
+                if (sortBy !== 'Score' && sortBy !== 'Cost') {
+                    setShowSpinner(false);
+                }
+                // sort by cost in front-end
                 if (sortBy === 'Cost') {
                     // get the current student informationf or comparison
                     studentAPI.getStudent(localStorage.getItem('username')).then((studentResult) => {
@@ -49,11 +53,51 @@ const Search = () => {
                         });
                         setStudent(stud);
                         setSearchResults(result.colleges);
+                        setShowSpinner(false);
+                        // if recommnder toggle is on, get results
+                        if (collegeRecommenderToggle) {
+                            searchAPI.getCollegeRecommenderScore(result.colleges.map((c) => c.CollegeId))
+                                .then((scoreResult) => {
+                                    if (scoreResult.error) {
+                                        setErrorAlert(true);
+                                        setErrorMessage('Error getting college recommender score');
+                                    }
+                                    if (scoreResult.ok) {
+                                        setSearchResults(result.colleges.map((c, i) => ({ ...c, recommender: scoreResult.scores[i] })));
+                                    }
+                                });
+                        }
                     });
+                } else if (collegeRecommenderToggle) {
+                    // get the scores
+                    searchAPI.getCollegeRecommenderScore(result.colleges.map((c) => c.CollegeId))
+                        .then((scoreResult) => {
+                            if (scoreResult.error) {
+                                setErrorAlert(true);
+                                setErrorMessage('Error getting college recommender score');
+                            }
+                            if (scoreResult.ok) {
+                                // add scores to current reseults
+                                const newSearchResults = result.colleges.map((c, i) => ({ ...c, recommender: scoreResult.scores[i] }));
+                                // sort by score if desired
+                                if (sortBy === 'Score') {
+                                    newSearchResults.sort((a, b) => {
+                                        if (sortAsc) {
+                                            return a.recommender.score - b.recommender.score;
+                                        }
+                                        return b.recommender.score - a.recommender.score;
+                                    });
+                                    setSearchResults(newSearchResults);
+                                    setShowSpinner(false);
+                                } else {
+                                    setSearchResults(newSearchResults);
+                                    setShowSpinner(false);
+                                }
+                            }
+                        });
                 } else {
                     setSearchResults(result.colleges);
                 }
-                setShowSpinner(false);
             }
         });
     }, [filters, sortBy, sortAsc, collegeRecommenderToggle]);
@@ -70,7 +114,6 @@ const Search = () => {
                     <FilterColleges handleFilterChange={setFilters} />
                 </Col>
                 <Col xs="8">
-                    {/* TODO: College Recommender toggle */}
                     <Row className="mb-2">
                         <Col>
                             <Form>
@@ -97,6 +140,7 @@ const Search = () => {
                                     <option value="AdmissionRate">Admission Rate</option>
                                     <option value="Cost">Cost of Attendance</option>
                                     <option value="Ranking">Ranking</option>
+                                    <option value="Score">College Recommendation Score</option>
                                 </Form.Control>
                                 <OverlayTrigger
                                     placement="right"
@@ -114,6 +158,7 @@ const Search = () => {
                         </Col>
                     </Row>
                     {errorAlert && <Alert variant="danger">{errorMessage}</Alert>}
+                    {collegeRecommenderToggle && <Alert variant="primary">College recommender toggle is on. Please wait while reccommendation results load.</Alert>}
                     {sortBy === 'Cost' && student.residenceState == null ? <Alert variant="info">Sorting by out-of-state cost of attendance. Add your residence state in your profile to show in-state cost.</Alert> : <></>}
                     {showSpinner
                         ? (
