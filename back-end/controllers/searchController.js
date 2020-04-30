@@ -373,6 +373,8 @@ exports.calcScores = async ( collegeIDList, username ) => {
 			let applications = ( await getApplicationsWithFilter( colleges[i].CollegeId, appFilters ) ).toJSON().Users;
 			console.log( applications );
 
+			let simStudentsScore = 0;
+			maxScore += 10;
 			for (let i = applications.length - 1; i >= 0; i--) {
 				let student = applications[i];
 				let simMaxScore = 0;
@@ -426,27 +428,71 @@ exports.calcScores = async ( collegeIDList, username ) => {
 					simMaxScore += 5;
 					simScore += 5;
 				}
-				else if ( countMatch == 1 && failMatch == 1 ) {
+				else if ( countMatch == 1 && failMatch >= 1 ) {
 					simMaxScore += 10;
 					simScore += 5;
 				}
 
-
-
-
-
-
 				if ( student.ACTComposite != null ) {
 					simMaxScore += 10;
-					let points = 10 - Math.ceil( Math.abs( colleges[i].ACTComposite - ACTComposite ) / 2 );
-					if (points > 0)
-						simScore += points;
+					let diff = Math.abs( ACTComposite - student.ACTComposite );
+					if (diff <= 2)
+						simScore += 10;
+					else {
+						diff -= 2;
+						let points = 10 - diff;
+						if (points > 0)
+							simScore += points;
+					}
 				}
-				//major, sat, act, gpa
-				applications[i]
+				if ( student.SATMath != null ) {
+					simMaxScore += 5;
+					let diff = Math.abs( SATMath - student.SATMath );
+					if (diff <= 25)
+						simScore += 5;
+					else {
+						diff -= 25;
+						let points = 5 - Math.ceil( diff / 25 );
+						if (points > 0)
+							simScore += points;
+					}
+				}
+				if ( student.SATEBRW != null ) {
+					simMaxScore += 5;
+					let diff = Math.abs( SATEBRW - student.SATEBRW );
+					if (diff <= 25)
+						simScore += 5;
+					else {
+						diff -= 25;
+						let points = 5 - Math.ceil( diff / 25 );
+						if (points > 0)
+							simScore += points;
+					}
+				}
+				if ( student.GPA != null ) {
+					simMaxScore += 10;
+					let diff = Math.abs( GPA - student.GPA );
+					if (diff <= 0.1)
+						simScore += 10;
+					else {
+						diff -= 0.1;
+						let points = 10 - Math.ceil( diff / 0.1 );
+						if (points > 0)
+							simScore += points;
+					}
+				}
+				simScore = simScore / simMaxScore;
+				if ( simScore > 0.85 )
+					simStudentsScore += 1;
+				if (simStudentsScore >=10 )
+					break;
 			}
 
-
+			if ( simStudentsScore >= 10 )
+				score += 10;
+			else
+				score += simStudentsScore;
+			
 			scoreResults[ colleges[i].Name ] = score / maxScore;
 		}
 
