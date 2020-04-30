@@ -3,6 +3,7 @@ const models = require('../models');
 const { getStudent } = require('./studentController');
 const { getCollegeByID } = require('./collegeController');
 const { getMajorsByCollegeID } = require('./collegeController');
+const { getApplicationsWithFilter } = require('./collegeController');
 const { findSimilarHS } = require('./highschoolController');
 
 const {
@@ -21,6 +22,7 @@ const {
  * An example filter:
  * {
  *     "region" : "west",
+
  *     "SATEBRWMin": 0,
  *     "SATEBRWMax": 800,
  *     "SATMathMin" : 0,
@@ -176,8 +178,6 @@ exports.searchCollege = async (filters, username) => {
             }
         }
 
-        // the major filter is a bit weird since their can be 1 or 2 majors.
-        // I stuck with this solution for now.
         if (filters.hasOwnProperty('major') && filters.hasOwnProperty('major2')) {
             query.include = [{
                 model: models.Major,
@@ -297,7 +297,9 @@ exports.calcScores = async ( collegeIDList, username ) => {
 		let maxScore = 0;
 
 		let similarHS = await findSimilarHS( username );
-		similarHS = similarHS.highschools.slice( 0, 3 );
+		console.log( similarHS );
+		similarHS = similarHS.highSchools.slice( 0, 3 );
+		console.log( "getting high schools complete" );
 		console.log( similarHS );
 
 		for (let i = colleges.length - 1; i >= 0; i--) {
@@ -322,52 +324,53 @@ exports.calcScores = async ( collegeIDList, username ) => {
 					score += 5;
 			}
 
-			const majors = await getMajorsByCollegeID( colleges[i].CollegeId );
+			const majors = ( await getMajorsByCollegeID( colleges[i].CollegeId ) ).majors;
 
 			if ( major1 != null ) {
 				maxScore += 5;
-				for (let j = majors.length - 1; j >= 0; j--) {
-					if ( majors[j].Major.toLowerCase().includes( major1.toLowerCase() ) )
-						score += 5;
-				}
+				if ( majors.find((m) => m.Major.toLowerCase().includes( major1.toLowerCase() ) ) ) 
+					score += 5;
 			}
 			if ( major2 != null) {
 				maxScore += 5;
-				for (let j = majors.length - 1; j >= 0; j--) {
-					if ( major2 != null && majors[j].Major.toLowerCase().includes( major2.toLowerCase() ) )
-						score += 5;
-				}
+				if ( majors.find((m) => m.Major.toLowerCase().includes( major2.toLowerCase() ) ) ) 
+					score += 5;
 			}
 				
 			if ( ACTComposite != null ) {
 				maxScore += 10;
-				let points = 10 - Math.floor( Math.abs( colleges[i].ACTComposite - ACTComposite ) / 2 );
+				let points = 10 - Math.ceil( Math.abs( colleges[i].ACTComposite - ACTComposite ) / 2 );
 				if (points > 0)
 					score += points;
 			}
 			
 			if ( SATMath != null ) {
 				maxScore += 5;
-				points = 5 - Math.floor( Math.abs( colleges[i].SATMath - SATMath ) / 25 );
+				points = 5 - Math.ceil( Math.abs( colleges[i].SATMath - SATMath ) / 25 );
 				if (points > 0)
 					score += points;
 			}
 				
 			if ( SATEBRW != null ) {
 				maxScore += 5;
-				points = 5 - Math.floor( Math.abs( colleges[i].SATEBRW - SATEBRW ) / 25 );
+				points = 5 - Math.ceil( Math.abs( colleges[i].SATEBRW - SATEBRW ) / 25 );
 				if (points > 0)
 					score += points;
 			}
 			
 			if ( GPA != null ) {
 				maxScore += 10;
-				points = 10 - Math.floor( Math.abs( colleges[i].GPA - GPA ) / 0.1 );
+				points = 10 - Math.ceil( Math.abs( colleges[i].GPA - GPA ) / 0.1 );
 				if (points > 0)
 					score += points;
 			}
 			
-
+			let appFilters = { 
+				statuses : ['accepted'], 
+				highSchools: [ similarHS[0].Name, similarHS[1].Name, similarHS[2].Name ] 
+			};
+			let applications = await getApplicationsWithFilter( colleges[i].CollegeId, appFilters );
+			console.log( applications );
 
 			scoreResults[ colleges[i].Name ] = score / maxScore;
 		}
@@ -379,6 +382,7 @@ exports.calcScores = async ( collegeIDList, username ) => {
 
 	}
 	catch (error) {
+		console.log( error );
 		return {
             error: 'calcScores failed',
             reason: error
