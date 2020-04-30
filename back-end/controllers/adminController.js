@@ -1,6 +1,7 @@
 const sequelize = require('sequelize');
 const fs = require('fs');
 const puppeteer = require('puppeteer');
+const cheerio = require('cheerio');
 const parse = require('csv-parse');
 const models = require('../models');
 const { getCollegeList, getPathConfig } = require('../utils/readAppFiles');
@@ -135,25 +136,21 @@ exports.scrapeCollegeData = async () => {
             const collegeStr = colleges[i].replace(/The\s/g, '').replace(/[^A-Z0-9]+/ig, ' ').replace(/\s/g, '-').replace('SUNY', 'State-University-of-New-York');
             const collegeURL = collegeDataURL + collegeStr;
             await page.goto(collegeURL);
+            let content = await page.content();
+            var $ = cheerio.load(content);
+            let completionRateFull = $('#profile-overview > div:nth-child(4) > div > dl:nth-child(4) > dd:nth-child(2)').text();
+            let costOfAttendance = $('#profile-overview > div:nth-child(5) > div > dl > dd:nth-child(2)').text();
+            let gpa = $('#profile-overview > div:nth-child(4) > div > dl:nth-child(4) > dd:nth-child(2)').text();
+            let satMathFull = $('#profile-overview > div:nth-child(4) > div > dl:nth-child(4) > dd:nth-child(4)').text();
+            let satEbrwFull = $('#profile-overview > div:nth-child(4) > div > dl:nth-child(4) > dd:nth-child(6)').text();
+            let actCompositeFull = $('#profile-overview > div:nth-child(4) > div > dl:nth-child(4) > dd:nth-child(8)').text();
 
-            // Finds elements that contain the data value
-            const completionRateEl = await page.$x('//dt[contains(., \'Students Graduating Within 4 Years\')]//following-sibling::dd[1]');
-            const costOfAttendanceEl = await page.$x('//dt[contains(., \'Cost of Attendance\')]//following-sibling::dd[1]');
-            const gpaEl = await page.$x('//dt[contains(., \'Average GPA\')]//following-sibling::dd[1]');
-            const satMathEl = await page.$x('//dt[contains(., \'SAT Math\')]//following-sibling::dd[1]');
-            const satEbrwEl = await page.$x('//dt[contains(., \'SAT EBRW\')]//following-sibling::dd[1]');
-            const actCompositeEl = await page.$x('//dt[contains(., \'ACT Composite\')]//following-sibling::dd[1]');
-
-            // takes the text value of element and determines the completion rate
-            // eslint-disable-next-line max-len
-            const completionRateFull = await page.evaluate((el) => el.textContent, completionRateEl[0]);
             let completionRate = null;
             if (completionRateFull === 'Not reported') completionRate = null;
             else completionRate = parseFloat(completionRateFull.substring(0, completionRateFull.indexOf('%')));
 
             // takes the text value of element and determines the cost of attendance
             // eslint-disable-next-line max-len
-            let costOfAttendance = await page.evaluate((el) => el.textContent, costOfAttendanceEl[0]);
             let costOfAttendanceInState = null;
             let costOfAttendanceOutOfState = null;
             if (costOfAttendance === 'Not available') costOfAttendance = null;
@@ -167,11 +164,9 @@ exports.scrapeCollegeData = async () => {
             }
 
             // takes the text value of element and determines the gpa
-            let gpa = await page.evaluate((el) => el.textContent, gpaEl[0]);
             if (gpa.includes('Not reported')) gpa = null;
 
             // takes the text value of element and determines the sat math
-            const satMathFull = await page.evaluate((el) => el.textContent, satMathEl[0]);
             let satMathNums = null;
             let satMath = null;
             if (satMathFull.includes('Not reported')) satMath = null;
@@ -183,7 +178,6 @@ exports.scrapeCollegeData = async () => {
             }
 
             // takes the text value of element and determines the sat ebrw
-            const satEbrwFull = await page.evaluate((el) => el.textContent, satEbrwEl[0]);
             let satEbrwhNums = null;
             let satEbrw = null;
             if (satEbrwFull.includes('Not reported')) satEbrw = null;
@@ -195,7 +189,6 @@ exports.scrapeCollegeData = async () => {
             }
 
             // takes the text value of element and determines the act composite
-            const actCompositeFull = await page.evaluate((el) => el.textContent, actCompositeEl[0]);
             let actCompositeNums = null;
             let actComposite = null;
             if (actCompositeFull.includes('Not reported')) actComposite = null;
@@ -208,15 +201,15 @@ exports.scrapeCollegeData = async () => {
 
             // Go academics tab to retrieve majors
             await page.goto(`${collegeURL}/?tab=profile-academics-tab`);
+            content = await page.content();
+            $ = cheerio.load(content);
 
             // find elements containing majors
-            const majorEls = await page.$x('(//div[contains(., \'Undergraduate Majors\')])[last()]//ul');
             let preMajors = [];
-            // loops through elements and stores the majors to be added
-            for (let j = 0; j < majorEls.length; j += 1) {
-                const listChildren = await page.evaluate((el) => el.textContent, majorEls[j]);
-                preMajors = preMajors.concat(listChildren.trim().split('\n'));
-            }
+            $('.card-body:contains(\'Undergraduate Education\') .list--nice li').each((idx, el) => {
+                const major = $(el).text();
+                preMajors.push(major);
+            })
 
             const majors = preMajors.map((m) => m.trim());
             // create the college object
@@ -278,6 +271,7 @@ exports.scrapeCollegeData = async () => {
         await page.close();
         await browser.close();
     } catch (error) {
+        console.log(error);
         return {
             error: 'Unable to scrape data',
             reason: error,
