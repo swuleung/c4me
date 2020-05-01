@@ -76,6 +76,9 @@ const EditHighSchool = (props) => {
         onChange: (e, { newValue }) => {
             if (displayOtherHS) setDisplayOtherHS(false);
             if (typeof (newValue) === 'string') {
+                if(newValue === '') {
+                    setNewHighSchool({});
+                }
                 setHighSchool({ Name: newValue });
             } else {
                 setHighSchool(newValue);
