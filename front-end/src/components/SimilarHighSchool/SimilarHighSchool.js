@@ -40,7 +40,7 @@ const SimilarHighSchool = () => {
             }
             if (result.ok) {
                 setErrorAlert(false);
-                setAverageGPA(result.averageGPA.toFixed(2));
+                if (result.highSchools.length !== 0) setAverageGPA(result.averageGPA.toFixed(2));
                 setHighSchools(result.highSchools);
             }
         });
@@ -141,7 +141,7 @@ const SimilarHighSchool = () => {
                                                         </Row>
                                                     </Col>
                                                     <Col className="h4 text-center">
-                                                        {highSchool.similarityScore ? `${Math.round(highSchool.similarityScore)}%` : 'N/A'}
+                                                        {highSchool.similarityScore || highSchool.similarityScore === 0 ? `${Math.round(highSchool.similarityScore)}%` : 'N/A'}
                                                         {' Similarity'}
                                                     </Col>
                                                     <Col className="text-right">
