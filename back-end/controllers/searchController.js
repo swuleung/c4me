@@ -384,10 +384,10 @@ exports.calcScores = async (collegeIDList, username) => {
                     } else if (major1) {
                         simMaxScore += 5;
                         if (
-                            otherStudent.Major1.includes(major2)
-                            || major2.includes(otherStudent.Major1)
-                            || otherStudent.Major2.includes(major2)
-                            || major2.includes(otherStudent.Major2)
+                            otherStudent.Major1.includes(major1)
+                            || major1.includes(otherStudent.Major1)
+                            || otherStudent.Major2.includes(major1)
+                            || major1.includes(otherStudent.Major2)
                         ) {
                             simScore += 5;
                         }
