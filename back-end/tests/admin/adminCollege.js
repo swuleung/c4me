@@ -22,7 +22,7 @@ describe('Scrape college information', () => {
 
         it('Delete all colleges', (done) => {
             agent
-                .delete('/admin/deleteAllColleges')
+                .delete('/admin/delete-all-colleges')
                 .end((err, res) => {
                     res.should.have.status(200);
                     done();
@@ -34,7 +34,7 @@ describe('Scrape college information', () => {
         it('Scrape from CollegeData.com', function scrapeCollegeData(done) {
             this.timeout(60000);
             agent
-                .get('/admin/scrapeCollegeData')
+                .get('/admin/scrape-college-data')
                 .end((err, res) => {
                     res.should.have.status(200);
                     done();
@@ -44,7 +44,7 @@ describe('Scrape college information', () => {
         it('Scrape from College Ranking', function scrapeCollegeRanking(done) {
             this.timeout(60000);
             agent
-                .get('/admin/scrapeCollegeRanking')
+                .get('/admin/scrape-college-ranking')
                 .end((err, res) => {
                     res.should.have.status(200);
                     done();
@@ -54,7 +54,7 @@ describe('Scrape college information', () => {
         it('Import College Scorecard', function importCollegeScorecard(done) {
             this.timeout(60000);
             agent
-                .get('/admin/importCollegeScorecard')
+                .get('/admin/import-college-scorecard')
                 .end((err, res) => {
                     res.should.have.status(200);
                     done();

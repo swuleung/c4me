@@ -2,6 +2,7 @@ const sequelize = require('sequelize');
 const puppeteer = require('puppeteer');
 const { getPathConfig } = require('../utils/readAppFiles');
 const models = require('../models');
+const { ACTtoSAT } = require('./sharedControllerVars');
 
 /**
  * Get a high school's information using its id
@@ -272,8 +273,8 @@ exports.findSimilarHS = async (username) => {
     });
     if (!student.HighSchool) {
         return {
-            error: 'No high school in student profile',
-            reason: 'No high school in student profile',
+            ok: 'No high school in student profile',
+            highSchools: [],
         };
     }
     const studentHS = student.HighSchool;
@@ -299,37 +300,6 @@ exports.findSimilarHS = async (username) => {
         'D-': 11,
     };
 
-    // conversion for act score to sat score
-    const ACTtoSAT = {
-        9: 590,
-        10: 630,
-        11: 670,
-        12: 710,
-        13: 760,
-        14: 800,
-        15: 850,
-        16: 890,
-        17: 930,
-        18: 970,
-        19: 1010,
-        20: 1040,
-        21: 1080,
-        22: 1110,
-        23: 1140,
-        24: 1180,
-        25: 1210,
-        26: 1240,
-        27: 1280,
-        28: 1310,
-        29: 1340,
-        30: 1370,
-        31: 1400,
-        32: 1430,
-        33: 1460,
-        34: 1500,
-        35: 1540,
-        36: 1590,
-    };
 
     // get students of high school of given student
     // eslint-disable-next-line no-await-in-loop

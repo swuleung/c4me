@@ -129,6 +129,7 @@ exports.getMajorsByCollegeID = async (collegeID) => {
     try {
         // use major table to find all majors with collegeId
         majors = await models.Major.findAll({
+            raw: true,
             attributes: ['MajorId', 'Major'],
             include: [{
                 model: models.College,
@@ -279,66 +280,11 @@ const processApplications = (applications) => {
 };
 
 /**
- *  Get only accepted applications with no other filters by collegeID
- * @param {integer} collegeID
- */
-exports.getAcceptedApplicationsByCollegeID = async (collegeID) => {
-    let applications = [];
-    // no questionable applications
-    const applicationWhereClause = {
-        IsQuestionable: false,
-        status: {
-            [Op.eq]: 'accepted',
-        },
-    };
-
-    const query = {
-        where: { CollegeId: collegeID },
-        include: [{
-            model: models.User,
-            through: {
-                where: applicationWhereClause,
-                attributes: { exclude: ['IsQuestionable', 'createdAt', 'updatedAt'] },
-            },
-            attributes: {
-                exclude: ['Password', 'createdAt', 'updatedAt', 'APPassed', 'ResidenceState',
-                    'City', 'State', 'Major1', 'Major2'],
-            },
-        }],
-    };
-    try {
-        applications = (await models.College.findOne(query));
-    } catch (error) {
-        return {
-            error: 'Unable to get applications for applications tracker',
-            reason: error.message,
-        };
-    }
-
-    if (!applications) {
-        return {
-            ok: 'No accepted data for college',
-            applications: [],
-            averages: {},
-        };
-    }
-    return processApplications(applications.toJSON().Users);
-};
-
-/**
  *
- * @param {integer} collegeID
- * @param {object} filters
- *    filters: {
- *       lowerCollegeClass: <integer>
- *       upperCollegeClass: <integer>
- *       statuses: ['accepted', ...]
- *       highSchools: [highSchoolId, ...]
- *       lax: <boolean>
- *    }
- * Each filter is optional
+ * @param {integer} collegeID ID of College to find applications by
+ * @param {Filters} filters Filters object
  */
-exports.getApplicationsByCollegeID = async (collegeID, filters) => {
+exports.getApplicationsWithFilter = async (collegeID, filters) => {
     let applications = [];
     // query parts
     const applicationWhereClause = {
@@ -413,7 +359,7 @@ exports.getApplicationsByCollegeID = async (collegeID, filters) => {
             where: userWhereClause,
             attributes: {
                 exclude: ['Password', 'createdAt', 'updatedAt', 'APPassed', 'ResidenceState',
-                    'City', 'State', 'Major1', 'Major2'],
+                    'City', 'State'],
             },
             include: [
                 includeHS,
@@ -430,26 +376,37 @@ exports.getApplicationsByCollegeID = async (collegeID, filters) => {
             reason: error.message,
         };
     }
+    return applications;
+};
 
+/**
+ *
+ * @param {integer} collegeID
+ * @param {object} filters
+ *    filters: {
+ *       lowerCollegeClass: <integer>
+ *       upperCollegeClass: <integer>
+ *       statuses: ['accepted', ...]
+ *       highSchools: [highSchoolId, ...]
+ *       lax: <boolean>
+ *    }
+ * Each filter is optional
+ */
+exports.getApplicationsByCollegeID = async (collegeID, filters) => {
     // get the accepted applications with no filters for averages
-    let acceptedApplications = null;
-    try {
-        acceptedApplications = await this.getAcceptedApplicationsByCollegeID(collegeID);
-    } catch (error) {
-        return {
-            error: 'Unable to get applications for applications tracker',
-            reason: error.message,
+    let acceptedApps = await this.getApplicationsWithFilter(collegeID, { statuses: ['accepted'] });
+    let acceptedAverages = {};
+    if (acceptedApps) {
+        acceptedApps = processApplications(acceptedApps.toJSON().Users);
+        acceptedAverages = {
+            avgAcceptedGPA: acceptedApps.averages.avgGPA,
+            avgAcceptedSATMath: acceptedApps.averages.avgSATMath,
+            avgAcceptedSATEBRW: acceptedApps.averages.avgSATEBRW,
+            avgAcceptedACTComposite: acceptedApps.averages.avgACTComposite,
         };
     }
 
-    // change the names of the averages
-    const acceptedAverages = {
-        avgAcceptedGPA: acceptedApplications.averages.avgGPA,
-        avgAcceptedSATMath: acceptedApplications.averages.avgSATMath,
-        avgAcceptedSATEBRW: acceptedApplications.averages.avgSATEBRW,
-        avgAcceptedACTComposite: acceptedApplications.averages.avgACTComposite,
-    };
-
+    const applications = await this.getApplicationsWithFilter(collegeID, filters);
     if (!applications) {
         return {
             ok: 'No data for college',

@@ -10,7 +10,7 @@ const highSchoolController = require('../controllers/highschoolController');
  * Scrape the college rankings from THE
  * GET request
  */
-router.get('/scrapeCollegeRanking', async (req, res) => {
+router.get('/scrape-college-ranking', async (req, res) => {
     // authentication check
     if (!req.cookies.access_token) {
         res.status(400).send({ status: 'error', error: 'No token provided' });
@@ -38,7 +38,7 @@ router.get('/scrapeCollegeRanking', async (req, res) => {
  * Scrape data from CollegeData
  * GET request
  */
-router.get('/scrapeCollegeData', async (req, res) => {
+router.get('/scrape-college-data', async (req, res) => {
     // authentication check
     if (!req.cookies.access_token) {
         res.status(400).send({ status: 'error', error: 'No token provided' });
@@ -66,7 +66,7 @@ router.get('/scrapeCollegeData', async (req, res) => {
  * Import the collegescorecard data
  * GET request
  */
-router.get('/importCollegeScorecard', async (req, res) => {
+router.get('/import-college-scorecard', async (req, res) => {
     // authentication check
     if (!req.cookies.access_token) {
         res.status(400).send({ status: 'error', error: 'No token provided' });
@@ -94,7 +94,7 @@ router.get('/importCollegeScorecard', async (req, res) => {
  * Delete all student profiles
  * GET request
  */
-router.delete('/deleteStudentProfiles', async (req, res) => {
+router.delete('/delete-student-profiles', async (req, res) => {
     // authentication check
     if (!req.cookies.access_token) {
         res.status(400).send({ status: 'error', error: 'No token provided' });
@@ -121,7 +121,7 @@ router.delete('/deleteStudentProfiles', async (req, res) => {
  * Import students from CSV file
  * GET request
  */
-router.get('/importStudents', async (req, res) => {
+router.get('/import-students', async (req, res) => {
     // authentication check
     if (!req.cookies.access_token) {
         res.status(400).send({ status: 'error', error: 'No token provided' });
@@ -145,7 +145,7 @@ router.get('/importStudents', async (req, res) => {
  * Import applications from CSV file
  * GET request
  */
-router.get('/importApplications', async (req, res) => {
+router.get('/import-applications', async (req, res) => {
     // authentication check
     if (!req.cookies.access_token) {
         res.status(400).send({ status: 'error', error: 'No token provided' });
@@ -169,7 +169,7 @@ router.get('/importApplications', async (req, res) => {
  * Delete all colleges
  * GET request
  */
-router.delete('/deleteAllColleges', async (req, res) => {
+router.delete('/delete-all-colleges', async (req, res) => {
     // authentication check
     if (!req.cookies.access_token) {
         res.status(400).send({ status: 'error', error: 'No token provided' });
@@ -194,7 +194,7 @@ router.delete('/deleteAllColleges', async (req, res) => {
  * Delete all high schools
  * GET request
  */
-router.delete('/deleteAllHighSchools', async (req, res) => {
+router.delete('/delete-all-high-schools', async (req, res) => {
     // authentication check
     if (!req.cookies.access_token) {
         res.status(400).send({ status: 'error', error: 'No token provided' });
@@ -219,7 +219,7 @@ router.delete('/deleteAllHighSchools', async (req, res) => {
  * Verify that a user is an admin
  * GET request
  */
-router.get('/verifyAdmin', async (req, res) => {
+router.get('/verify-admin', async (req, res) => {
     if (!req.cookies.access_token) {
         res.send({
             ok: 'Successfaully checked admin',
@@ -245,7 +245,7 @@ router.get('/verifyAdmin', async (req, res) => {
  *  "highSchoolState": "NJ"
  * }
  */
-router.post('/scrapeHighSchool', async (req, res) => {
+router.post('/scrape-high-school', async (req, res) => {
     // authentication check
     if (!req.cookies.access_token) {
         res.status(400).send({ status: 'error', error: 'No token provided' });

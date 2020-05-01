@@ -4,7 +4,7 @@ const admin = {
      */
     scrapeCollegeRanking: async function scrapeCollegeRanking() {
         try {
-            const result = await fetch('/admin/scrapeCollegeRanking', {
+            const result = await fetch('/admin/scrape-college-ranking', {
                 method: 'GET',
                 credentials: 'include',
                 headers: {
@@ -24,7 +24,7 @@ const admin = {
      */
     deleteAllStudents: async function deleteAllStudents() {
         try {
-            const result = await fetch('/admin/deleteStudentProfiles', {
+            const result = await fetch('/admin/delete-student-profiles', {
                 method: 'DELETE',
                 credentials: 'include',
                 headers: {
@@ -44,7 +44,7 @@ const admin = {
      */
     scrapeCollegeData: async function scrapeCollegeData() {
         try {
-            const result = await fetch('/admin/scrapeCollegeData', {
+            const result = await fetch('/admin/scrape-college-data', {
                 method: 'GET',
                 credentials: 'include',
                 headers: {
@@ -64,7 +64,7 @@ const admin = {
      */
     importCollegeScorecard: async function importCollegeScorecard() {
         try {
-            const result = await fetch('/admin/importCollegeScorecard', {
+            const result = await fetch('/admin/import-college-scorecard', {
                 method: 'GET',
                 credentials: 'include',
                 headers: {
@@ -84,7 +84,7 @@ const admin = {
      */
     importStudents: async function importStudents() {
         try {
-            const result = await fetch('/admin/importStudents', {
+            const result = await fetch('/admin/import-students', {
                 method: 'GET',
                 credentials: 'include',
                 headers: {
@@ -104,7 +104,7 @@ const admin = {
      */
     importStudentApplications: async function importStudentApplications() {
         try {
-            const result = await fetch('/admin/importApplications', {
+            const result = await fetch('/admin/import-applications', {
                 method: 'GET',
                 credentials: 'include',
                 headers: {
@@ -124,7 +124,7 @@ const admin = {
      */
     verifyAdmin: async function verifyAdmin() {
         try {
-            const result = await fetch('/admin/verifyAdmin', {
+            const result = await fetch('/admin/verify-admin', {
                 method: 'GET',
                 credentials: 'include',
                 headers: {
@@ -136,6 +136,47 @@ const admin = {
         } catch (error) {
             return {
                 error: `${error.message}`,
+            };
+        }
+    },
+
+    /**
+     * Send a GET request for all Questionable Applications
+     */
+    getQuestionableApplications: async function getQuestionableApplications() {
+        try {
+            const qApps = await fetch('/admin/questionable-decisions', {
+                method: 'GET',
+                credentials: 'include',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json; charset=utf-8',
+                },
+            });
+            return qApps.json();
+        } catch (error) {
+            return {
+                error: `${error.message}`,
+            };
+        }
+    },
+    updateApplications: async function updateApplications(applications) {
+        try {
+            const result = await fetch('/admin/update-applications ', {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json; charset=utf-8',
+                },
+                body: JSON.stringify({
+                    applications: applications,
+                }),
+            });
+
+            return await result.json();
+        } catch (error) {
+            return {
+                error: `Update applications error: ${error.message}`,
             };
         }
     },

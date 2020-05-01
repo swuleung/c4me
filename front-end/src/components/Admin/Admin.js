@@ -18,11 +18,11 @@ const Admin = () => {
     const [disableDelete, setDisableDelete] = useState(false);
     const [disableProfile, setDisableProfile] = useState(false);
 
-    const toggleProfiles = (b) =>{
+    const toggleProfiles = (b) => {
         setDisableDelete(b);
         setDisableProfile(b);
-    }
-    
+    };
+
     /**
      * Handle the button click for scrape college rankings
      */

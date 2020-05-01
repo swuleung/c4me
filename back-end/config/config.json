@@ -1,34 +1,34 @@
 {
-  "development": {
-    "username": "swuleung",
-    "password": "111065204",
-    "database": "swuleung",
-    "host": "mysql4.cs.stonybrook.edu",
-    "dialect": "mysql",
-    "operatorsAliases": 0
-  },
-  "local": {
-    "username": "root",
-    "password": "password",
-    "database": "c4me",
-    "host": "localhost",
-    "dialect": "mysql",
-    "operatorsAliases": 0
-  },
-  "test": {
-    "username": "root",
-    "password": "password",
-    "database": "c4me",
-    "host": "localhost",
-    "dialect": "mysql",
-    "operatorsAliases": 0
-  },
-  "production": {
-    "username": "jaquach",
-    "password": "111019384",
-    "database": "jaquach",
-    "host": "mysql4.cs.stonybrook.edu",
-    "dialect": "mysql",
-    "operatorsAliases": 0
-  }
+    "development": {
+        "username": "swuleung",
+        "password": "111065204",
+        "database": "swuleung",
+        "host": "mysql4.cs.stonybrook.edu",
+        "dialect": "mysql",
+        "operatorsAliases": 0
+    },
+    "local": {
+        "username": "root",
+        "password": "password",
+        "database": "c4me",
+        "host": "localhost",
+        "dialect": "mysql",
+        "operatorsAliases": 0
+    },
+    "test": {
+        "username": "root",
+        "password": "password",
+        "database": "c4me",
+        "host": "localhost",
+        "dialect": "mysql",
+        "operatorsAliases": 0
+    },
+    "production": {
+        "username": "jaquach",
+        "password": "111019384",
+        "database": "jaquach",
+        "host": "mysql4.cs.stonybrook.edu",
+        "dialect": "mysql",
+        "operatorsAliases": 0
+    }
 }

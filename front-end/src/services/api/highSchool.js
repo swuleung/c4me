@@ -25,7 +25,7 @@ const highSchool = {
      */
     findSimilarHS: async function findSimilarHS(username) {
         try {
-            const highSchools = await fetch(`/highSchools/findSimilarHS/${username}`, {
+            const highSchools = await fetch('/highSchools/find-similar-hs', {
                 method: 'GET',
                 credentials: 'include',
                 headers: {
