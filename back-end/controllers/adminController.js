@@ -571,8 +571,16 @@ exports.importApplications = async () => {
     /* eslint-disable no-await-in-loop */
     const colleges = {};
     const collegeList = (await getAllColleges()).colleges;
-    for (let i = 0; i < collegeList.length; i += 1) {
-        colleges[collegeList[i].Name] = collegeList[i].CollegeId;
+
+    if (collegeList) {
+        for (let i = 0; i < collegeList.length; i += 1) {
+            colleges[collegeList[i].Name] = collegeList[i].CollegeId;
+        }
+    } else {
+        return {
+            error: 'Error importing applications',
+            reason: 'No colleges in database',
+        };
     }
 
     // for each application, try to add it
