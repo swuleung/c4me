@@ -368,15 +368,15 @@ exports.calcQuestionableApplication = async (app) => {
     const { majors } = (await getMajorsByCollegeID(thisCollege.CollegeId));
     if (thisStudent.Major1 && thisStudent.Major2) {
         // eslint-disable-next-line max-len
-        if (majors.find((m) => m.Major.toLowerCase().includes(thisStudent.Major1.toLowerCase()))) { qScore += 2.5; }
-        // eslint-disable-next-line max-len
-        if (majors.find((m) => m.Major.toLowerCase().includes(thisStudent.Major2.toLowerCase()))) { qScore += 2.5; }
-    } else if (thisStudent.Major1) {
-        // eslint-disable-next-line max-len
         if (majors.find((m) => m.Major.toLowerCase().includes(thisStudent.Major1.toLowerCase()))) { qScore += 5; }
-    } else if (thisStudent.Major2) {
         // eslint-disable-next-line max-len
         if (majors.find((m) => m.Major.toLowerCase().includes(thisStudent.Major2.toLowerCase()))) { qScore += 5; }
+    } else if (thisStudent.Major1) {
+        // eslint-disable-next-line max-len
+        if (majors.find((m) => m.Major.toLowerCase().includes(thisStudent.Major1.toLowerCase()))) { qScore += 10; }
+    } else if (thisStudent.Major2) {
+        // eslint-disable-next-line max-len
+        if (majors.find((m) => m.Major.toLowerCase().includes(thisStudent.Major2.toLowerCase()))) { qScore += 10; }
     }
 
     // GPA - 10
@@ -385,6 +385,16 @@ exports.calcQuestionableApplication = async (app) => {
     // ResidenceState - 5 for state match & 2.5 for region match
     const studentState = thisStudent.ResidenceState;
     const collegeState = thisCollege.Location;
+
+
+    let locationCheck = 0;
+    // if they are in a public school, add points
+    if (thisCollege.InstitutionType == 1) {
+        locationCheck = 5;
+        if (studentState === collegeState) {
+            qScore += 5;
+        } 
+    } 
 
     if (studentState === collegeState) {
         qScore += 5;
@@ -399,7 +409,7 @@ exports.calcQuestionableApplication = async (app) => {
     }
 
     // determine questionable status & update accordingly
-    let threshold = qScore / 40;
+    let threshold = qScore / (40 + locationCheck);
     threshold = (app.Status === 'denied') ? (1 - threshold) : threshold;
 
     if (threshold < 0.65) {
