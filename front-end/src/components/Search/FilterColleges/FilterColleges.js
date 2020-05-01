@@ -490,7 +490,7 @@ const FilterColleges = (props) => {
                 </Row>
                 <Form.Row>
                     <Form.Group as={Col}>
-                        <Form.Control min="10000" max="100000" step="500" type="range" value={costOfAttendance} onChange={(e) => setCostOfAttendance({ cost: e.target.value.trim(), changed: true })} />
+                        <Form.Control min="10000" max="100000" step="500" type="range" value={costOfAttendance.cost} onChange={(e) => setCostOfAttendance({ cost: e.target.value.trim(), changed: true })} />
                     </Form.Group>
                 </Form.Row>
 
