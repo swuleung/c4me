@@ -169,9 +169,8 @@ const Admin = () => {
                     setSuccessAlert(true);
                     setSuccessMessage('Student profile import complete.');
                 }
+                toggleProfiles(false);
             });
-            toggleProfiles(false);
-            setDisableProfile(false);
         });
     };
 

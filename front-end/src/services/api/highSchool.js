@@ -23,7 +23,7 @@ const highSchool = {
      * Get similar high schools list with a GET
      * @param {string} username
      */
-    findSimilarHS: async function findSimilarHS(username) {
+    findSimilarHS: async function findSimilarHS() {
         try {
             const highSchools = await fetch('/highSchools/find-similar-hs', {
                 method: 'GET',

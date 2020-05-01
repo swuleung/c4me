@@ -39,8 +39,8 @@
         "PRIVATE_KEY": "../../assets/keys/c4meJWT"
     },
     "production": {
-        "RANKING_URL": "https://www.timeshighereducation.com/rankings/united-states/2020#!/page/0/length/-1/sort_by/rank/sort_order/asc/cols/stats",
-        "COLLEGEDATA_URL": "https://www.collegedata.com/college/",
+        "RANKING_URL": "http://allv22.all.cs.stonybrook.edu/~stoller/cse416/WSJ_THE/",
+        "COLLEGEDATA_URL": "http://allv22.all.cs.stonybrook.edu/~stoller/cse416/collegedata/",
         "ASSETS": "../assets",
         "NICHE_URL": "http://allv22.all.cs.stonybrook.edu/~stoller/cse416/niche/",
         "NICHE_URL_UNUSED": "https://www.niche.com/k12/",

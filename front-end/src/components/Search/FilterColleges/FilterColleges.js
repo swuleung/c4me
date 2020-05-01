@@ -63,7 +63,10 @@ const FilterColleges = (props) => {
     });
 
     // Cost of Attendance
-    const [costOfAttendance, setCostOfAttendance] = useState('100000');
+    const [costOfAttendance, setCostOfAttendance] = useState({
+        cost: '100000',
+        changed: false,
+    });
 
     // region list
     const [regions, setRegions] = useState({
@@ -80,9 +83,10 @@ const FilterColleges = (props) => {
      * Build the query for filters before passing it up to Search
      * All values are trimmed. If there is a missing min/max, then it is appropriately filled.
      */
-    const buildATQuery = () => {
-        const filters = {};
+    const buildQuery = () => {
+        let filters = {};
 
+        let changed = false;
         if (lax === 'lax') {
             filters.lax = true;
         } else {
@@ -90,91 +94,95 @@ const FilterColleges = (props) => {
         }
 
         if (name !== '') {
+            changed = true;
             filters.name = name;
         }
 
         if (major1 !== '') {
+            changed = true;
             filters.major = major1;
         }
 
         if (major2 !== '') {
+            changed = true;
             filters.major2 = major2;
         }
 
         if (size.sizeMin !== '') {
+            changed = true;
             filters.sizeMin = parseInt(size.sizeMin, 10);
-        } else {
-            filters.sizeMin = 0;
+            if (size.sizeMax === '') filters.sizeMax = Number.MAX_SAFE_INTEGER;
         }
 
         if (size.sizeMax !== '') {
+            changed = true;
             filters.sizeMax = parseInt(size.sizeMax, 10);
-        } else {
-            filters.sizeMax = Number.MAX_SAFE_INTEGER;
+            if (size.sizeMin === '') filters.sizeMin = 0;
         }
 
         if (admissionRate.admissionRateMin !== '') {
+            changed = true;
             filters.admissionRateMin = parseInt(admissionRate.admissionRateMin, 10);
-        } else {
-            filters.admissionRateMin = 0;
+            if (admissionRate.admissionRateMax === '') filters.admissionRateMax = Number.MAX_SAFE_INTEGER;
         }
 
         if (admissionRate.admissionRateMax !== '') {
+            changed = true;
             filters.admissionRateMax = parseInt(admissionRate.admissionRateMax, 10);
-        } else {
-            filters.admissionRateMax = Number.MAX_SAFE_INTEGER;
+            if (admissionRate.admissionRateMin === '') filters.admissionRateMin = 0;
         }
 
         if (collegeRanking.rankingMin !== '') {
+            changed = true;
             filters.rankingMin = parseInt(collegeRanking.rankingMin, 10);
-        } else {
-            filters.rankingMin = 0;
+            if (collegeRanking.rankingMax === '') filters.rankingMax = Number.MAX_SAFE_INTEGER;
         }
 
         if (collegeRanking.rankingMax !== '') {
+            changed = true;
             filters.rankingMax = parseInt(collegeRanking.rankingMax, 10);
-        } else {
-            filters.rankingMax = Number.MAX_SAFE_INTEGER;
+            if (collegeRanking.rankingMin === '') filters.rankingMin = 0;
         }
 
         if (SATEBRW.SATEBRWMin !== '') {
+            changed = true;
             filters.SATEBRWMin = parseInt(SATEBRW.SATEBRWMin, 10);
-        } else {
-            filters.SATEBRWMin = 200;
+            if (SATEBRW.SATEBRWMax === '') filters.SATEBRWMax = 800;
         }
 
         if (SATEBRW.SATEBRWMax !== '') {
+            changed = true;
             filters.SATEBRWMax = parseInt(SATEBRW.SATEBRWMax, 10);
-        } else {
-            filters.SATEBRWMax = 800;
+            if (SATEBRW.SATEBRWMin === '') filters.SATEBRWMin = 200;
         }
 
         if (SATMath.SATMathMin !== '') {
+            changed = true;
             filters.SATMathMin = parseInt(SATMath.SATMathMin, 10);
-        } else {
-            filters.SATMathMin = 200;
+            if (SATMath.SATMathMax === '') filters.SATMathMax = 800;
         }
 
         if (SATMath.SATMathMax !== '') {
+            changed = true;
             filters.SATMathMax = parseInt(SATMath.SATMathMax, 10);
-        } else {
-            filters.SATMathMax = 800;
+            if (SATMath.SATMathMin === '') filters.SATMathMin = 200;
         }
 
         if (ACTComposite.ACTCompositeMin !== '') {
+            changed = true;
             filters.ACTCompositeMin = ACTComposite.ACTCompositeMin;
-        } else {
-            filters.ACTCompositeMin = 1;
+            if (ACTComposite.ACTCompositeMax === '') filters.ACTCompositeMax = 36;
         }
 
         if (ACTComposite.ACTCompositeMax !== '') {
+            changed = true;
             filters.ACTCompositeMax = ACTComposite.ACTCompositeMax;
-        } else {
-            filters.ACTCompositeMax = 36;
+            if (ACTComposite.ACTCompositeMin === '') filters.ACTCompositeMin = 1;
         }
 
-        if (costOfAttendance !== '') {
-            filters.costMax = costOfAttendance;
+        if (costOfAttendance.changed) {
+            changed = true;
+            filters.costMax = costOfAttendance.cost;
         }
 
         let selectedregions = [];
@@ -187,6 +195,11 @@ const FilterColleges = (props) => {
             }
         }
 
+        if (selectedStates.length !== 0) {
+            changed = true;
+            filters.states = selectedStates;
+        }
+
         // if no regions or states are selected, add all regions
         if (selectedregions.length === 0 && selectedStates.length === 0) {
             selectedregions = ['midwest', 'northeast', 'south', 'west'];
@@ -194,10 +207,9 @@ const FilterColleges = (props) => {
 
         filters.regions = selectedregions;
 
-        if (selectedStates.length !== 0) {
-            filters.states = selectedStates;
+        if (!changed) {
+            filters = {};
         }
-
         // pass this up to ApplicationsTracker
         handleFilterChange(filters);
     };
@@ -207,7 +219,7 @@ const FilterColleges = (props) => {
 
         <Container id="filter-box">
             <h2>Filters</h2>
-            <Form onSubmit={(e) => { e.preventDefault(); buildATQuery(); }}>
+            <Form onSubmit={(e) => { e.preventDefault(); buildQuery(); }}>
                 <b>Type of Filtering&nbsp;</b>
                 <OverlayTrigger
                     placement="right"
@@ -231,7 +243,7 @@ const FilterColleges = (props) => {
                     placement="right"
                     overlay={(
                         <Popover>
-                            <Popover.Title>College Class</Popover.Title>
+                            <Popover.Title>College Name</Popover.Title>
                             <Popover.Content>
                                 Enter a partial or complete name for the college you want to search for. For example, Stony Brook University.
                             </Popover.Content>
@@ -269,7 +281,7 @@ const FilterColleges = (props) => {
                     placement="right"
                     overlay={(
                         <Popover>
-                            <Popover.Title>College Class</Popover.Title>
+                            <Popover.Title>Second Major</Popover.Title>
                             <Popover.Content>
                                 Enter a partial or complete major you want to search for. For example, English.
                             </Popover.Content>
@@ -429,7 +441,7 @@ const FilterColleges = (props) => {
                         <Popover>
                             <Popover.Title>ACT Composite</Popover.Title>
                             <Popover.Content>
-                                Choose the range of ACT Composite to filter by. For example,28-32.
+                                Choose the range of ACT Composite to filter by. For example, 28-32.
                             </Popover.Content>
                         </Popover>
                     )}
@@ -461,12 +473,12 @@ const FilterColleges = (props) => {
                 </OverlayTrigger>
                 <Row>
                     <Col>
-                        {`Maximum Cost: ${costOfAttendance.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}
+                        {`Maximum Cost: ${costOfAttendance.cost.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}
                     </Col>
                 </Row>
                 <Form.Row>
                     <Form.Group as={Col}>
-                        <Form.Control min="10000" max="100000" step="500" type="range" value={costOfAttendance} onChange={(e) => setCostOfAttendance(e.target.value.trim())} />
+                        <Form.Control min="10000" max="100000" step="500" type="range" value={costOfAttendance.cost} onChange={(e) => setCostOfAttendance({ cost: e.target.value.trim(), changed: true })} />
                     </Form.Group>
                 </Form.Row>
 
@@ -475,7 +487,7 @@ const FilterColleges = (props) => {
                     placement="right"
                     overlay={(
                         <Popover>
-                            <Popover.Title>Status</Popover.Title>
+                            <Popover.Title>Region</Popover.Title>
                             <Popover.Content>
                                 Filter by a region. Choose one or more. If none is chosen, all regions will be shown.
                             </Popover.Content>

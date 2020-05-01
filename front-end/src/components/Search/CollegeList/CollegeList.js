@@ -81,7 +81,7 @@ const CollegeList = (props) => {
                                     <div className="college-details text-center">
                                         <div className="detail-title">Cost</div>
                                         <div className="detail-score text-center">
-                                            {student.residenceState === college.Location
+                                            {student.ResidenceState === college.Location
                                                 ? college.CostOfAttendanceInState
                                                     ? college.CostOfAttendanceInState.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                                                     : ''

@@ -267,4 +267,56 @@ router.post('/scrape-high-school', async (req, res) => {
         }
     }
 });
+
+
+/**
+ * Get Questionable Applications
+ *
+ */
+router.get('/questionable-decisions', async (req, res) => {
+    if (!req.cookies.access_token) {
+        res.status(400).send({ status: 'error', error: 'No token provided' });
+    } else {
+        const authorized = await authentication.validateJWT(req.cookies.access_token);
+        if (!authorized.username) {
+            res.clearCookie('access_token');
+            res.status(400).send(authorized);
+            // verify that user is an admin
+        } else if (!adminController.checkAdmin(authorized.username)) {
+            res.status(400).send(authorized);
+        } else {
+            const result = await adminController.getQuestionableApplications();
+            if (result.error) {
+                res.status(400);
+            }
+            res.send(result);
+        }
+    }
+});
+
+router.post('/update-applications', async (req, res) => {
+    if (!req.cookies.access_token) {
+        res.status(400).send({ status: 'error', error: 'No token provided' });
+    } else {
+        const authorized = await authentication.validateJWT(req.cookies.access_token);
+        if (!authorized.username) {
+            res.clearCookie('access_token');
+            res.status(400).send(authorized);
+            // verify that user is an admin
+        } else if (!adminController.checkAdmin(authorized.username)) {
+            res.status(400).send(authorized);
+        } else {
+            let result = await adminController.updateApplications(req.body.applications);
+            if (result.error) {
+                res.status(400);
+            } else {
+                result = await adminController.getQuestionableApplications();
+                if (result.error) {
+                    res.status(400);
+                }
+            }
+            res.send(result);
+        }
+    }
+});
 module.exports = router;

@@ -43,8 +43,8 @@ const Search = () => {
                     studentAPI.getStudent(localStorage.getItem('username')).then((studentResult) => {
                         const stud = studentResult.student ? studentResult.student : {};
                         result.colleges.sort((a, b) => {
-                            const costA = a.Location === stud.residenceState ? a.CostOfAttendanceInState : a.CostOfAttendanceOutOfState;
-                            const costB = b.Location === stud.residenceState ? b.CostOfAttendanceInState : b.CostOfAttendanceOutOfState;
+                            const costA = a.Location === stud.ResidenceState ? a.CostOfAttendanceInState : a.CostOfAttendanceOutOfState;
+                            const costB = b.Location === stud.ResidenceState ? b.CostOfAttendanceInState : b.CostOfAttendanceOutOfState;
                             if (sortAsc) return costA - costB;
                             return costB - costA;
                         });
@@ -157,7 +157,7 @@ const Search = () => {
                     </Row>
                     {errorAlert && <Alert variant="danger">{errorMessage}</Alert>}
                     {collegeRecommenderToggle && <Alert variant="primary">College recommender toggle is on. Please wait while reccommendation results load.</Alert>}
-                    {sortBy === 'Cost' && student.residenceState == null ? <Alert variant="info">Sorting by out-of-state cost of attendance. Add your residence state in your profile to show in-state cost.</Alert> : <></>}
+                    {sortBy === 'Cost' && student.ResidenceState == null ? <Alert variant="info">Sorting by out-of-state cost of attendance. Add your residence state in your profile to show in-state cost.</Alert> : <></>}
                     {showSpinner
                         ? (
                             <div className="text-center">

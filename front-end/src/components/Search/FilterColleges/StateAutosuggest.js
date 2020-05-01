@@ -112,9 +112,9 @@ const StateAutosuggest = (props) => {
                 placement="right"
                 overlay={(
                     <Popover>
-                        <Popover.Title>High Schools</Popover.Title>
+                        <Popover.Title>States</Popover.Title>
                         <Popover.Content>
-                                            Enter a 2 letter state to filter by states. For example, NY.
+                            Enter a 2 letter state to filter by states. For example, NY.
                         </Popover.Content>
                     </Popover>
                 )}

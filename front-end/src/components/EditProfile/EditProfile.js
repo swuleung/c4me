@@ -250,7 +250,7 @@ const EditProfile = (props) => {
                                             <FontAwesomeIcon className="text-info" icon={faQuestionCircle} />
                                         </OverlayTrigger>
                                     </Form.Label>
-                                    <Form.Control type="number" value={student.CollegeClass || ''} placeholder="Enter college class year" onChange={(e) => { handleProfileChange(e); }} autoComplete="on" />
+                                    <Form.Control type="number" min="0" max="3000" value={student.CollegeClass || ''} placeholder="Enter college class year" onChange={(e) => { handleProfileChange(e); }} autoComplete="on" />
                                 </Form.Group>
                             </Col>
                             <Col>

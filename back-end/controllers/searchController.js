@@ -249,7 +249,7 @@ exports.searchCollege = async (filters, username) => {
         if (filters.hasOwnProperty('costMax')) {
             const student = await getStudent(username);
             if (student.student) {
-                const state = student.student.residenceState;
+                const state = student.student.ResidenceState;
                 for (let i = searchResults.length - 1; i >= 0; i -= 1) {
                     // eslint-disable-next-line no-continue
                     if (state === searchResults[i].Location) continue;

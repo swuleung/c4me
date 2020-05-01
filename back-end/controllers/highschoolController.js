@@ -426,7 +426,7 @@ exports.findSimilarHS = async (username) => {
                 );
             }
             highSchool.averageGPA = otherAverageHSGPA;
-            highSchool.similarityPoints = similarityPoints;
+            highSchool.similarityScore = (similarityPoints / 55) * 100;
         } else {
             // removes student's high school from list
             highSchools.splice(i, 1);
@@ -434,7 +434,7 @@ exports.findSimilarHS = async (username) => {
         }
     }
     // sort by similarity points
-    highSchools.sort((a, b) => b.similarityPoints - a.similarityPoints);
+    highSchools.sort((a, b) => b.similarityScore - a.similarityScore);
     return {
         ok: 'Success',
         highSchools: highSchools,
