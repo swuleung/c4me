@@ -141,7 +141,7 @@ const SimilarHighSchool = () => {
                                                         </Row>
                                                     </Col>
                                                     <Col className="h4 text-center">
-                                                        {highSchool.similarityPoints ? `${Math.round((highSchool.similarityPoints / 55) * 100)}%` : 'N/A'}
+                                                        {highSchool.similarityScore ? `${Math.round(highSchool.similarityScore)}%` : 'N/A'}
                                                         {' Similarity'}
                                                     </Col>
                                                     <Col className="text-right">
