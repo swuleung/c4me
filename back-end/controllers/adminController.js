@@ -98,6 +98,7 @@ exports.scrapeCollegeRankings = async () => {
     }
 
     if (errors.length) {
+        console.log(errors);
         return { error: 'Error Scraping College Rankings', reason: errors };
     }
     return { ok: 'Successfully scraped college rankings' };
