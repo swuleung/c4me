@@ -458,7 +458,7 @@ exports.calcScores = async (collegeIDList, username) => {
     } catch (error) {
         return {
             error: 'calcScores failed',
-            reason: error,
+            reason: error.message,
         };
     }
     return {
