@@ -111,90 +111,78 @@ const FilterColleges = (props) => {
         if (size.sizeMin !== '') {
             changed = true;
             filters.sizeMin = parseInt(size.sizeMin, 10);
-        } else {
-            filters.sizeMin = 0;
+            if (size.sizeMax === '') filters.sizeMax = Number.MAX_SAFE_INTEGER;
         }
 
         if (size.sizeMax !== '') {
             changed = true;
             filters.sizeMax = parseInt(size.sizeMax, 10);
-        } else {
-            filters.sizeMax = Number.MAX_SAFE_INTEGER;
+            if (size.sizeMin === '') filters.sizeMin = 0;
         }
 
         if (admissionRate.admissionRateMin !== '') {
             changed = true;
             filters.admissionRateMin = parseInt(admissionRate.admissionRateMin, 10);
-        } else {
-            filters.admissionRateMin = 0;
+            if (admissionRate.admissionRateMax === '') filters.admissionRateMax = Number.MAX_SAFE_INTEGER;
         }
 
         if (admissionRate.admissionRateMax !== '') {
             changed = true;
             filters.admissionRateMax = parseInt(admissionRate.admissionRateMax, 10);
-        } else {
-            filters.admissionRateMax = Number.MAX_SAFE_INTEGER;
+            if (admissionRate.admissionRateMin === '') filters.admissionRateMin = 0;
         }
 
         if (collegeRanking.rankingMin !== '') {
             changed = true;
             filters.rankingMin = parseInt(collegeRanking.rankingMin, 10);
-        } else {
-            filters.rankingMin = 0;
+            if (collegeRanking.rankingMax === '') filters.rankingMax = Number.MAX_SAFE_INTEGER;
         }
 
         if (collegeRanking.rankingMax !== '') {
             changed = true;
             filters.rankingMax = parseInt(collegeRanking.rankingMax, 10);
-        } else {
-            filters.rankingMax = Number.MAX_SAFE_INTEGER;
+            if (collegeRanking.rankingMin === '') filters.rankingMin = 0;
         }
 
         if (SATEBRW.SATEBRWMin !== '') {
             changed = true;
             filters.SATEBRWMin = parseInt(SATEBRW.SATEBRWMin, 10);
-        } else {
-            filters.SATEBRWMin = 200;
+            if (SATEBRW.SATEBRWMax === '') filters.SATEBRWMax = 800;
         }
 
         if (SATEBRW.SATEBRWMax !== '') {
             changed = true;
             filters.SATEBRWMax = parseInt(SATEBRW.SATEBRWMax, 10);
-        } else {
-            filters.SATEBRWMax = 800;
+            if (SATEBRW.SATEBRWMin === '') filters.SATEBRWMin = 200;
         }
 
         if (SATMath.SATMathMin !== '') {
             changed = true;
             filters.SATMathMin = parseInt(SATMath.SATMathMin, 10);
-        } else {
-            filters.SATMathMin = 200;
+            if (SATMath.SATMathMax === '') filters.SATMathMax = 800;
         }
 
         if (SATMath.SATMathMax !== '') {
             changed = true;
             filters.SATMathMax = parseInt(SATMath.SATMathMax, 10);
-        } else {
-            filters.SATMathMax = 800;
+            if (SATMath.SATMathMin === '') filters.SATMathMin = 200;
         }
 
         if (ACTComposite.ACTCompositeMin !== '') {
             changed = true;
             filters.ACTCompositeMin = ACTComposite.ACTCompositeMin;
-        } else {
-            filters.ACTCompositeMin = 1;
+            if (ACTComposite.ACTCompositeMax === '') filters.ACTCompositeMax = 36;
         }
 
         if (ACTComposite.ACTCompositeMax !== '') {
             changed = true;
             filters.ACTCompositeMax = ACTComposite.ACTCompositeMax;
-        } else {
-            filters.ACTCompositeMax = 36;
+            if (ACTComposite.ACTCompositeMin === '') filters.ACTCompositeMin = 1;
         }
 
         if (costOfAttendance.changed) {
             changed = true;
-            filters.costMax = costOfAttendance.score;
+            filters.costMax = costOfAttendance.cost;
         }
 
         let selectedregions = [];
@@ -207,8 +195,6 @@ const FilterColleges = (props) => {
             }
         }
 
-        filters.regions = selectedregions;
-
         if (selectedStates.length !== 0) {
             changed = true;
             filters.states = selectedStates;
@@ -218,6 +204,8 @@ const FilterColleges = (props) => {
         if (selectedregions.length === 0 && selectedStates.length === 0) {
             selectedregions = ['midwest', 'northeast', 'south', 'west'];
         }
+
+        filters.regions = selectedregions;
 
         if (!changed) {
             filters = {};
