@@ -194,7 +194,7 @@ const FilterColleges = (props) => {
 
         if (costOfAttendance.changed) {
             changed = true;
-            filters.costMax = costOfAttendance;
+            filters.costMax = costOfAttendance.score;
         }
 
         let selectedregions = [];
@@ -255,7 +255,7 @@ const FilterColleges = (props) => {
                     placement="right"
                     overlay={(
                         <Popover>
-                            <Popover.Title>College Class</Popover.Title>
+                            <Popover.Title>College Name</Popover.Title>
                             <Popover.Content>
                                 Enter a partial or complete name for the college you want to search for. For example, Stony Brook University.
                             </Popover.Content>
@@ -293,7 +293,7 @@ const FilterColleges = (props) => {
                     placement="right"
                     overlay={(
                         <Popover>
-                            <Popover.Title>College Class</Popover.Title>
+                            <Popover.Title>Second Major</Popover.Title>
                             <Popover.Content>
                                 Enter a partial or complete major you want to search for. For example, English.
                             </Popover.Content>
@@ -453,7 +453,7 @@ const FilterColleges = (props) => {
                         <Popover>
                             <Popover.Title>ACT Composite</Popover.Title>
                             <Popover.Content>
-                                Choose the range of ACT Composite to filter by. For example,28-32.
+                                Choose the range of ACT Composite to filter by. For example, 28-32.
                             </Popover.Content>
                         </Popover>
                     )}
@@ -499,7 +499,7 @@ const FilterColleges = (props) => {
                     placement="right"
                     overlay={(
                         <Popover>
-                            <Popover.Title>Status</Popover.Title>
+                            <Popover.Title>Region</Popover.Title>
                             <Popover.Content>
                                 Filter by a region. Choose one or more. If none is chosen, all regions will be shown.
                             </Popover.Content>
