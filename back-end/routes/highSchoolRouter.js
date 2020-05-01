@@ -82,7 +82,7 @@ router.get('/name/:highSchoolName', async (req, res) => {
  *    highSchoolState: <string of 2 Letter State Code>
  * }
  */
-router.post('/scrapeHighSchoolData', async (req, res) => {
+router.post('/scrape-high-school-data', async (req, res) => {
     if (!req.cookies.access_token) {
         res.status(400).send({ status: 'error', error: 'No token provided' });
     } else {
@@ -109,7 +109,7 @@ router.post('/scrapeHighSchoolData', async (req, res) => {
  *      username: <string>
  * }
  */
-router.get('/findSimilarHS/:username', async (req, res) => {
+router.get('/find-similar-hs', async (req, res) => {
     if (!req.cookies.access_token) {
         res.status(400).send({ status: 'error', error: 'No token provided' });
     } else {
@@ -119,7 +119,7 @@ router.get('/findSimilarHS/:username', async (req, res) => {
             res.status(400).send(authorized);
         } else {
             let result = {};
-            result = await highSchoolController.findSimilarHS(req.params.username);
+            result = await highSchoolController.findSimilarHS(authorized.username);
             if (result.error) res.status(400);
             res.send(result);
         }
