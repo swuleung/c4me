@@ -329,7 +329,8 @@ exports.calcScores = async (collegeIDList, username) => {
             // if student's test score is higher than average, give max scores
             if (ACTComposite != null) {
                 maxScore += 10;
-                score += Math.max(0, 10 - Math.ceil(Math.abs(colleges[i].ACTComposite - ACTComposite) / 2));
+                score += Math.max(0,
+                    10 - Math.ceil(Math.abs(colleges[i].ACTComposite - ACTComposite) / 2));
             }
 
             if (SATMath != null) {
