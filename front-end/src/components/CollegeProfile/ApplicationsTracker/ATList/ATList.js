@@ -25,7 +25,7 @@ const ATList = (props) => {
                 }
                 return (
                     // eslint-disable-next-line react/no-array-index-key
-                    <div className="border mb-2 student-container" key={app.Application.status + i}>
+                    <div className="border mb-2 student-container" key={app.Application.Status + i}>
                         <Row className="student-title mb-3">
                             <Col className="font-weight-bold student-name">
                                 {app.Username}
