@@ -9,7 +9,7 @@
   "devDependencies": {},
   "scripts": {
     "front-end": "npm run start:production --prefix front-end",
-    "back-end": "npm start --prefix back-end",
+    "back-end": "npm run start:production --prefix back-end",
     "start": "concurrently \"npm run back-end\" \"npm run front-end\" --kill-others"
   },
   "repository": {
