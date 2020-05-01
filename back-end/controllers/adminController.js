@@ -108,7 +108,7 @@ exports.scrapeCollegeRankings = async () => {
 const scrapeCollegeFields = async (cheer, name) => {
     const errors = [];
     const $ = cheer;
-    const completionRateFull = $('#profile-overview > div:nth-child(4) > div > dl:nth-child(4) > dd:nth-child(2)').text();
+    const completionRateFull = $('#profile-overview > div:nth-child(8) > div > dl > dd:nth-child(8)').text();
     let costOfAttendance = $('#profile-overview > div:nth-child(5) > div > dl > dd:nth-child(2)').text();
     let gpa = $('#profile-overview > div:nth-child(4) > div > dl:nth-child(4) > dd:nth-child(2)').text();
     const satMathFull = $('#profile-overview > div:nth-child(4) > div > dl:nth-child(4) > dd:nth-child(4)').text();
@@ -294,12 +294,10 @@ exports.scrapeCollegeData = async () => {
         await Promise.all(updates).then((results) => {
             errors = results.filter((r) => r);
         });
-        console.log(errors);
         // close browser and pages since there is no more need
         await page.close();
         await browser.close();
     } catch (error) {
-        console.log(error);
         return {
             error: 'Unable to scrape data',
             reason: error,
