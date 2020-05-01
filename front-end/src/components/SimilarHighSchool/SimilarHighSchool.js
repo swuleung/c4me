@@ -32,7 +32,7 @@ const SimilarHighSchool = () => {
             }
         });
         setShowSpinner(true);
-        highSchoolAPI.findSimilarHS(localStorage.getItem('username')).then((result) => {
+        highSchoolAPI.findSimilarHS().then((result) => {
             setShowSpinner(false);
             if (result.error) {
                 setErrorAlert(true);
