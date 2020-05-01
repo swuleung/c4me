@@ -40,7 +40,7 @@ const SimilarHighSchool = () => {
             }
             if (result.ok) {
                 setErrorAlert(false);
-                setAverageGPA(result.averageGPA.toFixed(2));
+                if (result.highSchools.length !== 0) setAverageGPA(result.averageGPA.toFixed(2));
                 setHighSchools(result.highSchools);
             }
         });
