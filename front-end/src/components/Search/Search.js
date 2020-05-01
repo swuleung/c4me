@@ -43,8 +43,8 @@ const Search = () => {
                     studentAPI.getStudent(localStorage.getItem('username')).then((studentResult) => {
                         const stud = studentResult.student ? studentResult.student : {};
                         result.colleges.sort((a, b) => {
-                            const costA = a.Location === stud.residenceState ? a.CostOfAttendanceInState : a.CostOfAttendanceOutOfState;
-                            const costB = b.Location === stud.residenceState ? b.CostOfAttendanceInState : b.CostOfAttendanceOutOfState;
+                            const costA = a.Location === stud.ResidenceState ? a.CostOfAttendanceInState : a.CostOfAttendanceOutOfState;
+                            const costB = b.Location === stud.ResidenceState ? b.CostOfAttendanceInState : b.CostOfAttendanceOutOfState;
                             if (sortAsc) return costA - costB;
                             return costB - costA;
                         });
