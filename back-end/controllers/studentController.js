@@ -389,27 +389,15 @@ exports.calcQuestionableApplication = async (app) => {
 
     let locationCheck = 0;
     // if they are in a public school, add points
-    if (thisCollege.InstitutionType == 1) {
+    if (thisCollege.InstitutionType === '1') {
         locationCheck = 5;
         if (studentState === collegeState) {
             qScore += 5;
-        } 
-    } 
-
-    if (studentState === collegeState) {
-        qScore += 5;
-    } else if (northeastRegion.includes(studentState) && northeastRegion.includes(collegeState)) {
-        qScore += 2.5;
-    } else if (midwestRegion.includes(studentState) && midwestRegion.includes(collegeState)) {
-        qScore += 2.5;
-    } else if (southRegion.includes(studentState) && southRegion.includes(collegeState)) {
-        qScore += 2.5;
-    } else if (westRegion.includes(studentState) && westRegion.includes(collegeState)) {
-        qScore += 2.5;
+        }
     }
 
     // determine questionable status & update accordingly
-    let threshold = qScore / (40 + locationCheck);
+    let threshold = qScore / (45 + locationCheck);
     threshold = (app.Status === 'denied') ? (1 - threshold) : threshold;
 
     if (threshold < 0.65) {
