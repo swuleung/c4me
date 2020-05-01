@@ -24,9 +24,9 @@
         "operatorsAliases": 0
     },
     "production": {
-        "username": "jaquach",
-        "password": "111019384",
-        "database": "jaquach",
+        "username": "swuleung",
+        "password": "111065204",
+        "database": "swuleung",
         "host": "mysql4.cs.stonybrook.edu",
         "dialect": "mysql",
         "operatorsAliases": 0
