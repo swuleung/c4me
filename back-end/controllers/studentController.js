@@ -108,7 +108,21 @@ exports.updateStudent = async (username, newStudent, newHighSchool) => {
  */
 exports.updateStudentHighSchool = async (student, highSchool) => {
     let newHighSchool = {};
-    if (!(highSchool.Name && highSchool.City && highSchool.State)) {
+    if(student.HighSchoolId && Object.keys(highSchool).length === 0) {
+        try {
+            // update the student with new high school id
+            await student.update({ HighSchoolId: null });
+        } catch (error) {
+            return {
+                error: 'Unable to remove high school from student',
+                reason: error,
+            };
+        }
+        return {
+            ok: 'Success',
+            highSchool: null,
+        };
+    } else if (!(highSchool.Name && highSchool.City && highSchool.State)) {
         return {
             ok: 'No high school provided',
             highSchool: null,

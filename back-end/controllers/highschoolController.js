@@ -318,7 +318,7 @@ exports.findSimilarHS = async (username) => {
             countGPA += 1;
         }
     }
-    averageCurrentHSGPA /= countGPA;
+    averageCurrentHSGPA = countGPA != 0 ? averageCurrentHSGPA/countGPA : 0;
 
     // loops through all high schools and give similarity points
     for (let i = 0; i < highSchools.length; i += 1) {

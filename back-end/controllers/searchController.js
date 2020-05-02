@@ -329,7 +329,8 @@ exports.calcScores = async (collegeIDList, username) => {
             // if student's test score is higher than average, give max scores
             if (ACTComposite != null) {
                 maxScore += 10;
-                score += Math.max(0, 10 - Math.ceil(Math.abs(colleges[i].ACTComposite - ACTComposite) / 2));
+                score += Math.max(0,
+                    10 - Math.ceil(Math.abs(colleges[i].ACTComposite - ACTComposite) / 2));
             }
 
             if (SATMath != null) {
@@ -383,10 +384,10 @@ exports.calcScores = async (collegeIDList, username) => {
                     } else if (major1) {
                         simMaxScore += 5;
                         if (
-                            otherStudent.Major1.includes(major2)
-                            || major2.includes(otherStudent.Major1)
-                            || otherStudent.Major2.includes(major2)
-                            || major2.includes(otherStudent.Major2)
+                            otherStudent.Major1.includes(major1)
+                            || major1.includes(otherStudent.Major1)
+                            || otherStudent.Major2.includes(major1)
+                            || major1.includes(otherStudent.Major2)
                         ) {
                             simScore += 5;
                         }
@@ -458,7 +459,7 @@ exports.calcScores = async (collegeIDList, username) => {
     } catch (error) {
         return {
             error: 'calcScores failed',
-            reason: error,
+            reason: error.message,
         };
     }
     return {

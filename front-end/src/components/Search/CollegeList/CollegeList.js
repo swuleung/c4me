@@ -37,7 +37,7 @@ const CollegeList = (props) => {
                                 <CircularProgressbar
                                     value={Math.round(college.recommender.score * 100)}
                                     maxValue="100"
-                                    text={Math.round(college.recommender.score * 100)}
+                                    text={Math.round(college.recommender.score * 100).toString()}
                                     styles={buildStyles({
                                         strokeLinecap: 'round',
                                         textSize: '2.5rem',
