@@ -425,20 +425,29 @@ describe('Search Colleges', () => {
 
     it('Get recommender scores for Stony Brook University', (done) => {
         agent
-            .get('/colleges/name/Stony Brook University')
+            .post('/students/mocha5/edit')
+            .send({
+                student: {
+                    ResidenceState: 'NY',
+                },
+            })
             .end((err, res) => {
-                res.should.have.status(200);
-                const { college } = res.body;
-                const SBUCollegeId = college.CollegeId;
                 agent
-                    .post('/search/recommender')
-                    .send({
-                        collegeIds: [SBUCollegeId],
-                    })
-                    .end((error, response) => {
-                        response.should.have.status(200);
-                        expect(response.body.scores).to.deep.equal([{ Name: 'Stony Brook University', score: 0.82 }]);
-                        done();
+                    .get('/colleges/name/Stony Brook University')
+                    .end((err, res) => {
+                        res.should.have.status(200);
+                        const { college } = res.body;
+                        const SBUCollegeId = college.CollegeId;
+                        agent
+                            .post('/search/recommender')
+                            .send({
+                                collegeIds: [SBUCollegeId],
+                            })
+                            .end((error, response) => {
+                                response.should.have.status(200);
+                                expect(response.body.scores).to.deep.equal([{ Name: 'Stony Brook University', score: 0.82 }]);
+                                done();
+                            });
                     });
             });
     });
