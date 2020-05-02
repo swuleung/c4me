@@ -64,22 +64,8 @@ describe('Find Similar High Schools', () => {
             .get('/highSchools/find-similar-hs')
             .end((err, res) => {
                 res.should.have.status(200);
-                expect(res.body.highSchools).to.shallowDeepEqual([{
-                    Name: 'Ridgewood High School',
-                    City: 'Ridgewood',
-                    State: 'NJ',
-                    NicheAcademicScore: 'A+',
-                    GraduationRate: 97,
-                    AverageSAT: 1320,
-                    SATMath: 670,
-                    SATEBRW: 650,
-                    AverageACT: 30,
-                    ACTMath: 29,
-                    ACTEnglish: 30,
-                    ACTReading: 30,
-                    ACTScience: 29,
-                    similarityPoints: 41.5,
-                }]);
+                expect(Math.round(res.body.highSchools[0].similarityScore))
+                    .to.equal(75);
                 done();
             });
     });

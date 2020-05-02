@@ -122,7 +122,9 @@ exports.updateStudentHighSchool = async (student, highSchool) => {
             ok: 'Success',
             highSchool: null,
         };
-    } if (!(highSchool.Name && highSchool.City && highSchool.State)) {
+    } 
+    
+    if (!(highSchool.Name && highSchool.City && highSchool.State)) {
         return {
             ok: 'No high school provided',
             highSchool: null,
