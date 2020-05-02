@@ -108,7 +108,7 @@ exports.updateStudent = async (username, newStudent, newHighSchool) => {
  */
 exports.updateStudentHighSchool = async (student, highSchool) => {
     let newHighSchool = {};
-    if(student.HighSchoolId && Object.keys(highSchool).length === 0) {
+    if (student.HighSchoolId && Object.keys(highSchool).length === 0) {
         try {
             // update the student with new high school id
             await student.update({ HighSchoolId: null });
@@ -122,7 +122,7 @@ exports.updateStudentHighSchool = async (student, highSchool) => {
             ok: 'Success',
             highSchool: null,
         };
-    } else if (!(highSchool.Name && highSchool.City && highSchool.State)) {
+    } if (!(highSchool.Name && highSchool.City && highSchool.State)) {
         return {
             ok: 'No high school provided',
             highSchool: null,
@@ -244,7 +244,10 @@ exports.updateStudentApplications = async (username, newApplications) => {
             if (newApp.Status !== allApplications[i].dataValues.Status && (newApp.Status === 'accepted' || newApp.Status === 'denied')) {
                 // eslint-disable-next-line no-await-in-loop, max-len
                 copyApplications[found].IsQuestionable = await this.calcQuestionableApplication(copyApplications[found]);
+            } else if (newApp.Status !== 'accepted' && newApp.Status !== 'denied') {
+                copyApplications[found].IsQuestionable = false;
             }
+
             changes.push(allApplications[i].update(copyApplications[found]).catch(
                 (error) => {
                     errors.push({
@@ -271,7 +274,10 @@ exports.updateStudentApplications = async (username, newApplications) => {
             if (copyApplications[i].Status === 'accepted' || copyApplications[i].Status === 'denied') {
                 // eslint-disable-next-line no-await-in-loop, max-len
                 copyApplications[i].IsQuestionable = await this.calcQuestionableApplication(copyApplications[i]);
+            } else if (newApp.Status !== 'accepted' && newApp.Status !== 'denied') {
+                copyApplications[found].IsQuestionable = false;
             }
+
             changes.push(models.Application.create(copyApplications[i]).catch((error) => {
                 errors.push({
                     error: `Error creating application:  ${copyApplications[i]}`,
