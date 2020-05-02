@@ -274,8 +274,8 @@ exports.updateStudentApplications = async (username, newApplications) => {
             if (copyApplications[i].Status === 'accepted' || copyApplications[i].Status === 'denied') {
                 // eslint-disable-next-line no-await-in-loop, max-len
                 copyApplications[i].IsQuestionable = await this.calcQuestionableApplication(copyApplications[i]);
-            } else if (newApp.Status !== 'accepted' && newApp.Status !== 'denied') {
-                copyApplications[found].IsQuestionable = false;
+            } else if (copyApplications[i].Status !== 'accepted' && copyApplications[i].Status !== 'denied') {
+                copyApplications[i].IsQuestionable = false;
             }
 
             changes.push(models.Application.create(copyApplications[i]).catch((error) => {
